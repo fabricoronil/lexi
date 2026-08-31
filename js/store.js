@@ -81,11 +81,16 @@ export function get() {
   return load();
 }
 
-/** Devuelve el estado SRS de una card, creándolo la primera vez. */
+/**
+ * Devuelve el estado SRS de una card sin persistirlo: si nunca se calificó,
+ * da una card nueva "de prueba" para poder mostrarla o previsualizar
+ * intervalos. Guardar de verdad es cosa de `putCard`, que sólo se llama al
+ * calificar — así una card que sólo se mira (y la sesión se corta antes de
+ * responderla) no queda marcada como "vista" en el progreso.
+ */
 export function cardState(id) {
   const s = load();
-  if (!s.cards[id]) s.cards[id] = newCard(id);
-  return s.cards[id];
+  return s.cards[id] || newCard(id);
 }
 
 export function putCard(card) {

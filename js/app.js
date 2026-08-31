@@ -281,17 +281,61 @@ function deckLabel(id) {
   return d ? d.label : id;
 }
 
+// Palabras sin peso propio para elegir qué resaltar del ejemplo: artículos,
+// pronombres, auxiliares y las contracciones (sin apóstrofe) que aparecen
+// en el mazo. Sin esto el resaltado terminaba marcando fragmentos como
+// "doesn" (de "doesn't") en vez de la palabra que de verdad importa.
+const HIGHLIGHT_STOPWORDS = new Set([
+  'to', 'a', 'an', 'the', 'and', 'or', 'but', 'it', 'in', 'on', 'at', 'of', 'up', 'out',
+  'is', 'be', 'been', 'being', 'with', 'for', 'that', 'this', 'you', 'your', 'we', 'i',
+  'how', 'what', 'which', 'who', 'why', 'when', 'can', 'could', 'would', 'should', 'will',
+  'doesnt', 'heres', 'id', 'ill', 'im', 'its', 'lets', 'thats', 'well', 'were',
+]);
+// Verbos irregulares del propio mazo: el resaltado por raíz no los pesca
+// (become → became no comparten prefijo), así que van directo al ejemplo.
+const HIGHLIGHT_IRREGULAR = { become: 'became', find: 'found', take: 'took', freeze: 'froze', lend: 'lent' };
+
+/**
+ * Resalta en `sentence` la palabra o frase `term`. Prueba primero la frase
+ * completa tal cual; si no aparece literal (verbo conjugado, orden distinto,
+ * frase parafraseada), busca palabra por palabra permitiendo que el final
+ * cambie (run → running, dependency → dependencies). Si nada matchea, se
+ * muestra el ejemplo sin marcar — no es un error, hay mazos donde el
+ * ejemplo no repite el término literalmente.
+ */
 function highlight(sentence, term) {
   if (!sentence) return '';
   const esc = (t) => t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-  const clean = term.replace(/^(to|a|an|the)\s+/i, '').trim();
   const safe = sentence.replace(/[<>&]/g, (ch) => ({ '<': '&lt;', '>': '&gt;', '&': '&amp;' }[ch]));
+  const clean = term.replace(/^(to|a|an|the)\s+/i, '').replace(/[.!?…]+$/, '').trim();
   if (!clean) return safe;
+
   try {
-    return safe.replace(new RegExp(esc(clean), 'i'), (m) => `<mark>${m}</mark>`);
+    const exact = new RegExp(esc(clean), 'i');
+    if (exact.test(safe)) return safe.replace(exact, (m) => `<mark>${m}</mark>`);
   } catch {
-    return safe;
+    // regex inválida por algún caracter raro en el término: seguimos con el plan B
   }
+
+  const words = clean.toLowerCase().replace(/[^a-z\s]/g, '').split(/\s+/)
+    .filter((w) => w.length > 2 && !HIGHLIGHT_STOPWORDS.has(w));
+
+  for (const w of words) {
+    const candidates = [w, HIGHLIGHT_IRREGULAR[w]].filter(Boolean);
+    for (const base of candidates) {
+      for (let cut = 0; cut <= 2 && base.length - cut >= 3; cut++) {
+        const stem = base.slice(0, base.length - cut);
+        try {
+          const re = new RegExp('\\b' + esc(stem) + '\\w*', 'i');
+          if (re.test(safe)) return safe.replace(re, (m) => `<mark>${m}</mark>`);
+        } catch {
+          // idem
+        }
+      }
+    }
+  }
+
+  return safe;
 }
 
 const GRADE_SOUND = [sound.playAgain, sound.playHard, sound.playGood, sound.playEasy];
