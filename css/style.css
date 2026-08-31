@@ -463,6 +463,11 @@ button {
 
 .card-back { padding: 26px 24px; display: flex; flex-direction: column; gap: 22px; }
 .card-back[hidden] { display: none; }
+@keyframes reveal-in {
+  0% { opacity: 0; transform: translateY(10px); }
+  100% { opacity: 1; transform: translateY(0); }
+}
+.card-back.reveal-in { animation: reveal-in .3s cubic-bezier(.22,.61,.36,1); }
 .field { display: flex; flex-direction: column; gap: 7px; }
 .field-label { font-size: 10px; color: var(--faint); letter-spacing: 1.6px; text-transform: uppercase; font-weight: 600; }
 .answer { font-size: 21px; font-weight: 600; color: var(--green); letter-spacing: -.3px; line-height: 1.3; }

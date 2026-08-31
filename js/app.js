@@ -273,7 +273,7 @@ function revealCard() {
   $('#btn-reveal').hidden = true;
   $('#grade-grid').hidden = false;
   $('#grade-hint').hidden = false;
-  bounce($('#card-back'), 'card-enter');
+  bounce($('#card-back'), 'reveal-in');
 }
 
 function deckLabel(id) {
