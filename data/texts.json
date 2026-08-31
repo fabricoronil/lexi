@@ -1,0 +1,460 @@
+{
+  "levels": [
+    {
+      "id": "a1",
+      "label": "A1",
+      "color": "#7ab8f5",
+      "exam": "Estilo Cambridge A1 Movers / KET — reading",
+      "texts": [
+        {
+          "id": "a1-family",
+          "title": "My Family",
+          "words": 81,
+          "body": "Hi! My name is Laura. I am fifteen years old and I live in a small house with my family. My father is a teacher and my mother is a doctor. I have one brother. His name is Tom and he is ten years old. We have a dog called Max. Every morning I go to school by bus. In the afternoon, I do my homework and then I play with Max in the garden. I love my family very much.",
+          "questions": [
+            {
+              "q": "How old is Laura?",
+              "options": [
+                "Ten",
+                "Fifteen",
+                "Sixteen"
+              ],
+              "answer": 1
+            },
+            {
+              "q": "What does Laura's mother do?",
+              "options": [
+                "She is a teacher",
+                "She is a doctor",
+                "She is a student"
+              ],
+              "answer": 1
+            },
+            {
+              "q": "What is the name of the dog?",
+              "options": [
+                "Tom",
+                "Max",
+                "Laura"
+              ],
+              "answer": 1
+            },
+            {
+              "q": "How does Laura go to school?",
+              "options": [
+                "By car",
+                "By bike",
+                "By bus"
+              ],
+              "answer": 2
+            },
+            {
+              "q": "What does Laura do in the garden?",
+              "options": [
+                "She studies",
+                "She plays with Max",
+                "She sleeps"
+              ],
+              "answer": 1
+            }
+          ]
+        },
+        {
+          "id": "a1-shop",
+          "title": "A Day at the Shop",
+          "words": 87,
+          "body": "Peter works in a small shop in the city center. The shop opens at nine o'clock in the morning and closes at six o'clock in the evening. Peter sells fruit and vegetables. On Mondays, he gets new apples and bananas from the market. His shop is next to a coffee shop. Many people buy coffee and then come to Peter's shop. Peter likes his job because he talks to a lot of people every day. At six o'clock, he closes the shop and goes home by bicycle.",
+          "questions": [
+            {
+              "q": "What does Peter sell?",
+              "options": [
+                "Books",
+                "Fruit and vegetables",
+                "Coffee"
+              ],
+              "answer": 1
+            },
+            {
+              "q": "What time does the shop open?",
+              "options": [
+                "8am",
+                "9am",
+                "6pm"
+              ],
+              "answer": 1
+            },
+            {
+              "q": "What is next to Peter's shop?",
+              "options": [
+                "A school",
+                "A coffee shop",
+                "A bank"
+              ],
+              "answer": 1
+            },
+            {
+              "q": "When does Peter get new apples?",
+              "options": [
+                "On Mondays",
+                "On Sundays",
+                "Every day"
+              ],
+              "answer": 0
+            },
+            {
+              "q": "How does Peter go home?",
+              "options": [
+                "By car",
+                "By bus",
+                "By bicycle"
+              ],
+              "answer": 2
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "a2",
+      "label": "A2",
+      "color": "#a6adc8",
+      "exam": "Estilo Cambridge A2 Key (KET) — reading",
+      "texts": [
+        {
+          "id": "a2-laptop",
+          "title": "My New Laptop",
+          "words": 124,
+          "body": "Last week, I bought a new laptop for my studies. It was quite expensive, but it works really fast. Before, I used my brother's old computer, but it was very slow and it often stopped working. Now, I can watch videos, write documents, and even play games without any problems. Yesterday, I spent three hours learning how to use a new program for editing photos. It was difficult at first, but I watched some videos online and now I understand it better. My friend Marta helped me too — she knows a lot about computers. Next month, I'm going to start an online course about programming. I'm a bit nervous, but also very excited because I really want to learn how to build websites.",
+          "questions": [
+            {
+              "q": "When did the person buy the laptop?",
+              "options": [
+                "Yesterday",
+                "Last week",
+                "Next month"
+              ],
+              "answer": 1
+            },
+            {
+              "q": "What was the problem with the old computer?",
+              "options": [
+                "It was too expensive",
+                "It was slow and stopped working",
+                "It didn't have internet"
+              ],
+              "answer": 1
+            },
+            {
+              "q": "Who helped the writer with the new program?",
+              "options": [
+                "A teacher",
+                "Their brother",
+                "Marta"
+              ],
+              "answer": 2
+            },
+            {
+              "q": "What is the writer going to do next month?",
+              "options": [
+                "Buy a new phone",
+                "Start an online course",
+                "Sell the laptop"
+              ],
+              "answer": 1
+            },
+            {
+              "q": "How does the writer feel about the course?",
+              "options": [
+                "Bored",
+                "Nervous and excited",
+                "Angry"
+              ],
+              "answer": 1
+            }
+          ]
+        },
+        {
+          "id": "a2-trip",
+          "title": "The Weekend Trip",
+          "words": 121,
+          "body": "On Saturday morning, Sofia and her friends went to the mountains for a short trip. They left the city at seven o'clock because they wanted to arrive before it got too hot. When they arrived, they walked for two hours to reach a small lake. The weather was beautiful, so they decided to have a picnic near the water. After lunch, some of them went swimming, but Sofia didn't want to swim because the water was too cold for her. In the afternoon, it started to rain a little, so they packed their things and walked back to the car. Even though it rained, everybody agreed that it was a great day. They are already planning another trip for next month.",
+          "questions": [
+            {
+              "q": "Why did they leave early?",
+              "options": [
+                "Because they were late",
+                "Because they wanted to avoid the heat",
+                "Because it was raining"
+              ],
+              "answer": 1
+            },
+            {
+              "q": "How long did they walk to the lake?",
+              "options": [
+                "One hour",
+                "Two hours",
+                "Three hours"
+              ],
+              "answer": 1
+            },
+            {
+              "q": "Why didn't Sofia swim?",
+              "options": [
+                "She was tired",
+                "The water was too cold",
+                "She couldn't swim"
+              ],
+              "answer": 1
+            },
+            {
+              "q": "What happened in the afternoon?",
+              "options": [
+                "It got very hot",
+                "It started to rain",
+                "They got lost"
+              ],
+              "answer": 1
+            },
+            {
+              "q": "What are they planning to do?",
+              "options": [
+                "Never go back",
+                "Another trip next month",
+                "Move to the mountains"
+              ],
+              "answer": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "b1",
+      "label": "B1",
+      "color": "#fab387",
+      "exam": "Estilo Cambridge B1 Preliminary (PET) — reading",
+      "texts": [
+        {
+          "id": "b1-coding",
+          "title": "Learning to Code",
+          "words": 197,
+          "body": "Two years ago, I decided to learn how to code, even though I had never studied anything related to technology before. At first, it seemed impossible — there were so many new words and concepts that I felt completely lost. However, instead of giving up, I started watching tutorials online and practising for just twenty minutes every day. Although progress was slow at the beginning, I gradually began to understand how everything worked.\n\nWhat really helped me was joining an online community where other beginners shared their doubts and their small achievements. Whenever I got stuck on a problem, someone was usually willing to explain it in a simple way. Despite the frustration I sometimes felt, I never stopped because I truly enjoyed the feeling of solving a problem after hours of trying.\n\nNow, I have built several small projects, including a website for a local business. I'm not an expert yet, and I still have a lot to learn, but I'm proud of how far I've come. If you are thinking about learning to code, my advice is simple: don't expect to understand everything immediately, and don't compare yourself to people who started years before you.",
+          "questions": [
+            {
+              "q": "How did the writer feel at the beginning?",
+              "options": [
+                "Confident",
+                "Completely lost",
+                "Bored"
+              ],
+              "answer": 1
+            },
+            {
+              "q": "How much time did they practise every day at first?",
+              "options": [
+                "Two hours",
+                "Twenty minutes",
+                "All day"
+              ],
+              "answer": 1
+            },
+            {
+              "q": "What helped the writer the most?",
+              "options": [
+                "An expensive course",
+                "A book",
+                "An online community"
+              ],
+              "answer": 2
+            },
+            {
+              "q": "What has the writer built?",
+              "options": [
+                "A mobile app",
+                "Several small projects, including a website",
+                "A video game"
+              ],
+              "answer": 1
+            },
+            {
+              "q": "What advice does the writer give?",
+              "options": [
+                "Give up if it's too hard",
+                "Compare yourself to experts",
+                "Don't expect to understand everything immediately"
+              ],
+              "answer": 2
+            }
+          ]
+        },
+        {
+          "id": "b1-wfh",
+          "title": "Working From Home",
+          "words": 204,
+          "body": "When my company announced that we could work from home permanently, I was thrilled. No more waking up early to catch the bus, no more sitting in traffic for an hour every day. For the first few months, everything seemed perfect: I had more free time, I saved money, and I could even have lunch with my family.\n\nHowever, as time went by, I started noticing some disadvantages I hadn't expected. Although I was technically \"at work\" fewer hours, I found it harder to switch off in the evenings, since my laptop was always right there in the living room. I also began to miss the small conversations with colleagues that used to happen naturally in the office — those little chats that made the day more enjoyable.\n\nEventually, I decided to create a proper routine: I set specific working hours, I got dressed every morning as if I were going to the office, and I started working from a coffee shop twice a week just to change the environment. These small changes made a huge difference to how I felt.\n\nWorking from home isn't perfect, but with the right habits, it can definitely work well — as long as you're willing to adapt.",
+          "questions": [
+            {
+              "q": "What did the writer no longer have to do?",
+              "options": [
+                "Cook every day",
+                "Catch the bus and sit in traffic",
+                "Call clients"
+              ],
+              "answer": 1
+            },
+            {
+              "q": "What was one disadvantage the writer discovered?",
+              "options": [
+                "They earned less money",
+                "They found it hard to switch off in the evenings",
+                "They had less free time"
+              ],
+              "answer": 1
+            },
+            {
+              "q": "What did the writer miss from the office?",
+              "options": [
+                "The desk",
+                "Small conversations with colleagues",
+                "The coffee machine"
+              ],
+              "answer": 1
+            },
+            {
+              "q": "What did the writer do to feel better?",
+              "options": [
+                "Went back to the office full-time",
+                "Created a proper routine and changed environment sometimes",
+                "Stopped working completely"
+              ],
+              "answer": 1
+            },
+            {
+              "q": "What is the writer's final opinion?",
+              "options": [
+                "Working from home never works",
+                "It can work well with the right habits",
+                "It's always perfect"
+              ],
+              "answer": 1
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "b2",
+      "label": "B2",
+      "color": "#f38ba8",
+      "exam": "Estilo Cambridge B2 First (FCE) — reading",
+      "texts": [
+        {
+          "id": "b2-ai",
+          "title": "The Rise of Artificial Intelligence in Everyday Life",
+          "words": 261,
+          "body": "Artificial intelligence, once considered a concept confined to science fiction, has quietly become an integral part of our daily routines. From the moment we unlock our phones using facial recognition to the personalised recommendations that appear on streaming platforms, AI is constantly shaping the decisions we make, often without us even realising it.\n\nProponents argue that this technology has brought about undeniable benefits. Tasks that used to take hours can now be completed in seconds, and complex problems — from diagnosing diseases to predicting traffic patterns — are being tackled with a level of efficiency that would have seemed unimaginable a decade ago. Furthermore, AI has opened up entirely new career paths, encouraging a generation of programmers, data scientists and engineers to specialise in fields that barely existed a few years ago.\n\nNevertheless, this rapid progress has not come without its critics. Some experts warn that an overreliance on automated systems could gradually erode essential human skills, such as critical thinking and problem-solving. Others raise concerns about privacy, pointing out that the vast amounts of personal data required to train these systems could be misused if left unregulated.\n\nWhat seems undeniable, however, is that artificial intelligence is here to stay. Rather than resisting its integration into society, many argue that the most sensible approach is to establish clear ethical guidelines that ensure the technology is used responsibly. Whether this balance can be achieved remains to be seen, but one thing is certain: the way we live, work and communicate will continue to be transformed by AI in the years to come.",
+          "questions": [
+            {
+              "q": "According to the text, how has AI changed compared to the past?",
+              "options": [
+                "It used to be more advanced",
+                "It has moved from science fiction to everyday life",
+                "It has disappeared from most industries"
+              ],
+              "answer": 1
+            },
+            {
+              "q": "What is mentioned as a benefit of AI?",
+              "options": [
+                "It has made human skills unnecessary",
+                "It completes complex tasks with great efficiency",
+                "It has reduced the number of jobs available"
+              ],
+              "answer": 1
+            },
+            {
+              "q": "What concern do some experts raise?",
+              "options": [
+                "AI is too expensive for companies",
+                "AI could weaken human critical thinking skills",
+                "AI cannot process large amounts of data"
+              ],
+              "answer": 1
+            },
+            {
+              "q": "What issue related to privacy is mentioned?",
+              "options": [
+                "AI systems don't use personal data",
+                "Personal data used to train AI could be misused",
+                "AI companies don't collect any data"
+              ],
+              "answer": 1
+            },
+            {
+              "q": "What does the writer suggest as the best approach going forward?",
+              "options": [
+                "Banning AI completely",
+                "Ignoring the risks entirely",
+                "Establishing clear ethical guidelines"
+              ],
+              "answer": 2
+            }
+          ]
+        },
+        {
+          "id": "b2-connectivity",
+          "title": "The Hidden Cost of Constant Connectivity",
+          "words": 240,
+          "body": "In an age where smartphones have become almost an extension of ourselves, it is worth pausing to consider what we might be sacrificing in exchange for constant connectivity. Notifications arrive relentlessly throughout the day, each one competing for our attention and, more often than not, succeeding in pulling us away from whatever task we were originally focused on.\n\nResearch increasingly suggests that this fragmented attention comes at a considerable cost. Studies have shown that it can take several minutes to fully refocus after even a brief interruption, meaning that a single hour riddled with notifications may, in practice, yield far less productive output than an hour of uninterrupted concentration. Beyond productivity, there is growing concern about the impact on mental wellbeing: the constant comparison encouraged by social media, combined with the pressure to respond instantly to messages, has been linked by several studies to heightened levels of anxiety.\n\nThat said, it would be misleading to suggest that technology itself is inherently harmful. Rather, the issue lies in how thoughtlessly it is often used. Simple strategies — such as turning off non-essential notifications, designating specific times to check messages, or setting devices aside during meals — have proven remarkably effective for those willing to adopt them.\n\nUltimately, reclaiming a healthier relationship with technology does not require rejecting it altogether. It requires a degree of intentionality that, admittedly, can be difficult to maintain in a world designed to keep us endlessly scrolling.",
+          "questions": [
+            {
+              "q": "What does the text say about notifications?",
+              "options": [
+                "They rarely interrupt our focus",
+                "They compete for our attention throughout the day",
+                "They have completely disappeared from smartphones"
+              ],
+              "answer": 1
+            },
+            {
+              "q": "According to research mentioned in the text, what happens after an interruption?",
+              "options": [
+                "We refocus instantly",
+                "It can take several minutes to refocus",
+                "Productivity always increases"
+              ],
+              "answer": 1
+            },
+            {
+              "q": "What has been linked to heightened anxiety?",
+              "options": [
+                "Turning off notifications",
+                "Constant comparison on social media and pressure to respond instantly",
+                "Reading books"
+              ],
+              "answer": 1
+            },
+            {
+              "q": "What does the writer say about technology itself?",
+              "options": [
+                "It is inherently harmful",
+                "The issue is how thoughtlessly it's used, not the technology itself",
+                "It should be banned"
+              ],
+              "answer": 1
+            },
+            {
+              "q": "What does \"reclaiming a healthier relationship with technology\" require, according to the text?",
+              "options": [
+                "Rejecting it completely",
+                "A degree of intentionality",
+                "Buying a new phone"
+              ],
+              "answer": 1
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

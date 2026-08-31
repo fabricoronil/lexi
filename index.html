@@ -318,6 +318,14 @@
         </div>
         <svg viewBox="0 0 24 24" class="ico chev"><path d="m9 6 6 6-6 6"/></svg>
       </button>
+      <button class="study-card" id="btn-go-texts" type="button">
+        <span class="study-card-ico">📰</span>
+        <div class="study-card-text">
+          <span>Textos</span>
+          <small id="study-texts-sub">Reading estilo examen, por nivel</small>
+        </div>
+        <svg viewBox="0 0 24 24" class="ico chev"><path d="m9 6 6 6-6 6"/></svg>
+      </button>
     </div>
   </section>
 
@@ -378,6 +386,56 @@
     <div class="topic-block" id="topic-mistakes-block">
       <h2 class="section-label">❌ Errores típicos</h2>
       <div class="topic-mistakes" id="topic-mistakes"></div>
+    </div>
+
+    <div class="topic-block" id="topic-exercises-block">
+      <h2 class="section-label">🏋️ Practicá</h2>
+      <div class="topic-exercises" id="topic-exercises"></div>
+      <p class="practice-summary" id="topic-exercise-summary" hidden></p>
+    </div>
+  </section>
+
+  <!-- ══ TEXTOS — niveles ══ -->
+  <section class="view" id="view-texts" hidden>
+    <header class="session-bar">
+      <button class="icon-btn" id="btn-texts-back" type="button" aria-label="Volver a Estudio">
+        <svg viewBox="0 0 24 24" class="ico"><path d="M15 18l-6-6 6-6"/></svg>
+      </button>
+      <h1 class="page-title" style="margin:0">Textos</h1>
+    </header>
+    <p class="note" style="margin-top:6px">Reading corto por nivel, con preguntas de comprensión estilo examen Cambridge. Antes del examen, probá si podés leer un texto de tu nivel sin ayuda.</p>
+    <div class="level-list" id="text-level-list"></div>
+  </section>
+
+  <!-- ══ TEXTOS — un nivel ══ -->
+  <section class="view" id="view-texts-level" hidden>
+    <header class="session-bar">
+      <button class="icon-btn" id="btn-texts-level-back" type="button" aria-label="Volver a niveles">
+        <svg viewBox="0 0 24 24" class="ico"><path d="M15 18l-6-6 6-6"/></svg>
+      </button>
+      <h1 class="page-title" id="texts-level-title" style="margin:0">A1</h1>
+    </header>
+    <p class="note" id="texts-level-exam"></p>
+    <div class="text-list" id="text-list"></div>
+  </section>
+
+  <!-- ══ TEXTOS — lectura ══ -->
+  <section class="view" id="view-texts-reader" hidden>
+    <header class="session-bar">
+      <button class="icon-btn" id="btn-texts-reader-back" type="button" aria-label="Volver">
+        <svg viewBox="0 0 24 24" class="ico"><path d="M15 18l-6-6 6-6"/></svg>
+      </button>
+      <span class="tag accent" id="text-tag" style="margin-left:auto"></span>
+    </header>
+    <h1 class="page-title" id="text-title" style="margin-top:14px"></h1>
+    <p class="note" id="text-words"></p>
+
+    <div class="reading-passage" id="text-body"></div>
+
+    <div class="topic-block">
+      <h2 class="section-label">❓ Comprensión de lectura</h2>
+      <div class="topic-exercises" id="text-questions"></div>
+      <p class="practice-summary" id="text-summary" hidden></p>
     </div>
   </section>
 

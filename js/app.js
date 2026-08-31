@@ -5,6 +5,7 @@
 import * as store from './store.js';
 import * as decks from './decks.js';
 import * as study from './study.js';
+import * as texts from './texts.js';
 import { schedule, previewInterval, formatDelay, AGAIN, GOOD } from './srs.js';
 import * as sound from './sound.js';
 import * as sync from './sync.js';
@@ -12,11 +13,16 @@ import * as sync from './sync.js';
 const $ = (sel) => document.querySelector(sel);
 const $$ = (sel) => Array.from(document.querySelectorAll(sel));
 
-const VIEWS = ['home', 'review', 'done', 'stats', 'words', 'settings', 'study', 'grammar', 'grammar-level', 'grammar-topic', 'my-vocab'];
-const SUBVIEW_TAB = { words: 'stats', grammar: 'study', 'grammar-level': 'study', 'grammar-topic': 'study', 'my-vocab': 'study' };
+const VIEWS = ['home', 'review', 'done', 'stats', 'words', 'settings', 'study', 'grammar', 'grammar-level', 'grammar-topic', 'my-vocab', 'texts', 'texts-level', 'texts-reader'];
+const SUBVIEW_TAB = {
+  words: 'stats', grammar: 'study', 'grammar-level': 'study', 'grammar-topic': 'study', 'my-vocab': 'study',
+  texts: 'study', 'texts-level': 'study', 'texts-reader': 'study',
+};
 let wordsFilter = 'all';
 let currentGrammarLevelId = null;
 let currentTopicId = null;
+let currentTextLevelId = null;
+let currentTextId = null;
 const openVocabCats = new Set();
 const XP_BY_QUALITY = [2, 5, 10, 15]; // otra vez, difícil, bien, fácil — solo cosmético, no toca el SRS
 let session = null;
@@ -28,7 +34,7 @@ let revealed = false; // si ya se mostró el significado de la card actual
 
 async function boot() {
   try {
-    await Promise.all([decks.loadDecks(), study.loadStudyData()]);
+    await Promise.all([decks.loadDecks(), study.loadStudyData(), texts.loadTextsData()]);
   } catch (err) {
     const msg = $('#boot-msg');
     msg.className = 'boot-msg error';
@@ -86,6 +92,9 @@ function show(view) {
   if (view === 'grammar-level') renderGrammarLevel();
   if (view === 'grammar-topic') renderTopic();
   if (view === 'my-vocab') renderMyVocab();
+  if (view === 'texts') renderTextLevels();
+  if (view === 'texts-level') renderTextsLevel();
+  if (view === 'texts-reader') renderTextReader();
 }
 
 function wireNav() {
@@ -746,13 +755,127 @@ function renderRuleLine(line) {
   return `<p>${highlightAux(line)}</p>`;
 }
 
+/*
+ * Motor de "preguntas con autocorrección", compartido entre los ejercicios
+ * de un tema de gramática y las preguntas de comprensión de un texto de
+ * lectura — ambos son, en el fondo, la misma cosa: una lista de preguntas de
+ * opción múltiple (o para completar) que se corrigen al toque, sin backend.
+ */
+function normalizeAnswer(s) {
+  return String(s).trim().toLowerCase().replace(/[.!?,;:]+$/, '').replace(/\s+/g, ' ');
+}
+
+function practiceItemHtml(item, i) {
+  const q = `<div class="ex-q">${highlightAux(item.q)}</div>`;
+  if (item.type === 'fill') {
+    return `
+      <div class="exercise exercise-fill" data-idx="${i}">
+        ${q}
+        <form class="ex-form">
+          <input type="text" class="ex-input" autocomplete="off" autocapitalize="off" spellcheck="false" placeholder="Escribí tu respuesta">
+          <button type="submit" class="ex-check">Revisar</button>
+        </form>
+        <p class="ex-explain" hidden></p>
+      </div>`;
+  }
+  const options = item.options.map((o, oi) => `<button type="button" class="ex-option" data-opt="${oi}">${escapeHtml(o)}</button>`).join('');
+  return `
+    <div class="exercise exercise-mc" data-idx="${i}">
+      ${q}
+      <div class="ex-options">${options}</div>
+      <p class="ex-explain" hidden></p>
+    </div>`;
+}
+
+/**
+ * Pinta una lista de preguntas autocorregibles en `host` y llama a
+ * `onComplete(correct, total)` una sola vez, cuando ya se respondieron todas.
+ */
+function renderPractice(host, summaryEl, items, onComplete) {
+  if (!items?.length) {
+    host.innerHTML = '';
+    summaryEl.hidden = true;
+    return;
+  }
+  const state = items.map(() => false);
+  let doneCount = 0;
+  host.innerHTML = items.map(practiceItemHtml).join('');
+  summaryEl.hidden = true;
+  summaryEl.className = 'practice-summary';
+
+  const finish = () => {
+    doneCount += 1;
+    if (doneCount < items.length) return;
+    const correct = state.filter(Boolean).length;
+    summaryEl.hidden = false;
+    summaryEl.classList.toggle('perfect', correct === items.length);
+    summaryEl.textContent = correct === items.length
+      ? `¡Todo correcto! ${correct}/${items.length}.`
+      : `Resultado: ${correct}/${items.length} correctas.`;
+    onComplete(correct, items.length);
+  };
+
+  host.querySelectorAll('.exercise-mc').forEach((card) => {
+    const idx = Number(card.dataset.idx);
+    const item = items[idx];
+    card.querySelectorAll('.ex-option').forEach((btn) => {
+      btn.addEventListener('click', () => {
+        if (state[idx] !== false) return;
+        const chosen = Number(btn.dataset.opt);
+        const correct = chosen === item.answer;
+        state[idx] = correct;
+        card.querySelectorAll('.ex-option').forEach((b, oi) => {
+          b.disabled = true;
+          if (oi === item.answer) b.classList.add('correct');
+          else if (oi === chosen) b.classList.add('wrong');
+        });
+        const explain = card.querySelector('.ex-explain');
+        if (item.explain) {
+          explain.hidden = false;
+          explain.textContent = item.explain;
+        }
+        (correct ? sound.playCorrect : sound.playWrong)();
+        finish();
+      });
+    });
+  });
+
+  host.querySelectorAll('.exercise-fill').forEach((card) => {
+    const idx = Number(card.dataset.idx);
+    const item = items[idx];
+    const form = card.querySelector('form');
+    form.addEventListener('submit', (e) => {
+      e.preventDefault();
+      if (state[idx] !== false) return;
+      const input = card.querySelector('.ex-input');
+      const accepted = [item.answer, ...(item.accept || [])].map(normalizeAnswer);
+      const correct = accepted.includes(normalizeAnswer(input.value));
+      state[idx] = correct;
+      input.disabled = true;
+      form.querySelector('.ex-check').disabled = true;
+      card.classList.add(correct ? 'is-correct' : 'is-wrong');
+      const explain = card.querySelector('.ex-explain');
+      explain.hidden = false;
+      explain.textContent = correct
+        ? (item.explain || '¡Correcto!')
+        : `Respuesta: ${item.answer}${item.explain ? ' — ' + item.explain : ''}`;
+      (correct ? sound.playCorrect : sound.playWrong)();
+      finish();
+    });
+  });
+}
+
 function wireStudy() {
   $('#btn-go-my-vocab').addEventListener('click', () => show('my-vocab'));
   $('#btn-go-grammar').addEventListener('click', () => show('grammar'));
+  $('#btn-go-texts').addEventListener('click', () => show('texts'));
   $('#btn-grammar-back').addEventListener('click', () => show('study'));
   $('#btn-grammar-level-back').addEventListener('click', () => show('grammar'));
   $('#btn-grammar-topic-back').addEventListener('click', () => show(currentGrammarLevelId ? 'grammar-level' : 'grammar'));
   $('#btn-my-vocab-back').addEventListener('click', () => show('study'));
+  $('#btn-texts-back').addEventListener('click', () => show('study'));
+  $('#btn-texts-level-back').addEventListener('click', () => show('texts'));
+  $('#btn-texts-reader-back').addEventListener('click', () => show(currentTextLevelId ? 'texts-level' : 'texts'));
 
   $('#btn-topic-done').addEventListener('click', () => {
     store.toggleTopicDone(currentTopicId);
@@ -772,6 +895,16 @@ function renderStudy() {
     totalAll += total;
   }
   $('#study-grammar-sub').textContent = `${doneAll}/${totalAll} temas · A1 a B2`;
+
+  let textsTotal = 0;
+  let textsRead = 0;
+  for (const lvl of texts.allLevels()) {
+    for (const t of lvl.texts) {
+      textsTotal += 1;
+      if (store.textResult(t.id)) textsRead += 1;
+    }
+  }
+  $('#study-texts-sub').textContent = `${textsRead}/${textsTotal} leídos · A1 a B2`;
 }
 
 function renderGrammarLevels() {
@@ -826,9 +959,12 @@ function renderGrammarLevel() {
     block.className = 'grammar-unit';
     const rows = unit.topics.map((t) => {
       const done = store.isTopicDone(t.id);
+      const res = store.exerciseResult(t.id);
+      const badge = res ? `<em class="topic-score${res.bestPct === 1 ? ' perfect' : ''}">${res.correct}/${res.total}</em>` : '';
       return `<button class="topic-row" type="button" data-topic="${t.id}">
         <span class="topic-check${done ? ' on' : ''}">${done ? checkSvg() : ''}</span>
         <div class="topic-row-text"><span>${t.title}</span><small>${t.tag}</small></div>
+        ${badge}
       </button>`;
     }).join('');
     block.innerHTML = `<div class="grammar-unit-label">${unit.label}</div>${rows}`;
@@ -905,6 +1041,10 @@ function renderTopic() {
   } else {
     mistakesBlock.hidden = true;
   }
+
+  renderPractice($('#topic-exercises'), $('#topic-exercise-summary'), topic.exercises, (correct, total) => {
+    store.recordExerciseRun(topic.id, correct, total);
+  });
 }
 
 /** Solo lectura, como la tabla de Notion: se navega y se lee, no se marca nada acá. */
@@ -958,6 +1098,83 @@ function wireMyVocab() {
     group.classList.toggle('open', willOpen);
     if (willOpen) openVocabCats.add(cat);
     else openVocabCats.delete(cat);
+  });
+}
+
+/* ═══════════ textos (reading) ═══════════ */
+
+function renderTextLevels() {
+  const list = $('#text-level-list');
+  list.innerHTML = '';
+  for (const lvl of texts.allLevels()) {
+    const total = lvl.texts.length;
+    const done = lvl.texts.filter((t) => store.textResult(t.id)).length;
+    const complete = total > 0 && done === total;
+    const btn = document.createElement('button');
+    btn.className = 'level-card';
+    btn.type = 'button';
+    btn.innerHTML = `
+      <span class="level-ring" style="border:2px solid ${lvl.color}; background:${complete ? lvl.color : 'transparent'}; color:${complete ? '#0d1011' : lvl.color}">${complete ? checkSvg() : lvl.label}</span>
+      <div class="level-card-text">
+        <span>${lvl.label}</span>
+        <small>${lvl.exam}</small>
+      </div>
+      <em>${done}/${total}</em>`;
+    btn.addEventListener('click', () => openTextLevel(lvl.id));
+    list.appendChild(btn);
+  }
+}
+
+function openTextLevel(id) {
+  currentTextLevelId = id;
+  show('texts-level');
+}
+
+function renderTextsLevel() {
+  const lvl = texts.levelById(currentTextLevelId);
+  if (!lvl) return;
+  $('#texts-level-title').textContent = lvl.label;
+  $('#texts-level-exam').textContent = lvl.exam;
+
+  const list = $('#text-list');
+  list.innerHTML = lvl.texts.map((t) => {
+    const res = store.textResult(t.id);
+    const badge = res
+      ? `<em class="topic-score${res.bestPct === 1 ? ' perfect' : ''}">${Math.round(res.bestPct * 100)}%</em>`
+      : '<em class="topic-score todo">Sin leer</em>';
+    return `<button class="topic-row" type="button" data-text="${t.id}">
+      <div class="topic-row-text"><span>${t.title}</span><small>${t.words} palabras · ${t.questions.length} preguntas</small></div>
+      ${badge}
+    </button>`;
+  }).join('');
+  list.querySelectorAll('.topic-row').forEach((row) => {
+    row.addEventListener('click', () => openText(row.dataset.text));
+  });
+}
+
+function openText(id) {
+  currentTextId = id;
+  show('texts-reader');
+}
+
+function renderTextReader() {
+  const found = texts.textById(currentTextId);
+  if (!found) return;
+  const { text, level } = found;
+
+  const tag = $('#text-tag');
+  tag.textContent = `${level.label} · ${text.words} palabras`;
+  tag.style.color = level.color;
+  tag.style.background = `${level.color}22`;
+  tag.style.borderColor = `${level.color}55`;
+
+  $('#text-title').textContent = text.title;
+  $('#text-words').textContent = level.exam;
+
+  $('#text-body').innerHTML = text.body.split('\n\n').map((p) => `<p>${escapeHtml(p)}</p>`).join('');
+
+  renderPractice($('#text-questions'), $('#text-summary'), text.questions, (correct, total) => {
+    store.recordTextRun(text.id, correct, total);
   });
 }
 

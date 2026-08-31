@@ -222,6 +222,35 @@ export function toggleTopicDone(id) {
   save();
 }
 
+/** Guarda el resultado de una tanda de ejercicios de un tema de gramática. */
+export function recordExerciseRun(topicId, correct, total) {
+  const s = load();
+  const pct = total ? correct / total : 0;
+  const prev = s.exerciseResults[topicId];
+  const bestPct = prev ? Math.max(prev.bestPct, pct) : pct;
+  s.exerciseResults[topicId] = { correct, total, bestPct, at: todayKey() };
+  save();
+}
+
+export function exerciseResult(topicId) {
+  return load().exerciseResults[topicId] || null;
+}
+
+/** Guarda el resultado de las preguntas de comprensión de un texto de lectura. */
+export function recordTextRun(textId, correct, total) {
+  const s = load();
+  const pct = total ? correct / total : 0;
+  const prev = s.textResults[textId];
+  const bestPct = prev ? Math.max(prev.bestPct, pct) : pct;
+  const attempts = (prev?.attempts || 0) + 1;
+  s.textResults[textId] = { correct, total, bestPct, attempts, at: todayKey() };
+  save();
+}
+
+export function textResult(textId) {
+  return load().textResults[textId] || null;
+}
+
 export function resetAll() {
   state = structuredClone(DEFAULTS);
   save();
