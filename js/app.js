@@ -170,7 +170,6 @@ function startSession(extra) {
 
   session = { queue, index: 0, answered: 0, planned: queue.length, xp: 0, reinforce: false };
   $('#session-xp').textContent = '+0';
-  $('#grade-grid').classList.remove('locked');
   show('review');
   renderCard();
 }
@@ -188,7 +187,6 @@ function startReinforce() {
   }
   session = { queue, index: 0, answered: 0, planned: queue.length, xp: 0, reinforce: true };
   $('#session-xp').textContent = '+0';
-  $('#grade-grid').classList.remove('locked');
   show('review');
   renderCard();
 }
@@ -220,6 +218,7 @@ function renderCard() {
   if (!card) return finishSession();
 
   bounce($('#card'), 'card-enter');
+  $('#grade-grid').classList.remove('locked');
 
   const s = store.get();
   const reverse = s.settings.reverse;
