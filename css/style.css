@@ -33,6 +33,7 @@
   --sans: 'Space Grotesk', system-ui, -apple-system, 'Helvetica Neue', sans-serif;
 
   --safe-b: env(safe-area-inset-bottom, 0px);
+  --safe-t: env(safe-area-inset-top, 0px);
   --tabbar-h: 62px;
 }
 
@@ -102,6 +103,7 @@ button {
 #app {
   max-width: 520px;
   margin: 0 auto;
+  padding-top: var(--safe-t);
   padding-bottom: calc(var(--tabbar-h) + var(--safe-b));
   min-height: 100dvh;
 }
@@ -200,7 +202,7 @@ button {
 /* ── celebración de racha: la llama "se pinta" al completar el día ── */
 .streak-pop {
   position: fixed;
-  top: 16px;
+  top: calc(var(--safe-t) + 16px);
   left: 50%;
   z-index: 60;
   display: flex;
