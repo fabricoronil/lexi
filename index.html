@@ -94,23 +94,29 @@
         <button class="speak" id="btn-speak" type="button" aria-label="Escuchar pronunciación">
           <svg viewBox="0 0 24 24" class="ico"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="M16 9a4 4 0 0 1 0 6"/><path d="M19 6a8 8 0 0 1 0 12"/></svg>
         </button>
+        <div class="field front-example">
+          <div class="example mono" id="card-example"></div>
+        </div>
       </div>
 
-      <div class="card-back" id="card-back">
+      <div class="card-back" id="card-back" hidden>
         <div class="field">
           <div class="field-label">Significado</div>
           <div class="answer" id="card-answer"></div>
         </div>
         <div class="field">
           <div class="field-label">Ejemplo</div>
-          <div class="example mono" id="card-example"></div>
           <div class="example-es" id="card-example-es"></div>
         </div>
       </div>
     </div>
 
     <div class="answers" id="answers">
-      <div class="grade-grid" id="grade-grid">
+      <button class="cta reveal-btn" id="btn-reveal" type="button">
+        <span>Mostrar significado</span>
+        <svg viewBox="0 0 24 24" class="ico"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/><circle cx="12" cy="12" r="3"/></svg>
+      </button>
+      <div class="grade-grid" id="grade-grid" hidden>
         <button class="grade g-again" data-q="0" type="button"><b>Otra vez</b><small id="iv-0">—</small></button>
         <button class="grade g-hard"  data-q="1" type="button"><b>Difícil</b><small id="iv-1">—</small></button>
         <button class="grade g-good"  data-q="2" type="button"><b>Bien</b><small id="iv-2">—</small></button>

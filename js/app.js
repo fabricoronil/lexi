@@ -15,6 +15,7 @@ const XP_BY_QUALITY = [2, 5, 10, 15]; // otra vez, difícil, bien, fácil — so
 let session = null;
 let lastStreakSeen = null;
 let streakPopTimer = null;
+let revealed = false; // si ya se mostró el significado de la card actual
 
 /* ═══════════ arranque ═══════════ */
 
@@ -168,7 +169,7 @@ function startSession(extra) {
     return;
   }
 
-  session = { queue, index: 0, answered: 0, planned: queue.length, xp: 0, reinforce: false };
+  session = { queue, index: 0, answered: 0, xp: 0, reinforce: false };
   $('#session-xp').textContent = '+0';
   show('review');
   renderCard();
@@ -185,7 +186,7 @@ function startReinforce() {
     show('home');
     return;
   }
-  session = { queue, index: 0, answered: 0, planned: queue.length, xp: 0, reinforce: true };
+  session = { queue, index: 0, answered: 0, xp: 0, reinforce: true };
   $('#session-xp').textContent = '+0';
   show('review');
   renderCard();
@@ -218,7 +219,6 @@ function renderCard() {
   if (!card) return finishSession();
 
   bounce($('#card'), 'card-enter');
-  $('#grade-grid').classList.remove('locked');
 
   const s = store.get();
   const reverse = s.settings.reverse;
@@ -230,9 +230,9 @@ function renderCard() {
   const prompt = $('#card-prompt');
   prompt.textContent = front;
   prompt.className = 'prompt' + (front.length > 34 ? ' xlong' : front.length > 20 ? ' long' : '');
-  $('#card-answer').textContent = back;
-
   $('#card-example').innerHTML = highlight(card.ex, card.en);
+
+  $('#card-answer').textContent = back;
   $('#card-example-es').textContent = card.exEs || '';
 
   const seen = st.reps === 0 ? 'nueva' : `vista ${st.reps} ${st.reps === 1 ? 'vez' : 'veces'}`;
@@ -243,15 +243,37 @@ function renderCard() {
     <span class="tag">${card.lvl}</span>
     <span class="tag">${seen}</span>`;
 
-  $('#session-count').textContent = `${session.answered}/${session.planned}`;
-  const pct = session.planned ? (session.answered / session.planned) * 100 : 0;
+  // El total incluye lo que ya se contestó más lo que queda en cola: si una
+  // card "vuelve" (otra vez / aprendizaje) el total crece con ella, así el
+  // contador nunca muestra más respuestas que el total (ej. "8/7").
+  const total = session.answered + session.queue.length;
+  $('#session-count').textContent = `${session.answered}/${total}`;
+  const pct = total ? (session.answered / total) * 100 : 0;
   $('#session-fill').style.width = pct + '%';
 
   for (let q = 0; q <= 3; q++) {
     $('#iv-' + q).textContent = previewInterval(st, q);
   }
 
+  revealed = false;
+  $('#card-back').hidden = true;
+  $('#btn-reveal').hidden = false;
+  $('#grade-grid').hidden = true;
+  $('#grade-grid').classList.remove('locked');
+  $('#grade-hint').hidden = true;
+
   if (s.settings.autoSpeak) speak(card.en);
+}
+
+/** Muestra el significado de la card actual y habilita votar. */
+function revealCard() {
+  if (!session || revealed) return;
+  revealed = true;
+  $('#card-back').hidden = false;
+  $('#btn-reveal').hidden = true;
+  $('#grade-grid').hidden = false;
+  $('#grade-hint').hidden = false;
+  bounce($('#card-back'), 'card-enter');
 }
 
 function deckLabel(id) {
@@ -277,7 +299,7 @@ const GRADE_SOUND = [sound.playAgain, sound.playHard, sound.playGood, sound.play
 let grading = false;
 /** Capa cosmética sobre answer(): sonido, XP y el pop del botón elegido. */
 function chooseGrade(quality) {
-  if (!session || grading) return;
+  if (!session || grading || !revealed) return;
   grading = true;
 
   const gained = XP_BY_QUALITY[quality];
@@ -395,6 +417,10 @@ function wireReview() {
     const card = currentCard();
     if (card) speak(card.en);
   });
+  $('#btn-reveal').addEventListener('click', () => {
+    sound.playTap();
+    revealCard();
+  });
   $$('#grade-grid .grade').forEach((b) => {
     b.addEventListener('click', () => chooseGrade(Number(b.dataset.q)));
   });
@@ -407,9 +433,11 @@ function wireReview() {
     if ($('#view-review').hidden) return;
     if (e.key === ' ' || e.key === 'Enter') {
       e.preventDefault();
-      if (session) chooseGrade(GOOD);
+      if (!session) return;
+      if (!revealed) revealCard();
+      else chooseGrade(GOOD);
     } else if (['1', '2', '3', '4'].includes(e.key)) {
-      chooseGrade(Number(e.key) - 1);
+      if (revealed) chooseGrade(Number(e.key) - 1);
     } else if (e.key === 'Escape') {
       session = null;
       show('home');
