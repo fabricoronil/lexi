@@ -4,14 +4,18 @@
 
 import * as store from './store.js';
 import * as decks from './decks.js';
+import * as study from './study.js';
 import { schedule, previewInterval, formatDelay, AGAIN, GOOD } from './srs.js';
 import * as sound from './sound.js';
 
 const $ = (sel) => document.querySelector(sel);
 const $$ = (sel) => Array.from(document.querySelectorAll(sel));
 
-const VIEWS = ['home', 'review', 'done', 'stats', 'words', 'settings'];
+const VIEWS = ['home', 'review', 'done', 'stats', 'words', 'settings', 'study', 'grammar', 'grammar-level', 'grammar-topic', 'my-vocab'];
+const SUBVIEW_TAB = { words: 'stats', grammar: 'study', 'grammar-level': 'study', 'grammar-topic': 'study', 'my-vocab': 'study' };
 let wordsFilter = 'all';
+let currentGrammarLevelId = null;
+let currentTopicId = null;
 const XP_BY_QUALITY = [2, 5, 10, 15]; // otra vez, difícil, bien, fácil — solo cosmético, no toca el SRS
 let session = null;
 let lastStreakSeen = null;
@@ -22,11 +26,11 @@ let revealed = false; // si ya se mostró el significado de la card actual
 
 async function boot() {
   try {
-    await decks.loadDecks();
+    await Promise.all([decks.loadDecks(), study.loadStudyData()]);
   } catch (err) {
     const msg = $('#boot-msg');
     msg.className = 'boot-msg error';
-    msg.textContent = 'No pude cargar los mazos. Si abriste el archivo directo desde la carpeta, subilo a un servidor (o usá la versión publicada).';
+    msg.textContent = 'No pude cargar los mazos ni los datos de estudio. Si abriste el archivo directo desde la carpeta, subilo a un servidor (o usá la versión publicada).';
     console.error(err);
     return;
   }
@@ -42,6 +46,7 @@ async function boot() {
   wireReview();
   wireWords();
   wireSettings();
+  wireStudy();
   renderHome();
   renderSettings();
   registerServiceWorker();
@@ -55,7 +60,7 @@ function show(view) {
     if (el) el.hidden = v !== view;
   }
   $('#tabbar').hidden = view === 'review';
-  const activeTab = view === 'words' ? 'stats' : view;
+  const activeTab = SUBVIEW_TAB[view] || view;
   $$('#tabbar button').forEach((b) => b.classList.toggle('active', b.dataset.view === activeTab));
   window.scrollTo(0, 0);
 
@@ -63,6 +68,11 @@ function show(view) {
   if (view === 'stats') renderStats();
   if (view === 'words') renderWords();
   if (view === 'settings') renderSettings();
+  if (view === 'study') renderStudy();
+  if (view === 'grammar') renderGrammarLevels();
+  if (view === 'grammar-level') renderGrammarLevel();
+  if (view === 'grammar-topic') renderTopic();
+  if (view === 'my-vocab') renderMyVocab();
 }
 
 function wireNav() {
@@ -652,6 +662,183 @@ function renderWords() {
         ${due ? `<span class="word-due">vuelve en ${due}</span>` : ''}
       </div>`;
     list.appendChild(el);
+  }
+}
+
+/* ═══════════ estudio ═══════════ */
+
+function checkSvg() {
+  return '<svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>';
+}
+
+function wireStudy() {
+  $('#btn-go-my-vocab').addEventListener('click', () => show('my-vocab'));
+  $('#btn-go-grammar').addEventListener('click', () => show('grammar'));
+  $('#btn-grammar-back').addEventListener('click', () => show('study'));
+  $('#btn-grammar-level-back').addEventListener('click', () => show('grammar'));
+  $('#btn-grammar-topic-back').addEventListener('click', () => show(currentGrammarLevelId ? 'grammar-level' : 'grammar'));
+  $('#btn-my-vocab-back').addEventListener('click', () => show('study'));
+
+  $('#btn-topic-done').addEventListener('click', () => {
+    store.toggleTopicDone(currentTopicId);
+    renderTopic();
+  });
+}
+
+function renderStudy() {
+  const vocab = study.allVocab();
+  $('#study-vocab-sub').textContent = `${vocab.length} palabras`;
+
+  let doneAll = 0;
+  let totalAll = 0;
+  for (const lvl of study.allLevels()) {
+    const { done, total } = study.levelProgress(lvl);
+    doneAll += done;
+    totalAll += total;
+  }
+  $('#study-grammar-sub').textContent = `${doneAll}/${totalAll} temas · A1 a B2`;
+}
+
+function renderGrammarLevels() {
+  const list = $('#level-list');
+  list.innerHTML = '';
+  for (const lvl of study.allLevels()) {
+    const { done, total } = study.levelProgress(lvl);
+    const complete = total > 0 && done === total;
+    const emText = lvl.units ? `${done}/${total}` : 'Próximamente';
+    const btn = document.createElement('button');
+    btn.className = 'level-card';
+    btn.type = 'button';
+    btn.innerHTML = `
+      <span class="level-ring" style="border:2px solid ${lvl.color}; background:${complete ? lvl.color : 'transparent'}; color:${complete ? '#0d1011' : lvl.color}">${complete ? checkSvg() : lvl.label}</span>
+      <div class="level-card-text">
+        <span>${lvl.label}</span>
+        <small>${lvl.goal}</small>
+      </div>
+      <em>${emText}</em>`;
+    btn.addEventListener('click', () => openGrammarLevel(lvl.id));
+    list.appendChild(btn);
+  }
+}
+
+function openGrammarLevel(id) {
+  currentGrammarLevelId = id;
+  show('grammar-level');
+}
+
+function renderGrammarLevel() {
+  const lvl = study.levelById(currentGrammarLevelId);
+  if (!lvl) return;
+  $('#grammar-level-title').textContent = lvl.label;
+  $('#grammar-level-goal').textContent = lvl.goal;
+  $('#grammar-level-book').textContent = `📖 ${lvl.book}`;
+
+  const body = $('#grammar-level-body');
+  body.innerHTML = '';
+
+  if (!lvl.units) {
+    body.innerHTML = `
+      <p class="note">${lvl.note}</p>
+      <div class="grammar-unit">
+        <div class="grammar-unit-label">Lo que viene</div>
+        <ul class="grammar-upcoming">${lvl.upcoming.map((u) => `<li>${u}</li>`).join('')}</ul>
+      </div>`;
+    return;
+  }
+
+  for (const unit of lvl.units) {
+    const block = document.createElement('div');
+    block.className = 'grammar-unit';
+    const rows = unit.topics.map((t) => {
+      const done = store.isTopicDone(t.id);
+      return `<button class="topic-row" type="button" data-topic="${t.id}">
+        <span class="topic-check${done ? ' on' : ''}">${done ? checkSvg() : ''}</span>
+        <div class="topic-row-text"><span>${t.title}</span><small>${t.tag}</small></div>
+      </button>`;
+    }).join('');
+    block.innerHTML = `<div class="grammar-unit-label">${unit.label}</div>${rows}`;
+    body.appendChild(block);
+  }
+
+  if (lvl.checkpoint?.length) {
+    const cp = document.createElement('div');
+    cp.className = 'grammar-unit';
+    cp.innerHTML = `<div class="grammar-unit-label">Para pasar de nivel, tenés que poder…</div>
+      <ul class="checkpoint-list">${lvl.checkpoint.map((c) => `<li>${c}</li>`).join('')}</ul>`;
+    body.appendChild(cp);
+  }
+
+  body.querySelectorAll('.topic-row').forEach((row) => {
+    row.addEventListener('click', () => openTopic(row.dataset.topic));
+  });
+}
+
+function openTopic(id) {
+  currentTopicId = id;
+  show('grammar-topic');
+}
+
+function renderTopic() {
+  const found = study.topicById(currentTopicId);
+  if (!found) return;
+  const { topic, level } = found;
+
+  $('#topic-tag').textContent = `${level.label} · ${topic.tag}`;
+  $('#topic-title').textContent = topic.title;
+  $('#topic-hook').textContent = topic.hook;
+
+  const done = store.isTopicDone(topic.id);
+  $('#topic-done-label').textContent = done ? 'Aprendido' : 'Marcar como aprendido';
+  $('#topic-done-switch').classList.toggle('on', done);
+
+  $('#topic-rule').innerHTML = topic.rule.map((r) => `<p>${r}</p>`).join('');
+
+  $('#topic-examples').innerHTML = topic.examples.map((ex) => `
+    <div class="topic-example"><div class="en">${ex.en}</div><div class="es">${ex.es}</div></div>`).join('');
+
+  const mistakesBlock = $('#topic-mistakes-block');
+  if (topic.mistakes?.length) {
+    mistakesBlock.hidden = false;
+    $('#topic-mistakes').innerHTML = topic.mistakes.map((m) => `
+      <div class="topic-mistake">
+        <div class="wrong">${m.wrong}</div>
+        <div class="right">${m.right}</div>
+        ${m.note ? `<div class="mistake-note">${m.note}</div>` : ''}
+      </div>`).join('');
+  } else {
+    mistakesBlock.hidden = true;
+  }
+}
+
+/** Solo lectura, como la tabla de Notion: se navega y se lee, no se marca nada acá. */
+function renderMyVocab() {
+  const all = study.allVocab();
+  $('#my-vocab-count').textContent = `${all.length} ${all.length === 1 ? 'palabra' : 'palabras'}`;
+
+  const groups = new Map();
+  for (const w of all) {
+    const key = w.category || 'General';
+    if (!groups.has(key)) groups.set(key, []);
+    groups.get(key).push(w);
+  }
+
+  const list = $('#my-vocab-list');
+  list.innerHTML = '';
+  for (const [cat, words] of [...groups.entries()].sort((a, b) => a[0].localeCompare(b[0]))) {
+    const group = document.createElement('div');
+    group.className = 'vocab-group';
+    const rowsHtml = words
+      .sort((a, b) => a.word.localeCompare(b.word))
+      .map((w) => `
+        <div class="vocab-row">
+          <div class="vocab-row-text">
+            <div class="word-line"><span class="word-en">${w.word}</span><span class="word-type">${w.type}</span></div>
+            <span class="word-es">${w.meaning}</span>
+            <span class="word-ex">${w.example}</span>
+          </div>
+        </div>`).join('');
+    group.innerHTML = `<div class="vocab-group-label">${cat}</div>${rowsHtml}`;
+    list.appendChild(group);
   }
 }
 

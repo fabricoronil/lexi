@@ -32,6 +32,7 @@ const DEFAULTS = {
   },
   history: {}, // 'YYYY-MM-DD' -> cantidad de respuestas
   newIntroduced: {}, // 'YYYY-MM-DD' -> cards nuevas mostradas ese día
+  topicsDone: {}, // id de tema de gramática -> true
 };
 
 let state = null;
@@ -191,6 +192,17 @@ export function importJSON(text) {
   state = deepMerge(DEFAULTS, parsed);
   save();
   return state;
+}
+
+export function isTopicDone(id) {
+  return !!load().topicsDone[id];
+}
+
+export function toggleTopicDone(id) {
+  const s = load();
+  if (s.topicsDone[id]) delete s.topicsDone[id];
+  else s.topicsDone[id] = true;
+  save();
 }
 
 export function resetAll() {

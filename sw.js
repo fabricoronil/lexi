@@ -4,7 +4,7 @@
  * cache-first para el resto.
  */
 
-const VERSION = 'lexi-v9';
+const VERSION = 'lexi-v11';
 const ASSETS = [
   './',
   './index.html',
@@ -13,10 +13,13 @@ const ASSETS = [
   './js/srs.js',
   './js/store.js',
   './js/decks.js',
+  './js/study.js',
   './js/sound.js',
   './data/core.json',
   './data/tech.json',
   './data/phrases.json',
+  './data/grammar.json',
+  './data/my-vocab.json',
   './manifest.webmanifest',
   './assets/icon.svg',
 ];
