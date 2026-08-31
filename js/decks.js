@@ -3,7 +3,7 @@
  */
 
 import * as store from './store.js';
-import { isDue } from './srs.js';
+import { isDue, isMature } from './srs.js';
 
 export const DECKS = [
   { id: 'core', file: 'data/core.json', label: 'core', hint: 'A1–B1 esencial', color: '#7ab8f5' },
@@ -94,18 +94,35 @@ export function buildQueue(now = Date.now()) {
   return { due, fresh: picked, total, midLearning };
 }
 
+/** 'unseen' | 'learning' | 'learned', según el estado SRS guardado (si hay). */
+export function cardStatus(card, s = store.get()) {
+  const st = s.cards[card.id];
+  if (!st) return 'unseen';
+  return isMature(st) ? 'learned' : 'learning';
+}
+
 export function counts() {
   const s = store.get();
   let learned = 0;
   let learning = 0;
   let unseen = 0;
   for (const card of activeCards()) {
-    const st = s.cards[card.id];
-    if (!st) unseen += 1;
-    else if (st.state === 'review' && st.interval >= 21) learned += 1;
+    const status = cardStatus(card, s);
+    if (status === 'unseen') unseen += 1;
+    else if (status === 'learned') learned += 1;
     else learning += 1;
   }
   return { learned, learning, unseen, total: learned + learning + unseen };
+}
+
+/** Todas las cards activas con su estado, para listarlas en "Vocabulario". */
+export function wordList() {
+  const s = store.get();
+  return activeCards().map((card) => ({
+    card,
+    st: s.cards[card.id] || null,
+    status: cardStatus(card, s),
+  }));
 }
 
 /**

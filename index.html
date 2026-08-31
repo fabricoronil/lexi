@@ -183,9 +183,9 @@
         <span id="sb-learned"></span><span id="sb-learning"></span><span id="sb-unseen"></span>
       </div>
       <div class="rows">
-        <div class="row"><i class="dot c-green"></i><span>Aprendidas</span><b class="mono" id="st-learned">0</b></div>
-        <div class="row"><i class="dot c-amber"></i><span>En progreso</span><b class="mono" id="st-learning">0</b></div>
-        <div class="row"><i class="dot c-dim"></i><span>Sin ver</span><b class="mono" id="st-unseen">0</b></div>
+        <button class="row" type="button" data-status="learned"><i class="dot c-green"></i><span>Aprendidas</span><b class="mono" id="st-learned">0</b></button>
+        <button class="row" type="button" data-status="learning"><i class="dot c-amber"></i><span>En progreso</span><b class="mono" id="st-learning">0</b></button>
+        <button class="row" type="button" data-status="unseen"><i class="dot c-dim"></i><span>Sin ver</span><b class="mono" id="st-unseen">0</b></button>
       </div>
     </div>
 
@@ -193,6 +193,27 @@
       <h2 class="section-label">Repasos por día</h2>
       <div class="bars" id="bars"></div>
     </div>
+  </section>
+
+  <!-- ══ VOCABULARIO ══ -->
+  <section class="view" id="view-words" hidden>
+    <header class="session-bar">
+      <button class="icon-btn" id="btn-words-back" type="button" aria-label="Volver a Progreso">
+        <svg viewBox="0 0 24 24" class="ico"><path d="M15 18l-6-6 6-6"/></svg>
+      </button>
+      <h1 class="page-title" style="margin:0">Vocabulario</h1>
+    </header>
+
+    <div class="segmented seg-4" id="words-filter">
+      <button data-filter="all" type="button">Todas</button>
+      <button data-filter="learned" type="button">Aprendidas</button>
+      <button data-filter="learning" type="button">Progreso</button>
+      <button data-filter="unseen" type="button">Sin ver</button>
+    </div>
+
+    <p class="note" id="words-count"></p>
+
+    <div class="word-list" id="word-list"></div>
   </section>
 
   <!-- ══ AJUSTES ══ -->

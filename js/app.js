@@ -10,7 +10,8 @@ import * as sound from './sound.js';
 const $ = (sel) => document.querySelector(sel);
 const $$ = (sel) => Array.from(document.querySelectorAll(sel));
 
-const VIEWS = ['home', 'review', 'done', 'stats', 'settings'];
+const VIEWS = ['home', 'review', 'done', 'stats', 'words', 'settings'];
+let wordsFilter = 'all';
 const XP_BY_QUALITY = [2, 5, 10, 15]; // otra vez, difícil, bien, fácil — solo cosmético, no toca el SRS
 let session = null;
 let lastStreakSeen = null;
@@ -39,6 +40,7 @@ async function boot() {
 
   wireNav();
   wireReview();
+  wireWords();
   wireSettings();
   renderHome();
   renderSettings();
@@ -53,11 +55,13 @@ function show(view) {
     if (el) el.hidden = v !== view;
   }
   $('#tabbar').hidden = view === 'review';
-  $$('#tabbar button').forEach((b) => b.classList.toggle('active', b.dataset.view === view));
+  const activeTab = view === 'words' ? 'stats' : view;
+  $$('#tabbar button').forEach((b) => b.classList.toggle('active', b.dataset.view === activeTab));
   window.scrollTo(0, 0);
 
   if (view === 'home') renderHome();
   if (view === 'stats') renderStats();
+  if (view === 'words') renderWords();
   if (view === 'settings') renderSettings();
 }
 
@@ -596,6 +600,59 @@ function level(n, goal) {
   if (r < 0.6) return 2;
   if (r < 1) return 3;
   return 4;
+}
+
+/* ═══════════ vocabulario ═══════════ */
+
+const STATUS_LABEL = { learned: 'Aprendida', learning: 'En progreso', unseen: 'Sin ver' };
+
+function wireWords() {
+  $$('#view-stats .rows .row').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      wordsFilter = btn.dataset.status;
+      show('words');
+    });
+  });
+  $('#btn-words-back').addEventListener('click', () => show('stats'));
+  $$('#words-filter button').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      wordsFilter = btn.dataset.filter;
+      renderWords();
+    });
+  });
+}
+
+function renderWords() {
+  $$('#words-filter button').forEach((b) => b.classList.toggle('on', b.dataset.filter === wordsFilter));
+
+  const all = decks.wordList();
+  const rows = (wordsFilter === 'all' ? all : all.filter((w) => w.status === wordsFilter))
+    .sort((a, b) => a.card.en.localeCompare(b.card.en));
+
+  $('#words-count').textContent = `${rows.length} ${rows.length === 1 ? 'palabra' : 'palabras'}`;
+
+  const list = $('#word-list');
+  list.innerHTML = '';
+  if (!rows.length) {
+    list.innerHTML = '<p class="word-empty">No hay cards en esta categoría todavía.</p>';
+    return;
+  }
+
+  for (const { card, st, status } of rows) {
+    const due = st && status !== 'unseen' ? formatDelay(Math.max(0, st.due - Date.now())) : '';
+    const el = document.createElement('div');
+    el.className = 'word-row';
+    el.innerHTML = `
+      <div class="word-main">
+        <span class="word-en">${card.en}</span>
+        <span class="word-es">${card.es}</span>
+      </div>
+      <div class="word-meta">
+        <span class="word-status ${status}">${STATUS_LABEL[status]}</span>
+        ${due ? `<span class="word-due">vuelve en ${due}</span>` : ''}
+      </div>`;
+    list.appendChild(el);
+  }
 }
 
 /* ═══════════ ajustes ═══════════ */
