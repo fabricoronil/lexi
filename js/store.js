@@ -4,6 +4,7 @@
  */
 
 import { newCard } from './srs.js';
+import * as sync from './sync.js';
 
 const KEY = 'lexi.v1';
 
@@ -15,6 +16,7 @@ export const PRESETS = {
 
 const DEFAULTS = {
   version: 1,
+  updatedAt: 0, // timestamp del último cambio local, para saber qué dispositivo tiene la versión más nueva
   cards: {}, // id -> estado SRS
   settings: {
     preset: 'normal',
@@ -33,6 +35,8 @@ const DEFAULTS = {
   history: {}, // 'YYYY-MM-DD' -> cantidad de respuestas
   newIntroduced: {}, // 'YYYY-MM-DD' -> cards nuevas mostradas ese día
   topicsDone: {}, // id de tema de gramática -> true
+  exerciseResults: {}, // id de tema -> { correct, total, bestPct, at }
+  textResults: {}, // id de texto de lectura -> { correct, total, bestPct, attempts, at }
 };
 
 let state = null;
@@ -71,11 +75,24 @@ export function load() {
 }
 
 export function save() {
+  state.updatedAt = Date.now();
   try {
     localStorage.setItem(KEY, JSON.stringify(state));
   } catch (e) {
     console.warn('No se pudo guardar el progreso:', e);
   }
+  sync.schedulePush(state);
+}
+
+/** Reemplaza el estado local por uno traído de otro dispositivo (sync). No dispara un push de vuelta. */
+export function applyRemote(remote) {
+  state = deepMerge(DEFAULTS, remote);
+  try {
+    localStorage.setItem(KEY, JSON.stringify(state));
+  } catch (e) {
+    console.warn('No se pudo guardar el progreso sincronizado:', e);
+  }
+  return state;
 }
 
 export function get() {

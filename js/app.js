@@ -7,6 +7,7 @@ import * as decks from './decks.js';
 import * as study from './study.js';
 import { schedule, previewInterval, formatDelay, AGAIN, GOOD } from './srs.js';
 import * as sound from './sound.js';
+import * as sync from './sync.js';
 
 const $ = (sel) => document.querySelector(sel);
 const $$ = (sel) => Array.from(document.querySelectorAll(sel));
@@ -36,6 +37,15 @@ async function boot() {
     return;
   }
   store.load();
+
+  $('#boot-msg').textContent = 'sincronizando…';
+  const remote = await sync.pull();
+  if (remote && (remote.updatedAt || 0) > (store.get().updatedAt || 0)) {
+    store.applyRemote(remote);
+  } else {
+    sync.schedulePush(store.get());
+  }
+
   sound.setEnabled(store.get().settings.sound);
   document.addEventListener('pointerdown', () => sound.unlock(), { once: true });
 
@@ -47,6 +57,7 @@ async function boot() {
   wireReview();
   wireWords();
   wireSettings();
+  wireSync();
   wireStudy();
   wireMyVocab();
   renderHome();
@@ -984,6 +995,57 @@ function renderSettings() {
     });
     box.appendChild(row);
   }
+
+  renderSyncStatus();
+}
+
+function renderSyncStatus() {
+  const st = sync.status();
+  const dot = $('#sync-dot');
+  const label = $('#sync-status-label');
+  const note = $('#sync-status-note');
+  const row = $('#sync-connect-row');
+  const disconnectBtn = $('#btn-sync-disconnect');
+
+  dot.className = 'sync-dot';
+  if (!st.hasToken) {
+    label.textContent = 'Sin conectar';
+    note.textContent = 'El progreso solo vive en este dispositivo.';
+    row.hidden = false;
+    disconnectBtn.hidden = true;
+  } else if (st.lastPushError === 'token') {
+    dot.classList.add('error');
+    label.textContent = 'Código inválido';
+    note.textContent = 'Revisá el código pegado — puede haber expirado.';
+    row.hidden = false;
+    disconnectBtn.hidden = true;
+  } else {
+    dot.classList.add('on');
+    label.textContent = 'Sincronizado';
+    note.textContent = st.lastPushAt
+      ? `Último envío: ${new Date(st.lastPushAt).toLocaleTimeString('es-AR', { hour: '2-digit', minute: '2-digit' })}`
+      : 'Conectado — sincronizando en segundo plano.';
+    row.hidden = true;
+    disconnectBtn.hidden = false;
+  }
+}
+
+function wireSync() {
+  $('#btn-sync-connect').addEventListener('click', () => {
+    const input = $('#sync-token-input');
+    const token = input.value.trim();
+    if (!token) return;
+    sync.setToken(token);
+    input.value = '';
+    toast('Conectando…');
+    sync.pushNow().then(() => renderSyncStatus());
+    renderSyncStatus();
+  });
+  $('#btn-sync-disconnect').addEventListener('click', () => {
+    sync.setToken('');
+    renderSyncStatus();
+    toast('Desconectado de este dispositivo.');
+  });
 }
 
 function wireSettings() {

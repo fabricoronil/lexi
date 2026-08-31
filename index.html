@@ -258,6 +258,25 @@
       </div>
     </div>
 
+    <h2 class="section-label">Sincronización entre dispositivos</h2>
+    <div class="panel">
+      <div class="opt">
+        <span class="sync-dot" id="sync-dot"></span>
+        <div class="opt-text">
+          <span id="sync-status-label">Sin conectar</span>
+          <small id="sync-status-note">El progreso solo vive en este dispositivo.</small>
+        </div>
+      </div>
+      <div class="sync-connect" id="sync-connect-row">
+        <input type="password" id="sync-token-input" placeholder="Pegá acá el código" autocomplete="off" spellcheck="false">
+        <button class="sync-btn" id="btn-sync-connect" type="button">Conectar</button>
+      </div>
+      <button class="opt as-btn" id="btn-sync-disconnect" type="button" hidden>
+        <div class="opt-text"><span>Desconectar este dispositivo</span><small>Deja de enviar cambios desde acá, pero sigue recibiendo los de los demás</small></div>
+      </button>
+    </div>
+    <p class="note">Pegá el mismo código en la tablet, el celu y la compu una sola vez — después el progreso se mantiene igual en todos, solo, en segundo plano.</p>
+
     <h2 class="section-label">Tu progreso</h2>
     <div class="panel">
       <button class="opt as-btn" id="btn-export" type="button">
@@ -274,7 +293,7 @@
       </button>
     </div>
 
-    <p class="footer-note">Tu progreso se guarda en este dispositivo. Si limpiás los datos del navegador, se pierde — descargá una copia de vez en cuando.</p>
+    <p class="footer-note">Tu progreso se guarda en este dispositivo y, si conectaste la sincronización de arriba, también en tus otros dispositivos. Si limpiás los datos del navegador en todos a la vez, se pierde — descargá una copia de vez en cuando.</p>
   </section>
 
   <!-- ══ ESTUDIO (inicio) ══ -->
