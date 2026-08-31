@@ -115,6 +115,7 @@ button {
 @keyframes fade { from { opacity: 0; transform: translateY(4px); } }
 
 .view.center {
+  position: relative;
   min-height: calc(100dvh - var(--tabbar-h));
   display: flex;
   flex-direction: column;
@@ -122,6 +123,21 @@ button {
   justify-content: center;
   gap: 14px;
   text-align: center;
+}
+
+.confetti { position: absolute; inset: 0; overflow: hidden; pointer-events: none; z-index: 5; }
+@keyframes confetti-fall {
+  0% { transform: translateY(-16px) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(340px) rotate(var(--rot, 280deg)); opacity: 0; }
+}
+.confetti-piece {
+  position: absolute;
+  top: -12px;
+  width: 7px;
+  height: 12px;
+  border-radius: 2px;
+  animation: confetti-fall var(--dur, 1100ms) cubic-bezier(.22,.61,.36,1) forwards;
+  animation-delay: var(--delay, 0ms);
 }
 
 .page-title {
@@ -154,9 +170,113 @@ button {
   font-size: 15px;
   font-weight: 700;
   min-height: 38px;
+  transition: transform .18s cubic-bezier(.34,1.56,.64,1), background .3s, border-color .3s, box-shadow .3s;
 }
-.streak-chip .ico { width: 16px; height: 16px; }
+.streak-chip .ico { width: 16px; height: 16px; transition: transform .3s; }
+.streak-chip:active { transform: scale(.94); }
 .streak-chip.cold { background: #121618; border-color: var(--line); color: var(--dim); }
+
+/* Con racha activa: se pone tibia y la llama tiembla despacito. */
+.streak-chip:not(.cold) .ico {
+  animation: flame-flicker 2.6s ease-in-out infinite;
+  transform-origin: 50% 85%;
+}
+@keyframes flame-flicker {
+  0%, 100% { transform: scale(1) rotate(0deg); }
+  25% { transform: scale(1.08, .94) rotate(-3deg); }
+  50% { transform: scale(.95, 1.08) rotate(2deg); }
+  75% { transform: scale(1.05, .97) rotate(-1deg); }
+}
+
+/* Racha del día ya asegurada: queda "pintada", vívida y con brillo. */
+.streak-chip.lit {
+  background: linear-gradient(135deg, #ff8a3d, #ff5f3a);
+  border-color: #ff8a3d;
+  color: #2a1206;
+  box-shadow: 0 0 0 1px rgba(255,138,61,.25), 0 4px 18px rgba(255,95,58,.35);
+}
+.streak-chip.lit .ico { fill: #2a1206; stroke: none; }
+
+/* ── celebración de racha: la llama "se pinta" al completar el día ── */
+.streak-pop {
+  position: fixed;
+  top: 16px;
+  left: 50%;
+  z-index: 60;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  width: 240px;
+  background: linear-gradient(165deg, #201510, #140d0a);
+  border: 1px solid #3d2a16;
+  border-radius: 18px;
+  padding: 18px 20px 16px;
+  box-shadow: 0 18px 40px rgba(0,0,0,.5);
+  text-align: center;
+  opacity: 0;
+  pointer-events: none;
+  transform: translateX(-50%) translateY(-14px) scale(.94);
+  transition: opacity .35s ease, transform .35s cubic-bezier(.34,1.56,.64,1);
+}
+.streak-pop.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0) scale(1);
+}
+.streak-pop-flame { position: relative; width: 60px; height: 60px; margin: 0 auto; }
+.streak-pop-flame svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.flame-base { fill: none; stroke: #4a3320; stroke-width: 1.6; }
+.flame-fill {
+  fill: url(#flameGrad);
+  clip-path: inset(100% 0 0 0);
+  filter: drop-shadow(0 0 10px rgba(255,138,61,.55));
+}
+.streak-pop.show .flame-fill {
+  animation: flame-paint .85s cubic-bezier(.22,.61,.36,1) forwards;
+  animation-delay: .12s;
+}
+@keyframes flame-paint {
+  0% { clip-path: inset(100% 0 0 0); }
+  70% { clip-path: inset(-4% 0 0 0); }
+  100% { clip-path: inset(0% 0 0 0); }
+}
+.streak-pop-title {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--text);
+  opacity: 0;
+  transform: translateY(4px);
+}
+.streak-pop-sub {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: #d8a15f;
+  opacity: 0;
+  transform: translateY(4px);
+}
+.streak-pop.show .streak-pop-title,
+.streak-pop.show .streak-pop-sub {
+  animation: streak-pop-text .4s ease-out forwards;
+  animation-delay: .55s;
+}
+.streak-pop.show .streak-pop-sub { animation-delay: .65s; }
+@keyframes streak-pop-text {
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* ── feedback lúdico (pop genérico, reusable) ── */
+@keyframes pop-bounce {
+  0% { transform: scale(1); }
+  35% { transform: scale(1.24); }
+  62% { transform: scale(.93); }
+  100% { transform: scale(1); }
+}
+.pop { animation: pop-bounce .4s cubic-bezier(.34,1.56,.64,1); }
 
 .date { font-size: 13px; color: var(--muted); margin: 0; }
 
@@ -215,10 +335,10 @@ button {
   font-size: 17px;
   font-weight: 700;
   letter-spacing: -.2px;
-  transition: transform .1s, filter .15s;
+  transition: transform .18s cubic-bezier(.34,1.56,.64,1), filter .15s;
 }
 .cta .ico { stroke-width: 2.4; width: 19px; height: 19px; }
-.cta:active { transform: scale(.985); }
+.cta:active { transform: scale(.95); }
 .cta:disabled { background: var(--surface-2); color: var(--dim); }
 .cta:disabled .ico { display: none; }
 .cta.ghost { background: transparent; border: 1px solid var(--green-line); color: var(--green); }
@@ -264,6 +384,20 @@ button {
 .session-progress div { height: 5px; background: var(--green); border-radius: 3px; width: 0; transition: width .3s; }
 .session-count { font-size: 13px; color: var(--muted); }
 
+.xp-chip {
+  font-family: var(--mono);
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--green);
+  background: var(--green-bg);
+  border: 1px solid var(--green-line);
+  border-radius: 999px;
+  padding: 5px 10px;
+  min-height: 24px;
+  display: flex;
+  align-items: center;
+}
+
 .tags { display: flex; gap: 7px; margin-top: 12px; flex-wrap: wrap; }
 .tag {
   font-family: var(--mono);
@@ -275,6 +409,7 @@ button {
   padding: 3px 8px;
 }
 .tag.accent { color: var(--green); background: var(--green-bg); border-color: var(--green-line); }
+.tag.refuerzo { color: var(--blue); background: var(--blue-bg); border-color: var(--blue-line); }
 
 .card {
   flex-grow: 1;
@@ -287,14 +422,19 @@ button {
   overflow: hidden;
   min-height: 260px;
 }
+@keyframes card-pop {
+  0% { opacity: 0; transform: translateY(12px) scale(.97); }
+  100% { opacity: 1; transform: translateY(0) scale(1); }
+}
+.card.card-enter { animation: card-pop .32s cubic-bezier(.22,.61,.36,1); }
 .card-front {
   padding: 40px 24px 30px;
   display: flex;
   flex-direction: column;
   align-items: center;
   gap: 18px;
+  border-bottom: 1px dashed #23292c;
 }
-.card.revealed .card-front { border-bottom: 1px dashed #23292c; }
 
 .prompt {
   font-family: var(--mono);
@@ -328,20 +468,11 @@ button {
 .example-es { font-size: 13px; line-height: 1.5; color: #6d7a78; }
 
 .answers { padding-bottom: 26px; display: flex; flex-direction: column; gap: 9px; }
-.reveal {
-  width: 100%;
-  min-height: 58px;
-  background: var(--surface-2);
-  border: 1px solid #2a3134;
-  border-radius: 13px;
-  font-size: 16px;
-  font-weight: 600;
-  color: var(--text-2);
-}
-.reveal:active { background: #1d2427; }
 
 .grade-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 9px; }
+.grade-grid.locked { pointer-events: none; }
 .grade {
+  position: relative;
   min-height: 62px;
   border-radius: 13px;
   display: flex;
@@ -350,9 +481,9 @@ button {
   justify-content: center;
   gap: 3px;
   border: 1px solid;
-  transition: transform .08s;
+  transition: transform .16s cubic-bezier(.34,1.56,.64,1), filter .15s;
 }
-.grade:active { transform: scale(.97); }
+.grade:active { transform: scale(.95); }
 .grade b { font-size: 15px; font-weight: 600; }
 .grade small { font-family: var(--mono); font-size: 11px; }
 .g-again { background: var(--red-bg); border-color: var(--red-line); }
@@ -364,6 +495,30 @@ button {
 .g-easy { background: var(--blue-bg); border-color: var(--blue-line); }
 .g-easy b { color: var(--blue); } .g-easy small { color: #55788f; }
 
+@keyframes grade-chosen {
+  0% { transform: scale(1); filter: brightness(1); }
+  45% { transform: scale(1.07); filter: brightness(1.35); }
+  100% { transform: scale(1.02); filter: brightness(1.2); }
+}
+.grade.chosen { animation: grade-chosen .22s ease-out forwards; z-index: 1; }
+
+@keyframes xp-float {
+  0% { opacity: 0; transform: translate(-50%, 4px) scale(.7); }
+  25% { opacity: 1; transform: translate(-50%, -6px) scale(1.08); }
+  100% { opacity: 0; transform: translate(-50%, -30px) scale(1); }
+}
+.xp-fly {
+  position: absolute;
+  left: 50%;
+  top: -4px;
+  font-family: var(--mono);
+  font-weight: 700;
+  font-size: 13px;
+  color: var(--green);
+  pointer-events: none;
+  animation: xp-float .65s ease-out forwards;
+}
+
 .hint { text-align: center; font-size: 11px; color: #3f4a48; margin: 0; }
 
 /* ── fin de sesión ── */
@@ -374,8 +529,17 @@ button {
   border: 1px solid var(--green-line);
   display: flex; align-items: center; justify-content: center;
   color: var(--green);
+  position: relative;
+  z-index: 1;
 }
 .done-mark .ico { width: 32px; height: 32px; stroke-width: 2.2; }
+@keyframes mark-bounce {
+  0% { transform: scale(.3); opacity: 0; }
+  55% { transform: scale(1.15); opacity: 1; }
+  75% { transform: scale(.94); }
+  100% { transform: scale(1); }
+}
+.done-mark.enter { animation: mark-bounce .5s cubic-bezier(.22,.61,.36,1); }
 #view-done h2 { font-size: 23px; font-weight: 700; margin: 6px 0 0; letter-spacing: -.4px; }
 .done-sub { font-size: 14px; color: var(--muted); margin: 0; max-width: 280px; line-height: 1.5; }
 .done-stats { display: flex; gap: 10px; margin: 8px 0; }
@@ -385,16 +549,27 @@ button {
 
 /* ── progreso ── */
 .streak-cards { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin-top: 18px; }
-.streak-card { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 14px; }
+.streak-card { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 14px; transition: background .3s, border-color .3s, box-shadow .3s; }
 .streak-card.hot { background: var(--amber-bg); border-color: var(--amber-line); }
 .mini-label { display: flex; align-items: center; gap: 6px; font-size: 11px; color: var(--muted); letter-spacing: .4px; }
 .mini-label .ico { width: 14px; height: 14px; }
 .streak-card.hot .mini-label { color: #a08560; }
-.streak-card.hot .mini-label .ico { color: var(--amber); }
+.streak-card.hot .mini-label .ico { color: var(--amber); animation: flame-flicker 2.6s ease-in-out infinite; transform-origin: 50% 85%; }
 .big { font-size: 30px; font-weight: 700; letter-spacing: -1.4px; margin-top: 5px; color: var(--text-2); }
 .big small { font-size: 14px; font-weight: 400; color: var(--dim); }
 .streak-card.hot .big { color: var(--amber); }
 .streak-card.hot .big small { color: #8a7350; }
+
+/* Racha del día ya asegurada: la tarjeta también queda "pintada". */
+.streak-card.hot.lit {
+  background: linear-gradient(135deg, #33200f, #2a1508);
+  border-color: #ff8a3d;
+  box-shadow: 0 0 0 1px rgba(255,138,61,.2), 0 6px 20px rgba(255,95,58,.22);
+}
+.streak-card.hot.lit .mini-label { color: #e0a877; }
+.streak-card.hot.lit .mini-label .ico { color: #ff8a3d; }
+.streak-card.hot.lit .big { color: #ff9a3d; }
+.streak-card.hot.lit .big small { color: #b17c4a; }
 
 .block { margin-top: 24px; }
 .block-head { display: flex; justify-content: space-between; align-items: baseline; }

@@ -5,12 +5,16 @@
 import * as store from './store.js';
 import * as decks from './decks.js';
 import { schedule, previewInterval, formatDelay, AGAIN, GOOD } from './srs.js';
+import * as sound from './sound.js';
 
 const $ = (sel) => document.querySelector(sel);
 const $$ = (sel) => Array.from(document.querySelectorAll(sel));
 
 const VIEWS = ['home', 'review', 'done', 'stats', 'settings'];
+const XP_BY_QUALITY = [2, 5, 10, 15]; // otra vez, difícil, bien, fácil — solo cosmético, no toca el SRS
 let session = null;
+let lastStreakSeen = null;
+let streakPopTimer = null;
 
 /* ═══════════ arranque ═══════════ */
 
@@ -25,6 +29,9 @@ async function boot() {
     return;
   }
   store.load();
+  sound.setEnabled(store.get().settings.sound);
+  document.addEventListener('pointerdown', () => sound.unlock(), { once: true });
+
   $('#boot').classList.add('gone');
   $('#app').hidden = false;
   setTimeout(() => $('#boot').remove(), 300);
@@ -57,8 +64,16 @@ function wireNav() {
   $$('#tabbar button').forEach((b) => b.addEventListener('click', () => show(b.dataset.view)));
   $('#streak-chip').addEventListener('click', () => show('stats'));
   $('#btn-home').addEventListener('click', () => show('home'));
-  $('#btn-more').addEventListener('click', () => startSession(true));
-  $('#btn-start').addEventListener('click', () => startSession(false));
+  $('#btn-more').addEventListener('click', () => {
+    sound.playTap();
+    if ($('#btn-more').dataset.mode === 'reinforce') startReinforce();
+    else startSession(true);
+  });
+  $('#btn-start').addEventListener('click', () => {
+    sound.playTap();
+    if ($('#btn-start').dataset.mode === 'reinforce') startReinforce();
+    else startSession(false);
+  });
 }
 
 /* ═══════════ inicio ═══════════ */
@@ -75,10 +90,16 @@ function renderHome() {
   $('#today-label').textContent = label.charAt(0).toUpperCase() + label.slice(1);
 
   const streak = store.liveStreak();
+  const met = store.goalMet();
   $('#streak-count').textContent = streak;
   $('#streak-chip').classList.toggle('cold', streak === 0);
+  $('#streak-chip').classList.toggle('lit', streak > 0 && met);
+  if (lastStreakSeen !== null && streak > lastStreakSeen) {
+    bounce($('#streak-chip'));
+    sound.playStreak();
+  }
+  lastStreakSeen = streak;
 
-  const met = store.goalMet();
   $('#done-today').textContent = Math.min(done, goal);
   $('#goal-today').textContent = goal;
   const pct = met ? 1 : goal ? Math.min(1, done / goal) : 0;
@@ -92,19 +113,23 @@ function renderHome() {
   const note = $('#cta-note');
   if (q.total > 0) {
     btn.disabled = false;
+    btn.dataset.mode = 'normal';
     $('#cta-label').textContent = done > 0 ? 'Seguir repasando' : 'Empezar repaso';
     note.textContent = met
       ? 'Meta cumplida — lo que hagas ahora es yapa.'
       : `Te faltan ${goal - done} respuestas para salvar el día.`;
   } else {
-    btn.disabled = true;
-    $('#cta-label').textContent = 'Nada pendiente';
-    if (done === 0) {
-      note.textContent = 'Sin cards vencidas hoy. Volvé mañana o subí las nuevas por día.';
+    btn.disabled = false;
+    btn.dataset.mode = 'reinforce';
+    $('#cta-label').textContent = 'Reforzar más';
+    if (met) {
+      note.textContent = 'Día salvado. Si querés seguir practicando, no hay límite.';
+    } else if (done === 0) {
+      note.textContent = 'Sin cards vencidas hoy. Podés reforzar lo que ya viste igual.';
     } else {
       note.textContent = c.unseen > 0
-        ? 'Vaciaste la cola: el día ya cuenta. Subí el nivel en Ajustes si querés más.'
-        : 'Terminaste todos los mazos activos. Bien ahí.';
+        ? 'Vaciaste la cola y el día ya cuenta. Seguí si querés más.'
+        : 'Terminaste todos los mazos activos. Podés repasar de yapa.';
     }
   }
 
@@ -143,7 +168,27 @@ function startSession(extra) {
     return;
   }
 
-  session = { queue, index: 0, answered: 0, planned: queue.length, revealed: false };
+  session = { queue, index: 0, answered: 0, planned: queue.length, xp: 0, reinforce: false };
+  $('#session-xp').textContent = '+0';
+  $('#grade-grid').classList.remove('locked');
+  show('review');
+  renderCard();
+}
+
+/**
+ * Tanda extra sin límite diario: para cuando ya no queda nada pendiente
+ * pero el usuario quiere seguir practicando igual.
+ */
+function startReinforce() {
+  const queue = decks.buildReinforceQueue();
+  if (!queue.length) {
+    toast('Todavía no tenés cards para reforzar. Aprendé algunas primero.');
+    show('home');
+    return;
+  }
+  session = { queue, index: 0, answered: 0, planned: queue.length, xp: 0, reinforce: true };
+  $('#session-xp').textContent = '+0';
+  $('#grade-grid').classList.remove('locked');
   show('review');
   renderCard();
 }
@@ -152,20 +197,33 @@ function currentCard() {
   return session ? session.queue[session.index] : null;
 }
 
+/** Reinicia una animación CSS por clase, aunque ya la tuviera puesta. */
+function bounce(el, cls = 'pop') {
+  if (!el) return;
+  el.classList.remove(cls);
+  void el.offsetWidth;
+  el.classList.add(cls);
+}
+
+/** El momento exacto en que se salva el día: la llama "se pinta" en pantalla. */
+function celebrateStreak() {
+  const streak = store.liveStreak();
+  $('#streak-pop-sub').textContent = `Racha de ${streak} ${streak === 1 ? 'día' : 'días'}`;
+  bounce($('#streak-pop'), 'show');
+  sound.playStreak();
+  clearTimeout(streakPopTimer);
+  streakPopTimer = setTimeout(() => $('#streak-pop').classList.remove('show'), 2800);
+}
+
 function renderCard() {
   const card = currentCard();
   if (!card) return finishSession();
 
+  bounce($('#card'), 'card-enter');
+
   const s = store.get();
   const reverse = s.settings.reverse;
   const st = store.cardState(card.id);
-
-  session.revealed = false;
-  $('#card').classList.remove('revealed');
-  $('#card-back').hidden = true;
-  $('#btn-reveal').hidden = false;
-  $('#grade-grid').hidden = true;
-  $('#grade-hint').textContent = 'Tocá la card o la barra espaciadora para ver la respuesta';
 
   const front = reverse ? card.es : card.en;
   const back = reverse ? card.en : card.es;
@@ -179,7 +237,9 @@ function renderCard() {
   $('#card-example-es').textContent = card.exEs || '';
 
   const seen = st.reps === 0 ? 'nueva' : `vista ${st.reps} ${st.reps === 1 ? 'vez' : 'veces'}`;
+  const reinforceTag = session.reinforce ? '<span class="tag refuerzo">refuerzo</span>' : '';
   $('#card-tags').innerHTML = `
+    ${reinforceTag}
     <span class="tag accent">${deckLabel(card.deck)}</span>
     <span class="tag">${card.lvl}</span>
     <span class="tag">${seen}</span>`;
@@ -188,7 +248,11 @@ function renderCard() {
   const pct = session.planned ? (session.answered / session.planned) * 100 : 0;
   $('#session-fill').style.width = pct + '%';
 
-  if (s.settings.autoSpeak && !reverse) speak(card.en);
+  for (let q = 0; q <= 3; q++) {
+    $('#iv-' + q).textContent = previewInterval(st, q);
+  }
+
+  if (s.settings.autoSpeak) speak(card.en);
 }
 
 function deckLabel(id) {
@@ -209,29 +273,43 @@ function highlight(sentence, term) {
   }
 }
 
-function reveal() {
-  if (!session || session.revealed) return;
-  const card = currentCard();
-  if (!card) return;
-  session.revealed = true;
-  $('#card').classList.add('revealed');
-  $('#card-back').hidden = false;
-  $('#btn-reveal').hidden = true;
-  $('#grade-grid').hidden = false;
-  $('#grade-hint').textContent = 'Elegí según cuánto te costó recordarla';
+const GRADE_SOUND = [sound.playAgain, sound.playHard, sound.playGood, sound.playEasy];
 
-  const st = store.cardState(card.id);
-  for (let q = 0; q <= 3; q++) {
-    $('#iv-' + q).textContent = previewInterval(st, q);
+let grading = false;
+/** Capa cosmética sobre answer(): sonido, XP y el pop del botón elegido. */
+function chooseGrade(quality) {
+  if (!session || grading) return;
+  grading = true;
+
+  const gained = XP_BY_QUALITY[quality];
+  session.xp += gained;
+  $('#session-xp').textContent = '+' + session.xp;
+
+  const btn = $(`.grade[data-q="${quality}"]`);
+  $('#grade-grid').classList.add('locked');
+  if (btn) {
+    bounce(btn, 'chosen');
+    const fly = document.createElement('span');
+    fly.className = 'xp-fly';
+    fly.textContent = '+' + gained;
+    btn.appendChild(fly);
+    fly.addEventListener('animationend', () => fly.remove());
   }
-  if (store.get().settings.autoSpeak && store.get().settings.reverse) speak(card.en);
+  GRADE_SOUND[quality]();
+
+  setTimeout(() => {
+    grading = false;
+    if (btn) btn.classList.remove('chosen');
+    answer(quality);
+  }, 190);
 }
 
 function answer(quality) {
-  if (!session || !session.revealed) return;
+  if (!session) return;
   const card = currentCard();
   if (!card) return;
 
+  const metBefore = store.goalMet();
   const st = store.cardState(card.id);
   const wasNew = st.reps === 0;
   const next = schedule(st, quality);
@@ -255,6 +333,8 @@ function answer(quality) {
   store.setCleared(pending === 0);
   store.recordAnswer();
 
+  if (!metBefore && store.goalMet()) celebrateStreak();
+
   if (session.index >= session.queue.length) session.index = 0;
   if (!session.queue.length) return finishSession();
   renderCard();
@@ -263,30 +343,61 @@ function answer(quality) {
 function finishSession() {
   const streak = store.liveStreak();
   const met = store.goalMet();
+  const xp = session ? session.xp : 0;
+  const wasReinforce = session ? session.reinforce : false;
   $('#done-count').textContent = session ? session.answered : 0;
+  $('#done-xp').textContent = '+' + xp;
   $('#done-streak').textContent = streak;
-  $('#done-title').textContent = met ? '¡Día salvado!' : 'Buena sesión';
+  $('#done-title').textContent = wasReinforce ? 'Refuerzo listo' : met ? '¡Día salvado!' : 'Buena sesión';
   const s = store.get();
   const falta = Math.max(0, s.settings.dailyGoal - store.reviewsToday());
-  $('#done-sub').textContent = met
-    ? `Racha de ${streak} ${streak === 1 ? 'día' : 'días'}. Volvé mañana antes de medianoche.`
-    : `Te faltan ${falta} respuestas para que cuente el día.`;
-  const q = decks.buildQueue();
-  $('#btn-more').hidden = q.total === 0;
+  $('#done-sub').textContent = wasReinforce
+    ? `Racha de ${streak} ${streak === 1 ? 'día' : 'días'} — seguís sumando repasos de yapa.`
+    : met
+      ? `Racha de ${streak} ${streak === 1 ? 'día' : 'días'}. Volvé mañana antes de medianoche.`
+      : `Te faltan ${falta} respuestas para que cuente el día.`;
+
+  const noMorePending = decks.buildQueue().total === 0;
+  const more = $('#btn-more');
+  more.textContent = noMorePending ? 'Reforzar más' : 'Seguir repasando';
+  more.dataset.mode = noMorePending ? 'reinforce' : 'normal';
+  more.hidden = false;
+
   session = null;
   show('done');
+
+  bounce($('#done-mark'), 'enter');
+  spawnConfetti(met && !wasReinforce);
+  sound.playComplete();
+}
+
+function spawnConfetti(big) {
+  const host = $('#confetti');
+  if (!host) return;
+  host.innerHTML = '';
+  const colors = ['#6ee7a0', '#f5a742', '#7ab8f5', '#f57a7a'];
+  const count = big ? 46 : 22;
+  for (let i = 0; i < count; i++) {
+    const p = document.createElement('i');
+    p.className = 'confetti-piece';
+    p.style.left = (Math.random() * 100) + '%';
+    p.style.background = colors[i % colors.length];
+    p.style.setProperty('--dur', (900 + Math.random() * 700) + 'ms');
+    p.style.setProperty('--delay', (Math.random() * 250) + 'ms');
+    p.style.setProperty('--rot', (180 + Math.random() * 360) + 'deg');
+    host.appendChild(p);
+  }
+  setTimeout(() => { host.innerHTML = ''; }, 2200);
 }
 
 function wireReview() {
-  $('#btn-reveal').addEventListener('click', reveal);
-  $('#card').addEventListener('click', reveal);
   $('#btn-speak').addEventListener('click', (e) => {
     e.stopPropagation();
     const card = currentCard();
     if (card) speak(card.en);
   });
   $$('#grade-grid .grade').forEach((b) => {
-    b.addEventListener('click', () => answer(Number(b.dataset.q)));
+    b.addEventListener('click', () => chooseGrade(Number(b.dataset.q)));
   });
   $('#btn-quit').addEventListener('click', () => {
     session = null;
@@ -297,9 +408,9 @@ function wireReview() {
     if ($('#view-review').hidden) return;
     if (e.key === ' ' || e.key === 'Enter') {
       e.preventDefault();
-      session && session.revealed ? answer(GOOD) : reveal();
+      if (session) chooseGrade(GOOD);
     } else if (['1', '2', '3', '4'].includes(e.key)) {
-      answer(Number(e.key) - 1);
+      chooseGrade(Number(e.key) - 1);
     } else if (e.key === 'Escape') {
       session = null;
       show('home');
@@ -346,7 +457,9 @@ function renderStats() {
   const s = store.get();
   const c = decks.counts();
 
-  $('#st-streak').innerHTML = `${store.liveStreak()} <small>días</small>`;
+  const liveStreak = store.liveStreak();
+  $('#st-streak').innerHTML = `${liveStreak} <small>días</small>`;
+  $('#streak-card-current').classList.toggle('lit', liveStreak > 0 && store.goalMet());
   $('#st-best').innerHTML = `${s.streak.best} <small>días</small>`;
 
   const total = Object.values(s.history).reduce((a, b) => a + b, 0);
@@ -425,6 +538,7 @@ function renderSettings() {
   $('#v-goal').textContent = s.settings.dailyGoal;
   $('#goal-note').textContent = `Con la meta en ${s.settings.dailyGoal} mantenés la racha en unos ${Math.max(2, Math.round(s.settings.dailyGoal / 4))} minutos por día.`;
 
+  $('#t-sound').classList.toggle('on', s.settings.sound);
   $('#t-speak').classList.toggle('on', s.settings.autoSpeak);
   $('#t-reverse').classList.toggle('on', s.settings.reverse);
 
@@ -467,6 +581,13 @@ function wireSettings() {
     renderSettings();
   });
 
+  $('#t-sound').addEventListener('click', () => {
+    const on = !store.get().settings.sound;
+    store.setSettings({ sound: on });
+    sound.setEnabled(on);
+    if (on) sound.playTap();
+    renderSettings();
+  });
   $('#t-speak').addEventListener('click', () => {
     store.setSettings({ autoSpeak: !store.get().settings.autoSpeak });
     renderSettings();
