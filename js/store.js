@@ -23,6 +23,7 @@ const DEFAULTS = {
     decks: { core: true, tech: true, phrases: true },
     autoSpeak: true,
     reverse: false,
+    sound: true,
   },
   streak: {
     current: 0,

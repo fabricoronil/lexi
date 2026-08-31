@@ -108,6 +108,18 @@ export function counts() {
   return { learned, learning, unseen, total: learned + learning + unseen };
 }
 
+/**
+ * Cola de refuerzo: para cuando ya no queda nada pendiente por hoy pero
+ * el usuario quiere seguir practicando. A propósito no respeta newPerDay
+ * ni la meta diaria — es una vuelta extra, sin límite, sobre los mazos
+ * activos (ya vistos o no). Se pide de a tandas mezcladas al azar.
+ */
+export function buildReinforceQueue(limit = 20) {
+  const pool = activeCards();
+  const shuffled = [...pool].sort(() => Math.random() - 0.5);
+  return shuffled.slice(0, limit);
+}
+
 export function deckProgress(deckId) {
   const s = store.get();
   const cards = all.filter((c) => c.deck === deckId);
