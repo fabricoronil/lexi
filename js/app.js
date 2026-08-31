@@ -16,6 +16,7 @@ const SUBVIEW_TAB = { words: 'stats', grammar: 'study', 'grammar-level': 'study'
 let wordsFilter = 'all';
 let currentGrammarLevelId = null;
 let currentTopicId = null;
+const openVocabCats = new Set();
 const XP_BY_QUALITY = [2, 5, 10, 15]; // otra vez, difícil, bien, fácil — solo cosmético, no toca el SRS
 let session = null;
 let lastStreakSeen = null;
@@ -47,6 +48,7 @@ async function boot() {
   wireWords();
   wireSettings();
   wireStudy();
+  wireMyVocab();
   renderHome();
   renderSettings();
   registerServiceWorker();
@@ -671,6 +673,68 @@ function checkSvg() {
   return '<svg viewBox="0 0 24 24"><path d="M5 13l4 4L19 7"/></svg>';
 }
 
+function escapeHtml(str) {
+  return String(str).replace(/[<>&]/g, (ch) => ({ '<': '&lt;', '>': '&gt;', '&': '&amp;' }[ch]));
+}
+
+const AUX_NEG = ["isn't", "aren't", "wasn't", "weren't", "doesn't", "don't", "didn't", "haven't", "hasn't", "hadn't", "can't", "won't", "wouldn't", "shouldn't", "mustn't"];
+const AUX_POS = ["going to", "am", "is", "are", "was", "were", "do", "does", "did", "have", "has", "had", "will", "would", "can", "could", "should", "must"];
+
+function buildAuxRegex(words) {
+  const esc = (w) => w.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  const sorted = [...words].sort((a, b) => b.length - a.length).map(esc);
+  return new RegExp(`\\b(${sorted.join('|')})\\b`, 'gi');
+}
+const AUX_NEG_RE = buildAuxRegex(AUX_NEG);
+const AUX_POS_RE = buildAuxRegex(AUX_POS);
+
+/** Resalta auxiliares/modales (azul) y sus formas negativas (rojo) en una oración. */
+function highlightAux(text) {
+  return escapeHtml(text)
+    .replace(AUX_NEG_RE, '<span class="hl-neg">$1</span>')
+    .replace(AUX_POS_RE, '<span class="hl-aux">$1</span>');
+}
+
+/** Si la línea empieza con una etiqueta corta seguida de ":" (ej. "Irregulares:"), la separa del resto. */
+function splitRuleIntro(line) {
+  const m = line.match(/^([A-Za-zÀ-ÿ .'-]{3,40}:)\s*(.+)$/);
+  return m ? { intro: m[1], rest: m[2] } : { intro: '', rest: line };
+}
+
+/**
+ * Convierte una línea de regla en HTML. Si es una lista de pares "X → Y" (o una
+ * cadena "A → B → C…"), la dibuja como chips/pills en vez de texto plano — son
+ * patrones muy comunes en las reglas de gramática y se leen mucho mejor así.
+ */
+function renderRuleLine(line) {
+  const { intro, rest } = splitRuleIntro(line);
+  const introHtml = intro ? `<p class="rule-intro">${escapeHtml(intro)}</p>` : '';
+  const segments = rest.split('·').map((s) => s.trim()).filter(Boolean);
+
+  const isPairGrid = segments.length >= 2 && segments.every((s) => {
+    const parts = s.split('→');
+    return parts.length === 2 && parts[0].trim().length <= 30 && parts[1].trim().length <= 30;
+  });
+  if (isPairGrid) {
+    const chips = segments.map((seg) => {
+      const [left, right] = seg.split('→').map((p) => p.trim().replace(/[.;]+$/, ''));
+      return `<span class="rule-chip">${escapeHtml(left)}<span class="arrow">→</span><b>${escapeHtml(right)}</b></span>`;
+    }).join('');
+    return `${introHtml}<div class="rule-grid">${chips}</div>`;
+  }
+
+  const arrowCount = (rest.match(/→/g) || []).length;
+  if (segments.length === 1 && arrowCount >= 2) {
+    const steps = rest.replace(/[.;]+$/, '').split('→').map((s) => s.trim());
+    const chainHtml = steps.map((s, i) => (i === 0
+      ? `<span class="step">${escapeHtml(s)}</span>`
+      : `<span class="arrow">→</span><span class="step">${escapeHtml(s)}</span>`)).join('');
+    return `${introHtml}<div class="rule-chain">${chainHtml}</div>`;
+  }
+
+  return `<p>${highlightAux(line)}</p>`;
+}
+
 function wireStudy() {
   $('#btn-go-my-vocab').addEventListener('click', () => show('my-vocab'));
   $('#btn-go-grammar').addEventListener('click', () => show('grammar'));
@@ -783,7 +847,12 @@ function renderTopic() {
   if (!found) return;
   const { topic, level } = found;
 
-  $('#topic-tag').textContent = `${level.label} · ${topic.tag}`;
+  const tag = $('#topic-tag');
+  tag.textContent = `${level.label} · ${topic.tag}`;
+  tag.style.color = level.color;
+  tag.style.background = `${level.color}22`;
+  tag.style.borderColor = `${level.color}55`;
+
   $('#topic-title').textContent = topic.title;
   $('#topic-hook').textContent = topic.hook;
 
@@ -791,19 +860,36 @@ function renderTopic() {
   $('#topic-done-label').textContent = done ? 'Aprendido' : 'Marcar como aprendido';
   $('#topic-done-switch').classList.toggle('on', done);
 
-  $('#topic-rule').innerHTML = topic.rule.map((r) => `<p>${r}</p>`).join('');
+  $('#topic-rule').innerHTML = topic.rule.map((r, i) => `
+    <div class="rule-card"><span class="rule-num">${i + 1}</span>${renderRuleLine(r)}</div>`).join('');
 
-  $('#topic-examples').innerHTML = topic.examples.map((ex) => `
-    <div class="topic-example"><div class="en">${ex.en}</div><div class="es">${ex.es}</div></div>`).join('');
+  const tipBlock = $('#topic-tip-block');
+  if (topic.tip) {
+    tipBlock.hidden = false;
+    $('#topic-tip').innerHTML = highlightAux(topic.tip);
+  } else {
+    tipBlock.hidden = true;
+  }
+
+  const examplesEl = $('#topic-examples');
+  examplesEl.style.setProperty('--ex-accent', level.color);
+  examplesEl.innerHTML = topic.examples.map((ex, i) => `
+    <div class="topic-example">
+      <span class="ex-num">${i + 1}</span>
+      <div class="ex-body">
+        <div class="en">${highlightAux(ex.en)}</div>
+        <div class="es">${escapeHtml(ex.es)}</div>
+      </div>
+    </div>`).join('');
 
   const mistakesBlock = $('#topic-mistakes-block');
   if (topic.mistakes?.length) {
     mistakesBlock.hidden = false;
     $('#topic-mistakes').innerHTML = topic.mistakes.map((m) => `
       <div class="topic-mistake">
-        <div class="wrong">${m.wrong}</div>
-        <div class="right">${m.right}</div>
-        ${m.note ? `<div class="mistake-note">${m.note}</div>` : ''}
+        <div class="wrong"><span class="ico">❌</span><span class="txt">${escapeHtml(m.wrong)}</span></div>
+        <div class="right"><span class="ico">✅</span><span class="txt">${escapeHtml(m.right)}</span></div>
+        ${m.note ? `<div class="mistake-note">${escapeHtml(m.note)}</div>` : ''}
       </div>`).join('');
   } else {
     mistakesBlock.hidden = true;
@@ -825,21 +911,43 @@ function renderMyVocab() {
   const list = $('#my-vocab-list');
   list.innerHTML = '';
   for (const [cat, words] of [...groups.entries()].sort((a, b) => a[0].localeCompare(b[0]))) {
+    const open = openVocabCats.has(cat);
     const group = document.createElement('div');
-    group.className = 'vocab-group';
+    group.className = `vocab-group${open ? ' open' : ''}`;
     const rowsHtml = words
       .sort((a, b) => a.word.localeCompare(b.word))
       .map((w) => `
         <div class="vocab-row">
           <div class="vocab-row-text">
-            <div class="word-line"><span class="word-en">${w.word}</span><span class="word-type">${w.type}</span></div>
-            <span class="word-es">${w.meaning}</span>
-            <span class="word-ex">${w.example}</span>
+            <div class="word-line"><span class="word-en">${escapeHtml(w.word)}</span><span class="word-type">${escapeHtml(w.type)}</span></div>
+            <span class="word-es">${escapeHtml(w.meaning)}</span>
+            <span class="word-ex">${escapeHtml(w.example)}</span>
           </div>
         </div>`).join('');
-    group.innerHTML = `<div class="vocab-group-label">${cat}</div>${rowsHtml}`;
+    group.innerHTML = `
+      <button class="vocab-group-head" type="button" data-cat="${escapeHtml(cat)}">
+        <span class="cat-name">${escapeHtml(cat)}</span>
+        <span class="cat-count">${words.length}</span>
+        <svg viewBox="0 0 24 24" class="ico chev"><path d="m9 6 6 6-6 6"/></svg>
+      </button>
+      <div class="vocab-group-body"${open ? '' : ' hidden'}>${rowsHtml}</div>`;
     list.appendChild(group);
   }
+}
+
+function wireMyVocab() {
+  $('#my-vocab-list').addEventListener('click', (e) => {
+    const head = e.target.closest('.vocab-group-head');
+    if (!head) return;
+    const cat = head.dataset.cat;
+    const group = head.closest('.vocab-group');
+    const body = group.querySelector('.vocab-group-body');
+    const willOpen = body.hidden;
+    body.hidden = !willOpen;
+    group.classList.toggle('open', willOpen);
+    if (willOpen) openVocabCats.add(cat);
+    else openVocabCats.delete(cat);
+  });
 }
 
 /* ═══════════ ajustes ═══════════ */
