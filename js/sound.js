@@ -30,7 +30,7 @@ function getCtx() {
     delayGain.connect(delayNode);
     delayGain.connect(master);
   }
-  if (ctx.state === 'suspended') ctx.resume();
+  if (ctx.state === 'suspended') ctx.resume().catch(() => {});
   return ctx;
 }
 
@@ -38,9 +38,52 @@ export function setEnabled(v) {
   enabled = v;
 }
 
+/**
+ * En iOS/Safari (y algunos Android) el primer gesto que "destrabe" el audio
+ * tiene que resumir el AudioContext de forma síncrona dentro del handler del
+ * gesto — un solo intento en un solo tipo de evento no siempre alcanza. Por
+ * eso probamos en varios tipos de gesto, y seguimos intentando hasta que el
+ * contexto confirme que quedó 'running' (no solo el primer toque).
+ */
+let unlocked = false;
 export function unlock() {
-  if (enabled) getCtx();
+  if (!enabled || unlocked) return;
+  const c = getCtx();
+  if (c && c.state === 'running') {
+    unlocked = true;
+    return;
+  }
+  // Un "tick" casi inaudible: en algunos navegadores el resume() recién
+  // queda confirmado si además se agenda algo de audio real en el mismo gesto.
+  if (c) {
+    try {
+      const o = c.createOscillator();
+      const g = c.createGain();
+      g.gain.value = 0.0001;
+      o.connect(g).connect(c.destination);
+      o.start(c.currentTime);
+      o.stop(c.currentTime + 0.01);
+    } catch {
+      // si esto falla no pasa nada, ya vamos a reintentar con el próximo gesto
+    }
+  }
+  if (c && c.state === 'running') unlocked = true;
 }
+
+function wireUnlock() {
+  const tryUnlock = () => {
+    unlock();
+    if (unlocked) {
+      ['pointerdown', 'touchend', 'mousedown', 'keydown'].forEach((ev) =>
+        document.removeEventListener(ev, tryUnlock)
+      );
+    }
+  };
+  ['pointerdown', 'touchend', 'mousedown', 'keydown'].forEach((ev) =>
+    document.addEventListener(ev, tryUnlock)
+  );
+}
+wireUnlock();
 
 /**
  * Una voz: oscilador principal + un armónico una octava (o quinta) arriba

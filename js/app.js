@@ -27,7 +27,7 @@ const openVocabCats = new Set();
 const XP_BY_QUALITY = [2, 5, 10, 15]; // otra vez, difícil, bien, fácil — solo cosmético, no toca el SRS
 // Mismo número que VERSION en sw.js — subir los dos juntos en cada deploy, así "Versión" en Ajustes
 // sirve para confirmar a simple vista si el dispositivo ya tiene los cambios nuevos.
-const APP_VERSION = 'v18';
+const APP_VERSION = 'v19';
 let session = null;
 let lastStreakSeen = null;
 let streakPopTimer = null;
@@ -56,11 +56,11 @@ async function boot() {
   }
 
   sound.setEnabled(store.get().settings.sound);
-  document.addEventListener('pointerdown', () => sound.unlock(), { once: true });
 
   $('#boot').classList.add('gone');
   $('#app').hidden = false;
-  setTimeout(() => $('#boot').remove(), 300);
+  $('#app').classList.add('enter');
+  setTimeout(() => $('#boot').remove(), 400);
 
   wireNav();
   wireReview();
@@ -103,7 +103,7 @@ function show(view) {
 
 // Botones que ya disparan su propio sonido — el tap genérico se salta estos
 // para no pisarlo (quedaría un "clic-clic" feo pegado al sonido real).
-const TAP_EXCLUDE = '.grade, .ex-option, .ex-check, .switch, .topic-row, #btn-start, #btn-more, #btn-reveal, #btn-topic-done';
+const TAP_EXCLUDE = '.grade, .ex-option, .ex-check, .switch, .topic-row, #btn-start, #btn-more, #btn-reveal, #btn-topic-done, #btn-test-sound';
 
 /** Un tap sutil para cualquier botón que no tenga ya su propio sonido — así toda la app "responde" al tacto, estilo Duolingo. */
 function wireGlobalTapSound() {
@@ -1375,6 +1375,13 @@ function wireSettings() {
     sound.setEnabled(on);
     if (on) sound.playSwitch(true);
     renderSettings();
+  });
+  $('#btn-test-sound').addEventListener('click', () => {
+    if (!store.get().settings.sound) {
+      toast('Primero activá "Sonidos" arriba.');
+      return;
+    }
+    sound.playPerfect();
   });
   $('#t-speak').addEventListener('click', () => {
     const on = !store.get().settings.autoSpeak;
