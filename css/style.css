@@ -283,6 +283,49 @@ button {
 
 .date { font-size: 13px; color: var(--muted); margin: 0; }
 
+/* ── banner de racha: el estado del día, bien a la vista ── */
+.streak-banner {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-top: 16px;
+  padding: 14px 16px;
+  border-radius: 16px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  animation: banner-in .35s cubic-bezier(.22,.61,.36,1);
+}
+@keyframes banner-in {
+  from { opacity: 0; transform: translateY(-6px) scale(.98); }
+}
+.streak-banner-ico { font-size: 26px; line-height: 1; flex-shrink: 0; }
+.streak-banner-text { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+.streak-banner-text b { font-size: 14.5px; font-weight: 700; color: var(--text); }
+.streak-banner-text small { font-size: 12px; color: var(--muted); line-height: 1.4; }
+
+/* Racha del día ya salvada: calma, verde. */
+.streak-banner.done {
+  background: linear-gradient(135deg, var(--green-bg), var(--surface));
+  border-color: var(--green-line);
+}
+.streak-banner.done .streak-banner-text b { color: var(--green); }
+
+/* Tenés racha activa pero todavía no cumpliste hoy: urgencia, sin agobiar. */
+.streak-banner.warn {
+  background: linear-gradient(135deg, #241208, var(--surface));
+  border-color: #4a2a12;
+  animation: banner-in .35s cubic-bezier(.22,.61,.36,1), banner-pulse 2.2s ease-in-out .35s infinite;
+}
+.streak-banner.warn .streak-banner-text b { color: #ff9a4d; }
+.streak-banner.warn .streak-banner-ico { animation: flame-flicker 2.6s ease-in-out infinite; transform-origin: 50% 85%; }
+@keyframes banner-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(255,138,61,0); }
+  50% { box-shadow: 0 0 0 5px rgba(255,138,61,.1); }
+}
+
+/* Sin racha activa todavía: invitación tranquila, no alarma. */
+.streak-banner.start .streak-banner-text b { color: var(--text-2); }
+
 /* ── anillo ── */
 .ring-wrap { position: relative; width: 208px; height: 208px; margin: 22px auto 6px; }
 .ring { width: 208px; height: 208px; transform: rotate(-90deg); }
@@ -294,8 +337,9 @@ button {
   stroke-linecap: round;
   stroke-dasharray: 565.5;
   stroke-dashoffset: 565.5;
-  transition: stroke-dashoffset .5s cubic-bezier(.4,0,.2,1);
+  transition: stroke-dashoffset .5s cubic-bezier(.4,0,.2,1), filter .4s;
 }
+.ring-fg.full { filter: drop-shadow(0 0 7px rgba(110,231,160,.65)); }
 .ring-center {
   position: absolute;
   inset: 0;
@@ -319,6 +363,7 @@ button {
   display: flex;
   flex-direction: column;
   gap: 3px;
+  box-shadow: 0 6px 16px -12px rgba(0,0,0,.5);
 }
 .stat b { font-family: var(--mono); font-size: 19px; font-weight: 700; }
 .stat span { font-size: 11px; color: var(--muted); }
@@ -328,7 +373,7 @@ button {
   width: 100%;
   min-height: 58px;
   margin-top: 16px;
-  background: var(--green);
+  background: linear-gradient(155deg, #7fedad, var(--green) 60%);
   color: var(--green-deep);
   border-radius: 14px;
   display: flex;
@@ -338,11 +383,12 @@ button {
   font-size: 17px;
   font-weight: 700;
   letter-spacing: -.2px;
-  transition: transform .18s cubic-bezier(.34,1.56,.64,1), filter .15s;
+  box-shadow: 0 6px 20px -6px rgba(110,231,160,.45), inset 0 1px 0 rgba(255,255,255,.25);
+  transition: transform .18s cubic-bezier(.34,1.56,.64,1), filter .15s, box-shadow .18s;
 }
 .cta .ico { stroke-width: 2.4; width: 19px; height: 19px; }
-.cta:active { transform: scale(.95); }
-.cta:disabled { background: var(--surface-2); color: var(--dim); }
+.cta:active { transform: scale(.95); box-shadow: 0 2px 10px -4px rgba(110,231,160,.4), inset 0 1px 0 rgba(255,255,255,.2); }
+.cta:disabled { background: var(--surface-2); color: var(--dim); box-shadow: none; }
 .cta:disabled .ico { display: none; }
 .cta.ghost { background: transparent; border: 1px solid var(--green-line); color: var(--green); }
 
@@ -360,7 +406,16 @@ button {
   margin: 26px 0 0;
 }
 .deck-list { display: flex; flex-direction: column; gap: 11px; margin-top: 13px; }
-.deck { display: flex; align-items: center; gap: 12px; }
+.deck {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 14px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 13px;
+  box-shadow: 0 6px 16px -14px rgba(0,0,0,.5);
+}
 .deck-dot { width: 8px; height: 8px; border-radius: 2px; flex-shrink: 0; }
 .deck-body { flex-grow: 1; display: flex; flex-direction: column; gap: 6px; }
 .deck-top { display: flex; justify-content: space-between; align-items: baseline; }
@@ -421,13 +476,14 @@ button {
 .card {
   flex-grow: 1;
   margin: 16px 0;
-  background: var(--surface);
+  background: linear-gradient(165deg, #131819, var(--surface) 55%);
   border: 1px solid var(--line);
   border-radius: 20px;
   display: flex;
   flex-direction: column;
   overflow: hidden;
   min-height: 260px;
+  box-shadow: 0 14px 34px -18px rgba(0,0,0,.6);
 }
 @keyframes card-pop {
   0% { opacity: 0; transform: translateY(12px) scale(.97); }
@@ -690,6 +746,7 @@ button.row:active { opacity: .7; }
   border-radius: 14px;
   margin-top: 13px;
   overflow: hidden;
+  box-shadow: 0 8px 20px -16px rgba(0,0,0,.55);
 }
 .slider-row { display: block; padding: 17px 16px; }
 .slider-row + .slider-row { border-top: 1px solid var(--line-soft); }
@@ -742,6 +799,11 @@ input[type=range]::-moz-range-thumb {
 .sync-dot { width: 10px; height: 10px; border-radius: 999px; background: var(--dim); flex-shrink: 0; }
 .sync-dot.on { background: var(--green); box-shadow: 0 0 0 3px var(--green-bg); }
 .sync-dot.error { background: var(--red); box-shadow: 0 0 0 3px var(--red-bg); }
+
+.update-dot { width: 10px; height: 10px; border-radius: 999px; background: var(--green); box-shadow: 0 0 0 3px var(--green-bg); flex-shrink: 0; }
+.update-dot.checking { background: var(--blue); box-shadow: 0 0 0 3px var(--blue-bg); animation: pulse-soft 1s ease-in-out infinite; }
+.update-dot.available { background: var(--amber); box-shadow: 0 0 0 3px var(--amber-bg); animation: pulse-soft 1s ease-in-out infinite; }
+@keyframes pulse-soft { 0%, 100% { opacity: 1; } 50% { opacity: .4; } }
 .sync-connect { display: flex; gap: 8px; padding: 0 16px 16px; border-top: 1px solid var(--line-soft); padding-top: 14px; }
 .sync-connect input {
   flex-grow: 1;
@@ -844,8 +906,10 @@ button.switch.on:active i { transform: translateX(19px) scale(.82); }
   border-radius: 16px;
   width: 100%;
   text-align: left;
+  box-shadow: 0 8px 20px -14px rgba(0,0,0,.55);
+  transition: transform .15s, background .15s;
 }
-.study-card:active { background: var(--surface-2); }
+.study-card:active { background: var(--surface-2); transform: scale(.98); }
 .study-card-ico { font-size: 26px; line-height: 1; }
 .study-card-text { flex-grow: 1; display: flex; flex-direction: column; gap: 3px; }
 .study-card-text span { font-size: 16px; font-weight: 700; }
@@ -863,8 +927,10 @@ button.switch.on:active i { transform: translateX(19px) scale(.82); }
   border-radius: 15px;
   width: 100%;
   text-align: left;
+  box-shadow: 0 8px 20px -14px rgba(0,0,0,.55);
+  transition: transform .15s, background .15s;
 }
-.level-card:active { background: var(--surface-2); }
+.level-card:active { background: var(--surface-2); transform: scale(.98); }
 .level-ring {
   position: relative;
   width: 46px; height: 46px;
@@ -895,8 +961,10 @@ button.switch.on:active i { transform: translateX(19px) scale(.82); }
   width: 100%;
   text-align: left;
   margin-bottom: 8px;
+  box-shadow: 0 6px 16px -14px rgba(0,0,0,.5);
+  transition: transform .15s, background .15s;
 }
-.topic-row:active { background: var(--surface-2); }
+.topic-row:active { background: var(--surface-2); transform: scale(.98); }
 .topic-check {
   width: 21px; height: 21px;
   border-radius: 999px;
@@ -1064,7 +1132,7 @@ button.switch.on:active i { transform: translateX(19px) scale(.82); }
 
 /* preguntas autocorregibles: ejercicios de gramática y comprensión de lectura */
 .topic-exercises { display: flex; flex-direction: column; gap: 12px; }
-.exercise { padding: 14px 15px; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; }
+.exercise { padding: 14px 15px; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; box-shadow: 0 8px 20px -16px rgba(0,0,0,.55); }
 .exercise .ex-q { font-size: 14px; color: var(--text); line-height: 1.5; margin-bottom: 12px; font-weight: 600; }
 .ex-options { display: flex; flex-direction: column; gap: 8px; }
 .ex-option { padding: 12px 14px; background: var(--surface-2); border: 1px solid var(--line); border-radius: 11px; text-align: left; font-size: 13.5px; color: var(--text-2); min-height: 44px; transition: transform .15s; }

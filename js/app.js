@@ -25,6 +25,9 @@ let currentTextLevelId = null;
 let currentTextId = null;
 const openVocabCats = new Set();
 const XP_BY_QUALITY = [2, 5, 10, 15]; // otra vez, difícil, bien, fácil — solo cosmético, no toca el SRS
+// Mismo número que VERSION en sw.js — subir los dos juntos en cada deploy, así "Versión" en Ajustes
+// sirve para confirmar a simple vista si el dispositivo ya tiene los cambios nuevos.
+const APP_VERSION = 'v18';
 let session = null;
 let lastStreakSeen = null;
 let streakPopTimer = null;
@@ -64,6 +67,7 @@ async function boot() {
   wireWords();
   wireSettings();
   wireSync();
+  wireVersionCheck();
   wireStudy();
   wireMyVocab();
   renderHome();
@@ -99,7 +103,7 @@ function show(view) {
 
 // Botones que ya disparan su propio sonido — el tap genérico se salta estos
 // para no pisarlo (quedaría un "clic-clic" feo pegado al sonido real).
-const TAP_EXCLUDE = '.grade, .ex-option, .ex-check, .switch, #btn-start, #btn-more, #btn-reveal';
+const TAP_EXCLUDE = '.grade, .ex-option, .ex-check, .switch, .topic-row, #btn-start, #btn-more, #btn-reveal, #btn-topic-done';
 
 /** Un tap sutil para cualquier botón que no tenga ya su propio sonido — así toda la app "responde" al tacto, estilo Duolingo. */
 function wireGlobalTapSound() {
@@ -151,10 +155,13 @@ function renderHome() {
   }
   lastStreakSeen = streak;
 
+  renderStreakBanner(streak, met, goal, done);
+
   $('#done-today').textContent = Math.min(done, goal);
   $('#goal-today').textContent = goal;
   const pct = met ? 1 : goal ? Math.min(1, done / goal) : 0;
   $('#ring-fg').style.strokeDashoffset = String(565.5 * (1 - pct));
+  $('#ring-fg').classList.toggle('full', pct >= 1);
 
   $('#n-new').textContent = q.fresh.length;
   $('#n-due').textContent = q.due.length;
@@ -199,6 +206,34 @@ function renderHome() {
         <div class="deck-track"><div class="deck-fill" style="width:${pctDeck}%;background:${deck.color}"></div></div>
       </div>`;
     list.appendChild(el);
+  }
+}
+
+/** El estado del día, bien a la vista: completado, en riesgo, o todavía sin arrancar. */
+function renderStreakBanner(streak, met, goal, done) {
+  const el = $('#streak-banner');
+  const ico = $('#streak-banner-ico');
+  const title = $('#streak-banner-title');
+  const sub = $('#streak-banner-sub');
+  const day = (n) => (n === 1 ? 'día' : 'días');
+
+  if (met) {
+    el.className = 'streak-banner done';
+    ico.textContent = '✅';
+    title.textContent = '¡Racha de hoy completada!';
+    sub.textContent = `Racha de ${streak} ${day(streak)}. Volvé mañana antes de medianoche.`;
+  } else if (streak > 0) {
+    el.className = 'streak-banner warn';
+    ico.textContent = '🔥';
+    title.textContent = 'No dejes que la racha muera';
+    sub.textContent = `Te faltan ${Math.max(0, goal - done)} respuestas para salvar tu racha de ${streak} ${day(streak)}.`;
+  } else {
+    el.className = 'streak-banner start';
+    ico.textContent = '🔥';
+    title.textContent = 'Arrancá tu racha hoy';
+    sub.textContent = done > 0
+      ? `Te faltan ${Math.max(0, goal - done)} respuestas para empezarla.`
+      : `Sumá ${goal} respuestas hoy para empezarla.`;
   }
 }
 
@@ -857,6 +892,7 @@ function renderPractice(host, summaryEl, items, onComplete) {
     summaryEl.textContent = correct === items.length
       ? `¡Todo correcto! ${correct}/${items.length}.`
       : `Resultado: ${correct}/${items.length} correctas.`;
+    if (correct === items.length) sound.playPerfect();
     onComplete(correct, items.length);
   };
 
@@ -924,6 +960,7 @@ function wireStudy() {
 
   $('#btn-topic-done').addEventListener('click', () => {
     store.toggleTopicDone(currentTopicId);
+    sound.playLearned(store.isTopicDone(currentTopicId));
     renderTopic();
   });
 }
@@ -1031,6 +1068,7 @@ function renderGrammarLevel() {
 
 function openTopic(id) {
   currentTopicId = id;
+  sound.playFlip();
   show('grammar-topic');
 }
 
@@ -1199,6 +1237,7 @@ function renderTextsLevel() {
 
 function openText(id) {
   currentTextId = id;
+  sound.playFlip();
   show('texts-reader');
 }
 
@@ -1260,6 +1299,7 @@ function renderSettings() {
   }
 
   renderSyncStatus();
+  $('#version-label').textContent = `Versión ${APP_VERSION}`;
 }
 
 function renderSyncStatus() {
@@ -1395,10 +1435,57 @@ function toast(msg) {
   toastTimer = setTimeout(() => { el.hidden = true; }, 2600);
 }
 
+/**
+ * Registra el service worker y se asegura de que una versión nueva se
+ * aplique sola. sw.js ya hace skipWaiting + clients.claim en cuanto
+ * termina de instalar, así que lo único que faltaba era escuchar
+ * `controllerchange` y recargar una vez — si no, la pestaña seguía viva
+ * con los módulos JS viejos ya cargados en memoria hasta el próximo
+ * cierre y apertura manual, y los cambios "no se notaban".
+ */
+let swRegistration = null;
+let reloadingForUpdate = false;
+
 function registerServiceWorker() {
   if (!('serviceWorker' in navigator)) return;
   const base = location.pathname.replace(/[^/]*$/, '');
-  navigator.serviceWorker.register(base + 'sw.js').catch((e) => console.warn('SW:', e));
+
+  navigator.serviceWorker.addEventListener('controllerchange', () => {
+    if (reloadingForUpdate) return;
+    reloadingForUpdate = true;
+    location.reload();
+  });
+
+  navigator.serviceWorker.register(base + 'sw.js')
+    .then((reg) => { swRegistration = reg; })
+    .catch((e) => console.warn('SW:', e));
+}
+
+/** Botón "Buscar actualización" en Ajustes: fuerza el chequeo, sin esperar al próximo reload natural. */
+function wireVersionCheck() {
+  $('#btn-check-update').addEventListener('click', async () => {
+    const dot = $('#update-dot');
+    const note = $('#update-note');
+    if (!('serviceWorker' in navigator) || !swRegistration) {
+      toast('Este navegador no soporta actualizaciones automáticas.');
+      return;
+    }
+    dot.className = 'update-dot checking';
+    note.textContent = 'Buscando actualización…';
+    try {
+      await swRegistration.update();
+    } catch (e) {
+      console.warn('No se pudo buscar actualización:', e);
+    }
+    // Si había una versión nueva, el listener de controllerchange ya
+    // recargó la página antes de que esto se ejecute. Si no, avisamos.
+    setTimeout(() => {
+      if (reloadingForUpdate) return;
+      dot.className = 'update-dot';
+      note.textContent = 'Estás al día.';
+      toast(`Ya tenés la última versión (${APP_VERSION}).`);
+    }, 1200);
+  });
 }
 
 export { formatDelay };

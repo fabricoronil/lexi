@@ -48,6 +48,14 @@
 
     <p class="date" id="today-label"></p>
 
+    <div class="streak-banner" id="streak-banner">
+      <span class="streak-banner-ico" id="streak-banner-ico">🔥</span>
+      <div class="streak-banner-text">
+        <b id="streak-banner-title">No dejes que la racha muera</b>
+        <small id="streak-banner-sub"></small>
+      </div>
+    </div>
+
     <div class="ring-wrap">
       <svg class="ring" viewBox="0 0 208 208" aria-hidden="true">
         <circle cx="104" cy="104" r="90" class="ring-bg"/>
@@ -290,6 +298,20 @@
       <input type="file" id="file-import" accept="application/json,.json" hidden>
       <button class="opt as-btn danger" id="btn-reset" type="button">
         <div class="opt-text"><span>Borrar todo el progreso</span><small>No se puede deshacer</small></div>
+      </button>
+    </div>
+
+    <h2 class="section-label">Versión</h2>
+    <div class="panel">
+      <div class="opt">
+        <span class="update-dot" id="update-dot"></span>
+        <div class="opt-text">
+          <span id="version-label">Versión —</span>
+          <small id="update-note">Estás al día.</small>
+        </div>
+      </div>
+      <button class="opt as-btn" id="btn-check-update" type="button">
+        <div class="opt-text"><span>Buscar actualización</span><small>Si hay una versión nueva, se recarga sola</small></div>
       </button>
     </div>
 
