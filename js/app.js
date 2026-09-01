@@ -836,6 +836,151 @@ function renderRuleLine(line) {
 }
 
 /*
+ * ── Bloques de explicación (campo `sections` de un tema) ──
+ *
+ * La regla de tres líneas alcanza para repasar, pero no para *entender* un tema
+ * por primera vez. `sections` es una lista de bloques tipados que se dibujan
+ * entre la regla y los ejemplos: tablas de conjugación, fórmulas de estructura,
+ * comparaciones lado a lado, escalas, árboles de decisión. Cada tipo tiene su
+ * propio dibujo; si aparece uno desconocido simplemente se ignora.
+ */
+
+/** Markdown mínimo para el texto de los bloques: **negrita**, `código`, + resaltado de auxiliares. */
+function richText(str) {
+  return highlightAux(str)
+    .replace(/\*\*([^*]+)\*\*/g, '<b>$1</b>')
+    .replace(/`([^`]+)`/g, '<code>$1</code>');
+}
+
+const SECTION_RENDERERS = {
+  /** Párrafos de explicación en prosa. */
+  text: (s) => `<div class="sec-text">${toArray(s.body).map((p) => `<p>${richText(p)}</p>`).join('')}</div>`,
+
+  /**
+   * Tabla. La primera columna se trata como etiqueta (destacada) y el resto como
+   * datos. Va dentro de un contenedor con scroll horizontal propio para que una
+   * tabla ancha nunca empuje el ancho de la pantalla.
+   */
+  table: (s) => {
+    const head = s.cols?.length
+      ? `<thead><tr>${s.cols.map((c) => `<th>${richText(c)}</th>`).join('')}</tr></thead>`
+      : '';
+    const body = s.rows.map((row) => {
+      const cells = toArray(row).map((cell, i) => (i === 0
+        ? `<th scope="row">${richText(cell)}</th>`
+        : `<td>${richText(cell)}</td>`)).join('');
+      return `<tr>${cells}</tr>`;
+    }).join('');
+    return `<div class="sec-table-wrap">
+      <div class="sec-table-scroll"><table class="sec-table">${head}<tbody>${body}</tbody></table></div>
+      <span class="sec-table-hint">↔ deslizá para ver el resto</span>
+    </div>`;
+  },
+
+  /**
+   * Fórmula de estructura: bloques encadenados (Sujeto + verbo + resto), cada
+   * uno con su etiqueta y un ejemplo debajo. Es el "gráfico" que más ayuda a ver
+   * el orden de las palabras de un tiempo verbal.
+   */
+  formula: (s) => {
+    const parts = s.parts.map((p, i) => {
+      const sep = i === 0 ? '' : `<span class="f-op">${escapeHtml(p.op || '+')}</span>`;
+      const ex = p.ex ? `<span class="f-ex">${richText(p.ex)}</span>` : '';
+      return `${sep}<span class="f-part${p.key ? ' key' : ''}"><span class="f-label">${richText(p.label)}</span>${ex}</span>`;
+    }).join('');
+    const out = s.result ? `<div class="sec-formula-out">${richText(s.result)}</div>` : '';
+    return `<div class="sec-formula">${parts}</div>${out}`;
+  },
+
+  /** Dos paneles enfrentados (esto vs. aquello). */
+  contrast: (s) => {
+    const panel = (p, tone) => `
+      <div class="sec-panel tone-${tone}">
+        <div class="panel-head">${richText(p.label)}</div>
+        ${p.sub ? `<p class="panel-sub">${richText(p.sub)}</p>` : ''}
+        <ul>${toArray(p.items).map((it) => `<li>${richText(it)}</li>`).join('')}</ul>
+      </div>`;
+    return `<div class="sec-contrast">${panel(s.left, s.leftTone || 'blue')}${panel(s.right, s.rightTone || 'green')}</div>`;
+  },
+
+  /** Lista con viñeta de check. */
+  list: (s) => `<ul class="sec-list">${s.items.map((it) => `<li>${richText(it)}</li>`).join('')}</ul>`,
+
+  /** Árbol de decisión: pregunta → respuesta, en pasos numerados. */
+  steps: (s) => `<ol class="sec-steps">${s.items.map((it) => `
+    <li>
+      <span class="step-q">${richText(it.q)}</span>
+      <span class="step-a">${richText(it.a)}</span>
+    </li>`).join('')}</ol>`,
+
+  /**
+   * Escala con barras (0–100%). Pensado para los adverbios de frecuencia, donde
+   * "ver" la distancia entre always y never explica más que cualquier lista.
+   */
+  scale: (s) => `<div class="sec-scale">${s.items.map((it) => `
+    <div class="scale-row">
+      <span class="scale-label">${richText(it.label)}</span>
+      <span class="scale-track"><span class="scale-fill" style="width:${Math.max(2, Math.min(100, Number(it.pct) || 0))}%"></span></span>
+      <span class="scale-pct">${escapeHtml(it.note || `${it.pct}%`)}</span>
+    </div>`).join('')}</div>`,
+
+  /** Línea de tiempo: pasado ← ahora → futuro, con marcas. */
+  timeline: (s) => `<div class="sec-timeline">
+    <div class="tl-line">${s.points.map((p) => `
+      <div class="tl-point${p.now ? ' now' : ''}">
+        <span class="tl-dot"></span>
+        <span class="tl-label">${richText(p.label)}</span>
+        ${p.note ? `<span class="tl-note">${richText(p.note)}</span>` : ''}
+      </div>`).join('')}</div>
+  </div>`,
+
+  /** Aviso destacado (ámbar) para las trampas que no entran en "errores típicos". */
+  warn: (s) => `<div class="sec-warn"><span class="warn-ico">⚠️</span><div>${toArray(s.body).map((p) => `<p>${richText(p)}</p>`).join('')}</div></div>`,
+};
+
+function toArray(v) {
+  return Array.isArray(v) ? v : [v];
+}
+
+/**
+ * Una tabla que no entra scrollea sola, pero sin aviso parece contenido cortado.
+ * Marcamos solo las que realmente desbordan para mostrarles la ayuda, y lo
+ * revisamos de nuevo cuando cambia el ancho (rotar el teléfono, por ejemplo).
+ */
+function markScrollableTables(host) {
+  host.querySelectorAll('.sec-table-scroll').forEach((el) => {
+    el.parentElement.classList.toggle('is-scrollable', el.scrollWidth > el.clientWidth + 1);
+  });
+}
+
+let tableObserver = null;
+
+function renderSections(host, sections) {
+  if (!sections?.length) {
+    host.innerHTML = '';
+    return false;
+  }
+  host.innerHTML = sections.map((s) => {
+    const draw = SECTION_RENDERERS[s.type];
+    if (!draw) return '';
+    const title = s.title ? `<h3 class="sec-title">${richText(s.title)}</h3>` : '';
+    const note = s.note ? `<p class="sec-note">${richText(s.note)}</p>` : '';
+    // El modificador va con doble guion (`sec--formula`) a propósito: el dibujo
+    // interno de cada tipo usa `sec-formula`, `sec-warn`, etc., y si el envoltorio
+    // llevara la misma clase heredaría su `display` (flex/grid) y descolocaría
+    // el título y la nota.
+    return `<section class="sec sec--${s.type}">${title}${draw(s)}${note}</section>`;
+  }).join('');
+
+  markScrollableTables(host);
+  if (!tableObserver && window.ResizeObserver) {
+    tableObserver = new ResizeObserver(() => markScrollableTables(host));
+    tableObserver.observe(host);
+  }
+  return true;
+}
+
+/*
  * Motor de "preguntas con autocorrección", compartido entre los ejercicios
  * de un tema de gramática y las preguntas de comprensión de un texto de
  * lectura — ambos son, en el fondo, la misma cosa: una lista de preguntas de
@@ -1100,6 +1245,9 @@ function renderTopic() {
   } else {
     tipBlock.hidden = true;
   }
+
+  const sectionsBlock = $('#topic-sections-block');
+  sectionsBlock.hidden = !renderSections($('#topic-sections'), topic.sections);
 
   const examplesEl = $('#topic-examples');
   examplesEl.style.setProperty('--ex-accent', level.color);

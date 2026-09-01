@@ -46,6 +46,18 @@
                 {
                   "en": "Am I late for the meeting?",
                   "es": "¿Llego tarde a la reunión?"
+                },
+                {
+                  "en": "It's cold today.",
+                  "es": "Hace frío hoy. (el «it» no se traduce)"
+                },
+                {
+                  "en": "My parents aren't from here.",
+                  "es": "Mis padres no son de acá."
+                },
+                {
+                  "en": "Is it far from the centre?",
+                  "es": "¿Está lejos del centro?"
                 }
               ],
               "mistakes": [
@@ -63,6 +75,16 @@
                   "wrong": "Is hot today",
                   "right": "It is hot today",
                   "note": "En inglés el sujeto nunca se omite."
+                },
+                {
+                  "wrong": "I amn't ready",
+                  "right": "I'm not ready",
+                  "note": "«amn't» no existe: con I la única contracción negativa es I'm not."
+                },
+                {
+                  "wrong": "You are Argentinian?",
+                  "right": "Are you Argentinian?",
+                  "note": "Para preguntar hay que invertir; no alcanza con la entonación."
                 }
               ],
               "exercises": [
@@ -82,6 +104,278 @@
                   "q": "They ___ (be) at the gym right now.",
                   "answer": "are",
                   "explain": "They siempre va con are."
+                },
+                {
+                  "type": "mc",
+                  "q": "___ your parents at home?",
+                  "options": [
+                    "Is",
+                    "Am",
+                    "Are"
+                  ],
+                  "answer": 2,
+                  "explain": "«Your parents» es plural (= they) → are."
+                },
+                {
+                  "type": "fill",
+                  "q": "Negativo de «He is my boss»: He ___ my boss.",
+                  "answer": "isn't",
+                  "accept": [
+                    "is not",
+                    "'s not"
+                  ],
+                  "explain": "Se agrega not después del verbo: isn't / is not."
+                },
+                {
+                  "type": "mc",
+                  "q": "¿Cómo se dice «Tengo 30 años»?",
+                  "options": [
+                    "I have 30 years",
+                    "I am 30 years old",
+                    "I have 30 years old"
+                  ],
+                  "answer": 1,
+                  "explain": "La edad va con TO BE, nunca con have."
+                },
+                {
+                  "type": "fill",
+                  "q": "Completá: ___ cold in winter. (sujeto vacío)",
+                  "answer": "it's",
+                  "accept": [
+                    "it is"
+                  ],
+                  "explain": "El inglés necesita sujeto siempre: el «it» vacío para clima, hora y distancia."
+                }
+              ],
+              "sections": [
+                {
+                  "type": "text",
+                  "title": "Qué es y por qué importa tanto",
+                  "body": [
+                    "En español tenés **dos** verbos distintos para lo mismo: *ser* (identidad, algo permanente) y *estar* (estado, ubicación). El inglés los junta en **uno solo**: `be`. Por eso `I am tired` es *estoy cansado* y `I am Argentinian` es *soy argentino* — el mismo verbo, dos traducciones.",
+                    "`be` no se usa solo para describir. Es también el **auxiliar** del presente continuo (`I am working`) y de la voz pasiva. Si dominás `be`, después todo lo demás se apoya en él."
+                  ]
+                },
+                {
+                  "type": "table",
+                  "title": "Las tres formas del presente",
+                  "cols": [
+                    "Sujeto",
+                    "Forma",
+                    "Contracción",
+                    "Ejemplo"
+                  ],
+                  "rows": [
+                    [
+                      "I",
+                      "am",
+                      "I'm",
+                      "I'm a developer."
+                    ],
+                    [
+                      "You",
+                      "are",
+                      "you're",
+                      "You're early."
+                    ],
+                    [
+                      "He / She / It",
+                      "is",
+                      "he's / she's / it's",
+                      "She's my sister."
+                    ],
+                    [
+                      "We",
+                      "are",
+                      "we're",
+                      "We're at home."
+                    ],
+                    [
+                      "They",
+                      "are",
+                      "they're",
+                      "They're Brazilian."
+                    ]
+                  ],
+                  "note": "Solo hay tres formas: **am**, **is**, **are**. En español el verbo cambia seis veces (soy, sos, es, somos, son…); acá te alcanza con memorizar tres."
+                },
+                {
+                  "type": "formula",
+                  "title": "Afirmativo",
+                  "parts": [
+                    {
+                      "label": "Sujeto",
+                      "ex": "She"
+                    },
+                    {
+                      "label": "be",
+                      "ex": "is",
+                      "key": true
+                    },
+                    {
+                      "label": "Resto",
+                      "ex": "a doctor"
+                    }
+                  ],
+                  "result": "She is a doctor. → She's a doctor."
+                },
+                {
+                  "type": "formula",
+                  "title": "Negativo",
+                  "parts": [
+                    {
+                      "label": "Sujeto",
+                      "ex": "She"
+                    },
+                    {
+                      "label": "be",
+                      "ex": "is",
+                      "key": true
+                    },
+                    {
+                      "label": "not",
+                      "ex": "not",
+                      "key": true
+                    },
+                    {
+                      "label": "Resto",
+                      "ex": "a doctor"
+                    }
+                  ],
+                  "result": "She is not a doctor. → She isn't a doctor. / She's not a doctor."
+                },
+                {
+                  "type": "formula",
+                  "title": "Pregunta — se da vuelta el orden",
+                  "parts": [
+                    {
+                      "label": "be",
+                      "ex": "Is",
+                      "key": true
+                    },
+                    {
+                      "label": "Sujeto",
+                      "ex": "she"
+                    },
+                    {
+                      "label": "Resto",
+                      "ex": "a doctor?"
+                    }
+                  ],
+                  "result": "Is she a doctor? — Yes, she is. / No, she isn't."
+                },
+                {
+                  "type": "table",
+                  "title": "Tabla completa: los tres tipos de oración",
+                  "cols": [
+                    "",
+                    "Afirmativo",
+                    "Negativo",
+                    "Pregunta"
+                  ],
+                  "rows": [
+                    [
+                      "I",
+                      "I'm here",
+                      "I'm not here",
+                      "Am I here?"
+                    ],
+                    [
+                      "You",
+                      "You're here",
+                      "You aren't here",
+                      "Are you here?"
+                    ],
+                    [
+                      "He/She/It",
+                      "He's here",
+                      "He isn't here",
+                      "Is he here?"
+                    ],
+                    [
+                      "We",
+                      "We're here",
+                      "We aren't here",
+                      "Are we here?"
+                    ],
+                    [
+                      "They",
+                      "They're here",
+                      "They aren't here",
+                      "Are they here?"
+                    ]
+                  ],
+                  "note": "Fijate el patrón: para negar metés `not` **después** del verbo; para preguntar movés el verbo **antes** del sujeto. Nada más."
+                },
+                {
+                  "type": "table",
+                  "title": "Dos formas de negar (las dos son correctas)",
+                  "cols": [
+                    "Completa",
+                    "Contraés el verbo",
+                    "Contraés el not"
+                  ],
+                  "rows": [
+                    [
+                      "I am not",
+                      "I'm not",
+                      "— (no existe *I amn't*)"
+                    ],
+                    [
+                      "You are not",
+                      "you're not",
+                      "you aren't"
+                    ],
+                    [
+                      "He is not",
+                      "he's not",
+                      "he isn't"
+                    ]
+                  ],
+                  "note": "Con `I` solo existe una contracción: **I'm not**. `amn't` no existe en inglés estándar."
+                },
+                {
+                  "type": "list",
+                  "title": "Para qué se usa `be` (mirá cuánto abarca)",
+                  "items": [
+                    "**Identidad y profesión:** I'm Fabricio. She's an engineer.",
+                    "**Nacionalidad y origen:** They're from Chile.",
+                    "**Edad:** I'm 25. ← en español decís *tengo* 25, en inglés **sos** 25.",
+                    "**Estado de ánimo o físico:** He's tired. We're happy.",
+                    "**Ubicación:** The keys are on the table.",
+                    "**Descripción:** The movie is long. It's cold today.",
+                    "**Auxiliar del presente continuo:** I **am** working right now."
+                  ]
+                },
+                {
+                  "type": "warn",
+                  "title": "La trampa del sujeto invisible",
+                  "body": [
+                    "En español el sujeto se puede omitir: *«Es tarde»*, *«Están cansados»*. En inglés **nunca**. Toda oración necesita sujeto, aunque no signifique nada real.",
+                    "Por eso existe el `it` vacío: `It's late.` / `It's cold.` / `It's Monday.` Ese `it` no traduce a nada, pero sin él la oración está mal."
+                  ]
+                },
+                {
+                  "type": "steps",
+                  "title": "Cómo armar cualquier oración con `be`",
+                  "items": [
+                    {
+                      "q": "¿Quién es el sujeto?",
+                      "a": "She"
+                    },
+                    {
+                      "q": "¿Qué forma le toca? (I→am · he/she/it→is · resto→are)",
+                      "a": "is"
+                    },
+                    {
+                      "q": "¿Es afirmación, negación o pregunta?",
+                      "a": "pregunta → invierto: Is she…?"
+                    },
+                    {
+                      "q": "Agrego el resto de la información.",
+                      "a": "Is she a doctor?"
+                    }
+                  ]
                 }
               ]
             },
@@ -114,6 +408,18 @@
                 {
                   "en": "Is this your umbrella?",
                   "es": "¿Este paraguas es tuyo?"
+                },
+                {
+                  "en": "The company changed its name last year.",
+                  "es": "La empresa cambió su nombre el año pasado."
+                },
+                {
+                  "en": "Wash your hands before dinner.",
+                  "es": "Lavate las manos antes de cenar."
+                },
+                {
+                  "en": "Our flat is small but it's nice.",
+                  "es": "Nuestro depto es chico pero es lindo."
                 }
               ],
               "mistakes": [
@@ -131,6 +437,16 @@
                   "wrong": "it's dog",
                   "right": "its dog",
                   "note": "it's = it is. its = su (de ello)."
+                },
+                {
+                  "wrong": "The dog lost it's collar",
+                  "right": "The dog lost its collar",
+                  "note": "«it's» = it is. El posesivo va sin apóstrofo."
+                },
+                {
+                  "wrong": "I broke the my phone",
+                  "right": "I broke my phone",
+                  "note": "El posesivo reemplaza al artículo; no van juntos."
                 }
               ],
               "exercises": [
@@ -150,6 +466,209 @@
                   "q": "We love ___ (we) new apartment.",
                   "answer": "our",
                   "explain": "we → our."
+                },
+                {
+                  "type": "mc",
+                  "q": "Sofía visits ___ grandmother every Sunday.",
+                  "options": [
+                    "his",
+                    "her",
+                    "their"
+                  ],
+                  "answer": 1,
+                  "explain": "El dueño es Sofía (mujer) → her."
+                },
+                {
+                  "type": "fill",
+                  "q": "The restaurant is famous for ___ pizza. (de ese lugar)",
+                  "answer": "its",
+                  "explain": "Dueño = una cosa → its, sin apóstrofo."
+                },
+                {
+                  "type": "mc",
+                  "q": "___ live in Córdoba and ___ house is huge.",
+                  "options": [
+                    "Their / they",
+                    "They / their",
+                    "They / they"
+                  ],
+                  "answer": 1,
+                  "explain": "Primero el sujeto (They live), después el posesivo (their house)."
+                }
+              ],
+              "sections": [
+                {
+                  "type": "text",
+                  "title": "La idea clave",
+                  "body": [
+                    "Un adjetivo posesivo dice **de quién** es algo, y va siempre **antes** del sustantivo: `my car`, `her name`, `their house`.",
+                    "La gran diferencia con el español: en inglés el posesivo **no concuerda con la cosa poseída, sino con el dueño**. En español decís *sus libros* (plural porque son varios libros); en inglés es `his books` si el dueño es él, `her books` si es ella — y no cambia por ser plural."
+                  ]
+                },
+                {
+                  "type": "table",
+                  "title": "Tabla de posesivos",
+                  "cols": [
+                    "Pronombre",
+                    "Posesivo",
+                    "Español",
+                    "Ejemplo"
+                  ],
+                  "rows": [
+                    [
+                      "I",
+                      "my",
+                      "mi / mis",
+                      "my brother"
+                    ],
+                    [
+                      "you",
+                      "your",
+                      "tu / tus, su (de ustedes)",
+                      "your keys"
+                    ],
+                    [
+                      "he",
+                      "his",
+                      "su (de él)",
+                      "his phone"
+                    ],
+                    [
+                      "she",
+                      "her",
+                      "su (de ella)",
+                      "her job"
+                    ],
+                    [
+                      "it",
+                      "its",
+                      "su (de eso)",
+                      "its colour"
+                    ],
+                    [
+                      "we",
+                      "our",
+                      "nuestro/a/s",
+                      "our house"
+                    ],
+                    [
+                      "they",
+                      "their",
+                      "su (de ellos)",
+                      "their parents"
+                    ]
+                  ]
+                },
+                {
+                  "type": "contrast",
+                  "title": "Español vs. inglés: qué determina la forma",
+                  "left": {
+                    "label": "Español — concuerda con la cosa",
+                    "sub": "El posesivo cambia según lo poseído.",
+                    "items": [
+                      "su libro → un libro",
+                      "sus libros → varios libros",
+                      "No sabés de quién es"
+                    ]
+                  },
+                  "leftTone": "amber",
+                  "right": {
+                    "label": "Inglés — concuerda con el dueño",
+                    "sub": "El posesivo cambia según quién posee.",
+                    "items": [
+                      "his book / his books → de él",
+                      "her book / her books → de ella",
+                      "Siempre sabés de quién es"
+                    ]
+                  },
+                  "rightTone": "green"
+                },
+                {
+                  "type": "table",
+                  "title": "El caso que más cuesta: his / her / its",
+                  "cols": [
+                    "Dueño",
+                    "Posesivo",
+                    "Ejemplo",
+                    "Traducción"
+                  ],
+                  "rows": [
+                    [
+                      "un hombre",
+                      "his",
+                      "Peter loves his dog.",
+                      "Peter ama a su perro."
+                    ],
+                    [
+                      "una mujer",
+                      "her",
+                      "Ana loves her dog.",
+                      "Ana ama a su perro."
+                    ],
+                    [
+                      "cosa/animal",
+                      "its",
+                      "The city has its charm.",
+                      "La ciudad tiene su encanto."
+                    ]
+                  ],
+                  "note": "Las tres frases dicen *«su»* en español. En inglés la palabra cambia según **el sujeto de la oración**, no según el perro."
+                },
+                {
+                  "type": "warn",
+                  "title": "its ≠ it's",
+                  "body": [
+                    "`its` (sin apóstrofo) = **su**, de eso. → `The dog ate its food.`",
+                    "`it's` (con apóstrofo) = **it is** o **it has**. → `It's raining.`",
+                    "Es el error escrito más común del inglés, y lo cometen también los nativos. Truco: si podés reemplazar por *«it is»*, lleva apóstrofo."
+                  ]
+                },
+                {
+                  "type": "list",
+                  "title": "Reglas de uso que valen para todos",
+                  "items": [
+                    "Van **antes** del sustantivo, nunca solos: `my car` ✓ · `the car my` ✗",
+                    "**No** llevan artículo delante: `the my car` ✗ → `my car` ✓",
+                    "**No** llevan -s en plural: `my brothers` ✓ · `mys brothers` ✗",
+                    "En inglés se usan mucho más que en español para el cuerpo y la ropa: `I washed **my** hands` (me lavé las manos), `He put on **his** jacket`."
+                  ]
+                },
+                {
+                  "type": "table",
+                  "title": "No los confundas con los pronombres sujeto",
+                  "cols": [
+                    "Sujeto",
+                    "Posesivo",
+                    "Ejemplo lado a lado"
+                  ],
+                  "rows": [
+                    [
+                      "I",
+                      "my",
+                      "I am late. / My bus is late."
+                    ],
+                    [
+                      "he",
+                      "his",
+                      "He is here. / His car is here."
+                    ],
+                    [
+                      "she",
+                      "her",
+                      "She works. / Her job is hard."
+                    ],
+                    [
+                      "they",
+                      "their",
+                      "They live here. / Their flat is nice."
+                    ],
+                    [
+                      "we",
+                      "our",
+                      "We are ready. / Our team is ready."
+                    ]
+                  ],
+                  "note": "Truco rápido: si después viene un **verbo**, es sujeto (`She works`). Si después viene un **sustantivo**, es posesivo (`Her job`)."
                 }
               ]
             }
@@ -188,6 +707,18 @@
                 {
                   "en": "There are a lot of fish in this river.",
                   "es": "Hay muchos peces en este río."
+                },
+                {
+                  "en": "There are three people in the room.",
+                  "es": "Hay tres personas en la sala."
+                },
+                {
+                  "en": "I need some information about the course.",
+                  "es": "Necesito información sobre el curso."
+                },
+                {
+                  "en": "My glasses are on the table.",
+                  "es": "Mis anteojos están sobre la mesa."
                 }
               ],
               "mistakes": [
@@ -205,6 +736,16 @@
                   "wrong": "three childs",
                   "right": "three children",
                   "note": ""
+                },
+                {
+                  "wrong": "I have two childs",
+                  "right": "I have two children",
+                  "note": "child es irregular: children."
+                },
+                {
+                  "wrong": "The news are bad",
+                  "right": "The news is bad",
+                  "note": "«news» termina en -s pero es incontable singular."
                 }
               ],
               "exercises": [
@@ -224,6 +765,240 @@
                   "q": "I have three ___ (child).",
                   "answer": "children",
                   "explain": "child es irregular: child → children."
+                },
+                {
+                  "type": "fill",
+                  "q": "Plural de «city»: ___",
+                  "answer": "cities",
+                  "explain": "Consonante + y → se cambia la y por -ies."
+                },
+                {
+                  "type": "mc",
+                  "q": "How ___ money do you need?",
+                  "options": [
+                    "many",
+                    "much",
+                    "manys"
+                  ],
+                  "answer": 1,
+                  "explain": "«money» es incontable → how much."
+                },
+                {
+                  "type": "fill",
+                  "q": "Plural de «knife»: ___",
+                  "answer": "knives",
+                  "explain": "-fe se transforma en -ves."
+                },
+                {
+                  "type": "mc",
+                  "q": "Elegí la forma correcta:",
+                  "options": [
+                    "two womans",
+                    "two women",
+                    "two womens"
+                  ],
+                  "answer": 1,
+                  "explain": "woman → women (cambia la primera vocal, sin -s)."
+                }
+              ],
+              "sections": [
+                {
+                  "type": "text",
+                  "title": "Cómo funciona el plural",
+                  "body": [
+                    "El plural regular es simplemente **+s**. La dificultad no está ahí: está en un puñado de terminaciones que cambian, en unos pocos irregulares muy frecuentes, y en los sustantivos **incontables** que en español sí se pluralizan pero en inglés no."
+                  ]
+                },
+                {
+                  "type": "table",
+                  "title": "Las cinco reglas de escritura",
+                  "cols": [
+                    "Si termina en…",
+                    "Se agrega",
+                    "Ejemplos"
+                  ],
+                  "rows": [
+                    [
+                      "cualquier cosa (normal)",
+                      "-s",
+                      "book → books · car → cars"
+                    ],
+                    [
+                      "-s, -ss, -sh, -ch, -x, -z",
+                      "-es",
+                      "bus → buses · watch → watches · box → boxes"
+                    ],
+                    [
+                      "consonante + y",
+                      "-y → -ies",
+                      "city → cities · baby → babies"
+                    ],
+                    [
+                      "vocal + y",
+                      "-s (no cambia)",
+                      "boy → boys · day → days"
+                    ],
+                    [
+                      "-f / -fe",
+                      "-f → -ves",
+                      "knife → knives · life → lives · leaf → leaves"
+                    ]
+                  ],
+                  "note": "La regla del -es tiene lógica fonética: después de un sonido silbante no se puede pronunciar otra /s/ pegada, así que se mete una vocal."
+                },
+                {
+                  "type": "table",
+                  "title": "Irregulares que hay que saber sí o sí",
+                  "cols": [
+                    "Singular",
+                    "Plural",
+                    "Español"
+                  ],
+                  "rows": [
+                    [
+                      "man",
+                      "men",
+                      "hombre → hombres"
+                    ],
+                    [
+                      "woman",
+                      "women",
+                      "mujer → mujeres"
+                    ],
+                    [
+                      "child",
+                      "children",
+                      "niño → niños"
+                    ],
+                    [
+                      "person",
+                      "people",
+                      "persona → gente"
+                    ],
+                    [
+                      "foot",
+                      "feet",
+                      "pie → pies"
+                    ],
+                    [
+                      "tooth",
+                      "teeth",
+                      "diente → dientes"
+                    ],
+                    [
+                      "mouse",
+                      "mice",
+                      "ratón → ratones"
+                    ],
+                    [
+                      "fish",
+                      "fish",
+                      "pez → peces (no cambia)"
+                    ],
+                    [
+                      "sheep",
+                      "sheep",
+                      "oveja → ovejas (no cambia)"
+                    ]
+                  ],
+                  "note": "Ojo con la pronunciación de **woman /ˈwʊmən/** vs **women /ˈwɪmɪn/**: en el plural cambia la **primera** vocal, no la segunda."
+                },
+                {
+                  "type": "scale",
+                  "title": "Los tres sonidos de la -s final",
+                  "items": [
+                    {
+                      "label": "/s/",
+                      "pct": 33,
+                      "note": "books"
+                    },
+                    {
+                      "label": "/z/",
+                      "pct": 66,
+                      "note": "cars"
+                    },
+                    {
+                      "label": "/ɪz/",
+                      "pct": 100,
+                      "note": "buses"
+                    }
+                  ],
+                  "note": "Después de sonido sordo (p, t, k, f) suena **/s/**: books, cats. Después de sonoro (vocales, b, d, g, m, n, l, r) suena **/z/**: cars, dogs, boys. Después de silbante (s, sh, ch, x, ge) suena **/ɪz/** y agrega una sílaba: buses, watches."
+                },
+                {
+                  "type": "contrast",
+                  "title": "Contables vs. incontables",
+                  "left": {
+                    "label": "Contables",
+                    "sub": "Se pueden numerar → tienen plural.",
+                    "items": [
+                      "one book / two books",
+                      "a chair / three chairs",
+                      "Preguntás con **How many?**",
+                      "Usás a / an, some, many"
+                    ]
+                  },
+                  "leftTone": "blue",
+                  "right": {
+                    "label": "Incontables",
+                    "sub": "Se miden, no se cuentan → sin plural, verbo en singular.",
+                    "items": [
+                      "water, rice, money, bread",
+                      "**information**, advice, news",
+                      "Preguntás con **How much?**",
+                      "Usás some, much, a lot of"
+                    ]
+                  },
+                  "rightTone": "amber"
+                },
+                {
+                  "type": "table",
+                  "title": "Incontables que en español sí van en plural",
+                  "cols": [
+                    "Inglés (siempre singular)",
+                    "Español",
+                    "Correcto"
+                  ],
+                  "rows": [
+                    [
+                      "information",
+                      "informaciones",
+                      "some information ✓ · informations ✗"
+                    ],
+                    [
+                      "advice",
+                      "consejos",
+                      "some advice / a piece of advice ✓ · advices ✗"
+                    ],
+                    [
+                      "furniture",
+                      "muebles",
+                      "a lot of furniture ✓ · furnitures ✗"
+                    ],
+                    [
+                      "homework",
+                      "tareas",
+                      "a lot of homework ✓ · homeworks ✗"
+                    ],
+                    [
+                      "money",
+                      "plata",
+                      "the money **is** here ✓ · money are ✗"
+                    ],
+                    [
+                      "news",
+                      "noticias",
+                      "the news **is** good ✓ (termina en -s pero es singular)"
+                    ]
+                  ]
+                },
+                {
+                  "type": "warn",
+                  "title": "Palabras que solo existen en plural",
+                  "body": [
+                    "`trousers`, `jeans`, `glasses` (anteojos), `scissors` (tijera), `clothes` (ropa) son siempre plurales y llevan verbo en plural: `My jeans **are** dirty.`",
+                    "Para contarlos se usa `a pair of`: `two pairs of jeans`, `a pair of glasses`."
+                  ]
                 }
               ]
             },
@@ -258,6 +1033,18 @@
                 {
                   "en": "This coffee isn't very strong.",
                   "es": "Este café no es muy fuerte."
+                },
+                {
+                  "en": "She bought a beautiful old wooden table.",
+                  "es": "Compró una hermosa mesa vieja de madera."
+                },
+                {
+                  "en": "The film was quite long but really good.",
+                  "es": "La película fue bastante larga pero muy buena."
+                },
+                {
+                  "en": "I'm interested in the job — it sounds interesting.",
+                  "es": "Me interesa el trabajo, suena interesante."
                 }
               ],
               "mistakes": [
@@ -275,6 +1062,16 @@
                   "wrong": "I have a very hungry",
                   "right": "I'm very hungry",
                   "note": "El hambre va con to be, no con have."
+                },
+                {
+                  "wrong": "I'm boring in this class",
+                  "right": "I'm bored in this class",
+                  "note": "-ed = cómo te sentís; -ing = cómo es la cosa."
+                },
+                {
+                  "wrong": "a car very expensive",
+                  "right": "a very expensive car",
+                  "note": "El intensificador y el adjetivo van juntos, antes del sustantivo."
                 }
               ],
               "exercises": [
@@ -294,6 +1091,217 @@
                   "q": "It's ___ cold today. (muy — usá 'very')",
                   "answer": "very",
                   "explain": "very intensifica el adjetivo."
+                },
+                {
+                  "type": "mc",
+                  "q": "Elegí el orden correcto:",
+                  "options": [
+                    "a red small car",
+                    "a small red car",
+                    "a car small red"
+                  ],
+                  "answer": 1,
+                  "explain": "Tamaño antes que color: small red car."
+                },
+                {
+                  "type": "fill",
+                  "q": "The movie was ___ (very / boring) — nadie lo disfrutó. Escribí las dos palabras.",
+                  "answer": "very boring",
+                  "explain": "El intensificador va antes del adjetivo."
+                },
+                {
+                  "type": "mc",
+                  "q": "After 12 hours of work I was really ___",
+                  "options": [
+                    "tiring",
+                    "tired",
+                    "tire"
+                  ],
+                  "answer": 1,
+                  "explain": "Describe cómo te sentís vos → -ed."
+                }
+              ],
+              "sections": [
+                {
+                  "type": "text",
+                  "title": "La regla que da vuelta lo que ya sabés",
+                  "body": [
+                    "En español el adjetivo va casi siempre **después** del sustantivo: *un auto rojo*. En inglés va **antes**: `a red car`. Es el cambio de orden más importante del nivel y hay que automatizarlo.",
+                    "Y hay una segunda regla que sorprende: el adjetivo en inglés **nunca cambia de forma**. No tiene género ni número. `a red car`, `two red cars`, `a red house` — siempre `red`."
+                  ]
+                },
+                {
+                  "type": "formula",
+                  "title": "El orden dentro del grupo nominal",
+                  "parts": [
+                    {
+                      "label": "Determinante",
+                      "ex": "a / the / my"
+                    },
+                    {
+                      "label": "Intensificador",
+                      "ex": "very"
+                    },
+                    {
+                      "label": "Adjetivo",
+                      "ex": "expensive",
+                      "key": true
+                    },
+                    {
+                      "label": "Sustantivo",
+                      "ex": "car"
+                    }
+                  ],
+                  "result": "a very expensive car — un auto muy caro"
+                },
+                {
+                  "type": "contrast",
+                  "title": "Las dos posiciones posibles",
+                  "left": {
+                    "label": "Antes del sustantivo",
+                    "sub": "El adjetivo modifica al sustantivo directamente.",
+                    "items": [
+                      "a **big** house",
+                      "an **interesting** book",
+                      "**cold** water",
+                      "Nunca lleva -s: two big houses"
+                    ]
+                  },
+                  "leftTone": "blue",
+                  "right": {
+                    "label": "Después del verbo `be`",
+                    "sub": "El adjetivo describe al sujeto.",
+                    "items": [
+                      "The house **is big**.",
+                      "The book **was interesting**.",
+                      "The water **is cold**.",
+                      "También con look, seem, feel: It **looks** cheap."
+                    ]
+                  },
+                  "rightTone": "green"
+                },
+                {
+                  "type": "table",
+                  "title": "Modificadores: cuánta intensidad agrega cada uno",
+                  "cols": [
+                    "Modificador",
+                    "Fuerza",
+                    "Ejemplo",
+                    "Traducción"
+                  ],
+                  "rows": [
+                    [
+                      "not very",
+                      "bajo",
+                      "It's not very good.",
+                      "No es muy bueno."
+                    ],
+                    [
+                      "quite / fairly",
+                      "medio",
+                      "It's quite good.",
+                      "Está bastante bien."
+                    ],
+                    [
+                      "very",
+                      "alto",
+                      "It's very good.",
+                      "Es muy bueno."
+                    ],
+                    [
+                      "really",
+                      "alto (más hablado)",
+                      "It's really good.",
+                      "Es re bueno."
+                    ],
+                    [
+                      "extremely",
+                      "muy alto",
+                      "It's extremely good.",
+                      "Es buenísimo."
+                    ]
+                  ]
+                },
+                {
+                  "type": "scale",
+                  "title": "La escala de intensidad, en gráfico",
+                  "items": [
+                    {
+                      "label": "not very",
+                      "pct": 20
+                    },
+                    {
+                      "label": "a bit",
+                      "pct": 30
+                    },
+                    {
+                      "label": "quite",
+                      "pct": 55
+                    },
+                    {
+                      "label": "very",
+                      "pct": 80
+                    },
+                    {
+                      "label": "really",
+                      "pct": 85
+                    },
+                    {
+                      "label": "extremely",
+                      "pct": 100
+                    }
+                  ],
+                  "note": "`quite` es engañoso: en inglés británico significa *bastante* (menos que very), no *muy*."
+                },
+                {
+                  "type": "table",
+                  "title": "Orden cuando hay varios adjetivos",
+                  "cols": [
+                    "Posición",
+                    "Tipo",
+                    "Ejemplo"
+                  ],
+                  "rows": [
+                    [
+                      "1",
+                      "Opinión",
+                      "nice, beautiful, ugly"
+                    ],
+                    [
+                      "2",
+                      "Tamaño",
+                      "big, small, long"
+                    ],
+                    [
+                      "3",
+                      "Edad",
+                      "new, old, young"
+                    ],
+                    [
+                      "4",
+                      "Color",
+                      "black, red, blue"
+                    ],
+                    [
+                      "5",
+                      "Origen",
+                      "Italian, Japanese"
+                    ],
+                    [
+                      "6",
+                      "Material",
+                      "wooden, plastic, leather"
+                    ]
+                  ],
+                  "note": "`a nice big old black Italian leather bag`. En A1 rara vez vas a usar más de dos, pero el orden opinión → tamaño → color ya te sirve: `a beautiful small red car`."
+                },
+                {
+                  "type": "warn",
+                  "title": "-ed vs -ing: dos adjetivos que no son lo mismo",
+                  "body": [
+                    "`bored` = **aburrido** (cómo te sentís vos). `boring` = **aburrido** (cómo es la cosa).",
+                    "`I'm bored` = me estoy aburriendo. `I'm boring` = soy una persona aburrida. Lo mismo con interested/interesting, tired/tiring, excited/exciting."
+                  ]
                 }
               ]
             },
@@ -327,6 +1335,18 @@
                 {
                   "en": "Let's not tell anyone yet.",
                   "es": "No le contemos a nadie todavía."
+                },
+                {
+                  "en": "Don't be nervous, it's just an interview.",
+                  "es": "No estés nervioso, es solo una entrevista."
+                },
+                {
+                  "en": "Let's not talk about work tonight.",
+                  "es": "No hablemos de trabajo esta noche."
+                },
+                {
+                  "en": "Turn left and then go straight on.",
+                  "es": "Doblá a la izquierda y después seguí derecho."
                 }
               ],
               "mistakes": [
@@ -344,6 +1364,16 @@
                   "wrong": "Don't to be late",
                   "right": "Don't be late",
                   "note": ""
+                },
+                {
+                  "wrong": "You open the door!",
+                  "right": "Open the door!",
+                  "note": "El imperativo no lleva sujeto."
+                },
+                {
+                  "wrong": "Let's to go",
+                  "right": "Let's go",
+                  "note": "Después de let's va el verbo base, sin «to»."
                 }
               ],
               "exercises": [
@@ -363,6 +1393,172 @@
                   "q": "___ the door, please! (cerrar)",
                   "answer": "close",
                   "explain": "El imperativo usa el verbo base solo."
+                },
+                {
+                  "type": "mc",
+                  "q": "___ late for the meeting!",
+                  "options": [
+                    "Don't be",
+                    "Not be",
+                    "Don't are"
+                  ],
+                  "answer": 0,
+                  "explain": "El imperativo negativo usa don't + verbo base, incluso con be."
+                },
+                {
+                  "type": "fill",
+                  "q": "«Vayamos al cine» → ___ go to the cinema.",
+                  "answer": "let's",
+                  "accept": [
+                    "lets",
+                    "let us"
+                  ],
+                  "explain": "let's = let us, para propuestas que te incluyen."
+                },
+                {
+                  "type": "mc",
+                  "q": "¿Cuál suena más amable en un restaurante?",
+                  "options": [
+                    "Give me the menu.",
+                    "Could you bring me the menu, please?",
+                    "Bring menu!"
+                  ],
+                  "answer": 1,
+                  "explain": "El imperativo pelado suena brusco; una pregunta con could suaviza."
+                }
+              ],
+              "sections": [
+                {
+                  "type": "text",
+                  "title": "El tiempo verbal más fácil del inglés",
+                  "body": [
+                    "El imperativo es dar una orden, una instrucción o un consejo directo. Y es facilísimo: se usa **el verbo tal cual está en el diccionario**, sin sujeto y sin conjugar.",
+                    "`Open the door.` `Sit down.` `Call me later.` No hay *you*, no hay -s, no hay nada."
+                  ]
+                },
+                {
+                  "type": "formula",
+                  "title": "Afirmativo",
+                  "parts": [
+                    {
+                      "label": "Verbo base",
+                      "ex": "Close",
+                      "key": true
+                    },
+                    {
+                      "label": "Resto",
+                      "ex": "the window"
+                    }
+                  ],
+                  "result": "Close the window. — Cerrá la ventana."
+                },
+                {
+                  "type": "formula",
+                  "title": "Negativo",
+                  "parts": [
+                    {
+                      "label": "Don't",
+                      "ex": "Don't",
+                      "key": true
+                    },
+                    {
+                      "label": "Verbo base",
+                      "ex": "close"
+                    },
+                    {
+                      "label": "Resto",
+                      "ex": "the window"
+                    }
+                  ],
+                  "result": "Don't close the window. — No cierres la ventana."
+                },
+                {
+                  "type": "warn",
+                  "title": "El negativo lleva don't con TODOS los verbos",
+                  "body": [
+                    "Incluso con `be`, que en el resto del inglés nunca usa `do`: `**Don't be** late.` `**Don't be** silly.`",
+                    "Es la única situación donde `do` y `be` conviven, y es justamente porque el imperativo tiene su propia regla."
+                  ]
+                },
+                {
+                  "type": "table",
+                  "title": "Imperativo vs. let's",
+                  "cols": [
+                    "",
+                    "A quién incluye",
+                    "Estructura",
+                    "Ejemplo"
+                  ],
+                  "rows": [
+                    [
+                      "Imperativo",
+                      "solo a la otra persona",
+                      "verbo base",
+                      "Go to bed."
+                    ],
+                    [
+                      "Negativo",
+                      "solo a la otra persona",
+                      "don't + verbo",
+                      "Don't go to bed."
+                    ],
+                    [
+                      "let's",
+                      "a vos **y** a mí",
+                      "let's + verbo base",
+                      "Let's go to the beach."
+                    ],
+                    [
+                      "let's not",
+                      "a vos y a mí (negado)",
+                      "let's not + verbo",
+                      "Let's not argue."
+                    ]
+                  ],
+                  "note": "`let's` es la contracción de **let us**. Equivale al *«vamos a…»* o al *«…mos»* del español: *vayamos*, *comamos*."
+                },
+                {
+                  "type": "list",
+                  "title": "Para qué se usa el imperativo",
+                  "items": [
+                    "**Órdenes:** Stop! · Come here.",
+                    "**Instrucciones y recetas:** Add the salt and mix well.",
+                    "**Carteles y avisos:** Push · Pull · Do not enter · Keep left.",
+                    "**Consejos:** Take an umbrella, it's going to rain.",
+                    "**Invitaciones y ofrecimientos:** Have a seat. · Help yourself."
+                  ]
+                },
+                {
+                  "type": "contrast",
+                  "title": "Cómo sonar amable (importante)",
+                  "left": {
+                    "label": "Directo — puede sonar brusco",
+                    "sub": "El imperativo pelado es más fuerte que en español.",
+                    "items": [
+                      "Give me the salt.",
+                      "Open the window.",
+                      "Wait."
+                    ]
+                  },
+                  "leftTone": "red",
+                  "right": {
+                    "label": "Suavizado — lo natural",
+                    "sub": "Con please o una pregunta.",
+                    "items": [
+                      "**Could you** pass me the salt?",
+                      "Open the window, **please**.",
+                      "**Just a moment**, please."
+                    ]
+                  },
+                  "rightTone": "green"
+                },
+                {
+                  "type": "text",
+                  "title": "Dónde va `please`",
+                  "body": [
+                    "`please` puede ir al principio o al final; al final es lo más común y neutro: `Sit down, please.` / `Please sit down.`",
+                    "En el negativo también funciona: `Please don't touch that.`"
+                  ]
                 }
               ]
             },
@@ -397,6 +1593,18 @@
                 {
                   "en": "We had a great time at the party.",
                   "es": "La pasamos genial en la fiesta."
+                },
+                {
+                  "en": "I waited for an hour at a bus stop.",
+                  "es": "Esperé una hora en una parada de colectivo."
+                },
+                {
+                  "en": "She's a university student in the United States.",
+                  "es": "Es estudiante universitaria en Estados Unidos."
+                },
+                {
+                  "en": "Life is short. Enjoy the moment.",
+                  "es": "La vida es corta. Disfrutá el momento."
                 }
               ],
               "mistakes": [
@@ -414,6 +1622,16 @@
                   "wrong": "I speak the English",
                   "right": "I speak English",
                   "note": "Los idiomas no llevan artículo."
+                },
+                {
+                  "wrong": "I like the music",
+                  "right": "I like music",
+                  "note": "Generalización con incontable → sin artículo."
+                },
+                {
+                  "wrong": "an university",
+                  "right": "a university",
+                  "note": "Suena «iu» = consonante, aunque se escriba con vocal."
                 }
               ],
               "exercises": [
@@ -433,6 +1651,205 @@
                   "q": "She's ___ engineer. (a/an)",
                   "answer": "an",
                   "explain": "engineer empieza con sonido vocálico → an."
+                },
+                {
+                  "type": "mc",
+                  "q": "I waited for ___ hour.",
+                  "options": [
+                    "a",
+                    "an",
+                    "the"
+                  ],
+                  "answer": 1,
+                  "explain": "La «h» de hour es muda → suena vocal → an."
+                },
+                {
+                  "type": "fill",
+                  "q": "Generalización: I love ___ pizza. (escribí «a», «the» o «-» si no va nada)",
+                  "answer": "-",
+                  "accept": [
+                    "nada",
+                    "ninguno",
+                    "—"
+                  ],
+                  "explain": "Generalización con incontable → sin artículo."
+                },
+                {
+                  "type": "mc",
+                  "q": "There's ___ car outside. ___ car is red.",
+                  "options": [
+                    "the / A",
+                    "a / The",
+                    "a / A"
+                  ],
+                  "answer": 1,
+                  "explain": "Primera mención a, segunda the."
+                },
+                {
+                  "type": "mc",
+                  "q": "She plays ___ piano and ___ tennis.",
+                  "options": [
+                    "the / -",
+                    "- / the",
+                    "the / the"
+                  ],
+                  "answer": 0,
+                  "explain": "Instrumentos con the; deportes sin artículo."
+                }
+              ],
+              "sections": [
+                {
+                  "type": "text",
+                  "title": "La lógica detrás de a / an / the",
+                  "body": [
+                    "Todo se reduce a una pregunta: **¿la otra persona sabe exactamente de cuál estoy hablando?**",
+                    "Si **no** lo sabe (es uno cualquiera, o lo menciono por primera vez) → `a / an`. Si **sí** lo sabe (ya lo mencioné, es único, o está claro por contexto) → `the`."
+                  ]
+                },
+                {
+                  "type": "steps",
+                  "title": "Árbol de decisión",
+                  "items": [
+                    {
+                      "q": "¿Es plural o incontable, y hablo en general?",
+                      "a": "sin artículo → I like coffee. Dogs are friendly."
+                    },
+                    {
+                      "q": "¿Es singular contable y es «uno cualquiera»?",
+                      "a": "a / an → I need a pen."
+                    },
+                    {
+                      "q": "¿La otra persona ya sabe cuál es?",
+                      "a": "the → Can you close the door?"
+                    },
+                    {
+                      "q": "¿Es único en el mundo o en el contexto?",
+                      "a": "the → the sun, the president, the kitchen"
+                    }
+                  ]
+                },
+                {
+                  "type": "table",
+                  "title": "a o an: manda el SONIDO, no la letra",
+                  "cols": [
+                    "Se usa",
+                    "Cuándo",
+                    "Ejemplos"
+                  ],
+                  "rows": [
+                    [
+                      "a",
+                      "antes de sonido consonante",
+                      "a book · a car · a table"
+                    ],
+                    [
+                      "an",
+                      "antes de sonido vocal",
+                      "an apple · an hour · an idea"
+                    ],
+                    [
+                      "a (trampa)",
+                      "u que suena /ju/",
+                      "**a** university · **a** European city · **a** user"
+                    ],
+                    [
+                      "an (trampa)",
+                      "h muda",
+                      "**an** hour · **an** honest man"
+                    ]
+                  ],
+                  "note": "`university` empieza con vocal escrita pero suena *«iuniversity»* → consonante → **a**. `hour` empieza con consonante escrita pero la h no suena → *«auer»* → **an**."
+                },
+                {
+                  "type": "contrast",
+                  "title": "El cambio de a → the en una conversación",
+                  "left": {
+                    "label": "Primera mención → a",
+                    "sub": "Lo introduzco, todavía no sabés cuál.",
+                    "items": [
+                      "I bought **a** book yesterday.",
+                      "There's **a** man at the door.",
+                      "We found **a** nice restaurant."
+                    ]
+                  },
+                  "leftTone": "blue",
+                  "right": {
+                    "label": "Segunda mención → the",
+                    "sub": "Ya sabés de cuál hablo.",
+                    "items": [
+                      "**The** book is about history.",
+                      "**The** man wants to talk to you.",
+                      "**The** restaurant was cheap."
+                    ]
+                  },
+                  "rightTone": "green"
+                },
+                {
+                  "type": "table",
+                  "title": "Cuándo NO va ningún artículo (lo que más cuesta)",
+                  "cols": [
+                    "Categoría",
+                    "Correcto",
+                    "Incorrecto"
+                  ],
+                  "rows": [
+                    [
+                      "Generalizaciones en plural",
+                      "I like dogs.",
+                      "I like the dogs. ✗"
+                    ],
+                    [
+                      "Incontables en general",
+                      "Water is important.",
+                      "The water is important. ✗"
+                    ],
+                    [
+                      "Idiomas",
+                      "I speak English.",
+                      "I speak the English. ✗"
+                    ],
+                    [
+                      "Comidas",
+                      "We had lunch at 2.",
+                      "We had the lunch. ✗"
+                    ],
+                    [
+                      "Días y meses",
+                      "See you on Monday.",
+                      "on the Monday ✗"
+                    ],
+                    [
+                      "Deportes",
+                      "I play football.",
+                      "I play the football. ✗"
+                    ],
+                    [
+                      "Países (casi todos)",
+                      "She lives in Argentina.",
+                      "in the Argentina ✗"
+                    ]
+                  ],
+                  "note": "En español casi todo lleva artículo (*me gustan **los** perros*, *hablo **el** inglés*). En inglés, cuando hablás **en general**, no va nada."
+                },
+                {
+                  "type": "list",
+                  "title": "Casos donde siempre va `the`",
+                  "items": [
+                    "Cosas únicas: **the** sun, **the** moon, **the** world, **the** Internet",
+                    "Superlativos: **the** best, **the** biggest city",
+                    "Instrumentos musicales: I play **the** guitar",
+                    "Ríos, mares, cadenas montañosas: **the** Amazon, **the** Andes",
+                    "Países en plural o con «republic/kingdom»: **the** USA, **the** UK, **the** Netherlands",
+                    "Lugares del contexto compartido: I'm in **the** kitchen (la de esta casa)"
+                  ]
+                },
+                {
+                  "type": "warn",
+                  "title": "El error #1 de los hispanohablantes",
+                  "body": [
+                    "Traducir el artículo español automáticamente. *«Me gusta la música»* → `I like **music**`, no *«the music»*.",
+                    "Regla práctica: si podés agregar *«en general»* a la frase en español, en inglés **no va artículo**."
+                  ]
                 }
               ]
             }
@@ -471,6 +1888,18 @@
                 {
                   "en": "What time does the train leave?",
                   "es": "¿A qué hora sale el tren?"
+                },
+                {
+                  "en": "The shop opens at 9 and closes at 6.",
+                  "es": "El negocio abre a las 9 y cierra a las 6."
+                },
+                {
+                  "en": "He doesn't eat meat.",
+                  "es": "Él no come carne."
+                },
+                {
+                  "en": "Do they speak Spanish at home?",
+                  "es": "¿Hablan español en casa?"
                 }
               ],
               "mistakes": [
@@ -488,6 +1917,16 @@
                   "wrong": "She doesn't likes pizza",
                   "right": "She doesn't like pizza",
                   "note": ""
+                },
+                {
+                  "wrong": "Does she works here?",
+                  "right": "Does she work here?",
+                  "note": "La -s ya está en does; el verbo queda en base."
+                },
+                {
+                  "wrong": "He no eat fish",
+                  "right": "He doesn't eat fish",
+                  "note": "El negativo necesita el auxiliar don't/doesn't, no un «no» suelto."
                 }
               ],
               "exercises": [
@@ -511,6 +1950,239 @@
                     "do not like"
                   ],
                   "explain": "They usa el auxiliar don't."
+                },
+                {
+                  "type": "fill",
+                  "q": "She ___ (study) medicine.",
+                  "answer": "studies",
+                  "explain": "Consonante + y → -ies en tercera persona."
+                },
+                {
+                  "type": "mc",
+                  "q": "___ your brother live with you?",
+                  "options": [
+                    "Do",
+                    "Does",
+                    "Is"
+                  ],
+                  "answer": 1,
+                  "explain": "«Your brother» = he → does."
+                },
+                {
+                  "type": "fill",
+                  "q": "Negativo: They ___ work on Saturdays.",
+                  "answer": "don't",
+                  "accept": [
+                    "do not"
+                  ],
+                  "explain": "They → don't + verbo base."
+                },
+                {
+                  "type": "mc",
+                  "q": "Elegí la correcta:",
+                  "options": [
+                    "He doesn't likes it",
+                    "He don't like it",
+                    "He doesn't like it"
+                  ],
+                  "answer": 2,
+                  "explain": "doesn't ya lleva la -s, el verbo va en base."
+                }
+              ],
+              "sections": [
+                {
+                  "type": "text",
+                  "title": "Qué expresa el presente simple",
+                  "body": [
+                    "El presente simple **no** es «lo que estoy haciendo ahora». Es lo que hacés **siempre, habitualmente o como verdad general**: rutinas, gustos, hechos, horarios.",
+                    "`I work in Buenos Aires` = trabajo en Buenos Aires (mi trabajo, en general). Si querés decir «estoy trabajando ahora mismo», eso es presente continuo: `I'm working`."
+                  ]
+                },
+                {
+                  "type": "table",
+                  "title": "Conjugación: solo cambia la 3ª persona",
+                  "cols": [
+                    "Sujeto",
+                    "Verbo",
+                    "Ejemplo"
+                  ],
+                  "rows": [
+                    [
+                      "I",
+                      "work",
+                      "I work from home."
+                    ],
+                    [
+                      "You",
+                      "work",
+                      "You work too much."
+                    ],
+                    [
+                      "**He / She / It**",
+                      "**works**",
+                      "She works at a bank."
+                    ],
+                    [
+                      "We",
+                      "work",
+                      "We work together."
+                    ],
+                    [
+                      "They",
+                      "work",
+                      "They work at night."
+                    ]
+                  ],
+                  "note": "En español el verbo cambia seis veces. Acá cambia **una sola**: he/she/it lleva **-s**. Todo lo demás es el verbo pelado."
+                },
+                {
+                  "type": "table",
+                  "title": "Cómo se escribe esa -s",
+                  "cols": [
+                    "Si termina en…",
+                    "Se agrega",
+                    "Ejemplos"
+                  ],
+                  "rows": [
+                    [
+                      "normal",
+                      "-s",
+                      "work → works · live → lives"
+                    ],
+                    [
+                      "-s, -sh, -ch, -x, -o",
+                      "-es",
+                      "watch → watches · go → goes · do → does"
+                    ],
+                    [
+                      "consonante + y",
+                      "-y → -ies",
+                      "study → studies · fly → flies"
+                    ],
+                    [
+                      "vocal + y",
+                      "-s",
+                      "play → plays · buy → buys"
+                    ],
+                    [
+                      "have (irregular)",
+                      "→ has",
+                      "She has two cats."
+                    ]
+                  ]
+                },
+                {
+                  "type": "formula",
+                  "title": "Negativo — la -s se muda al auxiliar",
+                  "parts": [
+                    {
+                      "label": "Sujeto",
+                      "ex": "She"
+                    },
+                    {
+                      "label": "doesn't",
+                      "ex": "doesn't",
+                      "key": true
+                    },
+                    {
+                      "label": "Verbo BASE",
+                      "ex": "work"
+                    },
+                    {
+                      "label": "Resto",
+                      "ex": "on Sundays"
+                    }
+                  ],
+                  "result": "She doesn't work on Sundays. — NO: she doesn't works ✗"
+                },
+                {
+                  "type": "formula",
+                  "title": "Pregunta — mismo principio",
+                  "parts": [
+                    {
+                      "label": "Does",
+                      "ex": "Does",
+                      "key": true
+                    },
+                    {
+                      "label": "Sujeto",
+                      "ex": "she"
+                    },
+                    {
+                      "label": "Verbo BASE",
+                      "ex": "work"
+                    },
+                    {
+                      "label": "Resto",
+                      "ex": "here?"
+                    }
+                  ],
+                  "result": "Does she work here? — Yes, she does. / No, she doesn't."
+                },
+                {
+                  "type": "warn",
+                  "title": "La regla de oro: una sola -s por oración",
+                  "body": [
+                    "La `-s` de la tercera persona es como una pelota: la tiene **el verbo principal** en afirmativo, pero cuando aparece un auxiliar (`does` / `doesn't`), la pelota **pasa al auxiliar** y el verbo principal queda desnudo.",
+                    "`She work**s**` ✓ · `She **does**n't work` ✓ · `**Does** she work?` ✓ · `She doesn't work**s**` ✗ · `**Does** she work**s**?` ✗"
+                  ]
+                },
+                {
+                  "type": "table",
+                  "title": "Tabla completa con los tres tipos",
+                  "cols": [
+                    "Sujeto",
+                    "Afirmativo",
+                    "Negativo",
+                    "Pregunta"
+                  ],
+                  "rows": [
+                    [
+                      "I / You / We / They",
+                      "live here",
+                      "don't live here",
+                      "Do you live here?"
+                    ],
+                    [
+                      "He / She / It",
+                      "lives here",
+                      "doesn't live here",
+                      "Does he live here?"
+                    ]
+                  ]
+                },
+                {
+                  "type": "list",
+                  "title": "Cuándo usarlo",
+                  "items": [
+                    "**Rutinas y hábitos:** I get up at 7. She goes to the gym twice a week.",
+                    "**Hechos y verdades generales:** Water boils at 100°C. The sun rises in the east.",
+                    "**Gustos y opiniones:** I like coffee. He hates Mondays.",
+                    "**Estados permanentes:** They live in Rosario. She works for Google.",
+                    "**Horarios fijos:** The train leaves at 6:15."
+                  ]
+                },
+                {
+                  "type": "scale",
+                  "title": "Sonido de la -s de la 3ª persona",
+                  "items": [
+                    {
+                      "label": "/s/",
+                      "pct": 33,
+                      "note": "works"
+                    },
+                    {
+                      "label": "/z/",
+                      "pct": 66,
+                      "note": "lives"
+                    },
+                    {
+                      "label": "/ɪz/",
+                      "pct": 100,
+                      "note": "watches"
+                    }
+                  ],
+                  "note": "Igual que el plural: sordo → /s/ (works, sits), sonoro → /z/ (lives, plays), silbante → /ɪz/ y suma sílaba (watches, uses)."
                 }
               ]
             },
@@ -546,6 +2218,18 @@
                 {
                   "en": "Who works with you?",
                   "es": "¿Quién trabaja con vos?"
+                },
+                {
+                  "en": "How often do you go to the gym?",
+                  "es": "¿Con qué frecuencia vas al gimnasio?"
+                },
+                {
+                  "en": "Who wants coffee?",
+                  "es": "¿Quién quiere café? (sin auxiliar: who es el sujeto)"
+                },
+                {
+                  "en": "What time does the film start?",
+                  "es": "¿A qué hora empieza la película?"
                 }
               ],
               "mistakes": [
@@ -563,6 +2247,16 @@
                   "wrong": "Why you didn't come?",
                   "right": "Why didn't you come?",
                   "note": ""
+                },
+                {
+                  "wrong": "Where you live?",
+                  "right": "Where do you live?",
+                  "note": "Falta el auxiliar: QU + AUX + SUJ + INF."
+                },
+                {
+                  "wrong": "Who does live here?",
+                  "right": "Who lives here?",
+                  "note": "Si la QU- es el sujeto, no hay inversión."
                 }
               ],
               "exercises": [
@@ -582,6 +2276,277 @@
                   "q": "___ does she live? (pregunta por lugar)",
                   "answer": "where",
                   "explain": "where pregunta por lugar."
+                },
+                {
+                  "type": "mc",
+                  "q": "Ordená: «¿Dónde trabaja tu hermana?»",
+                  "options": [
+                    "Where your sister works?",
+                    "Where does your sister work?",
+                    "Where does work your sister?"
+                  ],
+                  "answer": 1,
+                  "explain": "QU + AUX + SUJETO + INFINITIVO."
+                },
+                {
+                  "type": "fill",
+                  "q": "___ you like jazz? (auxiliar)",
+                  "answer": "do",
+                  "explain": "Presente simple con you → do."
+                },
+                {
+                  "type": "mc",
+                  "q": "___ broke the window?",
+                  "options": [
+                    "Who did break",
+                    "Who broke",
+                    "Who does break"
+                  ],
+                  "answer": 1,
+                  "explain": "«Who» es el sujeto → sin auxiliar, verbo conjugado normal."
+                },
+                {
+                  "type": "mc",
+                  "q": "___ she at home right now?",
+                  "options": [
+                    "Does",
+                    "Is",
+                    "Do"
+                  ],
+                  "answer": 1,
+                  "explain": "Con el verbo be no se agrega auxiliar: el propio be se mueve al frente."
+                }
+              ],
+              "sections": [
+                {
+                  "type": "text",
+                  "title": "Por qué esto es tan difícil para nosotros",
+                  "body": [
+                    "En español preguntás cambiando la **entonación**: *«Trabajás acá.»* → *«¿Trabajás acá?»*. La oración es idéntica.",
+                    "En inglés eso no alcanza: hay que **reordenar las palabras**. Y el orden es siempre el mismo, en todos los tiempos verbales. Si aprendés esta estructura ahora, te sirve para todo el resto del idioma."
+                  ]
+                },
+                {
+                  "type": "formula",
+                  "title": "ASI — pregunta cerrada (sí / no)",
+                  "parts": [
+                    {
+                      "label": "Auxiliar",
+                      "ex": "Do",
+                      "key": true
+                    },
+                    {
+                      "label": "Sujeto",
+                      "ex": "you",
+                      "key": true
+                    },
+                    {
+                      "label": "Infinitivo",
+                      "ex": "live",
+                      "key": true
+                    },
+                    {
+                      "label": "Resto",
+                      "ex": "in Córdoba?"
+                    }
+                  ],
+                  "result": "Do you live in Córdoba? — Yes, I do. / No, I don't."
+                },
+                {
+                  "type": "formula",
+                  "title": "QUASI — pregunta abierta (con palabra interrogativa)",
+                  "parts": [
+                    {
+                      "label": "QU-",
+                      "ex": "Where",
+                      "key": true
+                    },
+                    {
+                      "label": "Auxiliar",
+                      "ex": "do",
+                      "key": true
+                    },
+                    {
+                      "label": "Sujeto",
+                      "ex": "you",
+                      "key": true
+                    },
+                    {
+                      "label": "Infinitivo",
+                      "ex": "live?",
+                      "key": true
+                    }
+                  ],
+                  "result": "Where do you live? — In Córdoba."
+                },
+                {
+                  "type": "text",
+                  "title": "Cómo recordarlo",
+                  "body": [
+                    "**ASI** = **A**uxiliar + **S**ujeto + **I**nfinitivo.",
+                    "**QUASI** = palabra **QU**- + ASI. Es decir: la palabra interrogativa se pega **adelante** y todo lo demás queda igual.",
+                    "Nada más. Todas las preguntas del inglés salen de estas dos fórmulas."
+                  ]
+                },
+                {
+                  "type": "table",
+                  "title": "Qué auxiliar usar según el tiempo",
+                  "cols": [
+                    "Tiempo",
+                    "Auxiliar",
+                    "Ejemplo"
+                  ],
+                  "rows": [
+                    [
+                      "Presente simple",
+                      "do / does",
+                      "Does she work here?"
+                    ],
+                    [
+                      "Pasado simple",
+                      "did",
+                      "Did you call him?"
+                    ],
+                    [
+                      "Verbo be",
+                      "am / is / are (¡es él mismo!)",
+                      "Are you ready?"
+                    ],
+                    [
+                      "Presente continuo",
+                      "am / is / are",
+                      "Is he working?"
+                    ],
+                    [
+                      "Modales (can, must…)",
+                      "el modal mismo",
+                      "Can you swim?"
+                    ],
+                    [
+                      "Present perfect",
+                      "have / has",
+                      "Have you finished?"
+                    ]
+                  ],
+                  "note": "Con `be` y con los modales **no se agrega** ningún auxiliar extra: el propio verbo se mueve al frente."
+                },
+                {
+                  "type": "table",
+                  "title": "Las palabras QU-",
+                  "cols": [
+                    "Palabra",
+                    "Pregunta por",
+                    "Ejemplo"
+                  ],
+                  "rows": [
+                    [
+                      "What",
+                      "qué / cuál (cosa)",
+                      "What do you do?"
+                    ],
+                    [
+                      "Where",
+                      "dónde",
+                      "Where do you live?"
+                    ],
+                    [
+                      "When",
+                      "cuándo",
+                      "When does it start?"
+                    ],
+                    [
+                      "Who",
+                      "quién",
+                      "Who is that?"
+                    ],
+                    [
+                      "Why",
+                      "por qué",
+                      "Why are you late?"
+                    ],
+                    [
+                      "How",
+                      "cómo",
+                      "How do you say this?"
+                    ],
+                    [
+                      "Which",
+                      "cuál (de un grupo)",
+                      "Which one do you want?"
+                    ],
+                    [
+                      "Whose",
+                      "de quién",
+                      "Whose bag is this?"
+                    ],
+                    [
+                      "How much / many",
+                      "cuánto / cuántos",
+                      "How many people came?"
+                    ],
+                    [
+                      "How long / often",
+                      "cuánto tiempo / con qué frecuencia",
+                      "How often do you train?"
+                    ]
+                  ]
+                },
+                {
+                  "type": "contrast",
+                  "title": "Afirmación vs. pregunta, lado a lado",
+                  "left": {
+                    "label": "Afirmación",
+                    "sub": "Sujeto primero.",
+                    "items": [
+                      "You **are** tired.",
+                      "She **works** here.",
+                      "They **can** swim.",
+                      "He **went** home."
+                    ]
+                  },
+                  "leftTone": "blue",
+                  "right": {
+                    "label": "Pregunta",
+                    "sub": "Auxiliar primero.",
+                    "items": [
+                      "**Are** you tired?",
+                      "**Does** she work here?",
+                      "**Can** they swim?",
+                      "**Did** he go home?"
+                    ]
+                  },
+                  "rightTone": "green"
+                },
+                {
+                  "type": "warn",
+                  "title": "La excepción: cuando preguntás POR el sujeto",
+                  "body": [
+                    "Si la palabra QU- **es** el sujeto, no hay inversión ni auxiliar. Se arma como una afirmación normal.",
+                    "`Who lives here?` (no *«Who does live here?»*) · `What happened?` (no *«What did happen?»*)",
+                    "Truco: si la respuesta a la pregunta es *«quién/qué hizo la acción»*, no hay auxiliar."
+                  ]
+                },
+                {
+                  "type": "steps",
+                  "title": "Método para armar cualquier pregunta",
+                  "items": [
+                    {
+                      "q": "Armo la afirmación primero.",
+                      "a": "She works in a hospital."
+                    },
+                    {
+                      "q": "Identifico el auxiliar (o lo agrego si no hay).",
+                      "a": "presente simple + she → does"
+                    },
+                    {
+                      "q": "Pongo el auxiliar adelante y el verbo en base.",
+                      "a": "Does she work in a hospital?"
+                    },
+                    {
+                      "q": "Si quiero preguntar un dato, agrego la QU- adelante.",
+                      "a": "Where does she work?"
+                    }
+                  ]
                 }
               ]
             }
@@ -620,6 +2585,18 @@
                 {
                   "en": "The children's toys are all over the floor.",
                   "es": "Los juguetes de los chicos están por todo el piso."
+                },
+                {
+                  "en": "That's my parents' house at the end of the street.",
+                  "es": "Esa es la casa de mis padres al final de la calle."
+                },
+                {
+                  "en": "Whose phone is ringing? — It's mine.",
+                  "es": "¿De quién es el teléfono que suena? — Es el mío."
+                },
+                {
+                  "en": "The children's school starts next week.",
+                  "es": "La escuela de los chicos empieza la semana que viene."
                 }
               ],
               "mistakes": [
@@ -637,6 +2614,16 @@
                   "wrong": "my sister house",
                   "right": "my sister's house",
                   "note": "No te comas el apóstrofo."
+                },
+                {
+                  "wrong": "the house of my brother",
+                  "right": "my brother's house",
+                  "note": "Con personas se usa 's, no «of»."
+                },
+                {
+                  "wrong": "It's our's",
+                  "right": "It's ours",
+                  "note": "Los pronombres posesivos nunca llevan apóstrofo."
                 }
               ],
               "exercises": [
@@ -656,6 +2643,218 @@
                   "q": "Whose ___ is this? (bag)",
                   "answer": "bag",
                   "explain": "Whose + sustantivo: de quién es X."
+                },
+                {
+                  "type": "fill",
+                  "q": "«La habitación de los chicos» → the ___ room (children)",
+                  "answer": "children's",
+                  "explain": "Plural irregular → 's normal."
+                },
+                {
+                  "type": "mc",
+                  "q": "«La casa de mis padres» (dos padres):",
+                  "options": [
+                    "my parent's house",
+                    "my parents' house",
+                    "the house of my parents"
+                  ],
+                  "answer": 1,
+                  "explain": "Plural terminado en -s → solo apóstrofo."
+                },
+                {
+                  "type": "mc",
+                  "q": "En «Ana's got a new job», el 's significa:",
+                  "options": [
+                    "posesivo",
+                    "is",
+                    "has"
+                  ],
+                  "answer": 2,
+                  "explain": "Va seguido de «got» → es la contracción de has."
+                },
+                {
+                  "type": "fill",
+                  "q": "Whose car is that? — It's ___. (de nosotros)",
+                  "answer": "ours",
+                  "explain": "Pronombre posesivo, sin apóstrofo y sin sustantivo detrás."
+                }
+              ],
+              "sections": [
+                {
+                  "type": "text",
+                  "title": "El orden está al revés del español",
+                  "body": [
+                    "En español decís *«el auto **de** Ana»*: primero la cosa, después el dueño. En inglés es al revés: **primero el dueño**, después la cosa, con `'s` en el medio.",
+                    "`Ana's car`. Literalmente: *«de-Ana auto»*. Cuesta al principio, pero es mecánico."
+                  ]
+                },
+                {
+                  "type": "formula",
+                  "title": "La estructura",
+                  "parts": [
+                    {
+                      "label": "Dueño",
+                      "ex": "Ana",
+                      "key": true
+                    },
+                    {
+                      "label": "'s",
+                      "ex": "'s",
+                      "key": true
+                    },
+                    {
+                      "label": "Cosa poseída",
+                      "ex": "car"
+                    }
+                  ],
+                  "result": "Ana's car — el auto de Ana"
+                },
+                {
+                  "type": "table",
+                  "title": "Dónde va el apóstrofo",
+                  "cols": [
+                    "Caso",
+                    "Regla",
+                    "Ejemplo"
+                  ],
+                  "rows": [
+                    [
+                      "Singular",
+                      "'s",
+                      "my brother**'s** bike"
+                    ],
+                    [
+                      "Nombre propio",
+                      "'s",
+                      "Carlos**'s** house (también Carlos' house)"
+                    ],
+                    [
+                      "Plural terminado en -s",
+                      "solo '",
+                      "my parents**'** house"
+                    ],
+                    [
+                      "Plural irregular",
+                      "'s",
+                      "the children**'s** toys · the men**'s** room"
+                    ],
+                    [
+                      "Dos dueños de lo mismo",
+                      "'s en el último",
+                      "Tom and Ana**'s** flat"
+                    ],
+                    [
+                      "Dos dueños distintos",
+                      "'s en cada uno",
+                      "Tom**'s** and Ana**'s** cars"
+                    ]
+                  ],
+                  "note": "Para plurales regulares el sonido no cambia (`parents` y `parents'` suenan igual): la diferencia es solo escrita."
+                },
+                {
+                  "type": "contrast",
+                  "title": "'s con personas · «of» con cosas",
+                  "left": {
+                    "label": "Personas y animales → 's",
+                    "sub": "Lo natural y lo más frecuente.",
+                    "items": [
+                      "my sister's job",
+                      "the dog's name",
+                      "Argentina's economy (países también)",
+                      "today's news (tiempo también)"
+                    ]
+                  },
+                  "leftTone": "green",
+                  "right": {
+                    "label": "Objetos y conceptos → of",
+                    "sub": "Con cosas inanimadas se prefiere «of».",
+                    "items": [
+                      "the door **of** the house",
+                      "the end **of** the film",
+                      "the top **of** the page",
+                      "the name **of** the street"
+                    ]
+                  },
+                  "rightTone": "blue"
+                },
+                {
+                  "type": "warn",
+                  "title": "Cuidado: 's tiene TRES significados distintos",
+                  "body": [
+                    "**Posesivo:** `Ana's car` = el auto de Ana.",
+                    "**is:** `Ana's tired` = Ana está cansada.",
+                    "**has:** `Ana's got a car` = Ana tiene un auto.",
+                    "Se distinguen por lo que viene después: si sigue un **sustantivo** es posesivo; si sigue un adjetivo o un verbo, es `is` o `has`."
+                  ]
+                },
+                {
+                  "type": "table",
+                  "title": "Whose…? — preguntar de quién es algo",
+                  "cols": [
+                    "Pregunta",
+                    "Respuesta corta",
+                    "Respuesta larga"
+                  ],
+                  "rows": [
+                    [
+                      "Whose bag is this?",
+                      "Mine.",
+                      "It's my bag."
+                    ],
+                    [
+                      "Whose keys are these?",
+                      "Ana's.",
+                      "They're Ana's keys."
+                    ],
+                    [
+                      "Whose turn is it?",
+                      "Yours.",
+                      "It's your turn."
+                    ]
+                  ],
+                  "note": "`Whose` (de quién) se pronuncia igual que `who's` (= who is). Otro par que solo se distingue al escribir."
+                },
+                {
+                  "type": "table",
+                  "title": "Posesivos: adjetivo vs. pronombre",
+                  "cols": [
+                    "Adjetivo (+ sustantivo)",
+                    "Pronombre (solo)",
+                    "Ejemplo"
+                  ],
+                  "rows": [
+                    [
+                      "my",
+                      "mine",
+                      "It's my book. → It's mine."
+                    ],
+                    [
+                      "your",
+                      "yours",
+                      "your seat → yours"
+                    ],
+                    [
+                      "his",
+                      "his",
+                      "his coat → his"
+                    ],
+                    [
+                      "her",
+                      "hers",
+                      "her idea → hers"
+                    ],
+                    [
+                      "our",
+                      "ours",
+                      "our car → ours"
+                    ],
+                    [
+                      "their",
+                      "theirs",
+                      "their house → theirs"
+                    ]
+                  ],
+                  "note": "El pronombre reemplaza al sustantivo entero y **nunca** lleva apóstrofo: `ours`, no *«our's»*."
                 }
               ]
             },
@@ -689,6 +2888,18 @@
                 {
                   "en": "See you at midnight!",
                   "es": "¡Nos vemos a medianoche!"
+                },
+                {
+                  "en": "The meeting is on Tuesday at 10 in the morning.",
+                  "es": "La reunión es el martes a las 10 de la mañana."
+                },
+                {
+                  "en": "I was born in 1998, in the winter.",
+                  "es": "Nací en 1998, en invierno."
+                },
+                {
+                  "en": "See you next Friday!",
+                  "es": "¡Nos vemos el viernes que viene! (sin preposición)"
                 }
               ],
               "mistakes": [
@@ -706,6 +2917,16 @@
                   "wrong": "I go to work in every day",
                   "right": "I go to work every day",
                   "note": "Sin preposición."
+                },
+                {
+                  "wrong": "in the night",
+                  "right": "at night",
+                  "note": "Todas las partes del día van con in, menos night."
+                },
+                {
+                  "wrong": "I'll call you on next week",
+                  "right": "I'll call you next week",
+                  "note": "Con «next» no va preposición."
                 }
               ],
               "exercises": [
@@ -725,6 +2946,218 @@
                   "q": "My birthday is ___ April. (mes)",
                   "answer": "in",
                   "explain": "Meses → in."
+                },
+                {
+                  "type": "fill",
+                  "q": "The concert starts ___ 8 pm.",
+                  "answer": "at",
+                  "explain": "Hora exacta → at."
+                },
+                {
+                  "type": "mc",
+                  "q": "My birthday is ___ 12 October.",
+                  "options": [
+                    "at",
+                    "in",
+                    "on"
+                  ],
+                  "answer": 2,
+                  "explain": "Fecha concreta → on."
+                },
+                {
+                  "type": "fill",
+                  "q": "I always study ___ the evening.",
+                  "answer": "in",
+                  "explain": "Partes del día → in (menos night)."
+                },
+                {
+                  "type": "mc",
+                  "q": "«Te veo la semana que viene»:",
+                  "options": [
+                    "I'll see you in next week",
+                    "I'll see you next week",
+                    "I'll see you on next week"
+                  ],
+                  "answer": 1,
+                  "explain": "next/last/this/every no llevan preposición."
+                }
+              ],
+              "sections": [
+                {
+                  "type": "text",
+                  "title": "El sistema del embudo",
+                  "body": [
+                    "Las tres preposiciones forman una escala de **precisión**: cuanto más específico el momento, más «chica» la preposición.",
+                    "`in` = períodos largos → `on` = un día concreto → `at` = un punto exacto en el reloj."
+                  ]
+                },
+                {
+                  "type": "formula",
+                  "title": "De lo más amplio a lo más preciso",
+                  "parts": [
+                    {
+                      "label": "IN",
+                      "ex": "in 2024 · in July",
+                      "key": true
+                    },
+                    {
+                      "label": "ON",
+                      "ex": "on Monday",
+                      "op": "→",
+                      "key": true
+                    },
+                    {
+                      "label": "AT",
+                      "ex": "at 7 pm",
+                      "op": "→",
+                      "key": true
+                    }
+                  ],
+                  "result": "in July → on 14 July → at 9 am on 14 July"
+                },
+                {
+                  "type": "table",
+                  "title": "Qué va con cada una",
+                  "cols": [
+                    "Prep.",
+                    "Se usa con",
+                    "Ejemplos"
+                  ],
+                  "rows": [
+                    [
+                      "**at**",
+                      "hora exacta",
+                      "at 7 o'clock · at 6:30"
+                    ],
+                    [
+                      "**at**",
+                      "momentos puntuales",
+                      "at night · at midnight · at noon"
+                    ],
+                    [
+                      "**at**",
+                      "feriados (períodos)",
+                      "at Christmas · at the weekend (UK)"
+                    ],
+                    [
+                      "**on**",
+                      "días de la semana",
+                      "on Monday · on Fridays"
+                    ],
+                    [
+                      "**on**",
+                      "fechas",
+                      "on 25 December · on my birthday"
+                    ],
+                    [
+                      "**on**",
+                      "día + parte del día",
+                      "on Monday morning"
+                    ],
+                    [
+                      "**in**",
+                      "partes del día",
+                      "in the morning · in the afternoon · in the evening"
+                    ],
+                    [
+                      "**in**",
+                      "meses",
+                      "in January · in December"
+                    ],
+                    [
+                      "**in**",
+                      "estaciones",
+                      "in summer · in winter"
+                    ],
+                    [
+                      "**in**",
+                      "años, décadas, siglos",
+                      "in 1998 · in the 90s · in the 21st century"
+                    ]
+                  ]
+                },
+                {
+                  "type": "warn",
+                  "title": "La contradicción que hay que memorizar",
+                  "body": [
+                    "`in the morning / in the afternoon / in the evening` → pero **`at night`**.",
+                    "No tiene lógica, es histórico. Es de las cosas que simplemente se aprenden de memoria."
+                  ]
+                },
+                {
+                  "type": "list",
+                  "title": "Expresiones SIN preposición (error muy común)",
+                  "items": [
+                    "**next:** See you next week. ✗ *on next week*",
+                    "**last:** I saw her last night. ✗ *in last night*",
+                    "**this / that:** I'm busy this morning.",
+                    "**every:** I run every day.",
+                    "**today / tomorrow / yesterday:** Call me tomorrow."
+                  ],
+                  "note": "Regla: si la frase empieza con next, last, this, every, today, tomorrow o yesterday → **no lleva preposición**."
+                },
+                {
+                  "type": "table",
+                  "title": "Preposiciones de duración (bonus muy útil)",
+                  "cols": [
+                    "Prep.",
+                    "Significado",
+                    "Ejemplo"
+                  ],
+                  "rows": [
+                    [
+                      "for",
+                      "cuánto tiempo dura",
+                      "for two hours · for a week"
+                    ],
+                    [
+                      "since",
+                      "desde cuándo",
+                      "since 2020 · since Monday"
+                    ],
+                    [
+                      "from… to…",
+                      "de… a…",
+                      "from 9 to 5"
+                    ],
+                    [
+                      "until / till",
+                      "hasta",
+                      "I work until 6."
+                    ],
+                    [
+                      "during",
+                      "a lo largo de",
+                      "during the summer"
+                    ],
+                    [
+                      "by",
+                      "no más tarde que",
+                      "Finish it by Friday."
+                    ]
+                  ]
+                },
+                {
+                  "type": "steps",
+                  "title": "Cómo elegir en dos segundos",
+                  "items": [
+                    {
+                      "q": "¿Es una hora del reloj o un punto exacto?",
+                      "a": "at → at 8:15, at midnight"
+                    },
+                    {
+                      "q": "¿Es un día o una fecha?",
+                      "a": "on → on Tuesday, on 3 May"
+                    },
+                    {
+                      "q": "¿Es un mes, año, estación o parte del día?",
+                      "a": "in → in April, in 2025, in the morning"
+                    },
+                    {
+                      "q": "¿Empieza con next/last/this/every?",
+                      "a": "sin preposición → next Monday"
+                    }
+                  ]
                 }
               ]
             },
@@ -759,6 +3192,18 @@
                 {
                   "en": "We're moving to a new apartment.",
                   "es": "Nos estamos mudando a un departamento nuevo."
+                },
+                {
+                  "en": "I'm on the bus, I arrive at the station in ten minutes.",
+                  "es": "Estoy en el colectivo, llego a la estación en diez minutos."
+                },
+                {
+                  "en": "The pharmacy is opposite the bank, next to the bakery.",
+                  "es": "La farmacia está enfrente del banco, al lado de la panadería."
+                },
+                {
+                  "en": "She's not at home, she's at work.",
+                  "es": "No está en casa, está en el trabajo."
                 }
               ],
               "mistakes": [
@@ -776,6 +3221,16 @@
                   "wrong": "I arrived to Madrid",
                   "right": "I arrived in Madrid",
                   "note": "arrive in + ciudad; arrive at + lugar puntual."
+                },
+                {
+                  "wrong": "I arrived to Madrid",
+                  "right": "I arrived in Madrid",
+                  "note": "«arrive» va con in (ciudades/países) o at (lugares puntuales), nunca con to."
+                },
+                {
+                  "wrong": "in the bus",
+                  "right": "on the bus",
+                  "note": "Transporte público → on. Solo el auto y el taxi van con in."
                 }
               ],
               "exercises": [
@@ -795,6 +3250,241 @@
                   "q": "I'm going ___ the gym. (to/at)",
                   "answer": "to",
                   "explain": "Movimiento hacia un lugar → to."
+                },
+                {
+                  "type": "mc",
+                  "q": "She lives ___ Rosario, ___ a small flat.",
+                  "options": [
+                    "at / in",
+                    "in / in",
+                    "in / at"
+                  ],
+                  "answer": 1,
+                  "explain": "Ciudad → in; espacio cerrado → in."
+                },
+                {
+                  "type": "fill",
+                  "q": "I'm tired, I want to go ___. (a casa)",
+                  "answer": "home",
+                  "explain": "«home» va sin preposición: go home."
+                },
+                {
+                  "type": "mc",
+                  "q": "The book is ___ the table.",
+                  "options": [
+                    "in",
+                    "on",
+                    "at"
+                  ],
+                  "answer": 1,
+                  "explain": "Superficie → on."
+                },
+                {
+                  "type": "fill",
+                  "q": "We arrived ___ the airport at 6. (preposición)",
+                  "answer": "at",
+                  "explain": "arrive at + lugar puntual."
+                }
+              ],
+              "sections": [
+                {
+                  "type": "text",
+                  "title": "Lugar y movimiento son dos sistemas distintos",
+                  "body": [
+                    "Para **dónde estás** (posición) usás `in`, `on`, `at`. Para **hacia dónde vas** (movimiento) usás `to`.",
+                    "Confundirlos es el error más audible: `I go **to** work` (voy al trabajo) vs. `I am **at** work` (estoy en el trabajo)."
+                  ]
+                },
+                {
+                  "type": "formula",
+                  "title": "La lógica geométrica",
+                  "parts": [
+                    {
+                      "label": "IN — adentro",
+                      "ex": "in a box · in Rosario",
+                      "key": true
+                    },
+                    {
+                      "label": "ON — sobre una superficie",
+                      "ex": "on the table · on the wall"
+                    },
+                    {
+                      "label": "AT — un punto",
+                      "ex": "at the door · at the bus stop"
+                    }
+                  ],
+                  "result": "in = volumen · on = superficie · at = punto en el mapa"
+                },
+                {
+                  "type": "table",
+                  "title": "Posición: in / on / at",
+                  "cols": [
+                    "Prep.",
+                    "Idea",
+                    "Ejemplos"
+                  ],
+                  "rows": [
+                    [
+                      "**in**",
+                      "dentro de un espacio cerrado",
+                      "in the kitchen · in my bag · in the car"
+                    ],
+                    [
+                      "**in**",
+                      "ciudades, países, continentes",
+                      "in Buenos Aires · in Brazil · in Europe"
+                    ],
+                    [
+                      "**on**",
+                      "sobre una superficie",
+                      "on the table · on the floor · on the wall"
+                    ],
+                    [
+                      "**on**",
+                      "líneas y transporte público",
+                      "on the bus · on a train · on the second floor"
+                    ],
+                    [
+                      "**at**",
+                      "un punto o dirección exacta",
+                      "at the door · at 25 Main Street"
+                    ],
+                    [
+                      "**at**",
+                      "lugares por su función",
+                      "at work · at school · at home · at the cinema"
+                    ]
+                  ],
+                  "note": "`in the car` pero `on the bus`: el auto se piensa como una caja chica en la que entrás, el colectivo como una plataforma sobre la que te subís."
+                },
+                {
+                  "type": "contrast",
+                  "title": "at vs. in con el mismo lugar",
+                  "left": {
+                    "label": "at → el lugar como función",
+                    "sub": "Importa qué hacés ahí.",
+                    "items": [
+                      "She's **at** school. (estudiando)",
+                      "He's **at** the office. (trabajando)",
+                      "I'm **at** the supermarket. (comprando)"
+                    ]
+                  },
+                  "leftTone": "blue",
+                  "right": {
+                    "label": "in → el lugar como edificio",
+                    "sub": "Importa que estás físicamente adentro.",
+                    "items": [
+                      "She's **in** the school. (dentro del edificio)",
+                      "He's **in** the office. (en esa habitación)",
+                      "It's cold **in** the supermarket."
+                    ]
+                  },
+                  "rightTone": "green"
+                },
+                {
+                  "type": "table",
+                  "title": "Movimiento: to y sus excepciones",
+                  "cols": [
+                    "Expresión",
+                    "Correcto",
+                    "Nota"
+                  ],
+                  "rows": [
+                    [
+                      "ir a un lugar",
+                      "go **to** the gym",
+                      "regla general"
+                    ],
+                    [
+                      "ir a una ciudad",
+                      "fly **to** Madrid",
+                      "regla general"
+                    ],
+                    [
+                      "ir a casa",
+                      "go home",
+                      "**sin to** — home es adverbio"
+                    ],
+                    [
+                      "ir arriba/abajo",
+                      "go upstairs / downstairs",
+                      "sin to"
+                    ],
+                    [
+                      "ir afuera",
+                      "go out",
+                      "sin to"
+                    ],
+                    [
+                      "llegar a un lugar chico",
+                      "arrive **at** the station",
+                      "arrive nunca va con to"
+                    ],
+                    [
+                      "llegar a una ciudad/país",
+                      "arrive **in** Chile",
+                      "arrive nunca va con to"
+                    ]
+                  ]
+                },
+                {
+                  "type": "warn",
+                  "title": "«go to home» no existe",
+                  "body": [
+                    "`home` funciona como adverbio, no como sustantivo de lugar: `I'm going **home**.` ✓ · `I'm going to home.` ✗",
+                    "Pero sí decís `at home` para la posición: `I'm at home.` ✓"
+                  ]
+                },
+                {
+                  "type": "table",
+                  "title": "Otras preposiciones de lugar frecuentes",
+                  "cols": [
+                    "Prep.",
+                    "Significado",
+                    "Ejemplo"
+                  ],
+                  "rows": [
+                    [
+                      "under",
+                      "debajo de",
+                      "The cat is under the table."
+                    ],
+                    [
+                      "behind",
+                      "detrás de",
+                      "The car is behind the house."
+                    ],
+                    [
+                      "in front of",
+                      "delante de",
+                      "He's in front of me."
+                    ],
+                    [
+                      "next to / beside",
+                      "al lado de",
+                      "Sit next to me."
+                    ],
+                    [
+                      "between",
+                      "entre (dos)",
+                      "between the bank and the shop"
+                    ],
+                    [
+                      "among",
+                      "entre (varios)",
+                      "among the trees"
+                    ],
+                    [
+                      "opposite",
+                      "enfrente de",
+                      "The bar is opposite the cinema."
+                    ],
+                    [
+                      "near",
+                      "cerca de",
+                      "I live near the park."
+                    ]
+                  ]
                 }
               ]
             },
@@ -829,6 +3519,18 @@
                 {
                   "en": "I do the laundry twice a week.",
                   "es": "Lavo la ropa dos veces por semana."
+                },
+                {
+                  "en": "I hardly ever eat fast food.",
+                  "es": "Casi nunca como comida rápida."
+                },
+                {
+                  "en": "We go to the cinema twice a month.",
+                  "es": "Vamos al cine dos veces por mes."
+                },
+                {
+                  "en": "He doesn't usually answer the phone.",
+                  "es": "Normalmente no atiende el teléfono."
                 }
               ],
               "mistakes": [
@@ -846,6 +3548,16 @@
                   "wrong": "two times a week",
                   "right": "twice a week",
                   "note": ""
+                },
+                {
+                  "wrong": "I don't never smoke",
+                  "right": "I never smoke",
+                  "note": "never ya niega; no se le suma don't."
+                },
+                {
+                  "wrong": "I go two times a week",
+                  "right": "I go twice a week",
+                  "note": "Una y dos veces tienen palabra propia: once, twice."
                 }
               ],
               "exercises": [
@@ -865,6 +3577,265 @@
                   "q": "She ___ drinks alcohol. (nunca)",
                   "answer": "never",
                   "explain": "never = nunca, va antes del verbo."
+                },
+                {
+                  "type": "mc",
+                  "q": "Elegí la correcta:",
+                  "options": [
+                    "She is always late",
+                    "She always is late",
+                    "Always she is late"
+                  ],
+                  "answer": 0,
+                  "explain": "Con «be», el adverbio va después del verbo."
+                },
+                {
+                  "type": "fill",
+                  "q": "Ordená: (never / I / eat / meat) →",
+                  "answer": "I never eat meat",
+                  "explain": "Verbo normal → el adverbio va antes."
+                },
+                {
+                  "type": "mc",
+                  "q": "«Voy al gimnasio dos veces por semana»:",
+                  "options": [
+                    "I go to the gym two times a week",
+                    "I go to the gym twice a week",
+                    "I twice go to the gym a week"
+                  ],
+                  "answer": 1,
+                  "explain": "Dos veces = twice, y la expresión va al final."
+                },
+                {
+                  "type": "mc",
+                  "q": "¿Dónde va «usually» en «I don't ___ work at night»?",
+                  "options": [
+                    "antes de don't",
+                    "entre don't y work",
+                    "al final"
+                  ],
+                  "answer": 1,
+                  "explain": "Después del primer auxiliar."
+                }
+              ],
+              "sections": [
+                {
+                  "type": "text",
+                  "title": "Para qué sirven",
+                  "body": [
+                    "Los adverbios de frecuencia contestan **how often?** y son la pareja natural del presente simple: cuando hablás de tu rutina, casi siempre aparece uno.",
+                    "Lo único difícil es **dónde van** en la oración, porque no se ubican donde los pondría un hispanohablante."
+                  ]
+                },
+                {
+                  "type": "scale",
+                  "title": "La escala de frecuencia",
+                  "items": [
+                    {
+                      "label": "always",
+                      "pct": 100,
+                      "note": "100%"
+                    },
+                    {
+                      "label": "usually",
+                      "pct": 85,
+                      "note": "~85%"
+                    },
+                    {
+                      "label": "often",
+                      "pct": 70,
+                      "note": "~70%"
+                    },
+                    {
+                      "label": "sometimes",
+                      "pct": 45,
+                      "note": "~45%"
+                    },
+                    {
+                      "label": "occasionally",
+                      "pct": 30,
+                      "note": "~30%"
+                    },
+                    {
+                      "label": "rarely/seldom",
+                      "pct": 12,
+                      "note": "~10%"
+                    },
+                    {
+                      "label": "hardly ever",
+                      "pct": 6,
+                      "note": "~5%"
+                    },
+                    {
+                      "label": "never",
+                      "pct": 2,
+                      "note": "0%"
+                    }
+                  ]
+                },
+                {
+                  "type": "formula",
+                  "title": "Regla de posición #1 — antes del verbo normal",
+                  "parts": [
+                    {
+                      "label": "Sujeto",
+                      "ex": "I"
+                    },
+                    {
+                      "label": "Adverbio",
+                      "ex": "always",
+                      "key": true
+                    },
+                    {
+                      "label": "Verbo",
+                      "ex": "drink"
+                    },
+                    {
+                      "label": "Resto",
+                      "ex": "coffee"
+                    }
+                  ],
+                  "result": "I always drink coffee. — NO: I drink always coffee ✗"
+                },
+                {
+                  "type": "formula",
+                  "title": "Regla de posición #2 — después del verbo be",
+                  "parts": [
+                    {
+                      "label": "Sujeto",
+                      "ex": "She"
+                    },
+                    {
+                      "label": "be",
+                      "ex": "is",
+                      "key": true
+                    },
+                    {
+                      "label": "Adverbio",
+                      "ex": "never",
+                      "key": true
+                    },
+                    {
+                      "label": "Resto",
+                      "ex": "late"
+                    }
+                  ],
+                  "result": "She is never late. — NO: She never is late ✗"
+                },
+                {
+                  "type": "table",
+                  "title": "La posición en cada caso",
+                  "cols": [
+                    "Situación",
+                    "Posición",
+                    "Ejemplo"
+                  ],
+                  "rows": [
+                    [
+                      "Verbo normal",
+                      "antes del verbo",
+                      "I **usually** get up at 7."
+                    ],
+                    [
+                      "Verbo be",
+                      "después del verbo",
+                      "He is **often** tired."
+                    ],
+                    [
+                      "Con auxiliar",
+                      "entre auxiliar y verbo",
+                      "I don't **usually** work on Fridays."
+                    ],
+                    [
+                      "Con modal",
+                      "después del modal",
+                      "You can **always** call me."
+                    ],
+                    [
+                      "Pregunta",
+                      "después del sujeto",
+                      "Do you **often** go there?"
+                    ]
+                  ],
+                  "note": "Regla única que resume todo: el adverbio va **después del primer auxiliar**, y si no hay auxiliar, **antes del verbo principal** — salvo con `be`, que se comporta como auxiliar."
+                },
+                {
+                  "type": "contrast",
+                  "title": "Adverbios vs. expresiones de frecuencia",
+                  "left": {
+                    "label": "Adverbios (una palabra)",
+                    "sub": "Van en el medio de la oración.",
+                    "items": [
+                      "always, usually, often",
+                      "sometimes, rarely, never",
+                      "I **often** cook at home."
+                    ]
+                  },
+                  "leftTone": "blue",
+                  "right": {
+                    "label": "Expresiones (varias palabras)",
+                    "sub": "Van al final (o al principio).",
+                    "items": [
+                      "every day, once a week",
+                      "twice a month, three times a year",
+                      "I cook at home **every day**."
+                    ]
+                  },
+                  "rightTone": "green"
+                },
+                {
+                  "type": "table",
+                  "title": "Cómo decir cuántas veces",
+                  "cols": [
+                    "Expresión",
+                    "Significado"
+                  ],
+                  "rows": [
+                    [
+                      "once a week",
+                      "una vez por semana"
+                    ],
+                    [
+                      "twice a month",
+                      "dos veces por mes"
+                    ],
+                    [
+                      "three times a year",
+                      "tres veces por año"
+                    ],
+                    [
+                      "every day / week",
+                      "todos los días / semanas"
+                    ],
+                    [
+                      "every other day",
+                      "día por medio"
+                    ],
+                    [
+                      "from time to time",
+                      "de vez en cuando"
+                    ]
+                  ],
+                  "note": "Ojo: se dice **once** y **twice**, no *«one time»* / *«two times»*. A partir de tres sí: three times, four times."
+                },
+                {
+                  "type": "warn",
+                  "title": "never ya es negativo",
+                  "body": [
+                    "`never` significa *nunca* y **niega por sí solo**. No se combina con don't.",
+                    "`I never go there.` ✓ · `I don't never go there.` ✗ (doble negación, incorrecta en inglés)",
+                    "Lo mismo con `hardly ever`, `rarely`, `seldom`."
+                  ]
+                },
+                {
+                  "type": "list",
+                  "title": "sometimes: el flexible",
+                  "items": [
+                    "Es el único que también puede ir **al principio** o **al final**:",
+                    "**Sometimes** I work from home. ✓",
+                    "I **sometimes** work from home. ✓",
+                    "I work from home **sometimes**. ✓"
+                  ]
                 }
               ]
             }
@@ -904,6 +3875,18 @@
                 {
                   "en": "Can I ask you a question?",
                   "es": "¿Puedo hacerte una pregunta?"
+                },
+                {
+                  "en": "Could you repeat that, please?",
+                  "es": "¿Podrías repetir eso, por favor?"
+                },
+                {
+                  "en": "I can't come tonight, I'm busy.",
+                  "es": "No puedo ir esta noche, estoy ocupado."
+                },
+                {
+                  "en": "You can pay by card here.",
+                  "es": "Acá se puede pagar con tarjeta."
                 }
               ],
               "mistakes": [
@@ -921,6 +3904,16 @@
                   "wrong": "Do you can help me?",
                   "right": "Can you help me?",
                   "note": "No lleva auxiliar do."
+                },
+                {
+                  "wrong": "Do you can drive?",
+                  "right": "Can you drive?",
+                  "note": "can es su propio auxiliar; no lleva do."
+                },
+                {
+                  "wrong": "She cans sing",
+                  "right": "She can sing",
+                  "note": "Los modales nunca llevan -s."
                 }
               ],
               "exercises": [
@@ -940,6 +3933,222 @@
                   "q": "___ you swim? (pregunta con can)",
                   "answer": "can",
                   "explain": "can va primero en la pregunta, sin do/does."
+                },
+                {
+                  "type": "mc",
+                  "q": "___ you speak Portuguese?",
+                  "options": [
+                    "Do",
+                    "Can",
+                    "Are"
+                  ],
+                  "answer": 1,
+                  "explain": "Para habilidad se usa can, y es su propio auxiliar."
+                },
+                {
+                  "type": "fill",
+                  "q": "Negativo: I ___ come to the party.",
+                  "answer": "can't",
+                  "accept": [
+                    "cannot",
+                    "can not"
+                  ],
+                  "explain": "can + not = can't."
+                },
+                {
+                  "type": "mc",
+                  "q": "Elegí la correcta:",
+                  "options": [
+                    "He can to play tennis",
+                    "He can plays tennis",
+                    "He can play tennis"
+                  ],
+                  "answer": 2,
+                  "explain": "Después de un modal va el verbo base, sin to y sin -s."
+                },
+                {
+                  "type": "mc",
+                  "q": "El pedido más educado es:",
+                  "options": [
+                    "Open the window.",
+                    "Can you open the window?",
+                    "Could you open the window?"
+                  ],
+                  "answer": 2,
+                  "explain": "could suena más formal y amable que can."
+                }
+              ],
+              "sections": [
+                {
+                  "type": "text",
+                  "title": "Qué es un verbo modal",
+                  "body": [
+                    "`can` es un **modal**: un verbo que no describe una acción, sino tu **actitud** hacia ella (poder, deber, querer). Los modales tienen su propio club de reglas y son de los verbos más cómodos del inglés.",
+                    "Regla clave: un modal **nunca cambia de forma** y el verbo que lo sigue va siempre en **infinitivo sin to**."
+                  ]
+                },
+                {
+                  "type": "table",
+                  "title": "Las cuatro leyes de los modales",
+                  "cols": [
+                    "Ley",
+                    "Qué significa",
+                    "Ejemplo"
+                  ],
+                  "rows": [
+                    [
+                      "No lleva -s",
+                      "igual para todas las personas",
+                      "He **can** swim ✓ · he cans ✗"
+                    ],
+                    [
+                      "No lleva to",
+                      "el verbo siguiente va en base",
+                      "I can **swim** ✓ · can to swim ✗"
+                    ],
+                    [
+                      "Es su propio auxiliar",
+                      "no necesita do/does",
+                      "**Can** you swim? ✓ · do you can ✗"
+                    ],
+                    [
+                      "Niega con not",
+                      "can + not = can't",
+                      "I **can't** swim ✓ · I don't can ✗"
+                    ]
+                  ]
+                },
+                {
+                  "type": "formula",
+                  "title": "Afirmativo",
+                  "parts": [
+                    {
+                      "label": "Sujeto",
+                      "ex": "She"
+                    },
+                    {
+                      "label": "can",
+                      "ex": "can",
+                      "key": true
+                    },
+                    {
+                      "label": "Verbo base",
+                      "ex": "drive"
+                    }
+                  ],
+                  "result": "She can drive. — Ella sabe manejar."
+                },
+                {
+                  "type": "formula",
+                  "title": "Negativo y pregunta",
+                  "parts": [
+                    {
+                      "label": "Can",
+                      "ex": "Can",
+                      "key": true
+                    },
+                    {
+                      "label": "Sujeto",
+                      "ex": "she"
+                    },
+                    {
+                      "label": "Verbo base",
+                      "ex": "drive?"
+                    }
+                  ],
+                  "result": "Can she drive? — Yes, she can. / No, she can't."
+                },
+                {
+                  "type": "table",
+                  "title": "Los cuatro usos de can",
+                  "cols": [
+                    "Uso",
+                    "Ejemplo",
+                    "Traducción"
+                  ],
+                  "rows": [
+                    [
+                      "**Habilidad**",
+                      "I can play the guitar.",
+                      "Sé tocar la guitarra."
+                    ],
+                    [
+                      "**Posibilidad**",
+                      "You can buy tickets online.",
+                      "Se pueden comprar entradas online."
+                    ],
+                    [
+                      "**Permiso**",
+                      "Can I use your phone?",
+                      "¿Puedo usar tu teléfono?"
+                    ],
+                    [
+                      "**Pedido**",
+                      "Can you help me?",
+                      "¿Me podés ayudar?"
+                    ]
+                  ],
+                  "note": "En español *«puedo»* y *«sé»* son verbos distintos; en inglés los dos son `can`. `I can swim` puede ser *sé nadar* o *puedo nadar* según el contexto."
+                },
+                {
+                  "type": "warn",
+                  "title": "Pronunciación: can vs. can't",
+                  "body": [
+                    "Es la trampa auditiva más famosa. En afirmativo, `can` se pronuncia **débil**: /kən/, casi *«kn»*. En negativo, `can't` se pronuncia **fuerte y largo**: /kɑːnt/ (UK) o /kænt/ (US).",
+                    "`I can swim` suena *ai-kn-swim* (rápido). `I can't swim` suena *ai-CANT-swim* (marcado).",
+                    "Si escuchás la vocal clara y acentuada, es el negativo."
+                  ]
+                },
+                {
+                  "type": "contrast",
+                  "title": "can vs. could",
+                  "left": {
+                    "label": "can",
+                    "sub": "Presente, o pedido directo.",
+                    "items": [
+                      "I **can** speak English.",
+                      "**Can** you open the window?",
+                      "You **can** park here."
+                    ]
+                  },
+                  "leftTone": "blue",
+                  "right": {
+                    "label": "could",
+                    "sub": "Pasado, o pedido más formal.",
+                    "items": [
+                      "I **could** swim when I was five.",
+                      "**Could** you open the window? (más educado)",
+                      "It **could** rain later. (posibilidad)"
+                    ]
+                  },
+                  "rightTone": "green"
+                },
+                {
+                  "type": "table",
+                  "title": "Respuestas cortas",
+                  "cols": [
+                    "Pregunta",
+                    "Sí",
+                    "No"
+                  ],
+                  "rows": [
+                    [
+                      "Can you cook?",
+                      "Yes, I can.",
+                      "No, I can't."
+                    ],
+                    [
+                      "Can he come?",
+                      "Yes, he can.",
+                      "No, he can't."
+                    ],
+                    [
+                      "Can I sit here?",
+                      "Yes, of course.",
+                      "Sorry, it's taken."
+                    ]
+                  ],
+                  "note": "En la respuesta corta **no se repite el verbo principal**: `Yes, I can` ✓, no *«Yes, I can cook»* (aunque no está mal, suena redundante)."
                 }
               ]
             },
@@ -973,6 +4182,18 @@
                 {
                   "en": "Why are you smiling?",
                   "es": "¿Por qué estás sonriendo?"
+                },
+                {
+                  "en": "Sorry, I can't talk — I'm driving.",
+                  "es": "Perdón, no puedo hablar, estoy manejando."
+                },
+                {
+                  "en": "What are you doing this weekend?",
+                  "es": "¿Qué hacés este fin de semana? (futuro agendado)"
+                },
+                {
+                  "en": "He's studying medicine this year.",
+                  "es": "Está estudiando medicina este año."
                 }
               ],
               "mistakes": [
@@ -990,6 +4211,16 @@
                   "wrong": "I am knowing the answer",
                   "right": "I know the answer",
                   "note": "Verbos de estado: sin continuo."
+                },
+                {
+                  "wrong": "I working now",
+                  "right": "I'm working now",
+                  "note": "El continuo necesita SIEMPRE el verbo be delante."
+                },
+                {
+                  "wrong": "I'm not understanding",
+                  "right": "I don't understand",
+                  "note": "«understand» es stative: no va en continuo."
                 }
               ],
               "exercises": [
@@ -1009,6 +4240,229 @@
                   "q": "They ___ football at the moment. (play)",
                   "answer": "are playing",
                   "explain": "they → are + jugando-ing."
+                },
+                {
+                  "type": "fill",
+                  "q": "-ing de «run»: ___",
+                  "answer": "running",
+                  "explain": "Consonante-vocal-consonante en monosílabo → se dobla la consonante."
+                },
+                {
+                  "type": "mc",
+                  "q": "Elegí la correcta:",
+                  "options": [
+                    "I am knowing him",
+                    "I know him",
+                    "I knowing him"
+                  ],
+                  "answer": 1,
+                  "explain": "«know» es stative → presente simple."
+                },
+                {
+                  "type": "fill",
+                  "q": "Look! It ___ (rain).",
+                  "answer": "is raining",
+                  "accept": [
+                    "'s raining",
+                    "is raining."
+                  ],
+                  "explain": "be + verbo con -ing."
+                },
+                {
+                  "type": "mc",
+                  "q": "«Mañana me encuentro con Ana» (ya arreglado):",
+                  "options": [
+                    "I meet Ana tomorrow",
+                    "I'm meeting Ana tomorrow",
+                    "I am meet Ana tomorrow"
+                  ],
+                  "answer": 1,
+                  "explain": "Planes ya agendados → presente continuo con valor de futuro."
+                }
+              ],
+              "sections": [
+                {
+                  "type": "text",
+                  "title": "La acción en curso",
+                  "body": [
+                    "El presente continuo describe algo que está pasando **ahora mismo** o **en este período de mi vida**. Es el equivalente exacto del *«estoy + -ando/-iendo»* del español.",
+                    "Se arma con dos piezas: el verbo `be` conjugado (que hace de auxiliar) + el verbo principal con **-ing**."
+                  ]
+                },
+                {
+                  "type": "formula",
+                  "title": "La estructura",
+                  "parts": [
+                    {
+                      "label": "Sujeto",
+                      "ex": "She"
+                    },
+                    {
+                      "label": "be",
+                      "ex": "is",
+                      "key": true
+                    },
+                    {
+                      "label": "verbo + ing",
+                      "ex": "working",
+                      "key": true
+                    },
+                    {
+                      "label": "Resto",
+                      "ex": "right now"
+                    }
+                  ],
+                  "result": "She is working right now. → She's working right now."
+                },
+                {
+                  "type": "table",
+                  "title": "Conjugación completa",
+                  "cols": [
+                    "Sujeto",
+                    "Afirmativo",
+                    "Negativo",
+                    "Pregunta"
+                  ],
+                  "rows": [
+                    [
+                      "I",
+                      "I'm working",
+                      "I'm not working",
+                      "Am I working?"
+                    ],
+                    [
+                      "You / We / They",
+                      "you're working",
+                      "you aren't working",
+                      "Are you working?"
+                    ],
+                    [
+                      "He / She / It",
+                      "he's working",
+                      "he isn't working",
+                      "Is he working?"
+                    ]
+                  ],
+                  "note": "Fijate que el que se mueve y se niega es **be**, no el verbo con -ing. El -ing nunca cambia."
+                },
+                {
+                  "type": "table",
+                  "title": "Cómo se escribe el -ing",
+                  "cols": [
+                    "Si termina en…",
+                    "Regla",
+                    "Ejemplos"
+                  ],
+                  "rows": [
+                    [
+                      "normal",
+                      "+ ing",
+                      "work → working · play → playing"
+                    ],
+                    [
+                      "-e muda",
+                      "se cae la e",
+                      "write → writing · make → making · have → having"
+                    ],
+                    [
+                      "consonante-vocal-consonante (1 sílaba)",
+                      "se dobla la consonante",
+                      "run → running · sit → sitting · get → getting"
+                    ],
+                    [
+                      "-ie",
+                      "-ie → -y",
+                      "lie → lying · die → dying"
+                    ],
+                    [
+                      "-ee",
+                      "no cambia",
+                      "see → seeing · agree → agreeing"
+                    ]
+                  ],
+                  "note": "La regla de doblar la consonante vale también para verbos de dos sílabas con acento en la última: begin → beginning, prefer → preferring."
+                },
+                {
+                  "type": "table",
+                  "title": "Los tres usos",
+                  "cols": [
+                    "Uso",
+                    "Ejemplo",
+                    "Marcadores típicos"
+                  ],
+                  "rows": [
+                    [
+                      "**Ahora mismo**",
+                      "I'm watching a film.",
+                      "now, right now, at the moment"
+                    ],
+                    [
+                      "**Período actual** (no literalmente ahora)",
+                      "I'm studying English this year.",
+                      "these days, this month, currently"
+                    ],
+                    [
+                      "**Futuro ya arreglado**",
+                      "I'm meeting Ana tomorrow.",
+                      "tomorrow, next week, tonight"
+                    ]
+                  ],
+                  "note": "El tercer uso sorprende: si ya está agendado, en inglés se usa el presente continuo para hablar del futuro. `We're flying to Madrid on Friday.`"
+                },
+                {
+                  "type": "timeline",
+                  "title": "Dónde cae la acción",
+                  "points": [
+                    {
+                      "label": "Antes",
+                      "note": "no importa"
+                    },
+                    {
+                      "label": "AHORA",
+                      "note": "I'm working",
+                      "now": true
+                    },
+                    {
+                      "label": "Después",
+                      "note": "no importa"
+                    }
+                  ],
+                  "note": "El continuo se concentra en el momento presente; ni el principio ni el final de la acción importan."
+                },
+                {
+                  "type": "warn",
+                  "title": "Verbos que NO se usan en continuo",
+                  "body": [
+                    "Los llamados **stative verbs** describen estados, no acciones, y casi nunca van en -ing:",
+                    "**Sentidos y percepción:** see, hear, smell, taste · **Emociones:** like, love, hate, want, need, prefer · **Mente:** know, understand, remember, believe, think (= opinar) · **Posesión:** have (= tener), own, belong.",
+                    "`I want a coffee.` ✓ · `I'm wanting a coffee.` ✗ — `I know the answer.` ✓ · `I'm knowing…` ✗"
+                  ]
+                },
+                {
+                  "type": "contrast",
+                  "title": "Verbos que cambian de significado",
+                  "left": {
+                    "label": "Estado → simple",
+                    "sub": "Significado «quieto».",
+                    "items": [
+                      "I **think** it's a good idea. (opino)",
+                      "I **have** a car. (poseo)",
+                      "It **tastes** great. (sabe)",
+                      "I **see** what you mean. (entiendo)"
+                    ]
+                  },
+                  "leftTone": "blue",
+                  "right": {
+                    "label": "Acción → continuo",
+                    "sub": "Significado «en movimiento».",
+                    "items": [
+                      "I'm **thinking** about it. (estoy pensando)",
+                      "I'm **having** lunch. (estoy almorzando)",
+                      "She's **tasting** the soup. (la está probando)",
+                      "I'm **seeing** the doctor at 5. (tengo cita)"
+                    ]
+                  },
+                  "rightTone": "green"
                 }
               ]
             },
@@ -1038,6 +4492,18 @@
                 {
                   "en": "I don't usually drink coffee, but I'm drinking one now.",
                   "es": "Normalmente no tomo café, pero ahora estoy tomando uno."
+                },
+                {
+                  "en": "I usually take the bus, but today I'm walking.",
+                  "es": "Normalmente tomo el colectivo, pero hoy voy caminando."
+                },
+                {
+                  "en": "What do you do? — I'm a nurse. / What are you doing? — I'm cooking.",
+                  "es": "¿A qué te dedicás? vs. ¿Qué estás haciendo?"
+                },
+                {
+                  "en": "He doesn't smoke, but he's smoking a lot these days.",
+                  "es": "Él no fuma, pero está fumando mucho últimamente."
                 }
               ],
               "mistakes": [
@@ -1055,6 +4521,16 @@
                   "wrong": "I am wanting a coffee",
                   "right": "I want a coffee",
                   "note": "Verbo de estado."
+                },
+                {
+                  "wrong": "What do you do right now?",
+                  "right": "What are you doing right now?",
+                  "note": "«right now» pide continuo."
+                },
+                {
+                  "wrong": "I am liking this song",
+                  "right": "I like this song",
+                  "note": "«like» es de estado: va en simple."
                 }
               ],
               "exercises": [
@@ -1078,6 +4554,203 @@
                     "is raining"
                   ],
                   "explain": "Algo que pasa en este momento → continuo."
+                },
+                {
+                  "type": "mc",
+                  "q": "Listen! Someone ___ the piano.",
+                  "options": [
+                    "plays",
+                    "is playing",
+                    "play"
+                  ],
+                  "answer": 1,
+                  "explain": "«Listen!» señala algo que pasa en este instante → continuo."
+                },
+                {
+                  "type": "fill",
+                  "q": "She usually ___ (get) up at 7.",
+                  "answer": "gets",
+                  "explain": "«usually» → rutina → presente simple con -s."
+                },
+                {
+                  "type": "mc",
+                  "q": "«¿A qué te dedicás?» se dice:",
+                  "options": [
+                    "What are you doing?",
+                    "What do you do?",
+                    "What you do?"
+                  ],
+                  "answer": 1,
+                  "explain": "La profesión es algo permanente → presente simple."
+                },
+                {
+                  "type": "mc",
+                  "q": "I ___ in Buenos Aires, but this month I ___ in Córdoba.",
+                  "options": [
+                    "am living / live",
+                    "live / am living",
+                    "live / live"
+                  ],
+                  "answer": 1,
+                  "explain": "Permanente en simple, temporal en continuo."
+                }
+              ],
+              "sections": [
+                {
+                  "type": "text",
+                  "title": "La pregunta que resuelve todo",
+                  "body": [
+                    "**¿Estoy hablando de lo que pasa siempre, o de lo que pasa ahora?**",
+                    "Siempre / habitualmente → **presente simple**. Ahora / temporalmente → **presente continuo**. Toda la diferencia se reduce a eso."
+                  ]
+                },
+                {
+                  "type": "contrast",
+                  "title": "Cara a cara",
+                  "left": {
+                    "label": "Presente simple",
+                    "sub": "Permanente, habitual, general.",
+                    "items": [
+                      "I **work** in a bank. (mi trabajo)",
+                      "She **speaks** three languages.",
+                      "We **live** in Salta.",
+                      "Water **boils** at 100°C."
+                    ]
+                  },
+                  "leftTone": "blue",
+                  "right": {
+                    "label": "Presente continuo",
+                    "sub": "Temporal, en curso, ahora.",
+                    "items": [
+                      "I'm **working** from home today. (excepción)",
+                      "She's **speaking** to her boss.",
+                      "We're **living** with my parents for now.",
+                      "The water **is boiling**!"
+                    ]
+                  },
+                  "rightTone": "green"
+                },
+                {
+                  "type": "table",
+                  "title": "El mismo verbo, dos significados",
+                  "cols": [
+                    "Presente simple",
+                    "Presente continuo",
+                    "Diferencia"
+                  ],
+                  "rows": [
+                    [
+                      "I live in Rosario.",
+                      "I'm living in Rosario.",
+                      "permanente vs. temporal"
+                    ],
+                    [
+                      "He works at night.",
+                      "He's working tonight.",
+                      "siempre vs. esta noche"
+                    ],
+                    [
+                      "She studies law.",
+                      "She's studying for an exam.",
+                      "su carrera vs. ahora"
+                    ],
+                    [
+                      "I don't eat meat.",
+                      "I'm not eating meat this month.",
+                      "nunca vs. una etapa"
+                    ],
+                    [
+                      "The bus leaves at 8.",
+                      "The bus is leaving!",
+                      "horario vs. está pasando"
+                    ]
+                  ]
+                },
+                {
+                  "type": "table",
+                  "title": "Marcadores que te delatan cuál usar",
+                  "cols": [
+                    "→ Presente simple",
+                    "→ Presente continuo"
+                  ],
+                  "rows": [
+                    [
+                      "always, usually, often",
+                      "now, right now"
+                    ],
+                    [
+                      "every day / week / year",
+                      "at the moment"
+                    ],
+                    [
+                      "on Mondays, at weekends",
+                      "today, this week"
+                    ],
+                    [
+                      "sometimes, never, rarely",
+                      "currently, these days"
+                    ],
+                    [
+                      "once a week, twice a month",
+                      "Look! Listen!"
+                    ]
+                  ],
+                  "note": "Si ves `Look!` o `Listen!` al principio, casi seguro que viene un continuo: algo está pasando en este instante."
+                },
+                {
+                  "type": "steps",
+                  "title": "Cómo decidir en tres pasos",
+                  "items": [
+                    {
+                      "q": "¿Es un verbo de estado (know, want, like, have=tener)?",
+                      "a": "SÍ → presente simple, sin dudarlo."
+                    },
+                    {
+                      "q": "¿Pasa ahora mismo o en este período limitado?",
+                      "a": "SÍ → presente continuo (be + -ing)."
+                    },
+                    {
+                      "q": "¿Es una rutina, un hecho o algo permanente?",
+                      "a": "SÍ → presente simple."
+                    }
+                  ]
+                },
+                {
+                  "type": "timeline",
+                  "title": "Cómo se ven en el tiempo",
+                  "points": [
+                    {
+                      "label": "Simple",
+                      "note": "···•···•···•···  se repite siempre"
+                    },
+                    {
+                      "label": "AHORA",
+                      "note": "el punto de referencia",
+                      "now": true
+                    },
+                    {
+                      "label": "Continuo",
+                      "note": "▬▬▬  una franja alrededor del ahora"
+                    }
+                  ]
+                },
+                {
+                  "type": "warn",
+                  "title": "El error de los hispanohablantes es al revés del que esperás",
+                  "body": [
+                    "En español usamos el presente simple para muchas cosas que en inglés van en continuo: *«¿Qué hacés?»* (ahora) → `What **are you doing**?`, no *«What do you do?»* (eso pregunta a qué te dedicás).",
+                    "`What do you do?` = ¿A qué te dedicás? · `What are you doing?` = ¿Qué estás haciendo?"
+                  ]
+                },
+                {
+                  "type": "list",
+                  "title": "Chequeo rápido antes de hablar",
+                  "items": [
+                    "Si podés agregar *«siempre»* o *«en general»* → simple.",
+                    "Si podés agregar *«ahora»* o *«en este momento»* → continuo.",
+                    "Si el verbo es de estado mental o emocional → simple, aunque sea ahora.",
+                    "Si es un plan ya agendado para el futuro → continuo."
+                  ]
                 }
               ]
             }
@@ -1116,6 +4789,18 @@
                 {
                   "en": "We're going to visit them next weekend.",
                   "es": "Los vamos a visitar el próximo fin de semana."
+                },
+                {
+                  "en": "Can you send it to me tomorrow?",
+                  "es": "¿Me lo podés mandar mañana?"
+                },
+                {
+                  "en": "She's older than him.",
+                  "es": "Ella es mayor que él."
+                },
+                {
+                  "en": "I bought this for you.",
+                  "es": "Compré esto para vos."
                 }
               ],
               "mistakes": [
@@ -1133,6 +4818,16 @@
                   "wrong": "I saw yesterday",
                   "right": "I saw them yesterday",
                   "note": "En inglés el objeto no se omite."
+                },
+                {
+                  "wrong": "I saw she yesterday",
+                  "right": "I saw her yesterday",
+                  "note": "Después del verbo va el pronombre objeto."
+                },
+                {
+                  "wrong": "Did you like the film? — Yes, I liked.",
+                  "right": "Yes, I liked it.",
+                  "note": "El objeto no se puede omitir en inglés."
                 }
               ],
               "exercises": [
@@ -1152,6 +4847,195 @@
                   "q": "I saw Ana and I said hi to ___. (she)",
                   "answer": "her",
                   "explain": "she → her como objeto."
+                },
+                {
+                  "type": "mc",
+                  "q": "I don't know ___. (a ellos)",
+                  "options": [
+                    "they",
+                    "them",
+                    "their"
+                  ],
+                  "answer": 1,
+                  "explain": "Después del verbo → pronombre objeto: them."
+                },
+                {
+                  "type": "fill",
+                  "q": "This present is for ___. (para vos)",
+                  "answer": "you",
+                  "explain": "Después de preposición va el objeto; con «you» la forma no cambia."
+                },
+                {
+                  "type": "mc",
+                  "q": "Elegí la correcta:",
+                  "options": [
+                    "I her know well",
+                    "I know her well",
+                    "I know she well"
+                  ],
+                  "answer": 1,
+                  "explain": "En inglés el objeto va después del verbo, nunca antes."
+                },
+                {
+                  "type": "fill",
+                  "q": "Where are my keys? I can't find ___.",
+                  "answer": "them",
+                  "explain": "«keys» es plural de cosa → them."
+                }
+              ],
+              "sections": [
+                {
+                  "type": "text",
+                  "title": "Sujeto y objeto: dos series distintas",
+                  "body": [
+                    "El pronombre **sujeto** es quien hace la acción y va **antes** del verbo. El pronombre **objeto** es quien la recibe y va **después** del verbo o de una preposición.",
+                    "`**I** called **her**.` — yo llamé (sujeto), a ella (objeto)."
+                  ]
+                },
+                {
+                  "type": "table",
+                  "title": "Las dos columnas, una al lado de la otra",
+                  "cols": [
+                    "Sujeto",
+                    "Objeto",
+                    "Ejemplo"
+                  ],
+                  "rows": [
+                    [
+                      "I",
+                      "me",
+                      "I love her. / She loves me."
+                    ],
+                    [
+                      "you",
+                      "you",
+                      "You know him. / He knows you."
+                    ],
+                    [
+                      "he",
+                      "him",
+                      "He saw us. / We saw him."
+                    ],
+                    [
+                      "she",
+                      "her",
+                      "She called me. / I called her."
+                    ],
+                    [
+                      "it",
+                      "it",
+                      "It works. / I like it."
+                    ],
+                    [
+                      "we",
+                      "us",
+                      "We invited them. / They invited us."
+                    ],
+                    [
+                      "they",
+                      "them",
+                      "They help me. / I help them."
+                    ]
+                  ],
+                  "note": "Solo `you` y `it` son iguales en las dos columnas. Los otros cinco cambian."
+                },
+                {
+                  "type": "formula",
+                  "title": "El orden de la oración",
+                  "parts": [
+                    {
+                      "label": "Sujeto",
+                      "ex": "She",
+                      "key": true
+                    },
+                    {
+                      "label": "Verbo",
+                      "ex": "knows"
+                    },
+                    {
+                      "label": "Objeto",
+                      "ex": "him",
+                      "key": true
+                    }
+                  ],
+                  "result": "She knows him. — Ella lo conoce."
+                },
+                {
+                  "type": "warn",
+                  "title": "La gran diferencia con el español: la POSICIÓN",
+                  "body": [
+                    "En español el pronombre objeto va **antes** del verbo: *«Yo **la** conozco»*, *«**Me** llamó»*.",
+                    "En inglés va **siempre después**: `I know **her**.` `He called **me**.`",
+                    "`I her know` ✗ es una de las construcciones que más delata a un hispanohablante."
+                  ]
+                },
+                {
+                  "type": "list",
+                  "title": "Dónde aparecen los pronombres objeto",
+                  "items": [
+                    "**Después del verbo:** Can you help **me**?",
+                    "**Después de una preposición:** This is for **you**. · Come with **us**. · I'm talking to **him**.",
+                    "**Después de comparativos:** She's taller than **me**.",
+                    "**En respuestas cortas:** Who wants pizza? — **Me**!"
+                  ]
+                },
+                {
+                  "type": "table",
+                  "title": "Cuando hay dos objetos",
+                  "cols": [
+                    "Estructura",
+                    "Ejemplo",
+                    "Nota"
+                  ],
+                  "rows": [
+                    [
+                      "verbo + persona + cosa",
+                      "He gave **me** the book.",
+                      "sin preposición"
+                    ],
+                    [
+                      "verbo + cosa + to/for + persona",
+                      "He gave the book **to me**.",
+                      "con preposición"
+                    ],
+                    [
+                      "si los dos son pronombres",
+                      "He gave **it to me**.",
+                      "la cosa primero"
+                    ]
+                  ],
+                  "note": "`Give me it` suena raro; lo natural es `Give it to me`."
+                },
+                {
+                  "type": "contrast",
+                  "title": "El caso de `it`",
+                  "left": {
+                    "label": "it = cosa concreta",
+                    "sub": "Reemplaza a un objeto ya mencionado.",
+                    "items": [
+                      "Where's my phone? I can't find **it**.",
+                      "I bought a book and I read **it**."
+                    ]
+                  },
+                  "leftTone": "blue",
+                  "right": {
+                    "label": "it = sujeto vacío",
+                    "sub": "Obligatorio aunque no signifique nada.",
+                    "items": [
+                      "**It**'s raining.",
+                      "**It**'s five o'clock.",
+                      "**It**'s far from here."
+                    ]
+                  },
+                  "rightTone": "amber"
+                },
+                {
+                  "type": "warn",
+                  "title": "No te olvides del objeto",
+                  "body": [
+                    "En español el objeto se puede omitir si se sobreentiende: *«—¿Viste la película? —Sí, vi.»* En inglés eso está mal.",
+                    "`Did you see the film? — Yes, I saw **it**.` El `it` es obligatorio."
+                  ]
                 }
               ]
             },
@@ -1186,6 +5070,18 @@
                 {
                   "en": "Would you like to have dinner with me?",
                   "es": "¿Te gustaría cenar conmigo?"
+                },
+                {
+                  "en": "I'm interested in learning to code.",
+                  "es": "Me interesa aprender a programar."
+                },
+                {
+                  "en": "She can't stand waiting in queues.",
+                  "es": "No soporta esperar en las filas."
+                },
+                {
+                  "en": "I don't mind working late sometimes.",
+                  "es": "No me molesta trabajar hasta tarde a veces."
                 }
               ],
               "mistakes": [
@@ -1203,6 +5099,16 @@
                   "wrong": "I'd like going home",
                   "right": "I'd like to go home",
                   "note": "would like + to + infinitivo."
+                },
+                {
+                  "wrong": "I'm good at to cook",
+                  "right": "I'm good at cooking",
+                  "note": "Después de preposición siempre va -ing."
+                },
+                {
+                  "wrong": "Me likes football",
+                  "right": "I like football",
+                  "note": "El sujeto es «I», y el verbo no lleva -s con I."
                 }
               ],
               "exercises": [
@@ -1222,6 +5128,255 @@
                   "q": "She doesn't like ___. (wait)",
                   "answer": "waiting",
                   "explain": "wait + ing = waiting."
+                },
+                {
+                  "type": "fill",
+                  "q": "She loves ___ (dance).",
+                  "answer": "dancing",
+                  "explain": "Después de love va el verbo con -ing."
+                },
+                {
+                  "type": "mc",
+                  "q": "I'm interested in ___ Japanese.",
+                  "options": [
+                    "learn",
+                    "to learn",
+                    "learning"
+                  ],
+                  "answer": 2,
+                  "explain": "«in» es preposición → -ing."
+                },
+                {
+                  "type": "mc",
+                  "q": "Elegí la correcta:",
+                  "options": [
+                    "I want going home",
+                    "I want to go home",
+                    "I want go home"
+                  ],
+                  "answer": 1,
+                  "explain": "«want» pide to + infinitivo, no -ing."
+                },
+                {
+                  "type": "fill",
+                  "q": "«No me molesta esperar» → I don't mind ___.",
+                  "answer": "waiting",
+                  "explain": "don't mind + verbo con -ing."
+                }
+              ],
+              "sections": [
+                {
+                  "type": "text",
+                  "title": "El patrón",
+                  "body": [
+                    "Cuando querés decir que te gusta **hacer** algo, el segundo verbo va con **-ing**: `I like **cooking**` = me gusta cocinar.",
+                    "En español el segundo verbo va en infinitivo (*cocinar*). En inglés, con este grupo de verbos, va en gerundio. Es un salto que cuesta pero se automatiza rápido."
+                  ]
+                },
+                {
+                  "type": "formula",
+                  "title": "La estructura",
+                  "parts": [
+                    {
+                      "label": "Sujeto",
+                      "ex": "I"
+                    },
+                    {
+                      "label": "verbo de gusto",
+                      "ex": "like",
+                      "key": true
+                    },
+                    {
+                      "label": "verbo + ing",
+                      "ex": "cooking",
+                      "key": true
+                    }
+                  ],
+                  "result": "I like cooking. — Me gusta cocinar."
+                },
+                {
+                  "type": "warn",
+                  "title": "El sujeto está dado vuelta respecto del español",
+                  "body": [
+                    "En español *«me gusta»* tiene sujeto invertido: lo que gusta es el sujeto y vos sos el objeto (*a mí me gusta el fútbol*).",
+                    "En inglés es directo: **vos** sos el sujeto y hacés la acción de gustar. `**I** like football.` Literalmente: *yo gusto el fútbol*.",
+                    "Por eso `Me like football` ✗ está mal: `me` es objeto y no puede ir de sujeto."
+                  ]
+                },
+                {
+                  "type": "scale",
+                  "title": "Escala de gusto",
+                  "items": [
+                    {
+                      "label": "love",
+                      "pct": 100,
+                      "note": "❤️"
+                    },
+                    {
+                      "label": "really like",
+                      "pct": 85,
+                      "note": "😀"
+                    },
+                    {
+                      "label": "like",
+                      "pct": 70,
+                      "note": "🙂"
+                    },
+                    {
+                      "label": "don't mind",
+                      "pct": 50,
+                      "note": "😐"
+                    },
+                    {
+                      "label": "don't like",
+                      "pct": 25,
+                      "note": "🙁"
+                    },
+                    {
+                      "label": "hate",
+                      "pct": 5,
+                      "note": "😖"
+                    }
+                  ],
+                  "note": "`I don't mind…` = no me molesta, me da igual. Muy usado y muy natural: `I don't mind waiting.`"
+                },
+                {
+                  "type": "table",
+                  "title": "Verbos que van con -ing",
+                  "cols": [
+                    "Verbo",
+                    "Significado",
+                    "Ejemplo"
+                  ],
+                  "rows": [
+                    [
+                      "like",
+                      "gustar",
+                      "I like reading."
+                    ],
+                    [
+                      "love",
+                      "encantar",
+                      "She loves dancing."
+                    ],
+                    [
+                      "enjoy",
+                      "disfrutar",
+                      "We enjoy travelling."
+                    ],
+                    [
+                      "hate",
+                      "odiar",
+                      "He hates getting up early."
+                    ],
+                    [
+                      "don't mind",
+                      "no molestar",
+                      "I don't mind cooking."
+                    ],
+                    [
+                      "prefer",
+                      "preferir",
+                      "I prefer walking."
+                    ],
+                    [
+                      "can't stand",
+                      "no soportar",
+                      "I can't stand waiting."
+                    ],
+                    [
+                      "be good at",
+                      "ser bueno en",
+                      "She's good at drawing."
+                    ],
+                    [
+                      "be interested in",
+                      "interesar",
+                      "I'm interested in learning Japanese."
+                    ]
+                  ],
+                  "note": "`enjoy` **solo** acepta -ing: `I enjoy to read` ✗ es siempre un error."
+                },
+                {
+                  "type": "contrast",
+                  "title": "Después de una preposición SIEMPRE va -ing",
+                  "left": {
+                    "label": "Regla general",
+                    "sub": "preposición + verbo → -ing, sin excepciones.",
+                    "items": [
+                      "good **at** swimm**ing**",
+                      "interested **in** learn**ing**",
+                      "tired **of** wait**ing**",
+                      "instead **of** go**ing**"
+                    ]
+                  },
+                  "leftTone": "green",
+                  "right": {
+                    "label": "Incorrecto",
+                    "sub": "Nunca infinitivo después de preposición.",
+                    "items": [
+                      "good at to swim ✗",
+                      "interested in to learn ✗",
+                      "tired of to wait ✗",
+                      "instead of to go ✗"
+                    ]
+                  },
+                  "rightTone": "red"
+                },
+                {
+                  "type": "table",
+                  "title": "Ojo: otros verbos piden `to` + infinitivo",
+                  "cols": [
+                    "Verbo",
+                    "Estructura",
+                    "Ejemplo"
+                  ],
+                  "rows": [
+                    [
+                      "want",
+                      "want **to** + base",
+                      "I want to go."
+                    ],
+                    [
+                      "need",
+                      "need **to** + base",
+                      "I need to sleep."
+                    ],
+                    [
+                      "would like",
+                      "would like **to** + base",
+                      "I'd like to see it."
+                    ],
+                    [
+                      "decide",
+                      "decide **to** + base",
+                      "We decided to stay."
+                    ],
+                    [
+                      "hope",
+                      "hope **to** + base",
+                      "I hope to see you."
+                    ]
+                  ],
+                  "note": "Fijate el contraste: `I **like to** cook` y `I **like** cook**ing**` son las dos correctas (like acepta ambas), pero `I **want** cooking` ✗ está mal — want solo va con to."
+                },
+                {
+                  "type": "steps",
+                  "title": "Cómo preguntar y responder",
+                  "items": [
+                    {
+                      "q": "Do you like cooking?",
+                      "a": "Yes, I do. / No, I don't."
+                    },
+                    {
+                      "q": "What do you like doing at weekends?",
+                      "a": "I like going to the cinema."
+                    },
+                    {
+                      "q": "Are you good at cooking?",
+                      "a": "Yes, I'm quite good at it."
+                    }
+                  ]
                 }
               ]
             },
@@ -1255,6 +5410,18 @@
                 {
                   "en": "Does your brother play the guitar?",
                   "es": "¿Tu hermano toca la guitarra?"
+                },
+                {
+                  "en": "Are you cold? — No, I'm fine, thanks.",
+                  "es": "¿Tenés frío? — No, estoy bien, gracias."
+                },
+                {
+                  "en": "Does your brother speak English?",
+                  "es": "¿Tu hermano habla inglés?"
+                },
+                {
+                  "en": "She isn't working today, she's on holiday.",
+                  "es": "Hoy no está trabajando, está de vacaciones."
                 }
               ],
               "mistakes": [
@@ -1272,6 +5439,16 @@
                   "wrong": "I don't am tired",
                   "right": "I am not tired",
                   "note": ""
+                },
+                {
+                  "wrong": "Do you a student?",
+                  "right": "Are you a student?",
+                  "note": "Sin verbo de acción, el auxiliar es be."
+                },
+                {
+                  "wrong": "Are you have a car?",
+                  "right": "Do you have a car?",
+                  "note": "«have» es verbo de acción → do."
                 }
               ],
               "exercises": [
@@ -1291,6 +5468,228 @@
                   "q": "___ he work on Saturdays? (pregunta)",
                   "answer": "does",
                   "explain": "Verbo de acción, 3ª persona → does."
+                },
+                {
+                  "type": "mc",
+                  "q": "___ you hungry?",
+                  "options": [
+                    "Do",
+                    "Are",
+                    "Does"
+                  ],
+                  "answer": 1,
+                  "explain": "«hungry» es adjetivo, no hay verbo de acción → be."
+                },
+                {
+                  "type": "mc",
+                  "q": "___ she work on Saturdays?",
+                  "options": [
+                    "Is",
+                    "Does",
+                    "Do"
+                  ],
+                  "answer": 1,
+                  "explain": "«work» es verbo de acción y el sujeto es she → does."
+                },
+                {
+                  "type": "fill",
+                  "q": "He ___ speak French. (negativo, presente simple)",
+                  "answer": "doesn't",
+                  "accept": [
+                    "does not"
+                  ],
+                  "explain": "Verbo de acción + he → doesn't."
+                },
+                {
+                  "type": "mc",
+                  "q": "___ they watching TV right now?",
+                  "options": [
+                    "Do",
+                    "Are",
+                    "Does"
+                  ],
+                  "answer": 1,
+                  "explain": "El verbo termina en -ing → presente continuo → be."
+                }
+              ],
+              "sections": [
+                {
+                  "type": "text",
+                  "title": "El cruce de caminos de todo A1",
+                  "body": [
+                    "Casi todos los errores de A1 salen de acá: elegir mal el auxiliar. La pregunta que hay que hacerse es simple: **¿la oración tiene otro verbo además de `be`?**",
+                    "Si `be` es el único verbo → `be` se encarga de todo. Si hay otro verbo de acción → aparece `do/does`."
+                  ]
+                },
+                {
+                  "type": "steps",
+                  "title": "El árbol de decisión",
+                  "items": [
+                    {
+                      "q": "¿Hay un verbo de acción (work, live, eat, go…)?",
+                      "a": "SÍ → usás do / does"
+                    },
+                    {
+                      "q": "¿El único verbo es ser/estar (be)?",
+                      "a": "SÍ → usás am / is / are"
+                    },
+                    {
+                      "q": "¿Termina el verbo principal en -ing?",
+                      "a": "SÍ → es continuo → usás am / is / are"
+                    },
+                    {
+                      "q": "¿Hay un modal (can, must, will)?",
+                      "a": "SÍ → el modal es el auxiliar, no metas do ni be"
+                    }
+                  ]
+                },
+                {
+                  "type": "contrast",
+                  "title": "be vs. do, lado a lado",
+                  "left": {
+                    "label": "BE — describe",
+                    "sub": "No hay otro verbo. Estados, cualidades, ubicación.",
+                    "items": [
+                      "**Are** you tired?",
+                      "She **isn't** Argentinian.",
+                      "**Is** it expensive?",
+                      "They **are** at home."
+                    ]
+                  },
+                  "leftTone": "blue",
+                  "right": {
+                    "label": "DO — acciona",
+                    "sub": "Hay un verbo de acción en presente simple.",
+                    "items": [
+                      "**Do** you work here?",
+                      "She **doesn't** live here.",
+                      "**Does** it cost much?",
+                      "They **don't** eat meat."
+                    ]
+                  },
+                  "rightTone": "green"
+                },
+                {
+                  "type": "table",
+                  "title": "Tabla maestra de auxiliares",
+                  "cols": [
+                    "Tipo de oración",
+                    "Auxiliar",
+                    "Ejemplo negativo",
+                    "Ejemplo pregunta"
+                  ],
+                  "rows": [
+                    [
+                      "be + adjetivo/sustantivo",
+                      "am/is/are",
+                      "He isn't ready.",
+                      "Is he ready?"
+                    ],
+                    [
+                      "verbo de acción, presente",
+                      "do/does",
+                      "He doesn't drive.",
+                      "Does he drive?"
+                    ],
+                    [
+                      "be + verbo-ing (continuo)",
+                      "am/is/are",
+                      "He isn't driving.",
+                      "Is he driving?"
+                    ],
+                    [
+                      "modal (can, must…)",
+                      "el modal",
+                      "He can't drive.",
+                      "Can he drive?"
+                    ],
+                    [
+                      "have got (posesión)",
+                      "have/has",
+                      "He hasn't got a car.",
+                      "Has he got a car?"
+                    ]
+                  ]
+                },
+                {
+                  "type": "warn",
+                  "title": "El error clásico: mezclar los dos",
+                  "body": [
+                    "`Are you like pizza?` ✗ — hay dos verbos peleando por el mismo lugar. `like` es un verbo de acción, así que el auxiliar es `do`: `**Do** you like pizza?` ✓",
+                    "Al revés también pasa: `Do you a student?` ✗ — acá no hay verbo de acción, el único verbo es be: `**Are** you a student?` ✓"
+                  ]
+                },
+                {
+                  "type": "table",
+                  "title": "Pares para comparar",
+                  "cols": [
+                    "Con BE",
+                    "Con DO",
+                    "Por qué"
+                  ],
+                  "rows": [
+                    [
+                      "Are you a doctor?",
+                      "Do you work in a hospital?",
+                      "sustantivo vs. verbo de acción"
+                    ],
+                    [
+                      "Is she happy?",
+                      "Does she like it?",
+                      "adjetivo vs. verbo de acción"
+                    ],
+                    [
+                      "Are they students?",
+                      "Do they study a lot?",
+                      "sustantivo vs. verbo de acción"
+                    ],
+                    [
+                      "Is it cold?",
+                      "Does it snow here?",
+                      "adjetivo vs. verbo de acción"
+                    ],
+                    [
+                      "I'm not hungry.",
+                      "I don't want food.",
+                      "estado vs. acción"
+                    ]
+                  ]
+                },
+                {
+                  "type": "list",
+                  "title": "Verbos que confunden porque en español van con «estar/tener»",
+                  "items": [
+                    "**be hungry / thirsty / cold / hot** → Are you hungry? (no *do you have hunger*)",
+                    "**be right / wrong** → You're right. (no *you have reason*)",
+                    "**be 25 (years old)** → I'm 25. (no *I have 25*)",
+                    "**be afraid of** → I'm afraid of spiders. (no *I have fear*)",
+                    "**be in a hurry** → I'm in a hurry."
+                  ],
+                  "note": "Todos estos usan `be`, así que el auxiliar en preguntas y negaciones también es `be`."
+                },
+                {
+                  "type": "formula",
+                  "title": "Repaso: el orden nunca cambia",
+                  "parts": [
+                    {
+                      "label": "(QU-)",
+                      "ex": "Where"
+                    },
+                    {
+                      "label": "Auxiliar",
+                      "ex": "do / does / am / is / are / can",
+                      "key": true
+                    },
+                    {
+                      "label": "Sujeto",
+                      "ex": "you"
+                    },
+                    {
+                      "label": "Verbo base",
+                      "ex": "live?"
+                    }
+                  ],
+                  "result": "Cambia el auxiliar, no la estructura."
                 }
               ]
             }
