@@ -396,10 +396,14 @@ button {
   border: 1px solid var(--green-line);
   border-radius: 999px;
   padding: 5px 10px;
+  transition: color .2s, background .2s, border-color .2s;
   min-height: 24px;
   display: flex;
   align-items: center;
 }
+.xp-chip.combo { color: var(--amber); background: var(--amber-bg); border-color: #3d3221; }
+@keyframes xp-chip-pop { 0% { transform: scale(1); } 40% { transform: scale(1.18); } 100% { transform: scale(1); } }
+.xp-chip.pop { animation: xp-chip-pop .28s cubic-bezier(.34,1.56,.64,1); }
 
 .tags { display: flex; gap: 7px; margin-top: 12px; flex-wrap: wrap; }
 .tag {
@@ -516,6 +520,24 @@ button {
   100% { transform: scale(1.02); filter: brightness(1.2); }
 }
 .grade.chosen { animation: grade-chosen .22s ease-out forwards; z-index: 1; }
+
+/* Bien / Fácil: un pop más grande + un resplandor que se expande — la sensación de logro. */
+@keyframes grade-chosen-success {
+  0% { transform: scale(1); filter: brightness(1); box-shadow: 0 0 0 0 rgba(110,231,160,0); }
+  40% { transform: scale(1.12); filter: brightness(1.45); box-shadow: 0 0 0 10px rgba(110,231,160,.14); }
+  100% { transform: scale(1.03); filter: brightness(1.22); box-shadow: 0 0 0 3px rgba(110,231,160,0); }
+}
+.grade.chosen-success { animation: grade-chosen-success .32s cubic-bezier(.34,1.56,.64,1) forwards; z-index: 1; }
+
+/* Otra vez: un sacudón corto en vez de un pop — no hay nada que festejar. */
+@keyframes grade-chosen-negative {
+  0%, 100% { transform: translateX(0) scale(1); }
+  20% { transform: translateX(-4px) scale(.98); }
+  40% { transform: translateX(3px) scale(.98); }
+  60% { transform: translateX(-2px) scale(.99); }
+  80% { transform: translateX(1px) scale(.99); }
+}
+.grade.chosen-negative { animation: grade-chosen-negative .32s ease-out forwards; filter: brightness(.9); z-index: 1; }
 
 @keyframes xp-float {
   0% { opacity: 0; transform: translate(-50%, 4px) scale(.7); }
@@ -760,6 +782,8 @@ input[type=range]::-moz-range-thumb {
 .switch i { width: 21px; height: 21px; border-radius: 999px; background: var(--dim); transition: transform .18s, background .18s; }
 .switch.on { background: var(--green); }
 .switch.on i { background: var(--green-deep); transform: translateX(19px); }
+button.switch:active i { transform: scale(.82); }
+button.switch.on:active i { transform: translateX(19px) scale(.82); }
 
 /* ── tabbar ── */
 .tabbar {
@@ -784,7 +808,10 @@ input[type=range]::-moz-range-thumb {
   color: var(--dim);
 }
 .tabbar button span { font-size: 10px; letter-spacing: .3px; }
+.tabbar button .ico { transition: transform .18s cubic-bezier(.34,1.56,.64,1); }
 .tabbar button.active { color: var(--green); }
+.tabbar button.active .ico { transform: scale(1.14); }
+.tabbar button:active .ico { transform: scale(.88); }
 .tabbar[hidden] { display: none; }
 
 /* ── toast ── */
@@ -1040,11 +1067,24 @@ input[type=range]::-moz-range-thumb {
 .exercise { padding: 14px 15px; background: var(--surface); border: 1px solid var(--line); border-radius: 14px; }
 .exercise .ex-q { font-size: 14px; color: var(--text); line-height: 1.5; margin-bottom: 12px; font-weight: 600; }
 .ex-options { display: flex; flex-direction: column; gap: 8px; }
-.ex-option { padding: 12px 14px; background: var(--surface-2); border: 1px solid var(--line); border-radius: 11px; text-align: left; font-size: 13.5px; color: var(--text-2); min-height: 44px; }
+.ex-option { padding: 12px 14px; background: var(--surface-2); border: 1px solid var(--line); border-radius: 11px; text-align: left; font-size: 13.5px; color: var(--text-2); min-height: 44px; transition: transform .15s; }
 .ex-option:active:not(:disabled) { background: var(--line-soft); }
-.ex-option.correct { background: var(--green-bg); border-color: var(--green-line); color: var(--green); font-weight: 700; }
-.ex-option.wrong { background: var(--red-bg); border-color: var(--red-line); color: var(--red); text-decoration: line-through; }
+.ex-option.correct { background: var(--green-bg); border-color: var(--green-line); color: var(--green); font-weight: 700; animation: option-correct .3s ease-out; }
+.ex-option.wrong { background: var(--red-bg); border-color: var(--red-line); color: var(--red); text-decoration: line-through; animation: option-wrong .3s ease-out; }
 .ex-option:disabled { opacity: .85; }
+
+@keyframes option-correct {
+  0% { transform: scale(1); }
+  45% { transform: scale(1.025); }
+  100% { transform: scale(1); }
+}
+@keyframes option-wrong {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-5px); }
+  50% { transform: translateX(4px); }
+  75% { transform: translateX(-2px); }
+}
+.exercise.is-wrong .ex-input { animation: option-wrong .3s ease-out; }
 .ex-form { display: flex; gap: 8px; }
 .ex-input { flex-grow: 1; min-width: 0; padding: 12px 14px; background: var(--surface-2); border: 1px solid var(--line); border-radius: 11px; color: var(--text); font-size: 14px; font-family: var(--mono); min-height: 44px; }
 .ex-input:focus { outline: none; border-color: var(--blue-line); }

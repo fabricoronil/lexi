@@ -24,6 +24,7 @@ const GRADUATING_INTERVAL = 1; // días
 const EASY_INTERVAL = 4; // días
 const MAX_INTERVAL = 365; // días
 const MIN_EASE = 1.3;
+const MAX_EASE = 3.5; // evita que una racha de "Fácil" dispare el intervalo sin freno
 const START_EASE = 2.5;
 
 /** Card nueva, lista para entrar al mazo. */
@@ -45,7 +46,7 @@ export function newCard(id) {
  * Devuelve una copia de la card con la próxima programación aplicada.
  * No muta el original.
  */
-export function schedule(card, quality, now = Date.now()) {
+export function schedule(card, quality, now = Date.now(), fuzzed = true) {
   const c = { ...card };
   c.reps += 1;
   c.seen = now;
@@ -53,7 +54,7 @@ export function schedule(card, quality, now = Date.now()) {
   if (c.state === 'new' || c.state === 'learning') {
     return scheduleLearning(c, quality, now);
   }
-  return scheduleReview(c, quality, now);
+  return scheduleReview(c, quality, now, fuzzed);
 }
 
 function scheduleLearning(c, quality, now) {
@@ -95,7 +96,7 @@ function scheduleLearning(c, quality, now) {
   return c;
 }
 
-function scheduleReview(c, quality, now) {
+function scheduleReview(c, quality, now, fuzzed) {
   if (quality === AGAIN) {
     c.lapses += 1;
     c.ease = Math.max(MIN_EASE, c.ease - 0.2);
@@ -113,10 +114,11 @@ function scheduleReview(c, quality, now) {
   } else if (quality === GOOD) {
     interval = c.interval * c.ease;
   } else {
-    c.ease = c.ease + 0.15;
+    c.ease = Math.min(MAX_EASE, c.ease + 0.15);
     interval = c.interval * c.ease * 1.3;
   }
 
+  if (fuzzed) interval = fuzz(interval);
   interval = Math.min(MAX_INTERVAL, Math.max(1, Math.round(interval)));
   // Nunca repetir el mismo intervalo dos veces seguidas.
   if (interval === c.interval) interval += 1;
@@ -126,9 +128,25 @@ function scheduleReview(c, quality, now) {
   return c;
 }
 
-/** Cuánto falta para volver a ver la card si respondés `quality`. Para los botones. */
+/**
+ * Desordena un poco el intervalo (±5%, más en intervalos largos) para que
+ * cards que entraron juntas no queden vencidas siempre el mismo día — el
+ * mismo truco que usa Anki para no acumular repasos en picos.
+ */
+function fuzz(interval) {
+  if (interval < 2.5) return interval; // en pasos cortos el fuzz solo generaría ruido
+  const pct = interval < 7 ? 0.1 : interval < 30 ? 0.07 : 0.05;
+  const delta = interval * pct;
+  return interval + (Math.random() * 2 - 1) * delta;
+}
+
+/**
+ * Cuánto falta para volver a ver la card si respondés `quality`. Para los
+ * botones — sin fuzz, para que el número mostrado sea estable y no cambie
+ * cada vez que se re-renderiza la card.
+ */
 export function previewInterval(card, quality, now = Date.now()) {
-  const next = schedule(card, quality, now);
+  const next = schedule(card, quality, now, false);
   return formatDelay(next.due - now);
 }
 

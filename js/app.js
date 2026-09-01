@@ -6,7 +6,7 @@ import * as store from './store.js';
 import * as decks from './decks.js';
 import * as study from './study.js';
 import * as texts from './texts.js';
-import { schedule, previewInterval, formatDelay, AGAIN, GOOD } from './srs.js';
+import { schedule, previewInterval, formatDelay, AGAIN, HARD, GOOD, EASY } from './srs.js';
 import * as sound from './sound.js';
 import * as sync from './sync.js';
 
@@ -97,7 +97,21 @@ function show(view) {
   if (view === 'texts-reader') renderTextReader();
 }
 
+// Botones que ya disparan su propio sonido — el tap genérico se salta estos
+// para no pisarlo (quedaría un "clic-clic" feo pegado al sonido real).
+const TAP_EXCLUDE = '.grade, .ex-option, .ex-check, .switch, #btn-start, #btn-more, #btn-reveal';
+
+/** Un tap sutil para cualquier botón que no tenga ya su propio sonido — así toda la app "responde" al tacto, estilo Duolingo. */
+function wireGlobalTapSound() {
+  document.addEventListener('click', (e) => {
+    const btn = e.target.closest('button');
+    if (!btn || btn.matches(TAP_EXCLUDE) || btn.disabled) return;
+    sound.playTap();
+  });
+}
+
 function wireNav() {
+  wireGlobalTapSound();
   $$('#tabbar button').forEach((b) => b.addEventListener('click', () => show(b.dataset.view)));
   $('#streak-chip').addEventListener('click', () => show('stats'));
   $('#btn-home').addEventListener('click', () => show('home'));
@@ -205,7 +219,7 @@ function startSession(extra) {
     return;
   }
 
-  session = { queue, index: 0, answered: 0, xp: 0, reinforce: false };
+  session = { queue, index: 0, answered: 0, xp: 0, combo: 0, reinforce: false };
   $('#session-xp').textContent = '+0';
   show('review');
   renderCard();
@@ -222,7 +236,7 @@ function startReinforce() {
     show('home');
     return;
   }
-  session = { queue, index: 0, answered: 0, xp: 0, reinforce: true };
+  session = { queue, index: 0, answered: 0, xp: 0, combo: 0, reinforce: true };
   $('#session-xp').textContent = '+0';
   show('review');
   renderCard();
@@ -250,6 +264,18 @@ function celebrateStreak() {
   streakPopTimer = setTimeout(() => $('#streak-pop').classList.remove('show'), 2800);
 }
 
+/**
+ * Alterna entre el primer y el segundo ejemplo de la card según cuántas
+ * veces ya la respondiste (par → ex, impar → ex2). Así, cuando una palabra
+ * vuelve a aparecer, no te la aprendés de memoria por la oración siempre
+ * igual — cada repaso testea la palabra en un contexto distinto, y eso hace
+ * que la calificación que le des refleje mejor si de verdad la sabés.
+ */
+function pickExample(card, st) {
+  const useSecond = st.reps % 2 === 1 && card.ex2 && card.exEs2;
+  return useSecond ? { en: card.ex2, es: card.exEs2 } : { en: card.ex, es: card.exEs };
+}
+
 function renderCard() {
   const card = currentCard();
   if (!card) return finishSession();
@@ -266,10 +292,11 @@ function renderCard() {
   const prompt = $('#card-prompt');
   prompt.textContent = front;
   prompt.className = 'prompt' + (front.length > 34 ? ' xlong' : front.length > 20 ? ' long' : '');
-  $('#card-example').innerHTML = highlight(card.ex, card.en);
+  const ex = pickExample(card, st);
+  $('#card-example').innerHTML = highlight(ex.en, card.en);
 
   $('#card-answer').textContent = back;
-  $('#card-example-es').textContent = card.exEs || '';
+  $('#card-example-es').textContent = ex.es || '';
 
   const seen = st.reps === 0 ? 'nueva' : `vista ${st.reps} ${st.reps === 1 ? 'vez' : 'veces'}`;
   const reinforceTag = session.reinforce ? '<span class="tag refuerzo">refuerzo</span>' : '';
@@ -374,7 +401,19 @@ function highlight(sentence, term) {
   return safe;
 }
 
-const GRADE_SOUND = [sound.playAgain, sound.playHard, sound.playGood, sound.playEasy];
+/**
+ * Sonido según la calificación. Bien/Fácil llevan el "combo" de la sesión
+ * (cuántas veces seguidas veniste calificando bien) para que la nota suba
+ * un poco cada vez, al estilo racha de Duolingo — sin pasarse de rosca.
+ */
+function playGradeSound(quality) {
+  if (quality === AGAIN) return sound.playAgain();
+  if (quality === HARD) return sound.playHard();
+  const combo = Math.max(0, (session?.combo || 1) - 1);
+  return quality === GOOD ? sound.playGood(combo) : sound.playEasy(combo);
+}
+
+const CHOSEN_CLASS = { [AGAIN]: 'chosen-negative', [HARD]: 'chosen', [GOOD]: 'chosen-success', [EASY]: 'chosen-success' };
 
 let grading = false;
 /** Capa cosmética sobre answer(): sonido, XP y el pop del botón elegido. */
@@ -382,25 +421,31 @@ function chooseGrade(quality) {
   if (!session || grading || !revealed) return;
   grading = true;
 
+  session.combo = quality === GOOD || quality === EASY ? (session.combo || 0) + 1 : 0;
+
   const gained = XP_BY_QUALITY[quality];
   session.xp += gained;
-  $('#session-xp').textContent = '+' + session.xp;
+  const xpChip = $('#session-xp');
+  xpChip.textContent = '+' + session.xp;
+  xpChip.classList.toggle('combo', session.combo >= 3);
+  bounce(xpChip, 'pop');
 
   const btn = $(`.grade[data-q="${quality}"]`);
+  const chosenCls = CHOSEN_CLASS[quality];
   $('#grade-grid').classList.add('locked');
   if (btn) {
-    bounce(btn, 'chosen');
+    bounce(btn, chosenCls);
     const fly = document.createElement('span');
     fly.className = 'xp-fly';
     fly.textContent = '+' + gained;
     btn.appendChild(fly);
     fly.addEventListener('animationend', () => fly.remove());
   }
-  GRADE_SOUND[quality]();
+  playGradeSound(quality);
 
   setTimeout(() => {
     grading = false;
-    if (btn) btn.classList.remove('chosen');
+    if (btn) btn.classList.remove(chosenCls);
     answer(quality);
   }, 190);
 }
@@ -1208,6 +1253,7 @@ function renderSettings() {
       const next = { ...store.get().settings.decks, [deck.id]: !on };
       if (!Object.values(next).some(Boolean)) return toast('Dejá al menos un mazo activo.');
       store.setSettings({ decks: next });
+      sound.playSwitch(!on);
       renderSettings();
     });
     box.appendChild(row);
@@ -1287,15 +1333,19 @@ function wireSettings() {
     const on = !store.get().settings.sound;
     store.setSettings({ sound: on });
     sound.setEnabled(on);
-    if (on) sound.playTap();
+    if (on) sound.playSwitch(true);
     renderSettings();
   });
   $('#t-speak').addEventListener('click', () => {
-    store.setSettings({ autoSpeak: !store.get().settings.autoSpeak });
+    const on = !store.get().settings.autoSpeak;
+    store.setSettings({ autoSpeak: on });
+    sound.playSwitch(on);
     renderSettings();
   });
   $('#t-reverse').addEventListener('click', () => {
-    store.setSettings({ reverse: !store.get().settings.reverse });
+    const on = !store.get().settings.reverse;
+    store.setSettings({ reverse: on });
+    sound.playSwitch(on);
     renderSettings();
   });
 

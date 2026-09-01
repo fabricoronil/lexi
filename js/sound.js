@@ -117,35 +117,74 @@ export function playTap() {
   voice(660, c.currentTime, 0.05, { type: 'sine', peak: 0.08, harmonicMix: 0.12, toDelay: 0 });
 }
 
+/**
+ * Otra vez: un "buzz" corto y grave con un leve batido (dos frecuencias muy
+ * cercanas sonando juntas), la textura clásica de "mal" — sin ser agresivo.
+ */
 export function playAgain() {
   const c = getCtx();
   if (!c || !enabled) return;
   const t = c.currentTime;
-  voice(210, t, 0.26, { type: 'sine', peak: 0.13, glideTo: 130, harmonic: 1.5, harmonicMix: 0.15, cutoff: 900, toDelay: 0.1 });
+  voice(180, t, 0.22, { type: 'sawtooth', peak: 0.09, glideTo: 110, harmonicMix: 0, cutoff: 500, toDelay: 0 });
+  voice(172, t, 0.22, { type: 'sawtooth', peak: 0.08, glideTo: 104, harmonicMix: 0, cutoff: 480, toDelay: 0 });
+  click(t, 0.02, { cutoff: 900, peak: 0.035 });
 }
 
+/** Difícil: un tono medio con un pequeño vibrato — ni mal ni bien, un "mmh". */
 export function playHard() {
   const c = getCtx();
   if (!c || !enabled) return;
   const t = c.currentTime;
-  voice(392, t, 0.12, { type: 'triangle', peak: 0.11, harmonic: 1.5, harmonicMix: 0.18, cutoff: 2200 });
+  const osc = c.createOscillator();
+  const lfo = c.createOscillator();
+  const lfoGain = c.createGain();
+  lfo.frequency.value = 22;
+  lfoGain.gain.value = 8;
+  lfo.connect(lfoGain).connect(osc.frequency);
+  osc.type = 'triangle';
+  osc.frequency.value = 350;
+  const filter = c.createBiquadFilter();
+  filter.type = 'lowpass';
+  filter.frequency.value = 1800;
+  const gain = c.createGain();
+  gain.gain.setValueAtTime(0, t);
+  gain.gain.linearRampToValueAtTime(0.11, t + 0.015);
+  gain.gain.setValueAtTime(0.11, t + 0.1);
+  gain.gain.exponentialRampToValueAtTime(0.0001, t + 0.2);
+  osc.connect(filter).connect(gain).connect(master);
+  lfo.start(t); osc.start(t);
+  lfo.stop(t + 0.22); osc.stop(t + 0.22);
 }
 
-export function playGood() {
+/**
+ * Bien / Fácil: acordes ascendentes con un "combo" opcional (0, 1, 2…) que
+ * transpone la nota hacia arriba cada vez que encadenás varias seguidas,
+ * como el feedback de racha de Duolingo — sin volverse molesto (tope suave).
+ */
+function comboFactor(combo) {
+  return Math.pow(1.035, Math.min(combo, 6));
+}
+
+export function playGood(combo = 0) {
   const c = getCtx();
   if (!c || !enabled) return;
   const t = c.currentTime;
-  voice(523.25, t, 0.12, { type: 'sine', peak: 0.13, harmonicMix: 0.2, cutoff: 3400 });
-  voice(783.99, t + 0.07, 0.2, { type: 'sine', peak: 0.14, harmonicMix: 0.24, cutoff: 4200 });
+  const f = comboFactor(combo);
+  voice(523.25 * f, t, 0.12, { type: 'sine', peak: 0.13, harmonicMix: 0.2, cutoff: 3400 });
+  voice(783.99 * f, t + 0.07, 0.22, { type: 'sine', peak: 0.15, harmonicMix: 0.26, cutoff: 4400 });
 }
 
-export function playEasy() {
+export function playEasy(combo = 0) {
   const c = getCtx();
   if (!c || !enabled) return;
   const t = c.currentTime;
-  voice(523.25, t, 0.1, { type: 'sine', peak: 0.12, harmonicMix: 0.2, cutoff: 3600 });
-  voice(659.25, t + 0.06, 0.1, { type: 'sine', peak: 0.13, harmonicMix: 0.22, cutoff: 4000 });
-  voice(1046.5, t + 0.12, 0.24, { type: 'sine', peak: 0.15, harmonic: 1.5, harmonicMix: 0.26, cutoff: 5200 });
+  const f = comboFactor(combo);
+  voice(523.25 * f, t, 0.1, { type: 'sine', peak: 0.12, harmonicMix: 0.2, cutoff: 3600 });
+  voice(659.25 * f, t + 0.06, 0.1, { type: 'sine', peak: 0.13, harmonicMix: 0.22, cutoff: 4000 });
+  voice(1046.5 * f, t + 0.12, 0.26, { type: 'sine', peak: 0.16, harmonic: 1.5, harmonicMix: 0.28, cutoff: 5600, toDelay: 0.3 });
+  // sparkle: un par de notas muy altas y cortitas, de puro brillo.
+  voice(1567.98 * f, t + 0.19, 0.14, { type: 'sine', peak: 0.06, harmonicMix: 0.1, cutoff: 6000, toDelay: 0.35 });
+  voice(2093 * f, t + 0.24, 0.12, { type: 'sine', peak: 0.045, harmonicMix: 0.08, cutoff: 6500, toDelay: 0.35 });
 }
 
 export function playComplete() {
@@ -190,4 +229,13 @@ export function playFlip() {
   if (!c || !enabled) return;
   click(c.currentTime, 0.03, { cutoff: 1800, peak: 0.045 });
   voice(440, c.currentTime, 0.05, { type: 'sine', peak: 0.06, harmonicMix: 0.1, cutoff: 2600, toDelay: 0 });
+}
+
+/** Prender/apagar un switch de Ajustes: un "tick" cortito, más agudo si queda prendido. */
+export function playSwitch(on) {
+  const c = getCtx();
+  if (!c || !enabled) return;
+  const t = c.currentTime;
+  click(t, 0.015, { cutoff: 1500, peak: 0.035 });
+  voice(on ? 700 : 420, t, 0.045, { type: 'sine', peak: 0.06, harmonicMix: 0.1, cutoff: 3000, toDelay: 0 });
 }
