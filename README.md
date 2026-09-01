@@ -21,7 +21,7 @@ un estilo que dé ganas de abrirlo.
   próximo intervalo a la vista antes de elegir.
 - **Racha diaria** al estilo Duolingo: sube sólo cuando llegás a tu meta del día.
 - **Nivel de exigencia configurable**: Tranqui, Normal, Bestia, o los sliders a mano.
-- **316 cards** repartidas en tres mazos.
+- **386 cards** repartidas en cuatro mazos.
 - **Pronunciación** con la voz del sistema, en inglés.
 - **Modo inverso** (español → inglés) para producción, no sólo reconocimiento.
 - **Heatmap** de actividad y estadísticas de cuántas cards tenés aprendidas.
@@ -35,8 +35,11 @@ un estilo que dé ganas de abrirlo.
 | `core` | 117 | Conectores, verbos y adjetivos de alta frecuencia, A1 a B1 |
 | `tech` | 128 | Vocabulario de programación: git, APIs, bases de datos, debugging |
 | `frases` | 71 | Expresiones de videos de YouTube, reuniones y conversación |
+| `phrasal verbs` | 70 | Verbos frasales de uso diario, de A1 a B2 (get up, give up, look into…) |
 
-Cada card trae la palabra, la traducción, un ejemplo en inglés y su traducción.
+Cada card trae la palabra, la traducción, un ejemplo en inglés y su traducción — y
+una segunda oración de ejemplo que aparece alternada la próxima vez que repasás
+esa card, para no memorizarla por el contexto siempre igual.
 
 ## Agregar tus propias palabras
 

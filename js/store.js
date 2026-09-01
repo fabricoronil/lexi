@@ -22,7 +22,7 @@ const DEFAULTS = {
     preset: 'normal',
     newPerDay: 10,
     dailyGoal: 30,
-    decks: { core: true, tech: true, phrases: true },
+    decks: { core: true, tech: true, phrases: true, phrasal: true },
     autoSpeak: true,
     reverse: false,
     sound: true,

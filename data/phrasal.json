@@ -1,0 +1,702 @@
+[
+  {
+    "en": "to get up",
+    "es": "levantarse (de la cama)",
+    "ex": "I get up at 7am every day.",
+    "exEs": "Me levanto a las 7 todos los días.",
+    "ex2": "She didn't get up until noon on Sunday.",
+    "exEs2": "No se levantó hasta el mediodía el domingo.",
+    "lvl": "A1",
+    "tag": "phrasal"
+  },
+  {
+    "en": "to sit down",
+    "es": "sentarse",
+    "ex": "Please sit down and relax.",
+    "exEs": "Sentate y relajate.",
+    "ex2": "He sat down next to me on the bus.",
+    "exEs2": "Se sentó a mi lado en el colectivo.",
+    "lvl": "A1",
+    "tag": "phrasal"
+  },
+  {
+    "en": "to stand up",
+    "es": "pararse, ponerse de pie",
+    "ex": "Everyone stood up when she walked in.",
+    "exEs": "Todos se pararon cuando ella entró.",
+    "ex2": "Stand up straight!",
+    "exEs2": "¡Pará derecho!",
+    "lvl": "A1",
+    "tag": "phrasal"
+  },
+  {
+    "en": "to put on",
+    "es": "ponerse (ropa)",
+    "ex": "Put on your jacket, it's cold.",
+    "exEs": "Ponete la campera, hace frío.",
+    "ex2": "She put on her glasses to read the menu.",
+    "exEs2": "Se puso los anteojos para leer el menú.",
+    "lvl": "A1",
+    "tag": "phrasal"
+  },
+  {
+    "en": "to take off",
+    "es": "sacarse (ropa) / despegar (avión)",
+    "ex": "Take off your shoes before you come in.",
+    "exEs": "Sacate los zapatos antes de entrar.",
+    "ex2": "The plane took off two hours late.",
+    "exEs2": "El avión despegó dos horas tarde.",
+    "lvl": "A1",
+    "tag": "phrasal"
+  },
+  {
+    "en": "to turn on",
+    "es": "prender (un aparato)",
+    "ex": "Turn on the lights, it's dark.",
+    "exEs": "Prendé las luces, está oscuro.",
+    "ex2": "Can you turn on the AC?",
+    "exEs2": "¿Podés prender el aire?",
+    "lvl": "A1",
+    "tag": "phrasal"
+  },
+  {
+    "en": "to turn off",
+    "es": "apagar (un aparato)",
+    "ex": "Turn off the TV and go to sleep.",
+    "exEs": "Apagá la tele y andá a dormir.",
+    "ex2": "Don't forget to turn off the oven.",
+    "exEs2": "No te olvides de apagar el horno.",
+    "lvl": "A1",
+    "tag": "phrasal"
+  },
+  {
+    "en": "to come in",
+    "es": "entrar",
+    "ex": "Come in, the door's open.",
+    "exEs": "Entrá, la puerta está abierta.",
+    "ex2": "May I come in?",
+    "exEs2": "¿Puedo entrar?",
+    "lvl": "A1",
+    "tag": "phrasal"
+  },
+  {
+    "en": "to go out",
+    "es": "salir",
+    "ex": "Do you want to go out tonight?",
+    "exEs": "¿Querés salir esta noche?",
+    "ex2": "We went out for pizza last night.",
+    "exEs2": "Salimos a comer pizza anoche.",
+    "lvl": "A1",
+    "tag": "phrasal"
+  },
+  {
+    "en": "to wake up",
+    "es": "despertarse",
+    "ex": "I woke up late this morning.",
+    "exEs": "Me desperté tarde esta mañana.",
+    "ex2": "The baby woke up crying.",
+    "exEs2": "El bebé se despertó llorando.",
+    "lvl": "A1",
+    "tag": "phrasal"
+  },
+  {
+    "en": "to look for",
+    "es": "buscar",
+    "ex": "I'm looking for my keys.",
+    "exEs": "Estoy buscando mis llaves.",
+    "ex2": "We're looking for a new apartment.",
+    "exEs2": "Estamos buscando un departamento nuevo.",
+    "lvl": "A2",
+    "tag": "phrasal"
+  },
+  {
+    "en": "to look after",
+    "es": "cuidar",
+    "ex": "Can you look after my cat this weekend?",
+    "exEs": "¿Podés cuidar a mi gato este finde?",
+    "ex2": "She looks after her little brother every afternoon.",
+    "exEs2": "Ella cuida a su hermanito todas las tardes.",
+    "lvl": "A2",
+    "tag": "phrasal"
+  },
+  {
+    "en": "to give up",
+    "es": "rendirse, dejar (un hábito)",
+    "ex": "Don't give up, you're almost there.",
+    "exEs": "No te rindas, ya casi llegás.",
+    "ex2": "He gave up smoking last year.",
+    "exEs2": "Dejó de fumar el año pasado.",
+    "lvl": "A2",
+    "tag": "phrasal"
+  },
+  {
+    "en": "to come back",
+    "es": "volver",
+    "ex": "What time will you come back?",
+    "exEs": "¿A qué hora volvés?",
+    "ex2": "She came back from her trip yesterday.",
+    "exEs2": "Volvió de su viaje ayer.",
+    "lvl": "A2",
+    "tag": "phrasal"
+  },
+  {
+    "en": "to get back",
+    "es": "volver, recuperar",
+    "ex": "We got back home really late.",
+    "exEs": "Volvimos a casa muy tarde.",
+    "ex2": "Did you get your money back?",
+    "exEs2": "¿Te devolvieron la plata?",
+    "lvl": "A2",
+    "tag": "phrasal"
+  },
+  {
+    "en": "to find out",
+    "es": "averiguar, enterarse",
+    "ex": "I need to find out the price first.",
+    "exEs": "Necesito averiguar el precio primero.",
+    "ex2": "We found out the news too late.",
+    "exEs2": "Nos enteramos de la noticia demasiado tarde.",
+    "lvl": "A2",
+    "tag": "phrasal"
+  },
+  {
+    "en": "to pick up",
+    "es": "levantar, pasar a buscar",
+    "ex": "Can you pick up the phone?",
+    "exEs": "¿Podés atender el teléfono?",
+    "ex2": "I'll pick you up at 8.",
+    "exEs2": "Te paso a buscar a las 8.",
+    "lvl": "A2",
+    "tag": "phrasal"
+  },
+  {
+    "en": "to grow up",
+    "es": "crecer",
+    "ex": "I grew up in a small town.",
+    "exEs": "Crecí en un pueblo chico.",
+    "ex2": "Kids grow up so fast.",
+    "exEs2": "Los chicos crecen muy rápido.",
+    "lvl": "A2",
+    "tag": "phrasal"
+  },
+  {
+    "en": "to fill in",
+    "es": "completar (un formulario)",
+    "ex": "Please fill in this form.",
+    "exEs": "Completá este formulario, por favor.",
+    "ex2": "Fill in the blanks with the correct word.",
+    "exEs2": "Completá los espacios con la palabra correcta.",
+    "lvl": "A2",
+    "tag": "phrasal"
+  },
+  {
+    "en": "to try on",
+    "es": "probarse (ropa)",
+    "ex": "Can I try on this jacket?",
+    "exEs": "¿Me puedo probar esta campera?",
+    "ex2": "She tried on five pairs of shoes.",
+    "exEs2": "Se probó cinco pares de zapatos.",
+    "lvl": "A2",
+    "tag": "phrasal"
+  },
+  {
+    "en": "to put away",
+    "es": "guardar",
+    "ex": "Put away your toys before dinner.",
+    "exEs": "Guardá tus juguetes antes de cenar.",
+    "ex2": "I put away the winter clothes.",
+    "exEs2": "Guardé la ropa de invierno.",
+    "lvl": "A2",
+    "tag": "phrasal"
+  },
+  {
+    "en": "to hang up",
+    "es": "cortar (el teléfono)",
+    "ex": "Don't hang up, I'm not done.",
+    "exEs": "No cortes, no terminé.",
+    "ex2": "He hung up before I could say goodbye.",
+    "exEs2": "Cortó antes de que pudiera despedirme.",
+    "lvl": "A2",
+    "tag": "phrasal"
+  },
+  {
+    "en": "to go on",
+    "es": "continuar, pasar (qué pasa)",
+    "ex": "Please go on with your story.",
+    "exEs": "Seguí con tu historia, por favor.",
+    "ex2": "What's going on here?",
+    "exEs2": "¿Qué está pasando acá?",
+    "lvl": "A2",
+    "tag": "phrasal"
+  },
+  {
+    "en": "to come on",
+    "es": "vamos (ánimo) / prenderse",
+    "ex": "Come on, we're going to be late!",
+    "exEs": "¡Dale, vamos a llegar tarde!",
+    "ex2": "The heater comes on automatically at night.",
+    "exEs2": "La estufa se prende sola a la noche.",
+    "lvl": "A2",
+    "tag": "phrasal"
+  },
+  {
+    "en": "to get on",
+    "es": "subir (a un colectivo/tren)",
+    "ex": "We got on the bus at the corner.",
+    "exEs": "Nos subimos al colectivo en la esquina.",
+    "ex2": "How are you getting on with the new job?",
+    "exEs2": "¿Cómo te va con el trabajo nuevo?",
+    "lvl": "A2",
+    "tag": "phrasal"
+  },
+  {
+    "en": "to get off",
+    "es": "bajarse (de un colectivo/tren)",
+    "ex": "I get off at the next stop.",
+    "exEs": "Me bajo en la próxima parada.",
+    "ex2": "She got off the train and called a taxi.",
+    "exEs2": "Se bajó del tren y llamó a un taxi.",
+    "lvl": "A2",
+    "tag": "phrasal"
+  },
+  {
+    "en": "to turn up",
+    "es": "aparecer, subir (volumen)",
+    "ex": "He turned up an hour late.",
+    "exEs": "Apareció una hora tarde.",
+    "ex2": "Can you turn up the music?",
+    "exEs2": "¿Podés subir la música?",
+    "lvl": "A2",
+    "tag": "phrasal"
+  },
+  {
+    "en": "to turn down",
+    "es": "rechazar / bajar (volumen)",
+    "ex": "She turned down the job offer.",
+    "exEs": "Rechazó la oferta de trabajo.",
+    "ex2": "Turn down the volume, please.",
+    "exEs2": "Bajá el volumen, por favor.",
+    "lvl": "A2",
+    "tag": "phrasal"
+  },
+  {
+    "en": "to look forward to",
+    "es": "tener ganas de, esperar con ansias",
+    "ex": "I'm looking forward to the weekend.",
+    "exEs": "Tengo muchas ganas de que llegue el finde.",
+    "ex2": "We look forward to seeing you soon.",
+    "exEs2": "Esperamos verte pronto.",
+    "lvl": "B1",
+    "tag": "phrasal"
+  },
+  {
+    "en": "to come across",
+    "es": "encontrarse con (algo por casualidad)",
+    "ex": "I came across an old photo of us.",
+    "exEs": "Me encontré con una foto vieja nuestra.",
+    "ex2": "I came across this article and thought of you.",
+    "exEs2": "Me crucé con este artículo y pensé en vos.",
+    "lvl": "B1",
+    "tag": "phrasal"
+  },
+  {
+    "en": "to run out of",
+    "es": "quedarse sin",
+    "ex": "We ran out of milk.",
+    "exEs": "Nos quedamos sin leche.",
+    "ex2": "I ran out of time to finish the exam.",
+    "exEs2": "Me quedé sin tiempo para terminar el examen.",
+    "lvl": "B1",
+    "tag": "phrasal"
+  },
+  {
+    "en": "to break down",
+    "es": "descomponerse (auto/máquina)",
+    "ex": "My car broke down on the highway.",
+    "exEs": "Se me rompió el auto en la autopista.",
+    "ex2": "The printer broke down again.",
+    "exEs2": "La impresora se rompió de nuevo.",
+    "lvl": "B1",
+    "tag": "phrasal"
+  },
+  {
+    "en": "to work out",
+    "es": "resultar bien / hacer ejercicio",
+    "ex": "I hope everything works out for you.",
+    "exEs": "Espero que todo te salga bien.",
+    "ex2": "I work out three times a week.",
+    "exEs2": "Hago ejercicio tres veces por semana.",
+    "lvl": "B1",
+    "tag": "phrasal"
+  },
+  {
+    "en": "to figure out",
+    "es": "entender, descifrar",
+    "ex": "I can't figure out how this works.",
+    "exEs": "No puedo entender cómo funciona esto.",
+    "ex2": "We finally figured out the problem.",
+    "exEs2": "Por fin descifamos el problema.",
+    "lvl": "B1",
+    "tag": "phrasal"
+  },
+  {
+    "en": "to deal with",
+    "es": "lidiar con",
+    "ex": "I don't want to deal with this right now.",
+    "exEs": "No quiero lidiar con esto ahora.",
+    "ex2": "She deals with customer complaints all day.",
+    "exEs2": "Ella lidia con quejas de clientes todo el día.",
+    "lvl": "B1",
+    "tag": "phrasal"
+  },
+  {
+    "en": "to put off",
+    "es": "postergar",
+    "ex": "Let's put off the meeting until Monday.",
+    "exEs": "Postergemos la reunión hasta el lunes.",
+    "ex2": "Don't put off your homework until the last minute.",
+    "exEs2": "No dejes la tarea para último momento.",
+    "lvl": "B1",
+    "tag": "phrasal"
+  },
+  {
+    "en": "to set up",
+    "es": "organizar, instalar",
+    "ex": "We need to set up the projector.",
+    "exEs": "Tenemos que instalar el proyector.",
+    "ex2": "She set up her own business last year.",
+    "exEs2": "Puso su propio negocio el año pasado.",
+    "lvl": "B1",
+    "tag": "phrasal"
+  },
+  {
+    "en": "to carry on",
+    "es": "continuar",
+    "ex": "Carry on, I'm listening.",
+    "exEs": "Seguí, te estoy escuchando.",
+    "ex2": "They carried on talking after I left.",
+    "exEs2": "Siguieron hablando después de que me fui.",
+    "lvl": "B1",
+    "tag": "phrasal"
+  },
+  {
+    "en": "to get along with",
+    "es": "llevarse bien con",
+    "ex": "I get along with my coworkers.",
+    "exEs": "Me llevo bien con mis compañeros de trabajo.",
+    "ex2": "Do you get along with your neighbors?",
+    "exEs2": "¿Te llevás bien con tus vecinos?",
+    "lvl": "B1",
+    "tag": "phrasal"
+  },
+  {
+    "en": "to get over",
+    "es": "superar",
+    "ex": "It took her months to get over the breakup.",
+    "exEs": "Le llevó meses superar la separación.",
+    "ex2": "I finally got over my cold.",
+    "exEs2": "Por fin me curé del resfrío.",
+    "lvl": "B1",
+    "tag": "phrasal"
+  },
+  {
+    "en": "to hold on",
+    "es": "esperar (un momento)",
+    "ex": "Hold on, let me check.",
+    "exEs": "Esperá, dejame revisar.",
+    "ex2": "Hold on tight, the road is bumpy.",
+    "exEs2": "Agarrate fuerte, el camino tiene pozos.",
+    "lvl": "B1",
+    "tag": "phrasal"
+  },
+  {
+    "en": "to check in",
+    "es": "registrarse (hotel/vuelo)",
+    "ex": "We checked in at the hotel around noon.",
+    "exEs": "Nos registramos en el hotel cerca del mediodía.",
+    "ex2": "You can check in online for your flight.",
+    "exEs2": "Podés hacer el check-in online para tu vuelo.",
+    "lvl": "B1",
+    "tag": "phrasal"
+  },
+  {
+    "en": "to check out",
+    "es": "dejar el hotel / revisar",
+    "ex": "We have to check out by 11am.",
+    "exEs": "Tenemos que dejar el hotel antes de las 11.",
+    "ex2": "Check out this new restaurant downtown.",
+    "exEs2": "Fijate este restaurante nuevo en el centro.",
+    "lvl": "B1",
+    "tag": "phrasal"
+  },
+  {
+    "en": "to show up",
+    "es": "aparecer, presentarse",
+    "ex": "He didn't show up to the meeting.",
+    "exEs": "No apareció a la reunión.",
+    "ex2": "She showed up unannounced.",
+    "exEs2": "Se apareció sin avisar.",
+    "lvl": "B1",
+    "tag": "phrasal"
+  },
+  {
+    "en": "to point out",
+    "es": "señalar, hacer notar",
+    "ex": "I want to point out a small mistake.",
+    "exEs": "Quiero señalar un pequeño error.",
+    "ex2": "He pointed out that we were missing a file.",
+    "exEs2": "Hizo notar que nos faltaba un archivo.",
+    "lvl": "B1",
+    "tag": "phrasal"
+  },
+  {
+    "en": "to sort out",
+    "es": "resolver, ordenar",
+    "ex": "We need to sort out this misunderstanding.",
+    "exEs": "Tenemos que resolver este malentendido.",
+    "ex2": "I sorted out my closet over the weekend.",
+    "exEs2": "Ordené mi placard el fin de semana.",
+    "lvl": "B1",
+    "tag": "phrasal"
+  },
+  {
+    "en": "to cut down on",
+    "es": "reducir",
+    "ex": "I'm trying to cut down on sugar.",
+    "exEs": "Estoy tratando de reducir el azúcar.",
+    "ex2": "We need to cut down on expenses this month.",
+    "exEs2": "Necesitamos reducir gastos este mes.",
+    "lvl": "B1",
+    "tag": "phrasal"
+  },
+  {
+    "en": "to keep up with",
+    "es": "mantener el ritmo de",
+    "ex": "It's hard to keep up with all the news.",
+    "exEs": "Es difícil seguirle el ritmo a todas las noticias.",
+    "ex2": "I can't keep up with you, slow down!",
+    "exEs2": "No te puedo seguir el ritmo, ¡más despacio!",
+    "lvl": "B1",
+    "tag": "phrasal"
+  },
+  {
+    "en": "to give in",
+    "es": "ceder, rendirse",
+    "ex": "He finally gave in and apologized.",
+    "exEs": "Por fin cedió y pidió disculpas.",
+    "ex2": "Don't give in to pressure.",
+    "exEs2": "No cedas a la presión.",
+    "lvl": "B1",
+    "tag": "phrasal"
+  },
+  {
+    "en": "to go through",
+    "es": "atravesar, pasar por",
+    "ex": "She's going through a difficult time.",
+    "exEs": "Está atravesando un momento difícil.",
+    "ex2": "We went through all the documents.",
+    "exEs2": "Revisamos todos los documentos.",
+    "lvl": "B1",
+    "tag": "phrasal"
+  },
+  {
+    "en": "to run into",
+    "es": "encontrarse con (alguien)",
+    "ex": "I ran into an old friend at the mall.",
+    "exEs": "Me encontré con un viejo amigo en el shopping.",
+    "ex2": "We ran into some problems with the plan.",
+    "exEs2": "Nos encontramos con algunos problemas con el plan.",
+    "lvl": "B1",
+    "tag": "phrasal"
+  },
+  {
+    "en": "to take over",
+    "es": "hacerse cargo de, tomar el control",
+    "ex": "She took over the project after he left.",
+    "exEs": "Ella se hizo cargo del proyecto después de que él se fue.",
+    "ex2": "The new manager is taking over next month.",
+    "exEs2": "El nuevo gerente asume el mes que viene.",
+    "lvl": "B1",
+    "tag": "phrasal"
+  },
+  {
+    "en": "to bring up",
+    "es": "mencionar / criar",
+    "ex": "I don't want to bring up that topic again.",
+    "exEs": "No quiero volver a mencionar ese tema.",
+    "ex2": "She was brought up by her grandparents.",
+    "exEs2": "La criaron sus abuelos.",
+    "lvl": "B1",
+    "tag": "phrasal"
+  },
+  {
+    "en": "to call off",
+    "es": "cancelar",
+    "ex": "They called off the wedding.",
+    "exEs": "Cancelaron el casamiento.",
+    "ex2": "The game was called off because of rain.",
+    "exEs2": "Cancelaron el partido por la lluvia.",
+    "lvl": "B1",
+    "tag": "phrasal"
+  },
+  {
+    "en": "to throw away",
+    "es": "tirar (a la basura)",
+    "ex": "Don't throw away that box, I need it.",
+    "exEs": "No tires esa caja, la necesito.",
+    "ex2": "She threw away all her old notes.",
+    "exEs2": "Tiró todos sus apuntes viejos.",
+    "lvl": "B1",
+    "tag": "phrasal"
+  },
+  {
+    "en": "to end up",
+    "es": "terminar (haciendo algo)",
+    "ex": "We ended up staying home all day.",
+    "exEs": "Terminamos quedándonos en casa todo el día.",
+    "ex2": "He ended up apologizing anyway.",
+    "exEs2": "Terminó disculpándose igual.",
+    "lvl": "B1",
+    "tag": "phrasal"
+  },
+  {
+    "en": "to turn out",
+    "es": "resultar (ser)",
+    "ex": "The movie turned out to be really good.",
+    "exEs": "La película resultó ser muy buena.",
+    "ex2": "It turned out she was right all along.",
+    "exEs2": "Resultó que ella tenía razón todo el tiempo.",
+    "lvl": "B1",
+    "tag": "phrasal"
+  },
+  {
+    "en": "to get through",
+    "es": "terminar, atravesar (algo difícil)",
+    "ex": "I don't know how I got through that exam.",
+    "exEs": "No sé cómo pude terminar ese examen.",
+    "ex2": "We'll get through this together.",
+    "exEs2": "Vamos a atravesar esto juntos.",
+    "lvl": "B1",
+    "tag": "phrasal"
+  },
+  {
+    "en": "to put up with",
+    "es": "tolerar, aguantar",
+    "ex": "I can't put up with this noise anymore.",
+    "exEs": "Ya no aguanto más este ruido.",
+    "ex2": "She puts up with a lot at that job.",
+    "exEs2": "Ella aguanta mucho en ese trabajo.",
+    "lvl": "B2",
+    "tag": "phrasal"
+  },
+  {
+    "en": "to come up with",
+    "es": "idear, ocurrírsele",
+    "ex": "He came up with a great idea.",
+    "exEs": "Se le ocurrió una gran idea.",
+    "ex2": "We need to come up with a plan B.",
+    "exEs2": "Tenemos que idear un plan B.",
+    "lvl": "B2",
+    "tag": "phrasal"
+  },
+  {
+    "en": "to look into",
+    "es": "investigar",
+    "ex": "The police are looking into the case.",
+    "exEs": "La policía está investigando el caso.",
+    "ex2": "I'll look into it and get back to you.",
+    "exEs2": "Lo voy a investigar y te aviso.",
+    "lvl": "B2",
+    "tag": "phrasal"
+  },
+  {
+    "en": "to take after",
+    "es": "parecerse a (un familiar)",
+    "ex": "She takes after her mother.",
+    "exEs": "Se parece a su madre.",
+    "ex2": "He really takes after his dad in personality.",
+    "exEs2": "Se parece mucho a su papá en la personalidad.",
+    "lvl": "B2",
+    "tag": "phrasal"
+  },
+  {
+    "en": "to make up for",
+    "es": "compensar",
+    "ex": "I want to make up for lost time.",
+    "exEs": "Quiero compensar el tiempo perdido.",
+    "ex2": "He bought flowers to make up for being late.",
+    "exEs2": "Compró flores para compensar la tardanza.",
+    "lvl": "B2",
+    "tag": "phrasal"
+  },
+  {
+    "en": "to get away with",
+    "es": "salirse con la suya",
+    "ex": "He always gets away with everything.",
+    "exEs": "Él siempre se sale con la suya.",
+    "ex2": "You won't get away with this.",
+    "exEs2": "No te vas a salir con la tuya con esto.",
+    "lvl": "B2",
+    "tag": "phrasal"
+  },
+  {
+    "en": "to stand up for",
+    "es": "defender",
+    "ex": "You should stand up for what you believe in.",
+    "exEs": "Deberías defender en lo que creés.",
+    "ex2": "She always stands up for her friends.",
+    "exEs2": "Ella siempre defiende a sus amigos.",
+    "lvl": "B2",
+    "tag": "phrasal"
+  },
+  {
+    "en": "to break into",
+    "es": "entrar por la fuerza / irrumpir en",
+    "ex": "Someone broke into our office last night.",
+    "exEs": "Alguien entró por la fuerza a nuestra oficina anoche.",
+    "ex2": "She's trying to break into the tech industry.",
+    "exEs2": "Está tratando de entrar en la industria tech.",
+    "lvl": "B2",
+    "tag": "phrasal"
+  },
+  {
+    "en": "to carry out",
+    "es": "llevar a cabo",
+    "ex": "They carried out a full investigation.",
+    "exEs": "Llevaron a cabo una investigación completa.",
+    "ex2": "We need to carry out more tests.",
+    "exEs2": "Tenemos que llevar a cabo más pruebas.",
+    "lvl": "B2",
+    "tag": "phrasal"
+  },
+  {
+    "en": "to pass away",
+    "es": "fallecer",
+    "ex": "Her grandfather passed away last month.",
+    "exEs": "Su abuelo falleció el mes pasado.",
+    "ex2": "I'm sorry to hear your dog passed away.",
+    "exEs2": "Lamento escuchar que tu perro falleció.",
+    "lvl": "B2",
+    "tag": "phrasal"
+  },
+  {
+    "en": "to let down",
+    "es": "decepcionar",
+    "ex": "I don't want to let you down.",
+    "exEs": "No quiero decepcionarte.",
+    "ex2": "He felt let down by his best friend.",
+    "exEs2": "Se sintió decepcionado por su mejor amigo.",
+    "lvl": "B2",
+    "tag": "phrasal"
+  },
+  {
+    "en": "to hang out",
+    "es": "pasar el rato, salir con amigos",
+    "ex": "We usually hang out on Fridays.",
+    "exEs": "Normalmente salimos los viernes.",
+    "ex2": "Do you want to hang out later?",
+    "exEs2": "¿Querés que nos juntemos más tarde?",
+    "lvl": "B2",
+    "tag": "phrasal"
+  }
+]

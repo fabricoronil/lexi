@@ -27,7 +27,7 @@ const openVocabCats = new Set();
 const XP_BY_QUALITY = [2, 5, 10, 15]; // otra vez, difícil, bien, fácil — solo cosmético, no toca el SRS
 // Mismo número que VERSION en sw.js — subir los dos juntos en cada deploy, así "Versión" en Ajustes
 // sirve para confirmar a simple vista si el dispositivo ya tiene los cambios nuevos.
-const APP_VERSION = 'v19';
+const APP_VERSION = 'v20';
 let session = null;
 let lastStreakSeen = null;
 let streakPopTimer = null;

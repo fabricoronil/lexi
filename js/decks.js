@@ -9,6 +9,7 @@ export const DECKS = [
   { id: 'core', file: 'data/core.json', label: 'core', hint: 'A1–B1 esencial', color: '#7ab8f5' },
   { id: 'tech', file: 'data/tech.json', label: 'tech', hint: 'dev, videos, docs', color: '#6ee7a0' },
   { id: 'phrases', file: 'data/phrases.json', label: 'frases', hint: 'videos y reuniones', color: '#f5a742' },
+  { id: 'phrasal', file: 'data/phrasal.json', label: 'phrasal verbs', hint: 'get up, give up, look for…', color: '#cba6f7' },
 ];
 
 let all = [];

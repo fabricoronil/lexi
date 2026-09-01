@@ -4,7 +4,7 @@
  * cache-first para el resto.
  */
 
-const VERSION = 'lexi-v19';
+const VERSION = 'lexi-v20';
 const ASSETS = [
   './',
   './index.html',
@@ -20,6 +20,7 @@ const ASSETS = [
   './data/core.json',
   './data/tech.json',
   './data/phrases.json',
+  './data/phrasal.json',
   './data/grammar.json',
   './data/my-vocab.json',
   './data/texts.json',
