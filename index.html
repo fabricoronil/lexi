@@ -245,6 +245,16 @@
         <input type="range" id="s-goal" min="5" max="150" step="5">
       </label>
     </div>
+    <div class="rec-box" id="goal-rec">
+      <div class="rec-main">
+        <div class="rec-text">
+          <span class="rec-label">Meta recomendada</span>
+          <b class="mono rec-value" id="rec-value">30</b>
+        </div>
+        <button class="sheet-btn small" id="btn-use-rec" type="button">Usar</button>
+      </div>
+      <p class="rec-why" id="rec-why"></p>
+    </div>
     <p class="note" id="goal-note"></p>
 
     <h2 class="section-label">Mazos activos</h2>
@@ -327,11 +337,11 @@
     <p class="note" style="margin-top:6px">Vocabulario propio y gramática, organizados por nivel — para leer y repasar rápido.</p>
 
     <div class="study-nav">
-      <button class="study-card" id="btn-go-my-vocab" type="button">
+      <button class="study-card" id="btn-go-vocab" type="button">
         <span class="study-card-ico">📚</span>
         <div class="study-card-text">
-          <span>Mi vocabulario</span>
-          <small id="study-vocab-sub">Las palabras que fuiste anotando</small>
+          <span>Vocabulario</span>
+          <small id="study-vocab-sub">Las tuyas, las de cada nivel y las más frecuentes</small>
         </div>
         <svg viewBox="0 0 24 24" class="ico chev"><path d="m9 6 6 6-6 6"/></svg>
       </button>
@@ -472,14 +482,68 @@
   <!-- ══ MI VOCABULARIO ══ -->
   <section class="view" id="view-my-vocab" hidden>
     <header class="session-bar">
-      <button class="icon-btn" id="btn-my-vocab-back" type="button" aria-label="Volver a Estudio">
+      <button class="icon-btn" id="btn-my-vocab-back" type="button" aria-label="Volver a Vocabulario">
         <svg viewBox="0 0 24 24" class="ico"><path d="M15 18l-6-6 6-6"/></svg>
       </button>
       <h1 class="page-title" style="margin:0">Mi vocabulario</h1>
+      <button class="add-btn" id="btn-word-new" type="button" aria-label="Anotar una palabra nueva">
+        <svg viewBox="0 0 24 24" class="ico"><path d="M12 5v14"/><path d="M5 12h14"/></svg>
+        <span>Anotar</span>
+      </button>
     </header>
 
     <p class="note" id="my-vocab-count"></p>
     <div id="my-vocab-list"></div>
+  </section>
+
+  <!-- ══ VOCABULARIO (inicio) ══ -->
+  <section class="view" id="view-vocab" hidden>
+    <header class="session-bar">
+      <button class="icon-btn" id="btn-vocab-back" type="button" aria-label="Volver a Estudio">
+        <svg viewBox="0 0 24 24" class="ico"><path d="M15 18l-6-6 6-6"/></svg>
+      </button>
+      <h1 class="page-title" style="margin:0">Vocabulario</h1>
+    </header>
+
+    <div class="study-nav">
+      <button class="study-card" id="btn-go-my-vocab" type="button">
+        <span class="study-card-ico">✍️</span>
+        <div class="study-card-text">
+          <span>Mi vocabulario</span>
+          <small id="hub-my-vocab-sub">Las palabras que fuiste anotando</small>
+        </div>
+        <svg viewBox="0 0 24 24" class="ico chev"><path d="m9 6 6 6-6 6"/></svg>
+      </button>
+    </div>
+
+    <h2 class="section-label">Lo esencial de cada nivel</h2>
+    <div class="level-list" id="vocab-level-list"></div>
+
+    <h2 class="section-label">Las más usadas del idioma</h2>
+    <div class="study-nav" id="vocab-freq-list"></div>
+    <p class="note" style="margin-top:12px">Ordenadas de más a menos frecuente. Las primeras cien aparecen en casi cualquier cosa que leas o escuches, así que rinden más que cualquier otra lista.</p>
+  </section>
+
+  <!-- ══ VOCABULARIO: LISTA ══ -->
+  <section class="view" id="view-vocab-list" hidden>
+    <header class="session-bar">
+      <button class="icon-btn" id="btn-vocab-list-back" type="button" aria-label="Volver a Vocabulario">
+        <svg viewBox="0 0 24 24" class="ico"><path d="M15 18l-6-6 6-6"/></svg>
+      </button>
+      <h1 class="page-title" style="margin:0" id="vocab-list-title">Vocabulario</h1>
+    </header>
+
+    <p class="note" id="vocab-list-note"></p>
+
+    <div class="search-row">
+      <svg viewBox="0 0 24 24" class="ico search-ico"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input type="search" id="vocab-search" placeholder="Buscar palabra o significado" autocomplete="off" autocapitalize="none" spellcheck="false">
+      <button class="icon-btn" id="btn-vocab-search-clear" type="button" aria-label="Borrar la búsqueda" hidden>
+        <svg viewBox="0 0 24 24" class="ico"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+      </button>
+    </div>
+
+    <div id="vocab-list-body"></div>
   </section>
 
   <!-- ══ NAV ══ -->
@@ -501,6 +565,54 @@
       <span>Ajustes</span>
     </button>
   </nav>
+
+  <!-- ══ HOJA: ANOTAR PALABRA ══ -->
+  <div class="sheet-back" id="word-sheet" hidden>
+    <div class="sheet" role="dialog" aria-modal="true" aria-labelledby="word-sheet-title">
+      <div class="sheet-grab"></div>
+      <header class="sheet-head">
+        <h2 id="word-sheet-title">Anotar palabra</h2>
+        <button class="icon-btn" id="btn-word-close" type="button" aria-label="Cerrar">
+          <svg viewBox="0 0 24 24" class="ico"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+        </button>
+      </header>
+      <form class="sheet-body" id="word-form" novalidate>
+        <label class="field">
+          <span>Palabra en inglés</span>
+          <input id="f-word" type="text" autocomplete="off" autocapitalize="none" spellcheck="false" placeholder="to figure out" enterkeyhint="next">
+        </label>
+        <label class="field">
+          <span>Significado <em>lo podés completar después</em></span>
+          <input id="f-meaning" type="text" autocomplete="off" placeholder="darse cuenta / resolver">
+        </label>
+        <label class="field">
+          <span>Ejemplo <em>opcional</em></span>
+          <input id="f-example" type="text" autocomplete="off" autocapitalize="sentences" spellcheck="false" placeholder="I need to figure this out.">
+        </label>
+        <label class="field">
+          <span>Traducción del ejemplo <em>opcional</em></span>
+          <input id="f-example-es" type="text" autocomplete="off" placeholder="Necesito resolver esto.">
+        </label>
+        <div class="field-pair">
+          <label class="field">
+            <span>Tipo</span>
+            <input id="f-type" type="text" autocomplete="off" list="vocab-types" placeholder="Phrasal verb">
+          </label>
+          <label class="field">
+            <span>Categoría</span>
+            <input id="f-category" type="text" autocomplete="off" list="vocab-cats" placeholder="Videos">
+          </label>
+        </div>
+        <datalist id="vocab-types"></datalist>
+        <datalist id="vocab-cats"></datalist>
+        <p class="sheet-note" id="word-form-note" hidden></p>
+        <div class="sheet-actions">
+          <button class="sheet-btn ghost danger" id="btn-word-delete" type="button" hidden>Borrar</button>
+          <button class="sheet-btn" id="btn-word-save" type="submit">Guardar</button>
+        </div>
+      </form>
+    </div>
+  </div>
 
   <div class="toast" id="toast" hidden></div>
 

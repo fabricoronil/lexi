@@ -37,9 +37,20 @@ const DEFAULTS = {
   topicsDone: {}, // id de tema de gramática -> true
   exerciseResults: {}, // id de tema -> { correct, total, bestPct, at }
   textResults: {}, // id de texto de lectura -> { correct, total, bestPct, attempts, at }
+  myWords: [], // palabras anotadas a mano desde el celu (ver más abajo)
 };
 
 let state = null;
+
+/**
+ * Arregla lo que el merge no puede: si el estado guardado no traía `myWords`,
+ * `deepMerge` deja el array de DEFAULTS por referencia y agregar una palabra
+ * lo mutaría para siempre. Además defiende de un JSON importado con basura.
+ */
+function normalize(s) {
+  s.myWords = Array.isArray(s.myWords) ? s.myWords.slice() : [];
+  return s;
+}
 
 export function todayKey(d = new Date()) {
   const y = d.getFullYear();
@@ -70,7 +81,7 @@ export function load() {
   } catch (e) {
     console.warn('No se pudo leer el progreso guardado:', e);
   }
-  state = saved ? deepMerge(DEFAULTS, saved) : structuredClone(DEFAULTS);
+  state = normalize(saved ? deepMerge(DEFAULTS, saved) : structuredClone(DEFAULTS));
   return state;
 }
 
@@ -86,7 +97,7 @@ export function save() {
 
 /** Reemplaza el estado local por uno traído de otro dispositivo (sync). No dispara un push de vuelta. */
 export function applyRemote(remote) {
-  state = deepMerge(DEFAULTS, remote);
+  state = normalize(deepMerge(DEFAULTS, remote));
   try {
     localStorage.setItem(KEY, JSON.stringify(state));
   } catch (e) {
@@ -206,9 +217,49 @@ export function importJSON(text) {
   if (!parsed || typeof parsed !== 'object' || !parsed.cards) {
     throw new Error('El archivo no parece una copia de Lexi.');
   }
-  state = deepMerge(DEFAULTS, parsed);
+  state = normalize(deepMerge(DEFAULTS, parsed));
   save();
   return state;
+}
+
+/* ── palabras propias ──
+ * Las que anotás vos desde el celu mientras mirás algo con subtítulos.
+ * Viven acá y no en un JSON del repo porque la app no tiene backend:
+ * localStorage + el gist de sync.js es lo único que las hace aparecer en los
+ * otros dispositivos. Siguen siendo material de lectura, igual que las que
+ * salen del Notion: no llevan estado de progreso ni entran al SRS.
+ */
+
+export function myWords() {
+  return load().myWords;
+}
+
+/** Id propio y estable: no se deriva del texto, así podés corregir la palabra sin perderla. */
+function newWordId() {
+  return 'w' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6);
+}
+
+export function addMyWord(fields) {
+  const s = load();
+  const entry = { ...fields, id: newWordId(), createdAt: Date.now() };
+  s.myWords.push(entry);
+  save();
+  return entry;
+}
+
+export function updateMyWord(id, fields) {
+  const s = load();
+  const i = s.myWords.findIndex((w) => w.id === id);
+  if (i === -1) return null;
+  s.myWords[i] = { ...s.myWords[i], ...fields };
+  save();
+  return s.myWords[i];
+}
+
+export function removeMyWord(id) {
+  const s = load();
+  s.myWords = s.myWords.filter((w) => w.id !== id);
+  save();
 }
 
 export function isTopicDone(id) {
@@ -252,6 +303,6 @@ export function textResult(textId) {
 }
 
 export function resetAll() {
-  state = structuredClone(DEFAULTS);
+  state = normalize(structuredClone(DEFAULTS));
   save();
 }

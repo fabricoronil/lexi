@@ -1,0 +1,4861 @@
+{
+"levels": [
+{
+"id": "a1",
+"label": "A1",
+"color": "#7ab8f5",
+"goal": "Lo mínimo para presentarte, pedir algo y contar tu día.",
+"groups": [
+{
+"name": "Saludos y cortesía",
+"words": [
+{
+"w": "hello",
+"es": "hola"
+},
+{
+"w": "hi",
+"es": "hola (informal)"
+},
+{
+"w": "goodbye",
+"es": "adiós"
+},
+{
+"w": "bye",
+"es": "chau"
+},
+{
+"w": "good morning",
+"es": "buenos días"
+},
+{
+"w": "good afternoon",
+"es": "buenas tardes"
+},
+{
+"w": "good evening",
+"es": "buenas noches (al llegar)"
+},
+{
+"w": "good night",
+"es": "buenas noches (al irse)"
+},
+{
+"w": "please",
+"es": "por favor"
+},
+{
+"w": "thank you",
+"es": "gracias"
+},
+{
+"w": "thanks",
+"es": "gracias (informal)"
+},
+{
+"w": "you're welcome",
+"es": "de nada"
+},
+{
+"w": "sorry",
+"es": "perdón"
+},
+{
+"w": "excuse me",
+"es": "disculpá / permiso"
+},
+{
+"w": "yes",
+"es": "sí"
+},
+{
+"w": "no",
+"es": "no"
+},
+{
+"w": "maybe",
+"es": "quizás"
+},
+{
+"w": "of course",
+"es": "por supuesto"
+},
+{
+"w": "see you later",
+"es": "nos vemos después"
+},
+{
+"w": "nice to meet you",
+"es": "mucho gusto"
+},
+{
+"w": "how are you?",
+"es": "¿cómo estás?"
+},
+{
+"w": "my name is",
+"es": "me llamo"
+},
+{
+"w": "welcome",
+"es": "bienvenido"
+},
+{
+"w": "okay",
+"es": "está bien"
+}
+]
+},
+{
+"name": "Personas y familia",
+"words": [
+{
+"w": "family",
+"es": "familia"
+},
+{
+"w": "mother",
+"es": "madre"
+},
+{
+"w": "father",
+"es": "padre"
+},
+{
+"w": "mom",
+"es": "mamá"
+},
+{
+"w": "dad",
+"es": "papá"
+},
+{
+"w": "parents",
+"es": "padres"
+},
+{
+"w": "son",
+"es": "hijo"
+},
+{
+"w": "daughter",
+"es": "hija"
+},
+{
+"w": "child",
+"es": "niño / hijo"
+},
+{
+"w": "children",
+"es": "niños / hijos"
+},
+{
+"w": "baby",
+"es": "bebé"
+},
+{
+"w": "brother",
+"es": "hermano"
+},
+{
+"w": "sister",
+"es": "hermana"
+},
+{
+"w": "grandmother",
+"es": "abuela"
+},
+{
+"w": "grandfather",
+"es": "abuelo"
+},
+{
+"w": "aunt",
+"es": "tía"
+},
+{
+"w": "uncle",
+"es": "tío"
+},
+{
+"w": "cousin",
+"es": "primo / prima"
+},
+{
+"w": "husband",
+"es": "esposo"
+},
+{
+"w": "wife",
+"es": "esposa"
+},
+{
+"w": "friend",
+"es": "amigo / amiga"
+},
+{
+"w": "neighbour",
+"es": "vecino"
+},
+{
+"w": "man",
+"es": "hombre"
+},
+{
+"w": "woman",
+"es": "mujer"
+},
+{
+"w": "boy",
+"es": "chico / varón"
+},
+{
+"w": "girl",
+"es": "chica / nena"
+},
+{
+"w": "people",
+"es": "gente / personas"
+},
+{
+"w": "person",
+"es": "persona"
+},
+{
+"w": "name",
+"es": "nombre"
+}
+]
+},
+{
+"name": "Números, días y meses",
+"words": [
+{
+"w": "one",
+"es": "uno"
+},
+{
+"w": "two",
+"es": "dos"
+},
+{
+"w": "three",
+"es": "tres"
+},
+{
+"w": "four",
+"es": "cuatro"
+},
+{
+"w": "five",
+"es": "cinco"
+},
+{
+"w": "six",
+"es": "seis"
+},
+{
+"w": "seven",
+"es": "siete"
+},
+{
+"w": "eight",
+"es": "ocho"
+},
+{
+"w": "nine",
+"es": "nueve"
+},
+{
+"w": "ten",
+"es": "diez"
+},
+{
+"w": "twenty",
+"es": "veinte"
+},
+{
+"w": "hundred",
+"es": "cien"
+},
+{
+"w": "thousand",
+"es": "mil"
+},
+{
+"w": "first",
+"es": "primero"
+},
+{
+"w": "second",
+"es": "segundo"
+},
+{
+"w": "last",
+"es": "último"
+},
+{
+"w": "Monday",
+"es": "lunes"
+},
+{
+"w": "Tuesday",
+"es": "martes"
+},
+{
+"w": "Wednesday",
+"es": "miércoles"
+},
+{
+"w": "Thursday",
+"es": "jueves"
+},
+{
+"w": "Friday",
+"es": "viernes"
+},
+{
+"w": "Saturday",
+"es": "sábado"
+},
+{
+"w": "Sunday",
+"es": "domingo"
+},
+{
+"w": "day",
+"es": "día"
+},
+{
+"w": "week",
+"es": "semana"
+},
+{
+"w": "month",
+"es": "mes"
+},
+{
+"w": "year",
+"es": "año"
+},
+{
+"w": "today",
+"es": "hoy"
+},
+{
+"w": "tomorrow",
+"es": "mañana"
+},
+{
+"w": "yesterday",
+"es": "ayer"
+},
+{
+"w": "morning",
+"es": "mañana (parte del día)"
+},
+{
+"w": "afternoon",
+"es": "tarde"
+},
+{
+"w": "evening",
+"es": "tarde-noche"
+},
+{
+"w": "night",
+"es": "noche"
+},
+{
+"w": "hour",
+"es": "hora"
+},
+{
+"w": "minute",
+"es": "minuto"
+},
+{
+"w": "time",
+"es": "tiempo / hora"
+},
+{
+"w": "January",
+"es": "enero"
+},
+{
+"w": "February",
+"es": "febrero"
+},
+{
+"w": "March",
+"es": "marzo"
+},
+{
+"w": "April",
+"es": "abril"
+},
+{
+"w": "May",
+"es": "mayo"
+},
+{
+"w": "June",
+"es": "junio"
+},
+{
+"w": "July",
+"es": "julio"
+},
+{
+"w": "August",
+"es": "agosto"
+},
+{
+"w": "September",
+"es": "septiembre"
+},
+{
+"w": "October",
+"es": "octubre"
+},
+{
+"w": "November",
+"es": "noviembre"
+},
+{
+"w": "December",
+"es": "diciembre"
+}
+]
+},
+{
+"name": "Colores y descripción",
+"words": [
+{
+"w": "colour",
+"es": "color"
+},
+{
+"w": "red",
+"es": "rojo"
+},
+{
+"w": "blue",
+"es": "azul"
+},
+{
+"w": "green",
+"es": "verde"
+},
+{
+"w": "yellow",
+"es": "amarillo"
+},
+{
+"w": "black",
+"es": "negro"
+},
+{
+"w": "white",
+"es": "blanco"
+},
+{
+"w": "orange",
+"es": "naranja"
+},
+{
+"w": "pink",
+"es": "rosa"
+},
+{
+"w": "brown",
+"es": "marrón"
+},
+{
+"w": "grey",
+"es": "gris"
+},
+{
+"w": "purple",
+"es": "violeta"
+},
+{
+"w": "big",
+"es": "grande"
+},
+{
+"w": "small",
+"es": "pequeño / chico"
+},
+{
+"w": "long",
+"es": "largo"
+},
+{
+"w": "short",
+"es": "corto / bajo"
+},
+{
+"w": "tall",
+"es": "alto"
+},
+{
+"w": "new",
+"es": "nuevo"
+},
+{
+"w": "old",
+"es": "viejo"
+},
+{
+"w": "young",
+"es": "joven"
+}
+]
+},
+{
+"name": "La casa",
+"words": [
+{
+"w": "house",
+"es": "casa"
+},
+{
+"w": "home",
+"es": "hogar / casa"
+},
+{
+"w": "flat",
+"es": "departamento"
+},
+{
+"w": "room",
+"es": "habitación"
+},
+{
+"w": "bedroom",
+"es": "dormitorio"
+},
+{
+"w": "kitchen",
+"es": "cocina"
+},
+{
+"w": "bathroom",
+"es": "baño"
+},
+{
+"w": "living room",
+"es": "living / sala"
+},
+{
+"w": "door",
+"es": "puerta"
+},
+{
+"w": "window",
+"es": "ventana"
+},
+{
+"w": "wall",
+"es": "pared"
+},
+{
+"w": "floor",
+"es": "piso"
+},
+{
+"w": "table",
+"es": "mesa"
+},
+{
+"w": "chair",
+"es": "silla"
+},
+{
+"w": "bed",
+"es": "cama"
+},
+{
+"w": "sofa",
+"es": "sillón"
+},
+{
+"w": "lamp",
+"es": "lámpara"
+},
+{
+"w": "key",
+"es": "llave"
+},
+{
+"w": "garden",
+"es": "jardín"
+},
+{
+"w": "garage",
+"es": "garaje"
+},
+{
+"w": "mirror",
+"es": "espejo"
+},
+{
+"w": "towel",
+"es": "toalla"
+},
+{
+"w": "soap",
+"es": "jabón"
+},
+{
+"w": "fridge",
+"es": "heladera"
+},
+{
+"w": "oven",
+"es": "horno"
+}
+]
+},
+{
+"name": "Comida y bebida",
+"words": [
+{
+"w": "food",
+"es": "comida"
+},
+{
+"w": "water",
+"es": "agua"
+},
+{
+"w": "bread",
+"es": "pan"
+},
+{
+"w": "milk",
+"es": "leche"
+},
+{
+"w": "coffee",
+"es": "café"
+},
+{
+"w": "tea",
+"es": "té"
+},
+{
+"w": "juice",
+"es": "jugo"
+},
+{
+"w": "meat",
+"es": "carne"
+},
+{
+"w": "chicken",
+"es": "pollo"
+},
+{
+"w": "fish",
+"es": "pescado"
+},
+{
+"w": "rice",
+"es": "arroz"
+},
+{
+"w": "egg",
+"es": "huevo"
+},
+{
+"w": "cheese",
+"es": "queso"
+},
+{
+"w": "butter",
+"es": "manteca"
+},
+{
+"w": "sugar",
+"es": "azúcar"
+},
+{
+"w": "salt",
+"es": "sal"
+},
+{
+"w": "fruit",
+"es": "fruta"
+},
+{
+"w": "apple",
+"es": "manzana"
+},
+{
+"w": "banana",
+"es": "banana"
+},
+{
+"w": "orange",
+"es": "naranja (fruta)"
+},
+{
+"w": "vegetable",
+"es": "verdura"
+},
+{
+"w": "potato",
+"es": "papa"
+},
+{
+"w": "tomato",
+"es": "tomate"
+},
+{
+"w": "onion",
+"es": "cebolla"
+},
+{
+"w": "salad",
+"es": "ensalada"
+},
+{
+"w": "soup",
+"es": "sopa"
+},
+{
+"w": "cake",
+"es": "torta"
+},
+{
+"w": "breakfast",
+"es": "desayuno"
+},
+{
+"w": "lunch",
+"es": "almuerzo"
+},
+{
+"w": "dinner",
+"es": "cena"
+},
+{
+"w": "hungry",
+"es": "con hambre"
+},
+{
+"w": "thirsty",
+"es": "con sed"
+}
+]
+},
+{
+"name": "Ropa",
+"words": [
+{
+"w": "clothes",
+"es": "ropa"
+},
+{
+"w": "shirt",
+"es": "camisa"
+},
+{
+"w": "t-shirt",
+"es": "remera"
+},
+{
+"w": "trousers",
+"es": "pantalón"
+},
+{
+"w": "jeans",
+"es": "jeans"
+},
+{
+"w": "dress",
+"es": "vestido"
+},
+{
+"w": "skirt",
+"es": "pollera"
+},
+{
+"w": "jacket",
+"es": "campera"
+},
+{
+"w": "coat",
+"es": "abrigo"
+},
+{
+"w": "shoes",
+"es": "zapatos"
+},
+{
+"w": "socks",
+"es": "medias"
+},
+{
+"w": "hat",
+"es": "gorro / sombrero"
+},
+{
+"w": "glasses",
+"es": "anteojos"
+},
+{
+"w": "bag",
+"es": "bolso / mochila"
+},
+{
+"w": "watch",
+"es": "reloj (de pulsera)"
+},
+{
+"w": "to wear",
+"es": "usar (ropa)"
+}
+]
+},
+{
+"name": "El cuerpo y la salud",
+"words": [
+{
+"w": "body",
+"es": "cuerpo"
+},
+{
+"w": "head",
+"es": "cabeza"
+},
+{
+"w": "hair",
+"es": "pelo"
+},
+{
+"w": "face",
+"es": "cara"
+},
+{
+"w": "eye",
+"es": "ojo"
+},
+{
+"w": "ear",
+"es": "oreja"
+},
+{
+"w": "nose",
+"es": "nariz"
+},
+{
+"w": "mouth",
+"es": "boca"
+},
+{
+"w": "tooth",
+"es": "diente"
+},
+{
+"w": "hand",
+"es": "mano"
+},
+{
+"w": "arm",
+"es": "brazo"
+},
+{
+"w": "leg",
+"es": "pierna"
+},
+{
+"w": "foot",
+"es": "pie"
+},
+{
+"w": "back",
+"es": "espalda"
+},
+{
+"w": "stomach",
+"es": "estómago"
+},
+{
+"w": "heart",
+"es": "corazón"
+},
+{
+"w": "doctor",
+"es": "médico"
+},
+{
+"w": "nurse",
+"es": "enfermero"
+},
+{
+"w": "hospital",
+"es": "hospital"
+},
+{
+"w": "medicine",
+"es": "medicamento"
+},
+{
+"w": "ill",
+"es": "enfermo"
+},
+{
+"w": "sick",
+"es": "enfermo / descompuesto"
+},
+{
+"w": "pain",
+"es": "dolor"
+},
+{
+"w": "tired",
+"es": "cansado"
+}
+]
+},
+{
+"name": "La ciudad y los lugares",
+"words": [
+{
+"w": "city",
+"es": "ciudad"
+},
+{
+"w": "town",
+"es": "pueblo"
+},
+{
+"w": "street",
+"es": "calle"
+},
+{
+"w": "road",
+"es": "ruta / camino"
+},
+{
+"w": "shop",
+"es": "negocio"
+},
+{
+"w": "supermarket",
+"es": "supermercado"
+},
+{
+"w": "market",
+"es": "mercado"
+},
+{
+"w": "school",
+"es": "escuela"
+},
+{
+"w": "university",
+"es": "universidad"
+},
+{
+"w": "office",
+"es": "oficina"
+},
+{
+"w": "bank",
+"es": "banco"
+},
+{
+"w": "restaurant",
+"es": "restaurante"
+},
+{
+"w": "café",
+"es": "café (lugar)"
+},
+{
+"w": "hotel",
+"es": "hotel"
+},
+{
+"w": "park",
+"es": "parque"
+},
+{
+"w": "station",
+"es": "estación"
+},
+{
+"w": "airport",
+"es": "aeropuerto"
+},
+{
+"w": "church",
+"es": "iglesia"
+},
+{
+"w": "library",
+"es": "biblioteca"
+},
+{
+"w": "cinema",
+"es": "cine"
+},
+{
+"w": "beach",
+"es": "playa"
+},
+{
+"w": "country",
+"es": "país"
+},
+{
+"w": "place",
+"es": "lugar"
+}
+]
+},
+{
+"name": "Verbos de todos los días",
+"words": [
+{
+"w": "to be",
+"es": "ser / estar"
+},
+{
+"w": "to have",
+"es": "tener"
+},
+{
+"w": "to do",
+"es": "hacer"
+},
+{
+"w": "to go",
+"es": "ir"
+},
+{
+"w": "to come",
+"es": "venir"
+},
+{
+"w": "to eat",
+"es": "comer"
+},
+{
+"w": "to drink",
+"es": "tomar / beber"
+},
+{
+"w": "to sleep",
+"es": "dormir"
+},
+{
+"w": "to wake up",
+"es": "despertarse"
+},
+{
+"w": "to get up",
+"es": "levantarse"
+},
+{
+"w": "to work",
+"es": "trabajar"
+},
+{
+"w": "to study",
+"es": "estudiar"
+},
+{
+"w": "to read",
+"es": "leer"
+},
+{
+"w": "to write",
+"es": "escribir"
+},
+{
+"w": "to speak",
+"es": "hablar"
+},
+{
+"w": "to talk",
+"es": "conversar"
+},
+{
+"w": "to listen",
+"es": "escuchar"
+},
+{
+"w": "to watch",
+"es": "mirar"
+},
+{
+"w": "to see",
+"es": "ver"
+},
+{
+"w": "to look",
+"es": "mirar / parecer"
+},
+{
+"w": "to like",
+"es": "gustar"
+},
+{
+"w": "to love",
+"es": "amar / encantar"
+},
+{
+"w": "to want",
+"es": "querer"
+},
+{
+"w": "to need",
+"es": "necesitar"
+},
+{
+"w": "to buy",
+"es": "comprar"
+},
+{
+"w": "to pay",
+"es": "pagar"
+},
+{
+"w": "to open",
+"es": "abrir"
+},
+{
+"w": "to close",
+"es": "cerrar"
+},
+{
+"w": "to give",
+"es": "dar"
+},
+{
+"w": "to take",
+"es": "tomar / llevar"
+},
+{
+"w": "to put",
+"es": "poner"
+},
+{
+"w": "to make",
+"es": "hacer / fabricar"
+},
+{
+"w": "to help",
+"es": "ayudar"
+},
+{
+"w": "to live",
+"es": "vivir"
+},
+{
+"w": "to walk",
+"es": "caminar"
+},
+{
+"w": "to run",
+"es": "correr"
+},
+{
+"w": "to drive",
+"es": "manejar"
+},
+{
+"w": "to play",
+"es": "jugar / tocar"
+},
+{
+"w": "to learn",
+"es": "aprender"
+},
+{
+"w": "to know",
+"es": "saber / conocer"
+},
+{
+"w": "to think",
+"es": "pensar"
+},
+{
+"w": "to say",
+"es": "decir"
+},
+{
+"w": "to tell",
+"es": "contar / decirle a alguien"
+},
+{
+"w": "to ask",
+"es": "preguntar / pedir"
+},
+{
+"w": "to answer",
+"es": "responder"
+},
+{
+"w": "to start",
+"es": "empezar"
+},
+{
+"w": "to finish",
+"es": "terminar"
+},
+{
+"w": "to wait",
+"es": "esperar"
+},
+{
+"w": "to meet",
+"es": "encontrarse con"
+},
+{
+"w": "to call",
+"es": "llamar"
+}
+]
+},
+{
+"name": "Adjetivos básicos",
+"words": [
+{
+"w": "good",
+"es": "bueno"
+},
+{
+"w": "bad",
+"es": "malo"
+},
+{
+"w": "happy",
+"es": "feliz"
+},
+{
+"w": "sad",
+"es": "triste"
+},
+{
+"w": "easy",
+"es": "fácil"
+},
+{
+"w": "difficult",
+"es": "difícil"
+},
+{
+"w": "hot",
+"es": "caliente / caluroso"
+},
+{
+"w": "cold",
+"es": "frío"
+},
+{
+"w": "warm",
+"es": "templado / cálido"
+},
+{
+"w": "cheap",
+"es": "barato"
+},
+{
+"w": "expensive",
+"es": "caro"
+},
+{
+"w": "fast",
+"es": "rápido"
+},
+{
+"w": "slow",
+"es": "lento"
+},
+{
+"w": "clean",
+"es": "limpio"
+},
+{
+"w": "dirty",
+"es": "sucio"
+},
+{
+"w": "beautiful",
+"es": "hermoso"
+},
+{
+"w": "nice",
+"es": "lindo / simpático"
+},
+{
+"w": "ugly",
+"es": "feo"
+},
+{
+"w": "right",
+"es": "correcto"
+},
+{
+"w": "wrong",
+"es": "equivocado"
+},
+{
+"w": "open",
+"es": "abierto"
+},
+{
+"w": "closed",
+"es": "cerrado"
+},
+{
+"w": "free",
+"es": "libre / gratis"
+},
+{
+"w": "busy",
+"es": "ocupado"
+},
+{
+"w": "important",
+"es": "importante"
+},
+{
+"w": "different",
+"es": "diferente"
+},
+{
+"w": "same",
+"es": "mismo"
+}
+]
+},
+{
+"name": "Preguntas y palabras clave",
+"words": [
+{
+"w": "what",
+"es": "qué"
+},
+{
+"w": "who",
+"es": "quién"
+},
+{
+"w": "where",
+"es": "dónde"
+},
+{
+"w": "when",
+"es": "cuándo"
+},
+{
+"w": "why",
+"es": "por qué"
+},
+{
+"w": "how",
+"es": "cómo"
+},
+{
+"w": "which",
+"es": "cuál"
+},
+{
+"w": "how much",
+"es": "cuánto"
+},
+{
+"w": "how many",
+"es": "cuántos"
+},
+{
+"w": "here",
+"es": "acá"
+},
+{
+"w": "there",
+"es": "allá"
+},
+{
+"w": "now",
+"es": "ahora"
+},
+{
+"w": "always",
+"es": "siempre"
+},
+{
+"w": "never",
+"es": "nunca"
+},
+{
+"w": "sometimes",
+"es": "a veces"
+},
+{
+"w": "often",
+"es": "a menudo"
+},
+{
+"w": "very",
+"es": "muy"
+},
+{
+"w": "too",
+"es": "demasiado / también"
+},
+{
+"w": "also",
+"es": "también"
+},
+{
+"w": "but",
+"es": "pero"
+},
+{
+"w": "and",
+"es": "y"
+},
+{
+"w": "or",
+"es": "o"
+},
+{
+"w": "because",
+"es": "porque"
+},
+{
+"w": "with",
+"es": "con"
+},
+{
+"w": "without",
+"es": "sin"
+},
+{
+"w": "before",
+"es": "antes"
+},
+{
+"w": "after",
+"es": "después"
+},
+{
+"w": "again",
+"es": "otra vez"
+},
+{
+"w": "only",
+"es": "sólo"
+},
+{
+"w": "all",
+"es": "todo"
+},
+{
+"w": "some",
+"es": "algunos"
+},
+{
+"w": "many",
+"es": "muchos"
+},
+{
+"w": "few",
+"es": "pocos"
+},
+{
+"w": "more",
+"es": "más"
+},
+{
+"w": "less",
+"es": "menos"
+}
+]
+}
+]
+},
+{
+"id": "a2",
+"label": "A2",
+"color": "#a6e3a1",
+"goal": "Para hablar de tu rutina, tu trabajo y lo que hiciste el finde.",
+"groups": [
+{
+"name": "Trabajo y estudios",
+"words": [
+{
+"w": "job",
+"es": "trabajo / puesto"
+},
+{
+"w": "work",
+"es": "trabajo"
+},
+{
+"w": "career",
+"es": "carrera"
+},
+{
+"w": "company",
+"es": "empresa"
+},
+{
+"w": "boss",
+"es": "jefe"
+},
+{
+"w": "colleague",
+"es": "compañero de trabajo"
+},
+{
+"w": "team",
+"es": "equipo"
+},
+{
+"w": "meeting",
+"es": "reunión"
+},
+{
+"w": "salary",
+"es": "sueldo"
+},
+{
+"w": "interview",
+"es": "entrevista"
+},
+{
+"w": "experience",
+"es": "experiencia"
+},
+{
+"w": "skill",
+"es": "habilidad"
+},
+{
+"w": "task",
+"es": "tarea"
+},
+{
+"w": "project",
+"es": "proyecto"
+},
+{
+"w": "deadline",
+"es": "fecha límite"
+},
+{
+"w": "employee",
+"es": "empleado"
+},
+{
+"w": "manager",
+"es": "gerente / encargado"
+},
+{
+"w": "customer",
+"es": "cliente"
+},
+{
+"w": "staff",
+"es": "personal"
+},
+{
+"w": "to apply",
+"es": "postularse"
+},
+{
+"w": "to hire",
+"es": "contratar"
+},
+{
+"w": "to earn",
+"es": "ganar (dinero)"
+},
+{
+"w": "to retire",
+"es": "jubilarse"
+},
+{
+"w": "degree",
+"es": "título universitario"
+},
+{
+"w": "course",
+"es": "curso"
+},
+{
+"w": "exam",
+"es": "examen"
+},
+{
+"w": "homework",
+"es": "tarea (escolar)"
+},
+{
+"w": "subject",
+"es": "materia"
+},
+{
+"w": "teacher",
+"es": "profesor"
+},
+{
+"w": "student",
+"es": "estudiante"
+},
+{
+"w": "classroom",
+"es": "aula"
+},
+{
+"w": "notes",
+"es": "apuntes"
+},
+{
+"w": "to pass",
+"es": "aprobar"
+},
+{
+"w": "to fail",
+"es": "desaprobar"
+}
+]
+},
+{
+"name": "Viajes y transporte",
+"words": [
+{
+"w": "trip",
+"es": "viaje"
+},
+{
+"w": "journey",
+"es": "trayecto"
+},
+{
+"w": "flight",
+"es": "vuelo"
+},
+{
+"w": "ticket",
+"es": "pasaje / entrada"
+},
+{
+"w": "passport",
+"es": "pasaporte"
+},
+{
+"w": "luggage",
+"es": "equipaje"
+},
+{
+"w": "suitcase",
+"es": "valija"
+},
+{
+"w": "map",
+"es": "mapa"
+},
+{
+"w": "tourist",
+"es": "turista"
+},
+{
+"w": "holiday",
+"es": "vacaciones"
+},
+{
+"w": "abroad",
+"es": "en el exterior"
+},
+{
+"w": "to travel",
+"es": "viajar"
+},
+{
+"w": "to book",
+"es": "reservar"
+},
+{
+"w": "to arrive",
+"es": "llegar"
+},
+{
+"w": "to leave",
+"es": "irse / salir"
+},
+{
+"w": "to land",
+"es": "aterrizar"
+},
+{
+"w": "to take off",
+"es": "despegar"
+},
+{
+"w": "bus",
+"es": "colectivo"
+},
+{
+"w": "train",
+"es": "tren"
+},
+{
+"w": "plane",
+"es": "avión"
+},
+{
+"w": "car",
+"es": "auto"
+},
+{
+"w": "taxi",
+"es": "taxi"
+},
+{
+"w": "bike",
+"es": "bici"
+},
+{
+"w": "underground",
+"es": "subte"
+},
+{
+"w": "platform",
+"es": "andén"
+},
+{
+"w": "delay",
+"es": "demora"
+},
+{
+"w": "traffic",
+"es": "tránsito"
+},
+{
+"w": "petrol",
+"es": "nafta"
+},
+{
+"w": "seat",
+"es": "asiento"
+}
+]
+},
+{
+"name": "Compras y dinero",
+"words": [
+{
+"w": "money",
+"es": "dinero"
+},
+{
+"w": "price",
+"es": "precio"
+},
+{
+"w": "cost",
+"es": "costo"
+},
+{
+"w": "bill",
+"es": "cuenta / factura"
+},
+{
+"w": "change",
+"es": "cambio / vuelto"
+},
+{
+"w": "cash",
+"es": "efectivo"
+},
+{
+"w": "card",
+"es": "tarjeta"
+},
+{
+"w": "discount",
+"es": "descuento"
+},
+{
+"w": "sale",
+"es": "liquidación / venta"
+},
+{
+"w": "receipt",
+"es": "recibo / ticket"
+},
+{
+"w": "size",
+"es": "talle / tamaño"
+},
+{
+"w": "to spend",
+"es": "gastar"
+},
+{
+"w": "to save",
+"es": "ahorrar"
+},
+{
+"w": "to cost",
+"es": "costar"
+},
+{
+"w": "to afford",
+"es": "poder pagar"
+},
+{
+"w": "to order",
+"es": "pedir / encargar"
+},
+{
+"w": "to return",
+"es": "devolver"
+},
+{
+"w": "to try on",
+"es": "probarse"
+},
+{
+"w": "customer service",
+"es": "atención al cliente"
+},
+{
+"w": "shopping centre",
+"es": "shopping"
+},
+{
+"w": "cheap",
+"es": "barato"
+},
+{
+"w": "expensive",
+"es": "caro"
+},
+{
+"w": "worth",
+"es": "que vale la pena"
+}
+]
+},
+{
+"name": "Tiempo libre y hobbies",
+"words": [
+{
+"w": "hobby",
+"es": "pasatiempo"
+},
+{
+"w": "free time",
+"es": "tiempo libre"
+},
+{
+"w": "sport",
+"es": "deporte"
+},
+{
+"w": "football",
+"es": "fútbol"
+},
+{
+"w": "gym",
+"es": "gimnasio"
+},
+{
+"w": "to exercise",
+"es": "hacer ejercicio"
+},
+{
+"w": "to swim",
+"es": "nadar"
+},
+{
+"w": "to dance",
+"es": "bailar"
+},
+{
+"w": "to sing",
+"es": "cantar"
+},
+{
+"w": "music",
+"es": "música"
+},
+{
+"w": "song",
+"es": "canción"
+},
+{
+"w": "band",
+"es": "banda"
+},
+{
+"w": "film",
+"es": "película"
+},
+{
+"w": "series",
+"es": "serie"
+},
+{
+"w": "episode",
+"es": "episodio"
+},
+{
+"w": "book",
+"es": "libro"
+},
+{
+"w": "story",
+"es": "historia"
+},
+{
+"w": "game",
+"es": "juego"
+},
+{
+"w": "player",
+"es": "jugador"
+},
+{
+"w": "party",
+"es": "fiesta"
+},
+{
+"w": "concert",
+"es": "recital"
+},
+{
+"w": "museum",
+"es": "museo"
+},
+{
+"w": "photo",
+"es": "foto"
+},
+{
+"w": "to join",
+"es": "sumarse / anotarse"
+},
+{
+"w": "to practise",
+"es": "practicar"
+},
+{
+"w": "to win",
+"es": "ganar"
+},
+{
+"w": "to lose",
+"es": "perder"
+}
+]
+},
+{
+"name": "El clima y la naturaleza",
+"words": [
+{
+"w": "weather",
+"es": "clima"
+},
+{
+"w": "sun",
+"es": "sol"
+},
+{
+"w": "sunny",
+"es": "soleado"
+},
+{
+"w": "rain",
+"es": "lluvia"
+},
+{
+"w": "rainy",
+"es": "lluvioso"
+},
+{
+"w": "cloud",
+"es": "nube"
+},
+{
+"w": "cloudy",
+"es": "nublado"
+},
+{
+"w": "wind",
+"es": "viento"
+},
+{
+"w": "windy",
+"es": "ventoso"
+},
+{
+"w": "snow",
+"es": "nieve"
+},
+{
+"w": "storm",
+"es": "tormenta"
+},
+{
+"w": "fog",
+"es": "niebla"
+},
+{
+"w": "temperature",
+"es": "temperatura"
+},
+{
+"w": "degree",
+"es": "grado"
+},
+{
+"w": "season",
+"es": "estación"
+},
+{
+"w": "spring",
+"es": "primavera"
+},
+{
+"w": "summer",
+"es": "verano"
+},
+{
+"w": "autumn",
+"es": "otoño"
+},
+{
+"w": "winter",
+"es": "invierno"
+},
+{
+"w": "tree",
+"es": "árbol"
+},
+{
+"w": "flower",
+"es": "flor"
+},
+{
+"w": "grass",
+"es": "pasto"
+},
+{
+"w": "river",
+"es": "río"
+},
+{
+"w": "sea",
+"es": "mar"
+},
+{
+"w": "mountain",
+"es": "montaña"
+},
+{
+"w": "forest",
+"es": "bosque"
+},
+{
+"w": "animal",
+"es": "animal"
+},
+{
+"w": "bird",
+"es": "pájaro"
+},
+{
+"w": "dog",
+"es": "perro"
+},
+{
+"w": "cat",
+"es": "gato"
+}
+]
+},
+{
+"name": "Sentimientos y carácter",
+"words": [
+{
+"w": "feeling",
+"es": "sentimiento"
+},
+{
+"w": "angry",
+"es": "enojado"
+},
+{
+"w": "afraid",
+"es": "asustado"
+},
+{
+"w": "worried",
+"es": "preocupado"
+},
+{
+"w": "nervous",
+"es": "nervioso"
+},
+{
+"w": "excited",
+"es": "entusiasmado"
+},
+{
+"w": "bored",
+"es": "aburrido"
+},
+{
+"w": "surprised",
+"es": "sorprendido"
+},
+{
+"w": "proud",
+"es": "orgulloso"
+},
+{
+"w": "lonely",
+"es": "solo (sintiéndose)"
+},
+{
+"w": "calm",
+"es": "tranquilo"
+},
+{
+"w": "funny",
+"es": "gracioso"
+},
+{
+"w": "kind",
+"es": "amable"
+},
+{
+"w": "friendly",
+"es": "amigable"
+},
+{
+"w": "shy",
+"es": "tímido"
+},
+{
+"w": "polite",
+"es": "educado"
+},
+{
+"w": "rude",
+"es": "maleducado"
+},
+{
+"w": "lazy",
+"es": "vago"
+},
+{
+"w": "hard-working",
+"es": "trabajador"
+},
+{
+"w": "honest",
+"es": "honesto"
+},
+{
+"w": "clever",
+"es": "inteligente / astuto"
+},
+{
+"w": "generous",
+"es": "generoso"
+},
+{
+"w": "patient",
+"es": "paciente"
+},
+{
+"w": "selfish",
+"es": "egoísta"
+},
+{
+"w": "confident",
+"es": "seguro de sí mismo"
+}
+]
+},
+{
+"name": "Tecnología del día a día",
+"words": [
+{
+"w": "computer",
+"es": "computadora"
+},
+{
+"w": "laptop",
+"es": "notebook"
+},
+{
+"w": "phone",
+"es": "teléfono"
+},
+{
+"w": "screen",
+"es": "pantalla"
+},
+{
+"w": "keyboard",
+"es": "teclado"
+},
+{
+"w": "mouse",
+"es": "mouse"
+},
+{
+"w": "file",
+"es": "archivo"
+},
+{
+"w": "folder",
+"es": "carpeta"
+},
+{
+"w": "password",
+"es": "contraseña"
+},
+{
+"w": "account",
+"es": "cuenta"
+},
+{
+"w": "email",
+"es": "correo electrónico"
+},
+{
+"w": "message",
+"es": "mensaje"
+},
+{
+"w": "website",
+"es": "sitio web"
+},
+{
+"w": "app",
+"es": "aplicación"
+},
+{
+"w": "internet",
+"es": "internet"
+},
+{
+"w": "network",
+"es": "red"
+},
+{
+"w": "battery",
+"es": "batería"
+},
+{
+"w": "charger",
+"es": "cargador"
+},
+{
+"w": "to download",
+"es": "descargar"
+},
+{
+"w": "to upload",
+"es": "subir"
+},
+{
+"w": "to click",
+"es": "hacer clic"
+},
+{
+"w": "to type",
+"es": "tipear"
+},
+{
+"w": "to save",
+"es": "guardar"
+},
+{
+"w": "to delete",
+"es": "borrar"
+},
+{
+"w": "to share",
+"es": "compartir"
+},
+{
+"w": "to install",
+"es": "instalar"
+},
+{
+"w": "to update",
+"es": "actualizar"
+}
+]
+},
+{
+"name": "Casa y rutina",
+"words": [
+{
+"w": "routine",
+"es": "rutina"
+},
+{
+"w": "housework",
+"es": "tareas de casa"
+},
+{
+"w": "to clean",
+"es": "limpiar"
+},
+{
+"w": "to wash",
+"es": "lavar"
+},
+{
+"w": "to cook",
+"es": "cocinar"
+},
+{
+"w": "to tidy up",
+"es": "ordenar"
+},
+{
+"w": "to throw away",
+"es": "tirar"
+},
+{
+"w": "to fix",
+"es": "arreglar"
+},
+{
+"w": "to move",
+"es": "mudarse / mover"
+},
+{
+"w": "to rent",
+"es": "alquilar"
+},
+{
+"w": "rubbish",
+"es": "basura"
+},
+{
+"w": "noise",
+"es": "ruido"
+},
+{
+"w": "neighbour",
+"es": "vecino"
+},
+{
+"w": "landlord",
+"es": "dueño (del alquiler)"
+},
+{
+"w": "furniture",
+"es": "muebles"
+},
+{
+"w": "blanket",
+"es": "manta"
+},
+{
+"w": "pillow",
+"es": "almohada"
+},
+{
+"w": "shelf",
+"es": "estante"
+},
+{
+"w": "drawer",
+"es": "cajón"
+},
+{
+"w": "cupboard",
+"es": "alacena"
+}
+]
+},
+{
+"name": "Verbos frecuentes",
+"words": [
+{
+"w": "to bring",
+"es": "traer"
+},
+{
+"w": "to carry",
+"es": "llevar / cargar"
+},
+{
+"w": "to choose",
+"es": "elegir"
+},
+{
+"w": "to decide",
+"es": "decidir"
+},
+{
+"w": "to explain",
+"es": "explicar"
+},
+{
+"w": "to describe",
+"es": "describir"
+},
+{
+"w": "to remember",
+"es": "recordar"
+},
+{
+"w": "to forget",
+"es": "olvidar"
+},
+{
+"w": "to hope",
+"es": "esperar (desear)"
+},
+{
+"w": "to promise",
+"es": "prometer"
+},
+{
+"w": "to agree",
+"es": "estar de acuerdo"
+},
+{
+"w": "to change",
+"es": "cambiar"
+},
+{
+"w": "to try",
+"es": "intentar / probar"
+},
+{
+"w": "to keep",
+"es": "guardar / seguir"
+},
+{
+"w": "to grow",
+"es": "crecer"
+},
+{
+"w": "to happen",
+"es": "pasar / ocurrir"
+},
+{
+"w": "to seem",
+"es": "parecer"
+},
+{
+"w": "to belong",
+"es": "pertenecer"
+},
+{
+"w": "to suggest",
+"es": "sugerir"
+},
+{
+"w": "to prefer",
+"es": "preferir"
+},
+{
+"w": "to invite",
+"es": "invitar"
+},
+{
+"w": "to visit",
+"es": "visitar"
+},
+{
+"w": "to follow",
+"es": "seguir"
+},
+{
+"w": "to check",
+"es": "revisar / chequear"
+},
+{
+"w": "to prepare",
+"es": "preparar"
+},
+{
+"w": "to improve",
+"es": "mejorar"
+},
+{
+"w": "to allow",
+"es": "permitir"
+},
+{
+"w": "to avoid",
+"es": "evitar"
+},
+{
+"w": "to enjoy",
+"es": "disfrutar"
+},
+{
+"w": "to miss",
+"es": "extrañar / perderse algo"
+}
+]
+},
+{
+"name": "Adjetivos y adverbios",
+"words": [
+{
+"w": "quiet",
+"es": "silencioso / callado"
+},
+{
+"w": "loud",
+"es": "fuerte (sonido)"
+},
+{
+"w": "safe",
+"es": "seguro"
+},
+{
+"w": "dangerous",
+"es": "peligroso"
+},
+{
+"w": "useful",
+"es": "útil"
+},
+{
+"w": "useless",
+"es": "inútil"
+},
+{
+"w": "possible",
+"es": "posible"
+},
+{
+"w": "impossible",
+"es": "imposible"
+},
+{
+"w": "similar",
+"es": "parecido"
+},
+{
+"w": "strange",
+"es": "raro"
+},
+{
+"w": "sure",
+"es": "seguro (de algo)"
+},
+{
+"w": "ready",
+"es": "listo"
+},
+{
+"w": "full",
+"es": "lleno"
+},
+{
+"w": "empty",
+"es": "vacío"
+},
+{
+"w": "strong",
+"es": "fuerte"
+},
+{
+"w": "weak",
+"es": "débil"
+},
+{
+"w": "soft",
+"es": "suave"
+},
+{
+"w": "hard",
+"es": "duro / difícil"
+},
+{
+"w": "early",
+"es": "temprano"
+},
+{
+"w": "late",
+"es": "tarde"
+},
+{
+"w": "quickly",
+"es": "rápidamente"
+},
+{
+"w": "slowly",
+"es": "lentamente"
+},
+{
+"w": "carefully",
+"es": "con cuidado"
+},
+{
+"w": "suddenly",
+"es": "de repente"
+},
+{
+"w": "probably",
+"es": "probablemente"
+},
+{
+"w": "almost",
+"es": "casi"
+},
+{
+"w": "enough",
+"es": "suficiente"
+},
+{
+"w": "still",
+"es": "todavía"
+},
+{
+"w": "already",
+"es": "ya"
+},
+{
+"w": "yet",
+"es": "todavía / ya (preguntas)"
+}
+]
+},
+{
+"name": "Conectores y tiempo",
+"words": [
+{
+"w": "however",
+"es": "sin embargo"
+},
+{
+"w": "although",
+"es": "aunque"
+},
+{
+"w": "while",
+"es": "mientras"
+},
+{
+"w": "until",
+"es": "hasta que"
+},
+{
+"w": "since",
+"es": "desde / ya que"
+},
+{
+"w": "during",
+"es": "durante"
+},
+{
+"w": "finally",
+"es": "finalmente"
+},
+{
+"w": "then",
+"es": "entonces / después"
+},
+{
+"w": "so",
+"es": "así que"
+},
+{
+"w": "instead",
+"es": "en cambio"
+},
+{
+"w": "for example",
+"es": "por ejemplo"
+},
+{
+"w": "in fact",
+"es": "de hecho"
+},
+{
+"w": "at least",
+"es": "al menos"
+},
+{
+"w": "as well",
+"es": "también"
+},
+{
+"w": "by the way",
+"es": "por cierto"
+},
+{
+"w": "anyway",
+"es": "de todos modos"
+},
+{
+"w": "of course",
+"es": "por supuesto"
+},
+{
+"w": "in the end",
+"es": "al final"
+},
+{
+"w": "as soon as",
+"es": "apenas / en cuanto"
+}
+]
+}
+]
+},
+{
+"id": "b1",
+"label": "B1",
+"color": "#fab387",
+"goal": "Para dar opiniones, contar experiencias y seguir una charla de trabajo.",
+"groups": [
+{
+"name": "Trabajo y carrera",
+"words": [
+{
+"w": "workplace",
+"es": "lugar de trabajo"
+},
+{
+"w": "promotion",
+"es": "ascenso"
+},
+{
+"w": "application",
+"es": "postulación / solicitud"
+},
+{
+"w": "CV",
+"es": "currículum"
+},
+{
+"w": "reference",
+"es": "referencia"
+},
+{
+"w": "contract",
+"es": "contrato"
+},
+{
+"w": "shift",
+"es": "turno"
+},
+{
+"w": "overtime",
+"es": "horas extra"
+},
+{
+"w": "workload",
+"es": "carga de trabajo"
+},
+{
+"w": "achievement",
+"es": "logro"
+},
+{
+"w": "responsibility",
+"es": "responsabilidad"
+},
+{
+"w": "opportunity",
+"es": "oportunidad"
+},
+{
+"w": "challenge",
+"es": "desafío"
+},
+{
+"w": "goal",
+"es": "objetivo"
+},
+{
+"w": "performance",
+"es": "desempeño"
+},
+{
+"w": "feedback",
+"es": "devolución"
+},
+{
+"w": "training",
+"es": "capacitación"
+},
+{
+"w": "freelance",
+"es": "freelance"
+},
+{
+"w": "self-employed",
+"es": "autónomo"
+},
+{
+"w": "to manage",
+"es": "gestionar / lograr"
+},
+{
+"w": "to lead",
+"es": "liderar"
+},
+{
+"w": "to negotiate",
+"es": "negociar"
+},
+{
+"w": "to resign",
+"es": "renunciar"
+},
+{
+"w": "to be fired",
+"es": "ser despedido"
+},
+{
+"w": "to deal with",
+"es": "lidiar con"
+},
+{
+"w": "to take on",
+"es": "asumir"
+},
+{
+"w": "to look into",
+"es": "investigar"
+}
+]
+},
+{
+"name": "Educación y aprendizaje",
+"words": [
+{
+"w": "knowledge",
+"es": "conocimiento"
+},
+{
+"w": "research",
+"es": "investigación"
+},
+{
+"w": "essay",
+"es": "ensayo"
+},
+{
+"w": "assignment",
+"es": "trabajo práctico"
+},
+{
+"w": "lecture",
+"es": "clase magistral"
+},
+{
+"w": "tutor",
+"es": "tutor"
+},
+{
+"w": "scholarship",
+"es": "beca"
+},
+{
+"w": "qualification",
+"es": "título / credencial"
+},
+{
+"w": "skill",
+"es": "habilidad"
+},
+{
+"w": "progress",
+"es": "progreso"
+},
+{
+"w": "mistake",
+"es": "error"
+},
+{
+"w": "effort",
+"es": "esfuerzo"
+},
+{
+"w": "method",
+"es": "método"
+},
+{
+"w": "topic",
+"es": "tema"
+},
+{
+"w": "summary",
+"es": "resumen"
+},
+{
+"w": "source",
+"es": "fuente"
+},
+{
+"w": "to focus on",
+"es": "concentrarse en"
+},
+{
+"w": "to review",
+"es": "repasar"
+},
+{
+"w": "to memorise",
+"es": "memorizar"
+},
+{
+"w": "to point out",
+"es": "señalar"
+},
+{
+"w": "to figure out",
+"es": "darse cuenta / resolver"
+},
+{
+"w": "to keep up with",
+"es": "mantenerse al día con"
+}
+]
+},
+{
+"name": "Salud y bienestar",
+"words": [
+{
+"w": "health",
+"es": "salud"
+},
+{
+"w": "illness",
+"es": "enfermedad"
+},
+{
+"w": "symptom",
+"es": "síntoma"
+},
+{
+"w": "treatment",
+"es": "tratamiento"
+},
+{
+"w": "appointment",
+"es": "turno / cita"
+},
+{
+"w": "prescription",
+"es": "receta médica"
+},
+{
+"w": "injury",
+"es": "lesión"
+},
+{
+"w": "recovery",
+"es": "recuperación"
+},
+{
+"w": "diet",
+"es": "dieta / alimentación"
+},
+{
+"w": "stress",
+"es": "estrés"
+},
+{
+"w": "sleep",
+"es": "sueño"
+},
+{
+"w": "rest",
+"es": "descanso"
+},
+{
+"w": "exercise",
+"es": "ejercicio"
+},
+{
+"w": "habit",
+"es": "hábito"
+},
+{
+"w": "mental health",
+"es": "salud mental"
+},
+{
+"w": "to recover",
+"es": "recuperarse"
+},
+{
+"w": "to suffer",
+"es": "sufrir"
+},
+{
+"w": "to hurt",
+"es": "doler / lastimar"
+},
+{
+"w": "to breathe",
+"es": "respirar"
+},
+{
+"w": "to relax",
+"es": "relajarse"
+},
+{
+"w": "to give up",
+"es": "dejar (un hábito)"
+}
+]
+},
+{
+"name": "Medios y comunicación",
+"words": [
+{
+"w": "news",
+"es": "noticias"
+},
+{
+"w": "media",
+"es": "medios"
+},
+{
+"w": "article",
+"es": "artículo"
+},
+{
+"w": "headline",
+"es": "titular"
+},
+{
+"w": "journalist",
+"es": "periodista"
+},
+{
+"w": "interview",
+"es": "entrevista"
+},
+{
+"w": "report",
+"es": "informe"
+},
+{
+"w": "advertisement",
+"es": "publicidad"
+},
+{
+"w": "audience",
+"es": "público"
+},
+{
+"w": "channel",
+"es": "canal"
+},
+{
+"w": "podcast",
+"es": "podcast"
+},
+{
+"w": "subtitle",
+"es": "subtítulo"
+},
+{
+"w": "content",
+"es": "contenido"
+},
+{
+"w": "opinion",
+"es": "opinión"
+},
+{
+"w": "rumour",
+"es": "rumor"
+},
+{
+"w": "to broadcast",
+"es": "transmitir"
+},
+{
+"w": "to publish",
+"es": "publicar"
+},
+{
+"w": "to announce",
+"es": "anunciar"
+},
+{
+"w": "to mention",
+"es": "mencionar"
+},
+{
+"w": "to comment",
+"es": "comentar"
+},
+{
+"w": "to spread",
+"es": "difundir / propagarse"
+}
+]
+},
+{
+"name": "Sociedad y actualidad",
+"words": [
+{
+"w": "society",
+"es": "sociedad"
+},
+{
+"w": "government",
+"es": "gobierno"
+},
+{
+"w": "law",
+"es": "ley"
+},
+{
+"w": "right",
+"es": "derecho"
+},
+{
+"w": "rule",
+"es": "regla"
+},
+{
+"w": "crime",
+"es": "delito"
+},
+{
+"w": "police",
+"es": "policía"
+},
+{
+"w": "protest",
+"es": "protesta"
+},
+{
+"w": "election",
+"es": "elección"
+},
+{
+"w": "population",
+"es": "población"
+},
+{
+"w": "community",
+"es": "comunidad"
+},
+{
+"w": "culture",
+"es": "cultura"
+},
+{
+"w": "tradition",
+"es": "tradición"
+},
+{
+"w": "religion",
+"es": "religión"
+},
+{
+"w": "equality",
+"es": "igualdad"
+},
+{
+"w": "poverty",
+"es": "pobreza"
+},
+{
+"w": "citizen",
+"es": "ciudadano"
+},
+{
+"w": "immigrant",
+"es": "inmigrante"
+},
+{
+"w": "to vote",
+"es": "votar"
+},
+{
+"w": "to protest",
+"es": "protestar"
+},
+{
+"w": "to support",
+"es": "apoyar"
+},
+{
+"w": "to ban",
+"es": "prohibir"
+}
+]
+},
+{
+"name": "Medio ambiente",
+"words": [
+{
+"w": "environment",
+"es": "medio ambiente"
+},
+{
+"w": "climate",
+"es": "clima (global)"
+},
+{
+"w": "pollution",
+"es": "contaminación"
+},
+{
+"w": "waste",
+"es": "residuos / desperdicio"
+},
+{
+"w": "energy",
+"es": "energía"
+},
+{
+"w": "fuel",
+"es": "combustible"
+},
+{
+"w": "recycling",
+"es": "reciclaje"
+},
+{
+"w": "species",
+"es": "especie"
+},
+{
+"w": "resource",
+"es": "recurso"
+},
+{
+"w": "damage",
+"es": "daño"
+},
+{
+"w": "to pollute",
+"es": "contaminar"
+},
+{
+"w": "to recycle",
+"es": "reciclar"
+},
+{
+"w": "to protect",
+"es": "proteger"
+},
+{
+"w": "to reduce",
+"es": "reducir"
+},
+{
+"w": "to affect",
+"es": "afectar"
+},
+{
+"w": "to survive",
+"es": "sobrevivir"
+},
+{
+"w": "sustainable",
+"es": "sostenible"
+},
+{
+"w": "renewable",
+"es": "renovable"
+}
+]
+},
+{
+"name": "Opiniones y argumentos",
+"words": [
+{
+"w": "argument",
+"es": "argumento / discusión"
+},
+{
+"w": "reason",
+"es": "razón"
+},
+{
+"w": "evidence",
+"es": "evidencia"
+},
+{
+"w": "example",
+"es": "ejemplo"
+},
+{
+"w": "advantage",
+"es": "ventaja"
+},
+{
+"w": "disadvantage",
+"es": "desventaja"
+},
+{
+"w": "point of view",
+"es": "punto de vista"
+},
+{
+"w": "attitude",
+"es": "actitud"
+},
+{
+"w": "belief",
+"es": "creencia"
+},
+{
+"w": "doubt",
+"es": "duda"
+},
+{
+"w": "fact",
+"es": "hecho"
+},
+{
+"w": "issue",
+"es": "tema / problema"
+},
+{
+"w": "solution",
+"es": "solución"
+},
+{
+"w": "effect",
+"es": "efecto"
+},
+{
+"w": "cause",
+"es": "causa"
+},
+{
+"w": "to argue",
+"es": "argumentar / discutir"
+},
+{
+"w": "to admit",
+"es": "admitir"
+},
+{
+"w": "to deny",
+"es": "negar"
+},
+{
+"w": "to claim",
+"es": "afirmar"
+},
+{
+"w": "to assume",
+"es": "suponer"
+},
+{
+"w": "to consider",
+"es": "considerar"
+},
+{
+"w": "to realise",
+"es": "darse cuenta"
+},
+{
+"w": "to convince",
+"es": "convencer"
+},
+{
+"w": "to complain",
+"es": "quejarse"
+},
+{
+"w": "to compare",
+"es": "comparar"
+}
+]
+},
+{
+"name": "Personalidad y relaciones",
+"words": [
+{
+"w": "relationship",
+"es": "relación"
+},
+{
+"w": "couple",
+"es": "pareja"
+},
+{
+"w": "partner",
+"es": "pareja / socio"
+},
+{
+"w": "trust",
+"es": "confianza"
+},
+{
+"w": "respect",
+"es": "respeto"
+},
+{
+"w": "argument",
+"es": "pelea / discusión"
+},
+{
+"w": "apology",
+"es": "disculpa"
+},
+{
+"w": "favour",
+"es": "favor"
+},
+{
+"w": "support",
+"es": "apoyo"
+},
+{
+"w": "loyalty",
+"es": "lealtad"
+},
+{
+"w": "jealous",
+"es": "celoso"
+},
+{
+"w": "reliable",
+"es": "confiable"
+},
+{
+"w": "sensitive",
+"es": "sensible"
+},
+{
+"w": "stubborn",
+"es": "terco"
+},
+{
+"w": "outgoing",
+"es": "extrovertido"
+},
+{
+"w": "reserved",
+"es": "reservado"
+},
+{
+"w": "mature",
+"es": "maduro"
+},
+{
+"w": "to get on with",
+"es": "llevarse bien con"
+},
+{
+"w": "to fall out",
+"es": "pelearse"
+},
+{
+"w": "to make up",
+"es": "reconciliarse"
+},
+{
+"w": "to trust",
+"es": "confiar"
+},
+{
+"w": "to apologise",
+"es": "pedir disculpas"
+}
+]
+},
+{
+"name": "Verbos con matiz",
+"words": [
+{
+"w": "to achieve",
+"es": "lograr"
+},
+{
+"w": "to afford",
+"es": "permitirse"
+},
+{
+"w": "to appear",
+"es": "aparecer / parecer"
+},
+{
+"w": "to attend",
+"es": "asistir"
+},
+{
+"w": "to attract",
+"es": "atraer"
+},
+{
+"w": "to behave",
+"es": "comportarse"
+},
+{
+"w": "to consist of",
+"es": "consistir en"
+},
+{
+"w": "to contain",
+"es": "contener"
+},
+{
+"w": "to depend on",
+"es": "depender de"
+},
+{
+"w": "to deserve",
+"es": "merecer"
+},
+{
+"w": "to develop",
+"es": "desarrollar"
+},
+{
+"w": "to encourage",
+"es": "alentar"
+},
+{
+"w": "to expect",
+"es": "esperar (algo probable)"
+},
+{
+"w": "to increase",
+"es": "aumentar"
+},
+{
+"w": "to decrease",
+"es": "disminuir"
+},
+{
+"w": "to include",
+"es": "incluir"
+},
+{
+"w": "to involve",
+"es": "implicar"
+},
+{
+"w": "to manage to",
+"es": "lograr hacer algo"
+},
+{
+"w": "to mind",
+"es": "molestarle a uno"
+},
+{
+"w": "to notice",
+"es": "notar"
+},
+{
+"w": "to offer",
+"es": "ofrecer"
+},
+{
+"w": "to prevent",
+"es": "prevenir / impedir"
+},
+{
+"w": "to provide",
+"es": "proveer"
+},
+{
+"w": "to receive",
+"es": "recibir"
+},
+{
+"w": "to reduce",
+"es": "reducir"
+},
+{
+"w": "to refuse",
+"es": "rechazar / negarse"
+},
+{
+"w": "to replace",
+"es": "reemplazar"
+},
+{
+"w": "to require",
+"es": "requerir"
+},
+{
+"w": "to succeed",
+"es": "tener éxito"
+},
+{
+"w": "to warn",
+"es": "advertir"
+}
+]
+},
+{
+"name": "Adjetivos precisos",
+"words": [
+{
+"w": "accurate",
+"es": "preciso"
+},
+{
+"w": "aware",
+"es": "consciente"
+},
+{
+"w": "brief",
+"es": "breve"
+},
+{
+"w": "common",
+"es": "común"
+},
+{
+"w": "complex",
+"es": "complejo"
+},
+{
+"w": "crowded",
+"es": "lleno de gente"
+},
+{
+"w": "essential",
+"es": "esencial"
+},
+{
+"w": "fair",
+"es": "justo"
+},
+{
+"w": "familiar",
+"es": "familiar / conocido"
+},
+{
+"w": "guilty",
+"es": "culpable"
+},
+{
+"w": "harmful",
+"es": "dañino"
+},
+{
+"w": "likely",
+"es": "probable"
+},
+{
+"w": "main",
+"es": "principal"
+},
+{
+"w": "obvious",
+"es": "obvio"
+},
+{
+"w": "particular",
+"es": "particular"
+},
+{
+"w": "private",
+"es": "privado"
+},
+{
+"w": "public",
+"es": "público"
+},
+{
+"w": "rare",
+"es": "raro / poco común"
+},
+{
+"w": "recent",
+"es": "reciente"
+},
+{
+"w": "relevant",
+"es": "relevante"
+},
+{
+"w": "serious",
+"es": "serio / grave"
+},
+{
+"w": "specific",
+"es": "específico"
+},
+{
+"w": "sudden",
+"es": "repentino"
+},
+{
+"w": "typical",
+"es": "típico"
+},
+{
+"w": "unusual",
+"es": "inusual"
+},
+{
+"w": "valuable",
+"es": "valioso"
+},
+{
+"w": "worried",
+"es": "preocupado"
+},
+{
+"w": "worth it",
+"es": "que vale la pena"
+}
+]
+},
+{
+"name": "Conectores de discurso",
+"words": [
+{
+"w": "therefore",
+"es": "por lo tanto"
+},
+{
+"w": "moreover",
+"es": "además"
+},
+{
+"w": "nevertheless",
+"es": "no obstante"
+},
+{
+"w": "on the other hand",
+"es": "por otro lado"
+},
+{
+"w": "in addition",
+"es": "además"
+},
+{
+"w": "as a result",
+"es": "como resultado"
+},
+{
+"w": "due to",
+"es": "debido a"
+},
+{
+"w": "in order to",
+"es": "para (con el fin de)"
+},
+{
+"w": "even though",
+"es": "aunque"
+},
+{
+"w": "unless",
+"es": "a menos que"
+},
+{
+"w": "whether",
+"es": "si (opción)"
+},
+{
+"w": "despite",
+"es": "a pesar de"
+},
+{
+"w": "according to",
+"es": "según"
+},
+{
+"w": "overall",
+"es": "en general"
+},
+{
+"w": "in other words",
+"es": "en otras palabras"
+},
+{
+"w": "that is why",
+"es": "por eso"
+},
+{
+"w": "on the whole",
+"es": "en líneas generales"
+}
+]
+}
+]
+},
+{
+"id": "b2",
+"label": "B2",
+"color": "#f38ba8",
+"goal": "Para argumentar, matizar y bancarte contenido nativo sin subtítulos.",
+"groups": [
+{
+"name": "Trabajo y negocios",
+"words": [
+{
+"w": "industry",
+"es": "industria"
+},
+{
+"w": "market",
+"es": "mercado"
+},
+{
+"w": "profit",
+"es": "ganancia"
+},
+{
+"w": "revenue",
+"es": "ingresos"
+},
+{
+"w": "budget",
+"es": "presupuesto"
+},
+{
+"w": "investment",
+"es": "inversión"
+},
+{
+"w": "stakeholder",
+"es": "parte interesada"
+},
+{
+"w": "strategy",
+"es": "estrategia"
+},
+{
+"w": "efficiency",
+"es": "eficiencia"
+},
+{
+"w": "productivity",
+"es": "productividad"
+},
+{
+"w": "turnover",
+"es": "facturación / rotación"
+},
+{
+"w": "merger",
+"es": "fusión"
+},
+{
+"w": "startup",
+"es": "startup"
+},
+{
+"w": "supply",
+"es": "oferta / suministro"
+},
+{
+"w": "demand",
+"es": "demanda"
+},
+{
+"w": "competitor",
+"es": "competidor"
+},
+{
+"w": "leadership",
+"es": "liderazgo"
+},
+{
+"w": "workflow",
+"es": "flujo de trabajo"
+},
+{
+"w": "outcome",
+"es": "resultado"
+},
+{
+"w": "milestone",
+"es": "hito"
+},
+{
+"w": "to outsource",
+"es": "tercerizar"
+},
+{
+"w": "to scale",
+"es": "escalar"
+},
+{
+"w": "to streamline",
+"es": "simplificar / agilizar"
+},
+{
+"w": "to allocate",
+"es": "asignar"
+},
+{
+"w": "to implement",
+"es": "implementar"
+},
+{
+"w": "to launch",
+"es": "lanzar"
+},
+{
+"w": "to forecast",
+"es": "proyectar"
+}
+]
+},
+{
+"name": "Economía y política",
+"words": [
+{
+"w": "economy",
+"es": "economía"
+},
+{
+"w": "inflation",
+"es": "inflación"
+},
+{
+"w": "recession",
+"es": "recesión"
+},
+{
+"w": "tax",
+"es": "impuesto"
+},
+{
+"w": "debt",
+"es": "deuda"
+},
+{
+"w": "trade",
+"es": "comercio"
+},
+{
+"w": "currency",
+"es": "moneda"
+},
+{
+"w": "policy",
+"es": "política (medida)"
+},
+{
+"w": "democracy",
+"es": "democracia"
+},
+{
+"w": "parliament",
+"es": "parlamento"
+},
+{
+"w": "candidate",
+"es": "candidato"
+},
+{
+"w": "campaign",
+"es": "campaña"
+},
+{
+"w": "authority",
+"es": "autoridad"
+},
+{
+"w": "corruption",
+"es": "corrupción"
+},
+{
+"w": "reform",
+"es": "reforma"
+},
+{
+"w": "welfare",
+"es": "asistencia social"
+},
+{
+"w": "inequality",
+"es": "desigualdad"
+},
+{
+"w": "to fund",
+"es": "financiar"
+},
+{
+"w": "to regulate",
+"es": "regular"
+},
+{
+"w": "to enforce",
+"es": "hacer cumplir"
+},
+{
+"w": "to undermine",
+"es": "socavar"
+}
+]
+},
+{
+"name": "Ciencia y tecnología",
+"words": [
+{
+"w": "research",
+"es": "investigación"
+},
+{
+"w": "experiment",
+"es": "experimento"
+},
+{
+"w": "hypothesis",
+"es": "hipótesis"
+},
+{
+"w": "data",
+"es": "datos"
+},
+{
+"w": "evidence",
+"es": "evidencia"
+},
+{
+"w": "analysis",
+"es": "análisis"
+},
+{
+"w": "theory",
+"es": "teoría"
+},
+{
+"w": "device",
+"es": "dispositivo"
+},
+{
+"w": "algorithm",
+"es": "algoritmo"
+},
+{
+"w": "artificial intelligence",
+"es": "inteligencia artificial"
+},
+{
+"w": "innovation",
+"es": "innovación"
+},
+{
+"w": "breakthrough",
+"es": "avance decisivo"
+},
+{
+"w": "accuracy",
+"es": "precisión"
+},
+{
+"w": "framework",
+"es": "marco / estructura"
+},
+{
+"w": "infrastructure",
+"es": "infraestructura"
+},
+{
+"w": "to analyse",
+"es": "analizar"
+},
+{
+"w": "to measure",
+"es": "medir"
+},
+{
+"w": "to estimate",
+"es": "estimar"
+},
+{
+"w": "to detect",
+"es": "detectar"
+},
+{
+"w": "to simulate",
+"es": "simular"
+},
+{
+"w": "to optimise",
+"es": "optimizar"
+},
+{
+"w": "to automate",
+"es": "automatizar"
+},
+{
+"w": "to deploy",
+"es": "desplegar / poner en producción"
+}
+]
+},
+{
+"name": "Cultura y arte",
+"words": [
+{
+"w": "literature",
+"es": "literatura"
+},
+{
+"w": "novel",
+"es": "novela"
+},
+{
+"w": "poetry",
+"es": "poesía"
+},
+{
+"w": "author",
+"es": "autor"
+},
+{
+"w": "plot",
+"es": "trama"
+},
+{
+"w": "character",
+"es": "personaje"
+},
+{
+"w": "setting",
+"es": "ambientación"
+},
+{
+"w": "genre",
+"es": "género"
+},
+{
+"w": "review",
+"es": "reseña"
+},
+{
+"w": "audience",
+"es": "público"
+},
+{
+"w": "performance",
+"es": "actuación / función"
+},
+{
+"w": "exhibition",
+"es": "muestra / exposición"
+},
+{
+"w": "masterpiece",
+"es": "obra maestra"
+},
+{
+"w": "heritage",
+"es": "patrimonio"
+},
+{
+"w": "influence",
+"es": "influencia"
+},
+{
+"w": "to portray",
+"es": "retratar / representar"
+},
+{
+"w": "to interpret",
+"es": "interpretar"
+},
+{
+"w": "to inspire",
+"es": "inspirar"
+},
+{
+"w": "to reflect",
+"es": "reflejar"
+},
+{
+"w": "overrated",
+"es": "sobrevalorado"
+},
+{
+"w": "underrated",
+"es": "subvalorado"
+}
+]
+},
+{
+"name": "Argumentación y análisis",
+"words": [
+{
+"w": "assumption",
+"es": "suposición"
+},
+{
+"w": "implication",
+"es": "implicancia"
+},
+{
+"w": "contradiction",
+"es": "contradicción"
+},
+{
+"w": "bias",
+"es": "sesgo"
+},
+{
+"w": "perspective",
+"es": "perspectiva"
+},
+{
+"w": "criterion",
+"es": "criterio"
+},
+{
+"w": "consequence",
+"es": "consecuencia"
+},
+{
+"w": "trade-off",
+"es": "compromiso / contrapartida"
+},
+{
+"w": "approach",
+"es": "enfoque"
+},
+{
+"w": "insight",
+"es": "conocimiento profundo"
+},
+{
+"w": "nuance",
+"es": "matiz"
+},
+{
+"w": "tendency",
+"es": "tendencia"
+},
+{
+"w": "extent",
+"es": "medida / grado"
+},
+{
+"w": "scope",
+"es": "alcance"
+},
+{
+"w": "to justify",
+"es": "justificar"
+},
+{
+"w": "to emphasise",
+"es": "enfatizar"
+},
+{
+"w": "to highlight",
+"es": "destacar"
+},
+{
+"w": "to acknowledge",
+"es": "reconocer"
+},
+{
+"w": "to challenge",
+"es": "cuestionar"
+},
+{
+"w": "to dismiss",
+"es": "descartar"
+},
+{
+"w": "to imply",
+"es": "dar a entender"
+},
+{
+"w": "to infer",
+"es": "inferir"
+},
+{
+"w": "to distinguish",
+"es": "distinguir"
+},
+{
+"w": "to outweigh",
+"es": "pesar más que"
+},
+{
+"w": "to undermine",
+"es": "debilitar"
+}
+]
+},
+{
+"name": "Emociones y matices",
+"words": [
+{
+"w": "frustration",
+"es": "frustración"
+},
+{
+"w": "resentment",
+"es": "resentimiento"
+},
+{
+"w": "relief",
+"es": "alivio"
+},
+{
+"w": "guilt",
+"es": "culpa"
+},
+{
+"w": "regret",
+"es": "arrepentimiento"
+},
+{
+"w": "anxiety",
+"es": "ansiedad"
+},
+{
+"w": "enthusiasm",
+"es": "entusiasmo"
+},
+{
+"w": "empathy",
+"es": "empatía"
+},
+{
+"w": "resilience",
+"es": "resiliencia"
+},
+{
+"w": "overwhelmed",
+"es": "desbordado"
+},
+{
+"w": "reluctant",
+"es": "reticente"
+},
+{
+"w": "grateful",
+"es": "agradecido"
+},
+{
+"w": "disappointed",
+"es": "decepcionado"
+},
+{
+"w": "embarrassed",
+"es": "avergonzado"
+},
+{
+"w": "indifferent",
+"es": "indiferente"
+},
+{
+"w": "sceptical",
+"es": "escéptico"
+},
+{
+"w": "self-conscious",
+"es": "acomplejado"
+},
+{
+"w": "to cope with",
+"es": "sobrellevar"
+},
+{
+"w": "to look forward to",
+"es": "tener ganas de"
+},
+{
+"w": "to put up with",
+"es": "aguantar"
+},
+{
+"w": "to come to terms with",
+"es": "hacerse a la idea de"
+}
+]
+},
+{
+"name": "Ley y sociedad",
+"words": [
+{
+"w": "justice",
+"es": "justicia"
+},
+{
+"w": "court",
+"es": "tribunal"
+},
+{
+"w": "trial",
+"es": "juicio"
+},
+{
+"w": "lawyer",
+"es": "abogado"
+},
+{
+"w": "witness",
+"es": "testigo"
+},
+{
+"w": "evidence",
+"es": "prueba"
+},
+{
+"w": "sentence",
+"es": "condena"
+},
+{
+"w": "punishment",
+"es": "castigo"
+},
+{
+"w": "victim",
+"es": "víctima"
+},
+{
+"w": "suspect",
+"es": "sospechoso"
+},
+{
+"w": "liability",
+"es": "responsabilidad legal"
+},
+{
+"w": "privacy",
+"es": "privacidad"
+},
+{
+"w": "regulation",
+"es": "regulación"
+},
+{
+"w": "compliance",
+"es": "cumplimiento normativo"
+},
+{
+"w": "to sue",
+"es": "demandar"
+},
+{
+"w": "to convict",
+"es": "condenar"
+},
+{
+"w": "to appeal",
+"es": "apelar"
+},
+{
+"w": "to prosecute",
+"es": "procesar / enjuiciar"
+},
+{
+"w": "to comply with",
+"es": "cumplir con"
+}
+]
+},
+{
+"name": "Verbos abstractos",
+"words": [
+{
+"w": "to accomplish",
+"es": "llevar a cabo"
+},
+{
+"w": "to adapt",
+"es": "adaptarse"
+},
+{
+"w": "to address",
+"es": "abordar"
+},
+{
+"w": "to anticipate",
+"es": "anticipar"
+},
+{
+"w": "to appreciate",
+"es": "valorar / apreciar"
+},
+{
+"w": "to arise",
+"es": "surgir"
+},
+{
+"w": "to attribute",
+"es": "atribuir"
+},
+{
+"w": "to clarify",
+"es": "aclarar"
+},
+{
+"w": "to conduct",
+"es": "llevar a cabo"
+},
+{
+"w": "to constitute",
+"es": "constituir"
+},
+{
+"w": "to contribute",
+"es": "contribuir"
+},
+{
+"w": "to derive",
+"es": "derivar"
+},
+{
+"w": "to determine",
+"es": "determinar"
+},
+{
+"w": "to enhance",
+"es": "mejorar / potenciar"
+},
+{
+"w": "to establish",
+"es": "establecer"
+},
+{
+"w": "to evaluate",
+"es": "evaluar"
+},
+{
+"w": "to facilitate",
+"es": "facilitar"
+},
+{
+"w": "to generate",
+"es": "generar"
+},
+{
+"w": "to identify",
+"es": "identificar"
+},
+{
+"w": "to illustrate",
+"es": "ilustrar"
+},
+{
+"w": "to indicate",
+"es": "indicar"
+},
+{
+"w": "to maintain",
+"es": "mantener / sostener"
+},
+{
+"w": "to obtain",
+"es": "obtener"
+},
+{
+"w": "to overcome",
+"es": "superar"
+},
+{
+"w": "to perceive",
+"es": "percibir"
+},
+{
+"w": "to pursue",
+"es": "perseguir (un objetivo)"
+},
+{
+"w": "to reinforce",
+"es": "reforzar"
+},
+{
+"w": "to reveal",
+"es": "revelar"
+},
+{
+"w": "to sustain",
+"es": "sostener"
+},
+{
+"w": "to tackle",
+"es": "abordar (un problema)"
+}
+]
+},
+{
+"name": "Adjetivos avanzados",
+"words": [
+{
+"w": "ambiguous",
+"es": "ambiguo"
+},
+{
+"w": "apparent",
+"es": "aparente / evidente"
+},
+{
+"w": "arbitrary",
+"es": "arbitrario"
+},
+{
+"w": "compelling",
+"es": "convincente"
+},
+{
+"w": "comprehensive",
+"es": "integral / exhaustivo"
+},
+{
+"w": "consistent",
+"es": "coherente / constante"
+},
+{
+"w": "controversial",
+"es": "controvertido"
+},
+{
+"w": "crucial",
+"es": "crucial"
+},
+{
+"w": "deliberate",
+"es": "deliberado"
+},
+{
+"w": "feasible",
+"es": "factible"
+},
+{
+"w": "inevitable",
+"es": "inevitable"
+},
+{
+"w": "inherent",
+"es": "inherente"
+},
+{
+"w": "misleading",
+"es": "engañoso"
+},
+{
+"w": "negligible",
+"es": "insignificante"
+},
+{
+"w": "persistent",
+"es": "persistente"
+},
+{
+"w": "plausible",
+"es": "plausible"
+},
+{
+"w": "prominent",
+"es": "destacado"
+},
+{
+"w": "redundant",
+"es": "redundante"
+},
+{
+"w": "robust",
+"es": "robusto"
+},
+{
+"w": "significant",
+"es": "significativo"
+},
+{
+"w": "subtle",
+"es": "sutil"
+},
+{
+"w": "sufficient",
+"es": "suficiente"
+},
+{
+"w": "thorough",
+"es": "minucioso"
+},
+{
+"w": "vague",
+"es": "vago / impreciso"
+},
+{
+"w": "viable",
+"es": "viable"
+},
+{
+"w": "widespread",
+"es": "extendido / generalizado"
+}
+]
+},
+{
+"name": "Colocaciones y expresiones",
+"words": [
+{
+"w": "to take into account",
+"es": "tener en cuenta"
+},
+{
+"w": "to bear in mind",
+"es": "tener presente"
+},
+{
+"w": "to make a difference",
+"es": "marcar una diferencia"
+},
+{
+"w": "to raise awareness",
+"es": "generar conciencia"
+},
+{
+"w": "to draw a conclusion",
+"es": "sacar una conclusión"
+},
+{
+"w": "to meet a deadline",
+"es": "cumplir un plazo"
+},
+{
+"w": "to take responsibility",
+"es": "hacerse cargo"
+},
+{
+"w": "to play a role",
+"es": "cumplir un papel"
+},
+{
+"w": "to pose a risk",
+"es": "representar un riesgo"
+},
+{
+"w": "to gain insight",
+"es": "entender a fondo"
+},
+{
+"w": "to set a precedent",
+"es": "sentar un precedente"
+},
+{
+"w": "to reach an agreement",
+"es": "llegar a un acuerdo"
+},
+{
+"w": "to keep track of",
+"es": "hacer un seguimiento de"
+},
+{
+"w": "to run out of",
+"es": "quedarse sin"
+},
+{
+"w": "to carry out",
+"es": "llevar a cabo"
+},
+{
+"w": "to bring about",
+"es": "provocar"
+},
+{
+"w": "to rule out",
+"es": "descartar"
+},
+{
+"w": "to account for",
+"es": "explicar / representar"
+},
+{
+"w": "in the long run",
+"es": "a la larga"
+},
+{
+"w": "by and large",
+"es": "en general"
+},
+{
+"w": "to some extent",
+"es": "hasta cierto punto"
+}
+]
+},
+{
+"name": "Conectores formales",
+"words": [
+{
+"w": "consequently",
+"es": "en consecuencia"
+},
+{
+"w": "furthermore",
+"es": "es más"
+},
+{
+"w": "nonetheless",
+"es": "sin embargo"
+},
+{
+"w": "whereas",
+"es": "mientras que"
+},
+{
+"w": "provided that",
+"es": "siempre que"
+},
+{
+"w": "given that",
+"es": "dado que"
+},
+{
+"w": "regardless of",
+"es": "sin importar"
+},
+{
+"w": "with regard to",
+"es": "con respecto a"
+},
+{
+"w": "in terms of",
+"es": "en términos de"
+},
+{
+"w": "as opposed to",
+"es": "a diferencia de"
+},
+{
+"w": "namely",
+"es": "es decir"
+},
+{
+"w": "hence",
+"es": "de ahí que"
+},
+{
+"w": "thereby",
+"es": "de ese modo"
+},
+{
+"w": "albeit",
+"es": "si bien"
+},
+{
+"w": "notwithstanding",
+"es": "no obstante"
+}
+]
+}
+]
+}
+]
+}

@@ -9,13 +9,15 @@ import * as texts from './texts.js';
 import { schedule, previewInterval, formatDelay, AGAIN, HARD, GOOD, EASY } from './srs.js';
 import * as sound from './sound.js';
 import * as sync from './sync.js';
+import * as plan from './plan.js';
 
 const $ = (sel) => document.querySelector(sel);
 const $$ = (sel) => Array.from(document.querySelectorAll(sel));
 
-const VIEWS = ['home', 'review', 'done', 'stats', 'words', 'settings', 'study', 'grammar', 'grammar-level', 'grammar-topic', 'my-vocab', 'texts', 'texts-level', 'texts-reader'];
+const VIEWS = ['home', 'review', 'done', 'stats', 'words', 'settings', 'study', 'grammar', 'grammar-level', 'grammar-topic', 'vocab', 'vocab-list', 'my-vocab', 'texts', 'texts-level', 'texts-reader'];
 const SUBVIEW_TAB = {
-  words: 'stats', grammar: 'study', 'grammar-level': 'study', 'grammar-topic': 'study', 'my-vocab': 'study',
+  words: 'stats', grammar: 'study', 'grammar-level': 'study', 'grammar-topic': 'study',
+  vocab: 'study', 'vocab-list': 'study', 'my-vocab': 'study',
   texts: 'study', 'texts-level': 'study', 'texts-reader': 'study',
 };
 let wordsFilter = 'all';
@@ -24,10 +26,12 @@ let currentTopicId = null;
 let currentTextLevelId = null;
 let currentTextId = null;
 const openVocabCats = new Set();
+let currentVocabSection = null; // { kind: 'level' | 'freq', id } de la lista abierta
+const openVocabBlocks = new Set(); // grupos desplegados, por sección
 const XP_BY_QUALITY = [2, 5, 10, 15]; // otra vez, difícil, bien, fácil — solo cosmético, no toca el SRS
 // Mismo número que VERSION en sw.js — subir los dos juntos en cada deploy, así "Versión" en Ajustes
 // sirve para confirmar a simple vista si el dispositivo ya tiene los cambios nuevos.
-const APP_VERSION = 'v20';
+const APP_VERSION = 'v23';
 let session = null;
 let lastStreakSeen = null;
 let streakPopTimer = null;
@@ -70,6 +74,8 @@ async function boot() {
   wireVersionCheck();
   wireStudy();
   wireMyVocab();
+  wireVocabList();
+  wireWordSheet();
   renderHome();
   renderSettings();
   registerServiceWorker();
@@ -95,6 +101,8 @@ function show(view) {
   if (view === 'grammar') renderGrammarLevels();
   if (view === 'grammar-level') renderGrammarLevel();
   if (view === 'grammar-topic') renderTopic();
+  if (view === 'vocab') renderVocabHub();
+  if (view === 'vocab-list') renderVocabList();
   if (view === 'my-vocab') renderMyVocab();
   if (view === 'texts') renderTextLevels();
   if (view === 'texts-level') renderTextsLevel();
@@ -1092,13 +1100,16 @@ function renderPractice(host, summaryEl, items, onComplete) {
 }
 
 function wireStudy() {
+  $('#btn-go-vocab').addEventListener('click', () => show('vocab'));
   $('#btn-go-my-vocab').addEventListener('click', () => show('my-vocab'));
+  $('#btn-vocab-back').addEventListener('click', () => show('study'));
+  $('#btn-vocab-list-back').addEventListener('click', () => show('vocab'));
   $('#btn-go-grammar').addEventListener('click', () => show('grammar'));
   $('#btn-go-texts').addEventListener('click', () => show('texts'));
   $('#btn-grammar-back').addEventListener('click', () => show('study'));
   $('#btn-grammar-level-back').addEventListener('click', () => show('grammar'));
   $('#btn-grammar-topic-back').addEventListener('click', () => show(currentGrammarLevelId ? 'grammar-level' : 'grammar'));
-  $('#btn-my-vocab-back').addEventListener('click', () => show('study'));
+  $('#btn-my-vocab-back').addEventListener('click', () => show('vocab'));
   $('#btn-texts-back').addEventListener('click', () => show('study'));
   $('#btn-texts-level-back').addEventListener('click', () => show('texts'));
   $('#btn-texts-reader-back').addEventListener('click', () => show(currentTextLevelId ? 'texts-level' : 'texts'));
@@ -1111,8 +1122,7 @@ function wireStudy() {
 }
 
 function renderStudy() {
-  const vocab = study.allVocab();
-  $('#study-vocab-sub').textContent = `${vocab.length} palabras`;
+  $('#study-vocab-sub').textContent = 'Las tuyas, las de cada nivel y las 2000 más usadas';
 
   let doneAll = 0;
   let totalAll = 0;
@@ -1278,10 +1288,16 @@ function renderTopic() {
   });
 }
 
-/** Solo lectura, como la tabla de Notion: se navega y se lee, no se marca nada acá. */
+/*
+ * Tabla de consulta, sin estado de progreso: acá no se marca nada como
+ * aprendido. Lo único interactivo son las palabras propias, que se tocan
+ * para corregirlas o borrarlas.
+ */
 function renderMyVocab() {
   const all = study.allVocab();
-  $('#my-vocab-count').textContent = `${all.length} ${all.length === 1 ? 'palabra' : 'palabras'}`;
+  const own = all.filter((w) => w.own).length;
+  $('#my-vocab-count').textContent =
+    `${all.length} ${all.length === 1 ? 'palabra' : 'palabras'}` + (own ? ` · ${own} ${own === 1 ? 'anotada' : 'anotadas'} por vos` : '');
 
   const groups = new Map();
   for (const w of all) {
@@ -1298,14 +1314,7 @@ function renderMyVocab() {
     group.className = `vocab-group${open ? ' open' : ''}`;
     const rowsHtml = words
       .sort((a, b) => a.word.localeCompare(b.word))
-      .map((w) => `
-        <div class="vocab-row">
-          <div class="vocab-row-text">
-            <div class="word-line"><span class="word-en">${escapeHtml(w.word)}</span><span class="word-type">${escapeHtml(w.type)}</span></div>
-            <span class="word-es">${escapeHtml(w.meaning)}</span>
-            <span class="word-ex">${escapeHtml(w.example)}</span>
-          </div>
-        </div>`).join('');
+      .map(vocabRowHtml).join('');
     group.innerHTML = `
       <button class="vocab-group-head" type="button" data-cat="${escapeHtml(cat)}">
         <span class="cat-name">${escapeHtml(cat)}</span>
@@ -1317,8 +1326,36 @@ function renderMyVocab() {
   }
 }
 
+/**
+ * Las del JSON son un `div` muerto; las tuyas, un `button` que abre la hoja
+ * para editarlas. Si anotaste la palabra al vuelo y todavía no le pusiste el
+ * significado, la fila lo pide en vez de quedar en blanco.
+ */
+function vocabRowHtml(w) {
+  const tag = w.own ? 'button' : 'div';
+  const attrs = w.own ? ` type="button" data-word-id="${escapeHtml(w.id)}"` : '';
+  const meaning = w.meaning
+    ? `<span class="word-es">${escapeHtml(w.meaning)}</span>`
+    : '<span class="word-todo">Tocá para agregarle el significado</span>';
+  return `
+    <${tag} class="vocab-row${w.own ? ' own' : ''}"${attrs}>
+      <div class="vocab-row-text">
+        <div class="word-line">
+          <span class="word-en">${escapeHtml(w.word)}</span>
+          ${w.type ? `<span class="word-type">${escapeHtml(w.type)}</span>` : ''}
+        </div>
+        ${meaning}
+        ${w.example ? `<span class="word-ex">${escapeHtml(w.example)}</span>` : ''}
+      </div>
+      ${w.own ? '<svg viewBox="0 0 24 24" class="ico word-pencil"><path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4z"/></svg>' : ''}
+    </${tag}>`;
+}
+
 function wireMyVocab() {
   $('#my-vocab-list').addEventListener('click', (e) => {
+    const row = e.target.closest('[data-word-id]');
+    if (row) return openWordSheet(row.dataset.wordId);
+
     const head = e.target.closest('.vocab-group-head');
     if (!head) return;
     const cat = head.dataset.cat;
@@ -1329,6 +1366,311 @@ function wireMyVocab() {
     group.classList.toggle('open', willOpen);
     if (willOpen) openVocabCats.add(cat);
     else openVocabCats.delete(cat);
+  });
+}
+
+/* ═══════════ anotar palabras propias ═══════════ */
+
+const WORD_FIELDS = {
+  word: '#f-word',
+  meaning: '#f-meaning',
+  example: '#f-example',
+  exampleEs: '#f-example-es',
+  type: '#f-type',
+  category: '#f-category',
+};
+const DEFAULT_CATEGORY = 'Mis palabras';
+let editingWordId = null; // null = estoy anotando una nueva
+
+/** Abre la hoja: sin id anota una palabra nueva, con id edita la que ya está. */
+function openWordSheet(id = null) {
+  const existing = id ? store.myWords().find((w) => w.id === id) : null;
+  editingWordId = existing ? id : null;
+
+  for (const [key, sel] of Object.entries(WORD_FIELDS)) $(sel).value = existing?.[key] || '';
+  $('#word-sheet-title').textContent = existing ? 'Editar palabra' : 'Anotar palabra';
+  $('#word-form-note').hidden = true;
+  disarmDelete();
+  $('#btn-word-delete').hidden = !existing;
+
+  const { categories, types } = study.vocabSuggestions();
+  fillDatalist('#vocab-cats', categories);
+  fillDatalist('#vocab-types', types);
+
+  $('#word-sheet').hidden = false;
+  // El foco va a la palabra: en el celu el teclado sube solo y podés tipear
+  // sin tocar nada más, que es todo el punto de anotar mientras mirás un video.
+  setTimeout(() => $('#f-word').focus(), 60);
+}
+
+function closeWordSheet() {
+  $('#word-sheet').hidden = true;
+  editingWordId = null;
+}
+
+function fillDatalist(sel, values) {
+  $(sel).innerHTML = values.map((v) => `<option value="${escapeHtml(v)}"></option>`).join('');
+}
+
+function readWordForm() {
+  const out = {};
+  for (const [key, sel] of Object.entries(WORD_FIELDS)) out[key] = $(sel).value.trim();
+  if (!out.category) out.category = DEFAULT_CATEGORY;
+  return out;
+}
+
+function saveWordForm() {
+  const fields = readWordForm();
+  if (!fields.word) {
+    const note = $('#word-form-note');
+    note.textContent = 'Falta la palabra en inglés — lo demás lo podés dejar para después.';
+    note.hidden = false;
+    $('#f-word').focus();
+    return;
+  }
+
+  if (editingWordId) {
+    store.updateMyWord(editingWordId, fields);
+    toast('Palabra actualizada.');
+  } else {
+    store.addMyWord(fields);
+    sound.playLearned(true);
+    toast(`"${fields.word}" anotada.`);
+  }
+  // Dejar la categoría abierta para ver dónde cayó la palabra.
+  openVocabCats.add(fields.category);
+  closeWordSheet();
+  renderMyVocab();
+}
+
+/*
+ * Borrar pide dos toques en vez de un confirm(): los diálogos del navegador
+ * quedan horribles en el celu y encima frenan todo lo demás.
+ */
+let deleteArmed = false;
+function disarmDelete() {
+  deleteArmed = false;
+  const btn = $('#btn-word-delete');
+  btn.textContent = 'Borrar';
+  btn.classList.remove('armed');
+}
+
+function wireWordSheet() {
+  $('#btn-word-new').addEventListener('click', () => openWordSheet());
+  $('#btn-word-close').addEventListener('click', closeWordSheet);
+  $('#word-sheet').addEventListener('click', (e) => {
+    if (e.target === $('#word-sheet')) closeWordSheet();
+  });
+  $('#word-form').addEventListener('submit', (e) => {
+    e.preventDefault();
+    saveWordForm();
+  });
+  $('#btn-word-delete').addEventListener('click', () => {
+    if (!editingWordId) return;
+    if (!deleteArmed) {
+      deleteArmed = true;
+      const btn = $('#btn-word-delete');
+      btn.textContent = '¿Seguro?';
+      btn.classList.add('armed');
+      return;
+    }
+    store.removeMyWord(editingWordId);
+    closeWordSheet();
+    renderMyVocab();
+    toast('Palabra borrada.');
+  });
+  document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape' && !$('#word-sheet').hidden) closeWordSheet();
+  });
+}
+
+/* ═══════════ vocabulario: hub y listas ═══════════ */
+
+const FREQ_SECTIONS = [
+  { id: 'freq1000', size: 1000, ico: '🥇', label: 'Las 1000 palabras más importantes', hint: 'El núcleo del idioma: con esto seguís una conversación normal' },
+  { id: 'freq2000', size: 2000, ico: '🥈', label: 'Las 2000 palabras más importantes', hint: 'Las mil de arriba más el segundo millar, para leer y ver cosas sin subtítulos' },
+];
+
+/*
+ * El hub junta las tres formas de mirar el vocabulario: lo que anotaste vos,
+ * lo esencial de cada nivel del MCER, y las más frecuentes del idioma. Las dos
+ * últimas se bajan recién acá (ver study.loadVocabSections).
+ */
+async function renderVocabHub() {
+  const own = store.myWords().length;
+  const total = study.allVocab().length;
+  $('#hub-my-vocab-sub').textContent = own
+    ? `${total} palabras · ${own} ${own === 1 ? 'anotada' : 'anotadas'} por vos`
+    : `${total} palabras · tocá Anotar para sumar las tuyas`;
+
+  const levelBox = $('#vocab-level-list');
+  const freqBox = $('#vocab-freq-list');
+  if (!study.allVocabLevels().length) {
+    levelBox.innerHTML = '<p class="note">Cargando…</p>';
+    freqBox.innerHTML = '';
+    try {
+      await study.loadVocabSections();
+    } catch (err) {
+      levelBox.innerHTML = '<p class="note">No pude cargar las listas. Probá de nuevo con internet.</p>';
+      console.error(err);
+      return;
+    }
+    if ($('#view-vocab').hidden) return; // te fuiste mientras cargaba
+  }
+
+  levelBox.innerHTML = '';
+  for (const lvl of study.allVocabLevels()) {
+    const btn = document.createElement('button');
+    btn.className = 'level-card';
+    btn.type = 'button';
+    btn.innerHTML = `
+      <span class="level-ring" style="border:2px solid ${lvl.color}; color:${lvl.color}">${lvl.label}</span>
+      <div class="level-card-text">
+        <span>Vocabulario ${lvl.label}</span>
+        <small>${escapeHtml(lvl.goal)}</small>
+      </div>
+      <em>${study.vocabLevelCount(lvl)}</em>`;
+    btn.addEventListener('click', () => openVocabSection('level', lvl.id));
+    levelBox.appendChild(btn);
+  }
+
+  freqBox.innerHTML = '';
+  for (const sec of FREQ_SECTIONS) {
+    const btn = document.createElement('button');
+    btn.className = 'study-card';
+    btn.type = 'button';
+    btn.innerHTML = `
+      <span class="study-card-ico">${sec.ico}</span>
+      <div class="study-card-text">
+        <span>${sec.label}</span>
+        <small>${sec.hint}</small>
+      </div>
+      <svg viewBox="0 0 24 24" class="ico chev"><path d="m9 6 6 6-6 6"/></svg>`;
+    btn.addEventListener('click', () => openVocabSection('freq', sec.id));
+    freqBox.appendChild(btn);
+  }
+}
+
+function openVocabSection(kind, id) {
+  currentVocabSection = { kind, id };
+  openVocabBlocks.clear();
+  $('#vocab-search').value = '';
+  show('vocab-list');
+}
+
+/** Título, bajada y grupos de la sección abierta, sea un nivel o un tramo de frecuencia. */
+function vocabSectionData() {
+  if (!currentVocabSection) return null;
+  if (currentVocabSection.kind === 'level') {
+    const lvl = study.vocabLevelById(currentVocabSection.id);
+    if (!lvl) return null;
+    return { title: `Vocabulario ${lvl.label}`, note: lvl.goal, groups: lvl.groups, total: study.vocabLevelCount(lvl) };
+  }
+  const sec = FREQ_SECTIONS.find((f) => f.id === currentVocabSection.id);
+  if (!sec) return null;
+  return { title: sec.label, note: study.frequencyNote(), groups: study.frequencyBlocks(sec.size), total: sec.size };
+}
+
+function renderVocabList() {
+  const data = vocabSectionData();
+  if (!data) return show('vocab');
+
+  $('#vocab-list-title').textContent = data.title;
+  $('#vocab-list-note').textContent = `${data.total} palabras. ${data.note}`;
+
+  const query = $('#vocab-search').value.trim().toLowerCase();
+  $('#btn-vocab-search-clear').hidden = !query;
+  const body = $('#vocab-list-body');
+  body.innerHTML = '';
+
+  if (query) return renderVocabSearch(body, data.groups, query);
+
+  for (const group of data.groups) {
+    const open = openVocabBlocks.has(group.name);
+    const el = document.createElement('div');
+    el.className = `vocab-group${open ? ' open' : ''}`;
+    el.innerHTML = `
+      <button class="vocab-group-head" type="button" data-block="${escapeHtml(group.name)}">
+        <span class="cat-name">${escapeHtml(group.name)}</span>
+        <span class="cat-count">${group.words.length}</span>
+        <svg viewBox="0 0 24 24" class="ico chev"><path d="m9 6 6 6-6 6"/></svg>
+      </button>
+      <div class="vocab-group-body"${open ? '' : ' hidden'}>${open ? wordPairsHtml(group.words) : ''}</div>`;
+    body.appendChild(el);
+  }
+}
+
+/*
+ * El cuerpo de cada grupo se arma recién al abrirlo. Con 2000 palabras,
+ * meterlas todas en el DOM de una hace que el celu se arrastre al scrollear.
+ */
+function wordPairsHtml(words) {
+  return words.map((w) => `
+    <div class="pair-row">
+      <span class="pair-en">${escapeHtml(w.w)}</span>
+      <span class="pair-es">${escapeHtml(w.es)}</span>
+    </div>`).join('');
+}
+
+const SEARCH_LIMIT = 200;
+
+function renderVocabSearch(body, groups, query) {
+  const hits = [];
+  outer: for (const group of groups) {
+    for (const w of group.words) {
+      if (w.w.toLowerCase().includes(query) || w.es.toLowerCase().includes(query)) {
+        hits.push({ ...w, group: group.name });
+        if (hits.length > SEARCH_LIMIT) break outer;
+      }
+    }
+  }
+
+  if (!hits.length) {
+    body.innerHTML = '<p class="note">Ninguna palabra de esta lista coincide.</p>';
+    return;
+  }
+
+  const shown = hits.slice(0, SEARCH_LIMIT);
+  body.innerHTML = `
+    <div class="vocab-group open">
+      <div class="vocab-group-body">${shown.map((w) => `
+        <div class="pair-row">
+          <span class="pair-en">${escapeHtml(w.w)}</span>
+          <span class="pair-es">${escapeHtml(w.es)}</span>
+          <span class="pair-tag">${escapeHtml(w.group)}</span>
+        </div>`).join('')}</div>
+    </div>
+    ${hits.length > SEARCH_LIMIT ? '<p class="note">Hay más resultados — afiná la búsqueda.</p>' : ''}`;
+}
+
+function wireVocabList() {
+  $('#vocab-list-body').addEventListener('click', (e) => {
+    const head = e.target.closest('.vocab-group-head');
+    if (!head) return;
+    const name = head.dataset.block;
+    const group = head.closest('.vocab-group');
+    const bodyEl = group.querySelector('.vocab-group-body');
+    const willOpen = bodyEl.hidden;
+    if (willOpen) {
+      const data = vocabSectionData();
+      const words = data?.groups.find((g) => g.name === name)?.words || [];
+      if (!bodyEl.innerHTML) bodyEl.innerHTML = wordPairsHtml(words);
+      openVocabBlocks.add(name);
+    } else {
+      openVocabBlocks.delete(name);
+    }
+    bodyEl.hidden = !willOpen;
+    group.classList.toggle('open', willOpen);
+  });
+
+  let searchTimer = null;
+  $('#vocab-search').addEventListener('input', () => {
+    clearTimeout(searchTimer);
+    searchTimer = setTimeout(renderVocabList, 140);
+  });
+  $('#btn-vocab-search-clear').addEventListener('click', () => {
+    $('#vocab-search').value = '';
+    renderVocabList();
   });
 }
 
@@ -1419,7 +1761,8 @@ function renderSettings() {
   $('#s-goal').value = s.settings.dailyGoal;
   $('#v-new').textContent = s.settings.newPerDay;
   $('#v-goal').textContent = s.settings.dailyGoal;
-  $('#goal-note').textContent = `Con la meta en ${s.settings.dailyGoal} mantenés la racha en unos ${Math.max(2, Math.round(s.settings.dailyGoal / 4))} minutos por día.`;
+  $('#goal-note').textContent = `Con la meta en ${s.settings.dailyGoal} mantenés la racha en unos ${plan.minutesFor(s.settings.dailyGoal)} minutos por día.`;
+  renderGoalRec();
 
   $('#t-sound').classList.toggle('on', s.settings.sound);
   $('#t-speak').classList.toggle('on', s.settings.autoSpeak);
@@ -1448,6 +1791,32 @@ function renderSettings() {
 
   renderSyncStatus();
   $('#version-label').textContent = `Versión ${APP_VERSION}`;
+}
+
+/**
+ * La meta diaria que hace falta para bancar el ritmo de cards nuevas, sacada
+ * de proyectar el mazo real (ver plan.js). Es lo que evita el error clásico:
+ * subir las nuevas por día y dejar la meta chica, que hace que la racha se
+ * cumpla mientras el atraso crece por atrás.
+ */
+function renderGoalRec() {
+  const s = store.get();
+  const goal = s.settings.dailyGoal;
+  const rec = plan.recommendedGoal(s.settings.newPerDay);
+  const verdict = plan.goalVerdict(goal, rec);
+
+  $('#rec-value').textContent = rec;
+  $('#goal-rec').classList.toggle('ok', verdict === 'ok');
+  $('#btn-use-rec').hidden = goal === rec;
+  $('#btn-use-rec').textContent = `Usar ${rec}`;
+
+  const base = `Con ${s.settings.newPerDay} ${s.settings.newPerDay === 1 ? 'card nueva' : 'cards nuevas'} por día, el mazo te va a pedir unos ${rec} repasos diarios en las próximas dos semanas (${plan.minutesFor(rec)} min).`;
+  const extra = {
+    baja: ' Con tu meta actual vas a cerrar el día antes de terminar lo pendiente, y el atraso se acumula.',
+    alta: ' Tu meta actual pide más repasos de los que el mazo va a tener listos: algunos días no vas a poder cumplirla.',
+    ok: ' Tu meta actual acompaña bien ese ritmo.',
+  }[verdict];
+  $('#rec-why').textContent = base + extra;
 }
 
 function renderSyncStatus() {
@@ -1503,7 +1872,9 @@ function wireSettings() {
   $$('#presets button').forEach((b) => {
     b.addEventListener('click', () => {
       const p = store.PRESETS[b.dataset.preset];
-      store.setSettings({ preset: b.dataset.preset, newPerDay: p.newPerDay, dailyGoal: p.dailyGoal });
+      // El preset elige el ritmo de cards nuevas; la meta sale de lo que ese
+      // ritmo realmente genera, no de un número fijo que envejece con el mazo.
+      store.setSettings({ preset: b.dataset.preset, newPerDay: p.newPerDay, dailyGoal: plan.recommendedGoal(p.newPerDay) });
       renderSettings();
     });
   });
@@ -1515,6 +1886,11 @@ function wireSettings() {
   $('#s-goal').addEventListener('input', (e) => {
     store.setSettings({ dailyGoal: Number(e.target.value), preset: 'custom' });
     renderSettings();
+  });
+  $('#btn-use-rec').addEventListener('click', () => {
+    store.setSettings({ dailyGoal: plan.recommendedGoal(store.get().settings.newPerDay) });
+    renderSettings();
+    toast('Meta diaria ajustada.');
   });
 
   $('#t-sound').addEventListener('click', () => {

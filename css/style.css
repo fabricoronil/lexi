@@ -1497,3 +1497,176 @@ button.switch.on:active i { transform: translateX(19px) scale(.82); }
 @media (min-width: 560px) {
   .prompt { font-size: 34px; }
 }
+
+/* ── botón "Anotar" del header de Mi vocabulario ── */
+.add-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  margin-left: auto;
+  padding: 8px 13px 8px 10px;
+  background: var(--green-bg);
+  border: 1px solid var(--green-line);
+  border-radius: 999px;
+  color: var(--green);
+  font-size: 12.5px;
+  font-weight: 600;
+  flex-shrink: 0;
+  transition: transform .12s;
+}
+.add-btn .ico { width: 17px; height: 17px; stroke-width: 2.4; }
+.add-btn:active { transform: scale(.94); }
+
+/* filas de palabras propias: se pueden tocar para editarlas */
+.vocab-row.own { border-left: 2px solid var(--green-line); text-align: left; width: 100%; }
+.vocab-row.own:active { background: var(--line); }
+.vocab-row .word-pencil { width: 15px; height: 15px; color: var(--faint); flex-shrink: 0; margin-top: 3px; }
+.vocab-row .word-todo { font-size: 12px; color: var(--amber); opacity: .8; }
+.vocab-empty {
+  margin-top: 14px;
+  padding: 22px 18px;
+  background: var(--surface);
+  border: 1px dashed var(--line);
+  border-radius: 14px;
+  text-align: center;
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--muted);
+}
+
+/* ── hoja inferior (formulario de palabra) ── */
+.sheet-back {
+  position: fixed;
+  inset: 0;
+  z-index: 60;
+  background: rgba(4, 6, 7, .72);
+  display: flex;
+  align-items: flex-end;
+  justify-content: center;
+  animation: fade .18s;
+}
+.sheet {
+  width: 100%;
+  max-width: 520px;
+  max-height: 92dvh;
+  overflow-y: auto;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-bottom: none;
+  border-radius: 20px 20px 0 0;
+  padding-bottom: calc(var(--safe-b) + 10px);
+  animation: sheet-up .24s cubic-bezier(.2,.9,.3,1);
+}
+@keyframes sheet-up { from { transform: translateY(30px); opacity: 0; } to { transform: none; opacity: 1; } }
+.sheet-grab { width: 38px; height: 4px; border-radius: 2px; background: var(--line); margin: 9px auto 0; }
+.sheet-head { display: flex; align-items: center; gap: 10px; padding: 12px 14px 4px 18px; }
+.sheet-head h2 { flex-grow: 1; margin: 0; font-size: 16px; font-weight: 700; }
+.sheet-body { display: flex; flex-direction: column; gap: 13px; padding: 12px 18px 18px; }
+
+.field { display: flex; flex-direction: column; gap: 6px; min-width: 0; }
+.field > span { font-size: 11.5px; color: var(--muted); text-transform: uppercase; letter-spacing: .5px; font-weight: 600; }
+.field > span em { font-style: normal; text-transform: none; letter-spacing: 0; color: var(--faint); font-weight: 400; }
+.field input {
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  padding: 12px 13px;
+  color: var(--text);
+  font-family: var(--sans);
+  font-size: 15px; /* 16px o menos hace que iOS zoomee al enfocar; 15 con -webkit-text-size-adjust alcanza */
+  width: 100%;
+}
+.field input::placeholder { color: var(--faint); }
+.field input:focus { outline: none; border-color: var(--green-line); background: var(--surface-2); }
+.field-pair { display: flex; gap: 10px; }
+.field-pair .field { flex: 1 1 0; }
+
+.sheet-note { margin: 0; font-size: 12.5px; color: var(--amber); }
+.sheet-actions { display: flex; gap: 10px; margin-top: 4px; }
+.sheet-btn {
+  flex-grow: 1;
+  padding: 13px 16px;
+  background: var(--green);
+  color: var(--green-deep);
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 700;
+  transition: transform .12s;
+}
+.sheet-btn:active { transform: scale(.97); }
+.sheet-btn.small { flex-grow: 0; padding: 9px 16px; font-size: 12.5px; border-radius: 10px; }
+.sheet-btn.ghost { flex-grow: 0; background: var(--surface-2); border: 1px solid var(--line); color: var(--muted); font-weight: 600; }
+.sheet-btn.ghost.danger { color: var(--red); border-color: var(--red-line); }
+.sheet-btn.ghost.armed { background: var(--red-bg); color: var(--red); }
+
+/* ── meta diaria recomendada (Ajustes) ── */
+.rec-box {
+  margin-top: 10px;
+  padding: 14px 16px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-left: 3px solid var(--green);
+  border-radius: 14px;
+}
+.rec-main { display: flex; align-items: center; gap: 12px; }
+.rec-text { flex-grow: 1; display: flex; align-items: baseline; gap: 9px; min-width: 0; }
+.rec-label { font-size: 12.5px; color: var(--muted); }
+.rec-value { font-size: 20px; font-weight: 700; color: var(--green); }
+.rec-why { margin: 9px 0 0; font-size: 12.5px; line-height: 1.55; color: var(--dim); }
+.rec-box.ok { border-left-color: var(--line); }
+.rec-box.ok .rec-value { color: var(--text-2); }
+
+/* ── buscador dentro de una lista de vocabulario ── */
+.search-row {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-top: 12px;
+  padding: 0 12px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+}
+.search-row .search-ico { width: 17px; height: 17px; color: var(--dim); flex-shrink: 0; }
+.search-row input {
+  flex-grow: 1;
+  min-width: 0;
+  background: none;
+  border: none;
+  padding: 12px 0;
+  color: var(--text);
+  font-family: var(--sans);
+  font-size: 15px;
+}
+.search-row input::placeholder { color: var(--faint); }
+.search-row input:focus { outline: none; }
+.search-row input::-webkit-search-cancel-button { display: none; }
+.search-row .icon-btn { flex-shrink: 0; }
+.search-row .icon-btn .ico { width: 16px; height: 16px; color: var(--dim); }
+
+/* filas compactas de palabra + traducción (listas por nivel y por frecuencia) */
+.pair-row {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  padding: 9px 4px;
+  border-bottom: 1px solid var(--line-soft);
+}
+.pair-row:last-child { border-bottom: none; }
+.pair-en {
+  font-family: var(--mono);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text);
+  flex: 0 0 42%;
+  overflow-wrap: anywhere;
+}
+.pair-es { flex: 1 1 auto; font-size: 13px; color: var(--muted); min-width: 0; overflow-wrap: anywhere; }
+.pair-tag {
+  flex-shrink: 0;
+  font-size: 10px;
+  color: var(--faint);
+  background: var(--surface-2);
+  border-radius: 999px;
+  padding: 2px 8px;
+}

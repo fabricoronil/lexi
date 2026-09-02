@@ -2,14 +2,18 @@
  * study.js — carga gramática y vocabulario propio para la sección Estudio.
  * Es contenido para leer, separado del sistema de mazos/SRS estilo Anki
  * (decks.js): no comparten datos ni estado. La gramática tiene un simple
- * check de "aprendido" guardado en store.js; el vocabulario es de solo
- * lectura, como la tabla de Notion de la que sale.
+ * check de "aprendido" guardado en store.js; el vocabulario no tiene estado
+ * de progreso: es una tabla de consulta, como la de Notion de la que sale.
+ * Lo único que se le suma son las palabras que anotás vos desde el celu
+ * (`store.myWords()`), que se muestran en la misma lista y se editan a mano.
  */
 
 import * as store from './store.js';
 
 let levels = [];
 let vocab = [];
+let vocabLevels = [];
+let frequency = null;
 
 export async function loadStudyData() {
   if (levels.length && vocab.length) return;
@@ -39,8 +43,67 @@ export function topicById(id) {
   return null;
 }
 
+/**
+ * El vocabulario del JSON más las palabras propias. Las propias van marcadas
+ * con `own` porque son las únicas que se pueden editar o borrar desde la app.
+ */
+/*
+ * Las listas grandes (niveles y frecuencia, ~3000 palabras entre las dos) se
+ * bajan recién cuando entrás a Vocabulario, no en el arranque: no tiene
+ * sentido hacerte esperar 120 KB para abrir la app y ponerte a repasar.
+ */
+export async function loadVocabSections() {
+  if (vocabLevels.length && frequency) return;
+  const [lRes, fRes] = await Promise.all([fetch('data/vocab-levels.json'), fetch('data/frequency.json')]);
+  if (!lRes.ok) throw new Error(`No pude cargar data/vocab-levels.json (${lRes.status})`);
+  if (!fRes.ok) throw new Error(`No pude cargar data/frequency.json (${fRes.status})`);
+  vocabLevels = (await lRes.json()).levels;
+  frequency = await fRes.json();
+}
+
+export function allVocabLevels() {
+  return vocabLevels;
+}
+
+export function vocabLevelById(id) {
+  return vocabLevels.find((l) => l.id === id);
+}
+
+export function vocabLevelCount(level) {
+  return level.groups.reduce((n, g) => n + g.words.length, 0);
+}
+
+/** Las `size` más frecuentes, cortadas en bloques de a cien para poder navegarlas. */
+export function frequencyBlocks(size) {
+  const words = (frequency?.words || []).slice(0, size);
+  const blocks = [];
+  for (let i = 0; i < words.length; i += 100) {
+    blocks.push({ name: `${i + 1} – ${Math.min(i + 100, words.length)}`, words: words.slice(i, i + 100) });
+  }
+  return blocks;
+}
+
+export function frequencyNote() {
+  return frequency?.note || '';
+}
+
 export function allVocab() {
-  return vocab;
+  const own = store.myWords().map((w) => ({ ...w, own: true }));
+  return [...vocab, ...own];
+}
+
+/** Categorías y tipos ya usados, para sugerirlos al anotar una palabra nueva. */
+export function vocabSuggestions() {
+  const cats = new Set();
+  const types = new Set();
+  for (const w of allVocab()) {
+    if (w.category) cats.add(w.category);
+    if (w.type) types.add(w.type);
+  }
+  return {
+    categories: [...cats].sort((a, b) => a.localeCompare(b)),
+    types: [...types].sort((a, b) => a.localeCompare(b)),
+  };
 }
 
 /**
