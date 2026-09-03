@@ -22,6 +22,7 @@ const DEFAULTS = {
     preset: 'normal',
     newPerDay: 10,
     dailyGoal: 30,
+    minutesPerDay: 15, // presupuesto de tiempo; manda cuando preset === 'tiempo'
     decks: { core: true, tech: true, phrases: true, phrasal: true },
     autoSpeak: true,
     reverse: false,

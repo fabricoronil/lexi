@@ -60,6 +60,7 @@ async function boot() {
   }
 
   sound.setEnabled(store.get().settings.sound);
+  syncTimeBudget(); // el mazo cambió desde ayer: repartir de nuevo los minutos del día
 
   $('#boot').classList.add('gone');
   $('#app').hidden = false;
@@ -1884,6 +1885,7 @@ function renderSettings() {
   $('#v-new').textContent = s.settings.newPerDay;
   $('#v-goal').textContent = s.settings.dailyGoal;
   $('#goal-note').textContent = `Con la meta en ${s.settings.dailyGoal} mantenés la racha en unos ${plan.minutesFor(s.settings.dailyGoal)} minutos por día.`;
+  renderMinutes();
   renderGoalRec();
 
   $('#t-sound').classList.toggle('on', s.settings.sound);
@@ -1913,6 +1915,49 @@ function renderSettings() {
 
   renderSyncStatus();
   $('#version-label').textContent = `Versión ${APP_VERSION}`;
+}
+
+/**
+ * El presupuesto de tiempo: decís cuántos minutos por día le querés meter y
+ * la app calcula sola las cards nuevas y la meta. Lo único que hay que
+ * administrar de verdad es el tiempo; el resto es consecuencia.
+ */
+function renderMinutes() {
+  const s = store.get();
+  const byTime = s.settings.preset === 'tiempo';
+  // Fuera del modo tiempo el slider refleja lo que la meta actual implica,
+  // así no muestra un número que no tiene nada que ver con lo configurado.
+  const mins = byTime ? s.settings.minutesPerDay : plan.minutesFor(s.settings.dailyGoal);
+  const step = Number($('#s-minutes').step) || 1;
+  $('#s-minutes').value = Math.min(plan.MAX_MINUTES, Math.max(plan.MIN_MINUTES, Math.round(mins / step) * step));
+  $('#v-minutes').textContent = `${$('#s-minutes').value} min`;
+
+  const note = $('#minutes-note');
+  if (byTime) {
+    const real = plan.minutesFor(s.settings.dailyGoal);
+    const corto = real < mins - 2;
+    note.textContent = corto
+      ? `Con ${s.settings.newPerDay} ${s.settings.newPerDay === 1 ? 'card nueva' : 'cards nuevas'} por día y una meta de ${s.settings.dailyGoal} repasos, el mazo sólo te va a pedir unos ${real} minutos: no le queda material para llenarte ${mins}. Sumá otro mazo si querés más.`
+      : `Ajustado solo: ${s.settings.newPerDay} ${s.settings.newPerDay === 1 ? 'card nueva' : 'cards nuevas'} por día y meta de ${s.settings.dailyGoal} repasos. Si el mazo cambia, los números se recalculan para que el tiempo siga siendo el mismo.`;
+  } else {
+    // Sin repetir acá los minutos que implica la meta actual: ese número ya
+    // está abajo, y mostrarlo al lado del slider (que va de a 5) se contradice.
+    note.textContent = 'Ahora mismo estás ajustando a mano. Movés este slider y la app pasa a calcular sola las cards nuevas y la meta para el tiempo que elijas.';
+  }
+}
+
+/**
+ * Vuelve a repartir el presupuesto de tiempo cuando el mazo cambió — más
+ * cards vistas, otro mazo activado. Sólo si el día todavía no está salvado:
+ * mover la meta con la racha ya cumplida sería una zancadilla.
+ */
+function syncTimeBudget() {
+  const s = store.get();
+  if (s.settings.preset !== 'tiempo' || !s.settings.minutesPerDay) return;
+  if (store.goalMet()) return;
+  const p = plan.planForMinutes(s.settings.minutesPerDay);
+  if (p.newPerDay === s.settings.newPerDay && p.dailyGoal === s.settings.dailyGoal) return;
+  store.setSettings({ newPerDay: p.newPerDay, dailyGoal: p.dailyGoal });
 }
 
 /**
@@ -1999,6 +2044,19 @@ function wireSettings() {
       store.setSettings({ preset: b.dataset.preset, newPerDay: p.newPerDay, dailyGoal: plan.recommendedGoal(p.newPerDay) });
       renderSettings();
     });
+  });
+
+  // El slider de minutos manda: al soltarlo recalcula nuevas y meta. Va en
+  // 'change' y no en 'input' porque cada cálculo proyecta el mazo entero.
+  $('#s-minutes').addEventListener('input', (e) => {
+    $('#v-minutes').textContent = `${e.target.value} min`;
+  });
+  $('#s-minutes').addEventListener('change', (e) => {
+    const minutes = Number(e.target.value);
+    const p = plan.planForMinutes(minutes);
+    store.setSettings({ minutesPerDay: minutes, newPerDay: p.newPerDay, dailyGoal: p.dailyGoal, preset: 'tiempo' });
+    renderSettings();
+    toast(`Listo: ${p.newPerDay} nuevas y meta de ${p.dailyGoal} para tus ${minutes} min.`);
   });
 
   $('#s-new').addEventListener('input', (e) => {

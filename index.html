@@ -239,6 +239,15 @@
   <section class="view" id="view-settings" hidden>
     <h1 class="page-title">Ajustes</h1>
 
+    <h2 class="section-label">Tiempo por día</h2>
+    <div class="panel">
+      <label class="slider-row">
+        <span class="slider-head">Minutos que le querés meter <b class="mono" id="v-minutes">15</b></span>
+        <input type="range" id="s-minutes" min="5" max="45" step="5">
+      </label>
+    </div>
+    <p class="note" id="minutes-note"></p>
+
     <h2 class="section-label">Nivel de exigencia</h2>
     <div class="segmented" id="presets">
       <button data-preset="tranqui" type="button">Tranqui</button>

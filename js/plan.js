@@ -98,6 +98,50 @@ export function minutesFor(goal) {
   return Math.max(2, Math.round(goal / 4));
 }
 
+/* ── presupuesto de tiempo ──
+ * El camino inverso: en vez de elegir cards nuevas y deducir los minutos,
+ * decís cuánto tiempo le querés dedicar y de ahí salen las dos cosas. Es
+ * el control más honesto, porque el tiempo es lo único que de verdad tenés
+ * que administrar; el ritmo de nuevas es una consecuencia.
+ */
+export const MIN_MINUTES = 5;
+export const MAX_MINUTES = 45;
+const MAX_NEW = 40; // el tope del slider de cards nuevas
+
+/**
+ * Cuántas cards nuevas por día entran en ese tiempo, y qué meta diaria le
+ * corresponde. Busca en binaria porque la carga proyectada crece con el
+ * ritmo de nuevas, y así alcanzan seis proyecciones en vez de cuarenta.
+ */
+export function planForMinutes(minutes, now = Date.now()) {
+  const target = Math.max(MIN_MINUTES, Math.min(MAX_MINUTES, Math.round(minutes)));
+  const cache = new Map();
+  const minsFor = (n) => {
+    if (!cache.has(n)) cache.set(n, minutesFor(recommendedGoal(n, now)));
+    return cache.get(n);
+  };
+
+  let lo = 0;
+  let hi = MAX_NEW;
+  while (lo < hi) {
+    const mid = Math.floor((lo + hi) / 2);
+    if (minsFor(mid) < target) lo = mid + 1;
+    else hi = mid;
+  }
+
+  // Entre el primero que llega al objetivo y el anterior, el que menos se pase.
+  let best = lo;
+  if (lo > 0 && Math.abs(minsFor(lo - 1) - target) <= Math.abs(minsFor(lo) - target)) best = lo - 1;
+
+  // Si al mazo no le queda material, subir el ritmo de nuevas ya no agrega
+  // minutos: quedarse con el más bajo que da lo mismo, para no quemar en dos
+  // días las pocas cards sin ver que quedan.
+  while (best > 0 && minsFor(best - 1) === minsFor(best)) best -= 1;
+
+  const dailyGoal = recommendedGoal(best, now);
+  return { newPerDay: best, dailyGoal, minutes: minutesFor(dailyGoal), target };
+}
+
 /**
  * Cómo le queda la meta actual al ritmo elegido: 'ok' si acompaña,
  * 'baja' si te va a dejar atraso todos los días, 'alta' si pide más
