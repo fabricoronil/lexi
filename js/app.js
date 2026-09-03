@@ -137,6 +137,10 @@ function wireNav() {
     if ($('#btn-start').dataset.mode === 'reinforce') startReinforce();
     else startSession(false);
   });
+  $('#btn-hard-drill').addEventListener('click', () => {
+    sound.playTap();
+    startHardDrill();
+  });
 }
 
 /* ═══════════ inicio ═══════════ */
@@ -740,6 +744,8 @@ function renderStats() {
     }
   }
 
+  renderHardest();
+
   $('#st-cards-label').textContent = `Las ${c.total} cards`;
   const pc = (n) => (c.total ? (n / c.total) * 100 : 0);
   $('#sb-learned').style.width = pc(c.learned) + '%';
@@ -828,6 +834,67 @@ function renderWords() {
       </div>`;
     list.appendChild(el);
   }
+}
+
+/**
+ * Las palabras que se te resisten: las que venís marcando "Otra vez" o
+ * "Difícil", o que ya olvidaste después de haberlas aprendido. La idea no es
+ * retarte con un número sino darte dónde apretar: son las que más rinde
+ * atacar aparte.
+ */
+function renderHardest() {
+  const rows = decks.hardestCards(12);
+  const list = $('#hard-list');
+  const note = $('#hard-note');
+  const drill = $('#btn-hard-drill');
+
+  $('#hard-count').textContent = rows.length ? `top ${rows.length}` : '';
+  drill.hidden = rows.length < 3;
+
+  if (!rows.length) {
+    list.innerHTML = '';
+    note.textContent = 'Todavía ninguna se te resiste. Cuando una palabra empiece a costarte — porque le das "Otra vez" o "Difícil", o porque la olvidás después de haberla aprendido — va a aparecer acá.';
+    return;
+  }
+
+  note.textContent = 'Ordenadas por cuánto te cuestan: cuántas veces las olvidaste, cuántas respuestas te salieron difíciles y cómo venís con ellas últimamente.';
+
+  list.innerHTML = rows.map(({ card, st, score, leech }) => {
+    const misses = (st.againCount || 0) + (st.hardCount || 0);
+    const bits = [];
+    if (st.lapses) bits.push(`${st.lapses} ${st.lapses === 1 ? 'olvido' : 'olvidos'}`);
+    if (misses && st.reps) bits.push(`${misses} de ${st.reps} respuestas te costaron`);
+    const back = st.due > Date.now() ? `vuelve en ${formatDelay(st.due - Date.now())}` : 'te toca ahora';
+    bits.push(back);
+    return `
+      <div class="hard-row">
+        <div class="hard-gauge"><i style="width:${Math.round(Math.min(1, score) * 100)}%"></i></div>
+        <div class="hard-body">
+          <div class="word-main">
+            <span class="word-en">${escapeHtml(card.en)}</span>
+            <span class="word-es">${escapeHtml(card.es)}</span>
+          </div>
+          <small class="hard-why">${bits.join(' · ')}</small>
+        </div>
+        ${leech ? '<span class="hard-badge">hueso duro</span>' : ''}
+      </div>`;
+  }).join('');
+}
+
+/**
+ * Sesión enfocada sólo en las que te cuestan. No respeta la meta ni el
+ * ritmo de nuevas: es una vuelta extra a propósito sobre lo que más rinde.
+ */
+function startHardDrill() {
+  const queue = decks.buildHardQueue(20);
+  if (!queue.length) {
+    toast('Todavía no hay palabras difíciles para atacar.');
+    return;
+  }
+  session = { queue, index: 0, answered: 0, xp: 0, combo: 0, reinforce: true };
+  $('#session-xp').textContent = '+0';
+  show('review');
+  renderCard();
 }
 
 /* ═══════════ estudio ═══════════ */

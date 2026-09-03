@@ -3,7 +3,7 @@
  */
 
 import * as store from './store.js';
-import { isDue, isMature } from './srs.js';
+import { isDue, isMature, difficultyScore, struggles, isLeech } from './srs.js';
 
 export const DECKS = [
   { id: 'core', file: 'data/core.json', label: 'core', hint: 'A1–B1 esencial', color: '#7ab8f5' },
@@ -136,6 +136,28 @@ export function buildReinforceQueue(limit = 20) {
   const pool = activeCards();
   const shuffled = [...pool].sort(() => Math.random() - 0.5);
   return shuffled.slice(0, limit);
+}
+
+/**
+ * Las que más te cuestan: las cards que venís fallando o marcando difícil,
+ * ordenadas por cuánto pesan. Sólo entran las que ya tienen historia
+ * suficiente como para que el número diga algo (ver `struggles`).
+ */
+export function hardestCards(limit = 12) {
+  const s = store.get();
+  const out = [];
+  for (const card of activeCards()) {
+    const st = s.cards[card.id];
+    if (!st || !struggles(st)) continue;
+    out.push({ card, st, score: difficultyScore(st), leech: isLeech(st) });
+  }
+  out.sort((a, b) => b.score - a.score || (b.st.lapses || 0) - (a.st.lapses || 0));
+  return limit ? out.slice(0, limit) : out;
+}
+
+/** Cola de repaso enfocada sólo en esas, para atacarlas aparte. */
+export function buildHardQueue(limit = 20) {
+  return hardestCards(limit).map((h) => h.card);
 }
 
 export function deckProgress(deckId) {
