@@ -17,9 +17,16 @@ un estilo que dé ganas de abrirlo.
 
 - **Repetición espaciada SM-2**, el mismo algoritmo que usa Anki: cada card vuelve
   justo antes de que te la olvides, y el intervalo crece cada vez que la recordás.
+  Con dos arreglos propios: reaprender no arranca de cero, y el ease se recupera
+  (ver más abajo).
 - **Cuatro botones de dificultad** — Otra vez / Difícil / Bien / Fácil — con el
   próximo intervalo a la vista antes de elegir.
-- **Racha diaria** al estilo Duolingo: sube sólo cuando llegás a tu meta del día.
+- **Racha diaria** al estilo Duolingo: sube sólo cuando llegás a tu meta del día,
+  y si perdés un día podés recuperarla al siguiente pagando el doble.
+- **Las que más te cuestan**: las palabras que venís fallando, ordenadas por cuánto
+  pesan, con un repaso enfocado sólo en ellas.
+- **Presupuesto de tiempo**: decís cuántos minutos por día le querés meter y la app
+  calcula sola las cards nuevas y la meta.
 - **Nivel de exigencia configurable**: Tranqui, Normal, Bestia, o los sliders a mano.
 - **Meta diaria recomendada**: proyecta el mazo real para decirte cuántos repasos
   por día te va a pedir el ritmo de cards nuevas que elegiste.
@@ -78,6 +85,23 @@ ranking exacto de corpus.
 Son listas de consulta, con buscador: no llevan estado de aprendido ni entran al
 SRS. Para eso están los mazos.
 
+## Olvidarse no es empezar de nuevo
+
+SM-2 puro tiene dos vicios que se notan justo en las palabras que más cuestan, y
+[`js/srs.js`](js/srs.js) los corrige:
+
+**Fallar una card la mandaba de vuelta a 1 día**, como si fuera nueva. Pero una
+palabra que ya tuviste a veinte días y se te escapó no está en el mismo estado que
+una que ves por primera vez: la recuperás más rápido, y cada ciclo de olvido →
+reaprendizaje la deja más pegada. Acá, al graduarla de nuevo, se te devuelve un
+porcentaje del intervalo perdido — 25% la primera vez, más alto en cada
+reaprendizaje siguiente. Esa card vuelve con cinco días en vez de uno.
+
+**El ease sólo bajaba.** Contestar honestamente "Otra vez" o "Difícil" hundía la
+card a 1.30 para siempre, y quedaba repitiéndose cada tres días aunque ya te la
+supieras — el "ease hell" clásico de Anki. Ahora cada "Bien" recupera un poco:
+castiga mientras cuesta, perdona cuando ya la sacás.
+
 ## Cuántos repasos por día
 
 La meta diaria no es un número al azar: una card nueva no es un repaso, son
@@ -89,6 +113,21 @@ Ajustes recomienda, y el que usan los presets.
 Si la meta queda muy por debajo, la racha se cumple a mitad de camino y el atraso
 crece sin que se note; si queda muy por encima, hay días en que el mazo no tiene
 tanto para darte. Ajustes te avisa en cuál de los dos casos estás.
+
+También se puede ir al revés, que es lo más cómodo: en Ajustes decís cuántos
+minutos por día le querés dedicar y la app busca el ritmo de cards nuevas que
+llena ese tiempo, con la meta que le corresponde. Si el mazo cambia, los números
+se recalculan solos para que el tiempo siga siendo el mismo.
+
+## Perder un día no mata la racha
+
+Si te salteás un día, al siguiente la racha queda en riesgo en vez de morir: la
+salvás haciendo el doble de la meta. Si también fallás ese, queda una última
+oportunidad al tercer día con el triple. Recién ahí arrancás de cero.
+
+Vaciar la cola salva un día normal (no tiene sentido exigirte repasos que no
+existen), pero no un rescate: recuperar la racha tiene que costar de verdad, y
+para eso está el refuerzo, que no tiene límite.
 
 ## Agregar mazos de cards
 
