@@ -31,7 +31,7 @@ const openVocabBlocks = new Set(); // grupos desplegados, por sección
 const XP_BY_QUALITY = [2, 5, 10, 15]; // otra vez, difícil, bien, fácil — solo cosmético, no toca el SRS
 // Mismo número que VERSION en sw.js — subir los dos juntos en cada deploy, así "Versión" en Ajustes
 // sirve para confirmar a simple vista si el dispositivo ya tiene los cambios nuevos.
-const APP_VERSION = 'v23';
+const APP_VERSION = 'v24';
 let session = null;
 let lastStreakSeen = null;
 let streakPopTimer = null;
@@ -146,24 +146,27 @@ function renderHome() {
   const q = decks.buildQueue();
   const c = decks.counts();
   const done = store.reviewsToday();
-  const goal = s.settings.dailyGoal;
+  const st = store.streakStatus();
+  // En un día de rescate la meta viene multiplicada: es lo que cuesta hoy.
+  const goal = st.goal;
 
   const fmt = new Intl.DateTimeFormat('es-AR', { weekday: 'long', day: 'numeric', month: 'long' });
   const label = fmt.format(new Date());
   $('#today-label').textContent = label.charAt(0).toUpperCase() + label.slice(1);
 
-  const streak = store.liveStreak();
+  const streak = st.streak;
   const met = store.goalMet();
-  $('#streak-count').textContent = streak;
   $('#streak-chip').classList.toggle('cold', streak === 0);
   $('#streak-chip').classList.toggle('lit', streak > 0 && met);
+  $('#streak-chip').classList.toggle('at-risk', st.mode === 'rescue' && !met);
+  $('#streak-count').textContent = streak;
   if (lastStreakSeen !== null && streak > lastStreakSeen) {
     bounce($('#streak-chip'));
     sound.playStreak();
   }
   lastStreakSeen = streak;
 
-  renderStreakBanner(streak, met, goal, done);
+  renderStreakBanner(st, met, goal, done);
 
   $('#done-today').textContent = Math.min(done, goal);
   $('#goal-today').textContent = goal;
@@ -183,13 +186,17 @@ function renderHome() {
     $('#cta-label').textContent = done > 0 ? 'Seguir repasando' : 'Empezar repaso';
     note.textContent = met
       ? 'Meta cumplida — lo que hagas ahora es yapa.'
-      : `Te faltan ${goal - done} respuestas para salvar el día.`;
+      : st.mode === 'rescue'
+        ? `Te faltan ${goal - done} respuestas para recuperar la racha (meta ×${st.multiplier} hoy).`
+        : `Te faltan ${goal - done} respuestas para salvar el día.`;
   } else {
     btn.disabled = false;
     btn.dataset.mode = 'reinforce';
     $('#cta-label').textContent = 'Reforzar más';
     if (met) {
       note.textContent = 'Día salvado. Si querés seguir practicando, no hay límite.';
+    } else if (st.mode === 'rescue') {
+      note.textContent = `Vaciaste la cola, pero un rescate no se salva solo: te faltan ${goal - done} respuestas de refuerzo.`;
     } else if (done === 0) {
       note.textContent = 'Sin cards vencidas hoy. Podés reforzar lo que ya viste igual.';
     } else {
@@ -218,29 +225,45 @@ function renderHome() {
 }
 
 /** El estado del día, bien a la vista: completado, en riesgo, o todavía sin arrancar. */
-function renderStreakBanner(streak, met, goal, done) {
+function renderStreakBanner(st, met, goal, done) {
   const el = $('#streak-banner');
   const ico = $('#streak-banner-ico');
   const title = $('#streak-banner-title');
   const sub = $('#streak-banner-sub');
   const day = (n) => (n === 1 ? 'día' : 'días');
+  const streak = st.streak;
+  const falta = Math.max(0, goal - done);
 
-  if (met) {
+  if (met && st.rescuedToday) {
+    el.className = 'streak-banner done';
+    ico.textContent = '💪';
+    title.textContent = '¡Racha recuperada!';
+    sub.textContent = `Pagaste la meta ×${st.multiplier} y la salvaste: seguís con ${streak} ${day(streak)}. Volvé mañana antes de medianoche.`;
+  } else if (met) {
     el.className = 'streak-banner done';
     ico.textContent = '✅';
     title.textContent = '¡Racha de hoy completada!';
     sub.textContent = `Racha de ${streak} ${day(streak)}. Volvé mañana antes de medianoche.`;
+  } else if (st.mode === 'rescue') {
+    el.className = 'streak-banner rescue' + (st.lastChance ? ' last' : '');
+    ico.textContent = st.lastChance ? '🆘' : '⏳';
+    title.textContent = st.lastChance
+      ? 'Última chance para recuperar la racha'
+      : 'Podés recuperar la racha';
+    sub.textContent = st.lastChance
+      ? `Te salteaste ${st.missed} días. Hoy es la última oportunidad: ${goal} respuestas (el triple) y tu racha de ${streak} ${day(streak)} sigue viva. Te faltan ${falta}.`
+      : `Te salteaste un día. Hacé ${goal} respuestas hoy (el doble) y no perdés tu racha de ${streak} ${day(streak)}. Te faltan ${falta}.`;
   } else if (streak > 0) {
     el.className = 'streak-banner warn';
     ico.textContent = '🔥';
     title.textContent = 'No dejes que la racha muera';
-    sub.textContent = `Te faltan ${Math.max(0, goal - done)} respuestas para salvar tu racha de ${streak} ${day(streak)}.`;
+    sub.textContent = `Te faltan ${falta} respuestas para salvar tu racha de ${streak} ${day(streak)}.`;
   } else {
     el.className = 'streak-banner start';
     ico.textContent = '🔥';
     title.textContent = 'Arrancá tu racha hoy';
     sub.textContent = done > 0
-      ? `Te faltan ${Math.max(0, goal - done)} respuestas para empezarla.`
+      ? `Te faltan ${falta} respuestas para empezarla.`
       : `Sumá ${goal} respuestas hoy para empezarla.`;
   }
 }
@@ -299,8 +322,12 @@ function bounce(el, cls = 'pop') {
 
 /** El momento exacto en que se salva el día: la llama "se pinta" en pantalla. */
 function celebrateStreak() {
-  const streak = store.liveStreak();
-  $('#streak-pop-sub').textContent = `Racha de ${streak} ${streak === 1 ? 'día' : 'días'}`;
+  const st = store.streakStatus();
+  const streak = st.streak;
+  $('#streak-pop-title').textContent = st.rescuedToday ? '¡Racha recuperada!' : '¡Racha completada!';
+  $('#streak-pop-sub').textContent = st.rescuedToday
+    ? `Salvada con la meta ×${st.multiplier} — seguís con ${streak} ${streak === 1 ? 'día' : 'días'}`
+    : `Racha de ${streak} ${streak === 1 ? 'día' : 'días'}`;
   bounce($('#streak-pop'), 'show');
   sound.playStreak();
   clearTimeout(streakPopTimer);
@@ -530,21 +557,30 @@ function answer(quality) {
 }
 
 function finishSession() {
-  const streak = store.liveStreak();
+  const st = store.streakStatus();
+  const streak = st.streak;
   const met = store.goalMet();
   const xp = session ? session.xp : 0;
   const wasReinforce = session ? session.reinforce : false;
   $('#done-count').textContent = session ? session.answered : 0;
   $('#done-xp').textContent = '+' + xp;
   $('#done-streak').textContent = streak;
-  $('#done-title').textContent = wasReinforce ? 'Refuerzo listo' : met ? '¡Día salvado!' : 'Buena sesión';
-  const s = store.get();
-  const falta = Math.max(0, s.settings.dailyGoal - store.reviewsToday());
-  $('#done-sub').textContent = wasReinforce
-    ? `Racha de ${streak} ${streak === 1 ? 'día' : 'días'} — seguís sumando repasos de yapa.`
+  $('#done-title').textContent = wasReinforce
+    ? 'Refuerzo listo'
     : met
-      ? `Racha de ${streak} ${streak === 1 ? 'día' : 'días'}. Volvé mañana antes de medianoche.`
-      : `Te faltan ${falta} respuestas para que cuente el día.`;
+      ? (st.rescuedToday ? '¡Racha recuperada!' : '¡Día salvado!')
+      : 'Buena sesión';
+  const falta = Math.max(0, st.goal - store.reviewsToday());
+  const day = streak === 1 ? 'día' : 'días';
+  $('#done-sub').textContent = wasReinforce
+    ? `Racha de ${streak} ${day} — seguís sumando repasos de yapa.`
+    : met
+      ? st.rescuedToday
+        ? `Pagaste la meta ×${st.multiplier} y la salvaste: seguís con ${streak} ${day}.`
+        : `Racha de ${streak} ${day}. Volvé mañana antes de medianoche.`
+      : st.mode === 'rescue'
+        ? `Te faltan ${falta} respuestas para recuperar la racha (hoy la meta va ×${st.multiplier}).`
+        : `Te faltan ${falta} respuestas para que cuente el día.`;
 
   const noMorePending = decks.buildQueue().total === 0;
   const more = $('#btn-more');
@@ -652,10 +688,29 @@ function renderStats() {
   const s = store.get();
   const c = decks.counts();
 
-  const liveStreak = store.liveStreak();
+  const st = store.streakStatus();
+  const liveStreak = st.streak;
+  const met = store.goalMet();
   $('#st-streak').innerHTML = `${liveStreak} <small>días</small>`;
-  $('#streak-card-current').classList.toggle('lit', liveStreak > 0 && store.goalMet());
+  $('#streak-card-current').classList.toggle('lit', liveStreak > 0 && met);
+  $('#streak-card-current').classList.toggle('at-risk', st.mode === 'rescue' && !met);
   $('#st-best').innerHTML = `${s.streak.best} <small>días</small>`;
+
+  // Nota de rescate: cuánto cuesta hoy salvarla, o cuántas veces ya la salvaste.
+  const note = $('#st-rescue');
+  if (st.mode === 'rescue' && !met) {
+    note.hidden = false;
+    note.className = 'rescue-note' + (st.lastChance ? ' last' : '');
+    note.textContent = st.lastChance
+      ? `Última chance: ${st.goal} respuestas hoy (×${st.multiplier}) para recuperarla.`
+      : `Recuperala hoy con ${st.goal} respuestas (×${st.multiplier}).`;
+  } else if (s.streak.rescues > 0) {
+    note.hidden = false;
+    note.className = 'rescue-note';
+    note.textContent = `Rescatada ${s.streak.rescues} ${s.streak.rescues === 1 ? 'vez' : 'veces'} pagando la meta multiplicada.`;
+  } else {
+    note.hidden = true;
+  }
 
   const total = Object.values(s.history).reduce((a, b) => a + b, 0);
   $('#st-total').textContent = `${total.toLocaleString('es-AR')} repasos`;

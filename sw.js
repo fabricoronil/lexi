@@ -4,7 +4,7 @@
  * cache-first para el resto.
  */
 
-const VERSION = 'lexi-v23';
+const VERSION = 'lexi-v24';
 const ASSETS = [
   './',
   './index.html',

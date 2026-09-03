@@ -212,6 +212,19 @@ button {
   75% { transform: scale(1.05, .97) rotate(-1deg); }
 }
 
+/* Racha en riesgo: sobrevive pero pide rescate — se enfría hacia el rojo. */
+.streak-chip.at-risk {
+  background: var(--red-bg);
+  border-color: var(--red-line);
+  color: var(--red);
+  animation: risk-pulse 2s ease-in-out infinite;
+}
+.streak-chip.at-risk .ico { opacity: .75; }
+@keyframes risk-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(245,122,122,0); }
+  50% { box-shadow: 0 0 0 5px rgba(245,122,122,.12); }
+}
+
 /* Racha del día ya asegurada: queda "pintada", vívida y con brillo. */
 .streak-chip.lit {
   background: linear-gradient(135deg, #ff8a3d, #ff5f3a);
@@ -342,6 +355,24 @@ button {
 @keyframes banner-pulse {
   0%, 100% { box-shadow: 0 0 0 0 rgba(255,138,61,0); }
   50% { box-shadow: 0 0 0 5px rgba(255,138,61,.1); }
+}
+
+/* Perdiste un día pero la racha todavía se puede pagar: rojo contenido. */
+.streak-banner.rescue {
+  background: linear-gradient(135deg, var(--red-bg), var(--surface));
+  border-color: var(--red-line);
+}
+.streak-banner.rescue .streak-banner-text b { color: var(--red); }
+.streak-banner.rescue .streak-banner-ico { animation: risk-tick 2.6s ease-in-out infinite; }
+@keyframes risk-tick {
+  0%, 100% { transform: rotate(0deg); }
+  40% { transform: rotate(-8deg); }
+  70% { transform: rotate(6deg); }
+}
+/* Última oportunidad: el mismo rojo, pero latiendo. */
+.streak-banner.rescue.last {
+  border-color: #6b2a30;
+  animation: banner-in .35s cubic-bezier(.22,.61,.36,1), risk-pulse 1.8s ease-in-out .35s infinite;
 }
 
 /* Sin racha activa todavía: invitación tranquila, no alarma. */
@@ -675,6 +706,21 @@ button {
 .streak-card.hot .big small { color: #8a7350; }
 
 /* Racha del día ya asegurada: la tarjeta también queda "pintada". */
+/* En Progreso, la misma señal: la racha está viva pero hay que pagarla. */
+.streak-card.hot.at-risk { background: var(--red-bg); border-color: var(--red-line); }
+.streak-card.hot.at-risk .mini-label { color: #a07070; }
+.streak-card.hot.at-risk .mini-label .ico { color: var(--red); }
+.streak-card.hot.at-risk .big { color: var(--red); }
+.streak-card.hot.at-risk .big small { color: #8a5a5a; }
+
+.rescue-note {
+  margin: 10px 0 0;
+  font-size: 12.5px;
+  line-height: 1.45;
+  color: var(--muted);
+}
+.rescue-note.last { color: var(--red); font-weight: 600; }
+
 .streak-card.hot.lit {
   background: linear-gradient(135deg, #33200f, #2a1508);
   border-color: #ff8a3d;

@@ -31,6 +31,8 @@ const DEFAULTS = {
     current: 0,
     best: 0,
     lastGoalDay: null, // 'YYYY-MM-DD' del último día en que cumpliste la meta
+    rescuedOn: null, // 'YYYY-MM-DD' del último día en que la recuperaste pagando el multiplicador
+    rescues: 0, // cuántas veces la salvaste así, para las estadísticas
   },
   history: {}, // 'YYYY-MM-DD' -> cantidad de respuestas
   newIntroduced: {}, // 'YYYY-MM-DD' -> cards nuevas mostradas ese día
@@ -160,10 +162,20 @@ export function setCleared(v) {
   clearedToday = v;
 }
 
+/** La meta de hoy: la normal, o multiplicada si estás en un día de rescate. */
+export function todayGoal() {
+  return streakStatus().goal;
+}
+
 export function goalMet() {
   const done = reviewsToday();
   if (done === 0) return false;
-  return done >= load().settings.dailyGoal || clearedToday;
+  const st = streakStatus();
+  if (done >= st.goal) return true;
+  // Vaciar la cola salva un día normal, pero no un rescate: recuperar la
+  // racha tiene que costar el doble (o el triple) de verdad, y para eso
+  // siempre queda el refuerzo, que no tiene límite.
+  return st.mode !== 'rescue' && clearedToday;
 }
 
 function dayBefore(key) {
@@ -173,17 +185,82 @@ function dayBefore(key) {
   return todayKey(dt);
 }
 
+function parseKey(key) {
+  const [y, m, d] = key.split('-').map(Number);
+  return new Date(y, m - 1, d);
+}
+
+/** Días de calendario entre dos claves 'YYYY-MM-DD' (a → b). */
+function daysBetween(a, b) {
+  return Math.round((parseKey(b) - parseKey(a)) / 86400000);
+}
+
+/* ── recuperación de racha ──
+ * Perder un día no la mata de una: al día siguiente podés rescatarla
+ * haciendo el DOBLE de la meta. Si también fallás ese, queda una última
+ * oportunidad al tercer día con el TRIPLE. Recién ahí se muere.
+ */
+export const MAX_MISSED = 2; // días perdidos que se pueden pagar (1 → x2, 2 → x3)
+
+/**
+ * Todo el estado de la racha para hoy, en un solo lugar:
+ *  - mode: 'normal' (al día o sin racha), 'rescue' (podés recuperarla), 'lost'
+ *  - missed: días que te salteaste desde la última meta cumplida
+ *  - multiplier / goal: lo que cuesta salvar el día de hoy
+ *  - lastChance: true cuando es el último día en que se puede rescatar
+ *  - rescuedToday: hoy ya la recuperaste pagando el multiplicador
+ */
+export function streakStatus() {
+  const s = load();
+  const key = todayKey();
+  const base = s.settings.dailyGoal;
+  const flat = {
+    mode: 'normal',
+    missed: 0,
+    multiplier: 1,
+    goal: base,
+    streak: s.streak.current,
+    lastChance: false,
+    rescuedToday: s.streak.rescuedOn === key,
+  };
+  const last = s.streak.lastGoalDay;
+  if (!last || !s.streak.current) return { ...flat, streak: last ? s.streak.current : 0 };
+
+  const missed = Math.max(0, daysBetween(last, key) - 1);
+  if (missed === 0) return flat;
+  if (missed > MAX_MISSED) {
+    return { ...flat, mode: 'lost', missed, streak: 0 };
+  }
+  const multiplier = missed + 1;
+  return {
+    ...flat,
+    mode: 'rescue',
+    missed,
+    multiplier,
+    goal: base * multiplier,
+    lastChance: missed === MAX_MISSED,
+  };
+}
+
 /**
  * La racha sube una sola vez por día, y sólo cuando llegás a la meta.
  * Ese es el nivel de exigencia: vos elegís cuánto cuesta salvar el día.
+ * Si venías de un día perdido, la meta ya viene multiplicada (ver
+ * `streakStatus`), así que cumplirla también rescata la racha en vez de
+ * arrancarla de cero.
  */
 export function updateStreak() {
   const s = load();
   const key = todayKey();
+  const st = streakStatus(); // antes de tocar lastGoalDay
   if (!goalMet()) return;
   if (s.streak.lastGoalDay === key) return;
 
-  if (s.streak.lastGoalDay === dayBefore(key)) {
+  if (st.mode === 'rescue') {
+    s.streak.current += 1;
+    s.streak.rescuedOn = key;
+    s.streak.rescues = (s.streak.rescues || 0) + 1;
+  } else if (s.streak.lastGoalDay === dayBefore(key)) {
     s.streak.current += 1;
   } else {
     s.streak.current = 1;
@@ -192,14 +269,13 @@ export function updateStreak() {
   if (s.streak.current > s.streak.best) s.streak.best = s.streak.current;
 }
 
-/** Si te salteaste un día, la racha ya está rota: mostrala en cero. */
+/**
+ * La racha que se muestra: sigue viva mientras quede alguna oportunidad de
+ * rescate (queda "en riesgo", no en cero) y recién cae a cero cuando ya no
+ * hay forma de recuperarla.
+ */
 export function liveStreak() {
-  const s = load();
-  const last = s.streak.lastGoalDay;
-  if (!last) return 0;
-  const key = todayKey();
-  if (last === key || last === dayBefore(key)) return s.streak.current;
-  return 0;
+  return streakStatus().streak;
 }
 
 export function setSettings(patch) {
