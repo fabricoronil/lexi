@@ -21,6 +21,14 @@ un estilo que dé ganas de abrirlo.
   (ver más abajo).
 - **Cuatro botones de dificultad** — Otra vez / Difícil / Bien / Fácil — con el
   próximo intervalo a la vista antes de elegir.
+- **Primero lo que más se usa**: las palabras nuevas entran ordenadas por qué
+  tan seguido aparecen en inglés de verdad, no por el orden del archivo.
+- **Pistas** cuando la tenés en la punta de la lengua, antes de rendirte y
+  mirar la respuesta.
+- **"Ya me la sé"** para sacar del mazo una palabra que no necesitás practicar.
+- **Festejo cuando una palabra queda aprendida**, para que el logro se note.
+- **Los dos caminos a la vista**: cuánto llevás de cada nivel CEFR y cuánto del
+  vocabulario de tu área, por separado.
 - **Racha diaria** al estilo Duolingo: sube sólo cuando llegás a tu meta del día,
   y si perdés un día podés recuperarla al siguiente pagando el doble.
 - **Las que más te cuestan**: las palabras que venís fallando, ordenadas por cuánto
@@ -33,7 +41,7 @@ un estilo que dé ganas de abrirlo.
 - **Anotar palabras desde el celu**, mientras mirás un video con subtítulos.
 - **Vocabulario por nivel** (A1 a B2) y **las 2000 palabras más usadas** del idioma,
   con buscador.
-- **386 cards** repartidas en cuatro mazos.
+- **563 cards** repartidas en seis mazos.
 - **Pronunciación** con la voz del sistema, en inglés.
 - **Modo inverso** (español → inglés) para producción, no sólo reconocimiento.
 - **Heatmap** de actividad y estadísticas de cuántas cards tenés aprendidas.
@@ -44,14 +52,133 @@ un estilo que dé ganas de abrirlo.
 
 | Mazo | Cards | Qué trae |
 | --- | --- | --- |
-| `core` | 117 | Conectores, verbos y adjetivos de alta frecuencia, A1 a B1 |
-| `tech` | 128 | Vocabulario de programación: git, APIs, bases de datos, debugging |
+| `esencial` | 142 | Las que aparecen en cualquier conversación: verbos, adjetivos y conectores de uso diario, A1 a A2 |
+| `core` | 110 | Conectores, verbos y adjetivos de alta frecuencia, A1 a B1 |
+| `tech` | 126 | Vocabulario de programación: git, APIs, bases de datos, debugging |
+| `ia` | 44 | Machine learning y LLMs: modelos, entrenamiento, tokens, inferencia |
 | `frases` | 71 | Expresiones de videos de YouTube, reuniones y conversación |
 | `phrasal verbs` | 70 | Verbos frasales de uso diario, de A1 a B2 (get up, give up, look into…) |
 
 Cada card trae la palabra, la traducción, un ejemplo en inglés y su traducción — y
 una segunda oración de ejemplo que aparece alternada la próxima vez que repasás
 esa card, para no memorizarla por el contexto siempre igual.
+
+## En qué orden se aprende
+
+El objetivo no es "saber inglés" en abstracto: es poder ver videos de
+programación y de IA en inglés lo antes posible. Eso es el doble de
+productivo — practicás el idioma con contenido que ibas a consumir igual.
+
+El problema es que un mazo grande te tira `stale`, `a workaround` o
+`Bear with me.` cuando todavía no tenés `to seem` ni `between`. Aprender eso
+primero no rinde: no lo vas a escuchar casi nunca, y lo que se gana es
+frustración cuando volvés al otro día y no te acordás ninguna.
+
+Así que cada card tiene un escalón:
+
+- Las **palabras generales** se cruzan contra
+  [`data/frequency.json`](data/frequency.json), la lista de las 2000 más usadas
+  del idioma. Para una expresión de varias palabras vale la parte **menos**
+  común: `to look into` es tan difícil como la idea que arma, no como el `to`.
+- El **vocabulario técnico y las frases de video** no se pueden medir así:
+  `to debug` y `stale` están los dos fuera del top 2000, pero uno lo escuchás
+  en cada video y el otro casi nunca. Esos mazos traen un `step` puesto a mano
+  (`1`, `2` o `3`) y, cuando está, manda sobre la frecuencia.
+
+| Escalón | Qué entra |
+| --- | --- |
+| Base | A1 y A2 frecuente, más lo técnico de todos los días: `a bug`, `a function`, `a server`, `a model`, `to train` |
+| Intermedio | el resto de A2 y B1 común, más lo técnico de videos y docs: `to deploy`, `an endpoint`, `inference`, `a benchmark` |
+| Completo | lo idiomático y lo rebuscado: `under the hood`, `stale`, `gradient descent`, `Bear with me.` |
+
+En **Ajustes → Qué palabras nuevas te toma** elegís hasta dónde llegar. No
+apaga mazos ni esconde nada: lo que queda afuera espera su turno, y cuando te
+quedás sin palabras nuevas del escalón elegido el inicio te avisa y te deja
+subir de un toque. El salto lo das vos cuando terminaste lo anterior, en vez
+de que la app te meta términos rebuscados de sorpresa.
+
+### Una rampa, no una pared
+
+Dentro del escalón, ordenar por nivel y después por frecuencia daba tres
+semanas de puro A1 y de golpe un muro de A2. Ahora cada card tiene un costo —
+su posición en el ranking de frecuencia más un peso por nivel — así que una
+palabra A2 que se usa todo el tiempo entra antes que una A1 que casi no
+aparece. A1 domina el arranque y A2 toma fuerza sola:
+
+| | A1 | A2 |
+| --- | --- | --- |
+| días 1–3 | 27 | 9 |
+| días 4–7 | 13 | 34 |
+| días 8–14 | 15 | 68 |
+
+### Una de cada tres, de lo tuyo
+
+Dentro del escalón el orden es por frecuencia, pero si fuera sólo eso el
+vocabulario técnico quedaría para dentro de meses: ningún término de dev o de
+ML figura en el top 2000 del idioma general. Por eso cada tanda de cards
+nuevas **reserva un lugar de cada tres para una card de `tech` o `ia`** del
+escalón en el que estés. Desde el primer día hay algo de tu área, pero de a
+poco y sin que te coma la tanda entera.
+
+La proporción se cambia en **Ajustes → Cuánto de tu área** (1 de 5, 1 de 3,
+1 de 2). Subirla llega antes a los videos, pero el vocabulario general es el
+que te deja parsear la oración donde esas palabras aparecen — por eso el
+default es un tercio y no la mitad.
+
+### Cuánto falta, a este ritmo
+
+El cuello de botella para entender los videos no es el mazo: es cuántas cards
+nuevas por día aceptás. **Progreso** lo dice en días, para el escalón actual y
+para el vocabulario del área, así la decisión de apretar el acelerador se toma
+con el número a la vista y no a ciegas:
+
+| ritmo | escalón completo | vocabulario del área |
+| --- | --- | --- |
+| 5/día, 1 de 3 | 66 días | 39 días |
+| 10/día, 1 de 3 | 33 días | 26 días |
+| 10/día, 1 de 2 | 33 días | 16 días |
+| 20/día, 1 de 2 | 17 días | 8 días |
+
+## Los dos caminos, a la vista
+
+La misma sesión tira de dos sogas: subir de nivel (A1 → A2 → B1) y llegar a
+entender los videos de tu área sin subtítulos en español. Avanzan con las
+mismas cards pero a ritmos distintos, así que **Progreso** las muestra por
+separado: cuánto llevás del vocabulario de cada nivel CEFR, y cuánto de cada
+paso de `tech` + `ia`. El porcentaje dice lo que mide — cuánto llevás del
+vocabulario que trae la app, no un certificado de nivel.
+
+## Cuando no te sale, y cuando ya te la sabés
+
+Dos botones en la sesión, para los dos casos en que calificar no alcanza:
+
+**Pista** te da un empujón antes de que te rindas y mires la respuesta. Van de
+menos a más: primero otra oración en inglés con la misma palabra — que es como
+la vas a encontrar de verdad, input comprensible en chiquito — y después el
+esqueleto de la traducción (`d _ _ _ _ _   c _ _ _ _ _`). En modo inverso es al
+revés: la oración con la palabra tapada, y después cómo empieza.
+
+Y la pista **tiene precio**: si la sacaste con ayuda, no te la sabías, y
+calificarla "Fácil" le mentiría al SRS — te la mandaría a un mes cuando en
+realidad no te salió sola. Así que cada pista baja el techo de lo que podés
+votar: con una queda fuera "Fácil", con las dos el máximo es "Difícil". Hacia
+abajo siempre podés (ahí está "Otra vez"); hacia arriba, no.
+
+**Ya me la sé** saca la palabra del circuito para siempre: no vuelve a la cola,
+ni al refuerzo, ni a "las que más te cuestan". Y **en su lugar entra la
+siguiente**, en el acto: como nunca la respondiste, no gastó cupo de cards
+nuevas, así que marcarla te adelanta en vez de acortarte el día. Vive en el botón de arriba de
+todo, lejos de los de calificar, y siempre pide confirmación — no hay forma de
+sacarte una palabra de encima con un toque sin querer. Si te arrepentís, están
+todas juntas en **Progreso → Palabras → Ya la sé**, y tocarlas las devuelve al
+mazo con el progreso que tenían intacto.
+
+## Cuando una palabra queda aprendida
+
+Una card se considera aprendida cuando el intervalo pasa las tres semanas. Eso
+es un logro real y antes pasaba en silencio, en medio de la sesión: el número
+de "aprendidas" del inicio subía sin que te enteraras. Ahora la pantalla se
+pone verde, el círculo se dibuja y te dice cuál fue y cuándo vuelve.
 
 ## Anotar palabras al vuelo
 
@@ -153,7 +280,7 @@ JavaScript con módulos ES, sin dependencias ni build. Las piezas principales:
 
 - `js/srs.js` — el planificador SM-2, aislado y sin efectos secundarios
 - `js/store.js` — persistencia en `localStorage`, racha, historial y palabras propias
-- `js/decks.js` — carga de mazos y armado de la cola del día
+- `js/decks.js` — carga de mazos, ranking por frecuencia y armado de la cola del día
 - `js/plan.js` — proyección de carga diaria, para recomendar la meta
 - `js/app.js` — vistas y eventos
 
