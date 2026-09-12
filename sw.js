@@ -18,6 +18,7 @@ const ASSETS = [
   './js/sound.js',
   './js/sync.js',
   './js/plan.js',
+  './data/esencial.json',
   './data/core.json',
   './data/tech.json',
   './data/phrases.json',
