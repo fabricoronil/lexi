@@ -575,7 +575,23 @@ const HIGHLIGHT_STOPWORDS = new Set([
   'how', 'what', 'which', 'who', 'why', 'when', 'can', 'could', 'would', 'should', 'will',
   'doesnt', 'heres', 'id', 'ill', 'im', 'its', 'lets', 'thats', 'well', 'were',
 ]);
-const HIGHLIGHT_IRREGULAR = { become: 'became', find: 'found', take: 'took', freeze: 'froze', lend: 'lent' };
+// Verbos irregulares: el resaltado por raíz no los pesca (tell → told no
+// comparten prefijo), así que la forma irregular va anotada a mano. Sin esto
+// el ejemplo se mostraba sin marcar justo en los verbos más usados.
+const HIGHLIGHT_IRREGULAR = {
+  be: 'was', become: 'became', bring: 'brought', break: 'broke', build: 'built',
+  buy: 'bought', catch: 'caught', come: 'came', do: 'did', drink: 'drank',
+  drive: 'drove', eat: 'ate', feel: 'felt', find: 'found', freeze: 'froze',
+  get: 'got', give: 'gave', go: 'went', grow: 'grew', hang: 'hung', have: 'had',
+  hear: 'heard', hide: 'hid', hold: 'held', keep: 'kept', know: 'knew',
+  leave: 'left', lend: 'lent', lose: 'lost', make: 'made', meet: 'met',
+  pay: 'paid', run: 'ran', say: 'said', see: 'saw', sell: 'sold', send: 'sent',
+  sit: 'sat', sleep: 'slept', speak: 'spoke', stand: 'stood', take: 'took',
+  study: 'studied', teach: 'taught', tell: 'told', think: 'thought', throw: 'threw',
+  try: 'tried', worry: 'worried', carry: 'carried',
+  understand: 'understood', wake: 'woke', wear: 'wore', win: 'won',
+  write: 'wrote',
+};
 
 /**
  * Resalta en `sentence` la palabra o frase `term`. Prueba primero la frase
@@ -611,13 +627,24 @@ function termRegex(safe, term) {
     // regex inválida por algún caracter raro en el término: seguimos con el plan B
   }
 
-  const words = clean.toLowerCase().replace(/[^a-z\s]/g, '').split(/\s+/)
-    .filter((w) => w.length > 2 && !HIGHLIGHT_STOPWORDS.has(w));
+  // El guión se reemplaza por espacio y no se borra: si no, "fine-tune" se
+  // volvía "finetune" y no matcheaba con "fine-tuning" ni con nada.
+  const words = clean.toLowerCase().replace(/[^a-z\s]/g, ' ').split(/\s+/)
+    .filter((w) => w.length >= 2 && !HIGHLIGHT_STOPWORDS.has(w))
+    // De más larga a más corta: la palabra larga es la que carga el
+    // significado. Sin esto, "How do you say ... in English?" terminaba
+    // marcando "do" en vez de "say" o "English".
+    .sort((a, b) => b.length - a.length);
 
   for (const w of words) {
     const candidates = [w, HIGHLIGHT_IRREGULAR[w]].filter(Boolean);
     for (const base of candidates) {
-      for (let cut = 0; cut <= 2 && base.length - cut >= 3; cut++) {
+      // Las palabras largas admiten recortes más grandes: "quantization" y
+      // "quantized" sólo comparten "quantiz", y con dos letras no se llegaba.
+      // El mínimo nunca puede ser más largo que la palabra, si no "go" queda
+      // afuera del bucle y "to go on" se pierde "going on".
+      const minStem = base.length >= 8 ? 5 : Math.min(3, base.length);
+      for (let cut = 0; base.length - cut >= minStem; cut++) {
         const stem = base.slice(0, base.length - cut);
         try {
           const re = new RegExp('\\b' + escapeRe(stem) + '\\w*', 'i');
