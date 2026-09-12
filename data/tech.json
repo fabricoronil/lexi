@@ -7,7 +7,8 @@
     "lvl": "A2",
     "tag": "tech",
     "ex2": "Users have been asking for this feature for months.",
-    "exEs2": "Los usuarios vienen pidiendo esta funcionalidad hace meses."
+    "exEs2": "Los usuarios vienen pidiendo esta funcionalidad hace meses.",
+    "step": 1
   },
   {
     "en": "a bug",
@@ -17,7 +18,8 @@
     "lvl": "A2",
     "tag": "tech",
     "ex2": "There's a bug that only happens on Safari.",
-    "exEs2": "Hay un bug que solo pasa en Safari."
+    "exEs2": "Hay un bug que solo pasa en Safari.",
+    "step": 1
   },
   {
     "en": "an issue",
@@ -27,7 +29,8 @@
     "lvl": "A2",
     "tag": "tech",
     "ex2": "I closed the issue after fixing it.",
-    "exEs2": "Cerré el issue después de arreglarlo."
+    "exEs2": "Cerré el issue después de arreglarlo.",
+    "step": 1
   },
   {
     "en": "a fix",
@@ -37,7 +40,8 @@
     "lvl": "A2",
     "tag": "tech",
     "ex2": "The fix will go out in the next release.",
-    "exEs2": "El arreglo va a salir en el próximo release."
+    "exEs2": "El arreglo va a salir en el próximo release.",
+    "step": 1
   },
   {
     "en": "a workaround",
@@ -47,7 +51,8 @@
     "lvl": "B1",
     "tag": "tech",
     "ex2": "We used a workaround until the real fix was ready.",
-    "exEs2": "Usamos una solución alternativa hasta que estuvo lista la de verdad."
+    "exEs2": "Usamos una solución alternativa hasta que estuvo lista la de verdad.",
+    "step": 3
   },
   {
     "en": "to debug",
@@ -57,7 +62,8 @@
     "lvl": "A2",
     "tag": "tech",
     "ex2": "I spent two hours debugging a typo.",
-    "exEs2": "Pasé dos horas debugueando un error de tipeo."
+    "exEs2": "Pasé dos horas debugueando un error de tipeo.",
+    "step": 1
   },
   {
     "en": "to troubleshoot",
@@ -67,7 +73,8 @@
     "lvl": "B1",
     "tag": "tech",
     "ex2": "She's troubleshooting the deployment issue.",
-    "exEs2": "Ella está resolviendo el problema del deploy."
+    "exEs2": "Ella está resolviendo el problema del deploy.",
+    "step": 2
   },
   {
     "en": "to deploy",
@@ -77,7 +84,8 @@
     "lvl": "B1",
     "tag": "tech",
     "ex2": "They deploy to production automatically.",
-    "exEs2": "Ellos despliegan a producción automáticamente."
+    "exEs2": "Ellos despliegan a producción automáticamente.",
+    "step": 2
   },
   {
     "en": "to ship",
@@ -87,7 +95,8 @@
     "lvl": "B1",
     "tag": "tech",
     "ex2": "We shipped the update last night.",
-    "exEs2": "Lanzamos la actualización anoche."
+    "exEs2": "Lanzamos la actualización anoche.",
+    "step": 2
   },
   {
     "en": "to roll back",
@@ -97,7 +106,8 @@
     "lvl": "B1",
     "tag": "tech",
     "ex2": "They rolled back after the outage.",
-    "exEs2": "Revirtieron el cambio después de la caída."
+    "exEs2": "Revirtieron el cambio después de la caída.",
+    "step": 2
   },
   {
     "en": "to merge",
@@ -107,7 +117,8 @@
     "lvl": "A2",
     "tag": "tech",
     "ex2": "Don't merge without a review.",
-    "exEs2": "No hagas merge sin una revisión."
+    "exEs2": "No hagas merge sin una revisión.",
+    "step": 1
   },
   {
     "en": "a branch",
@@ -117,7 +128,8 @@
     "lvl": "A2",
     "tag": "tech",
     "ex2": "I switched to a new branch for the feature.",
-    "exEs2": "Cambié a una rama nueva para la funcionalidad."
+    "exEs2": "Cambié a una rama nueva para la funcionalidad.",
+    "step": 1
   },
   {
     "en": "a commit",
@@ -127,7 +139,8 @@
     "lvl": "A2",
     "tag": "tech",
     "ex2": "That commit broke the build.",
-    "exEs2": "Ese commit rompió el build."
+    "exEs2": "Ese commit rompió el build.",
+    "step": 1
   },
   {
     "en": "a pull request",
@@ -137,7 +150,8 @@
     "lvl": "B1",
     "tag": "tech",
     "ex2": "Can you review my pull request?",
-    "exEs2": "¿Podés revisar mi pull request?"
+    "exEs2": "¿Podés revisar mi pull request?",
+    "step": 2
   },
   {
     "en": "a repository",
@@ -147,7 +161,8 @@
     "lvl": "A2",
     "tag": "tech",
     "ex2": "The repository has three thousand stars.",
-    "exEs2": "El repositorio tiene tres mil estrellas."
+    "exEs2": "El repositorio tiene tres mil estrellas.",
+    "step": 1
   },
   {
     "en": "a conflict",
@@ -157,7 +172,8 @@
     "lvl": "A2",
     "tag": "tech",
     "ex2": "Git couldn't resolve the conflict automatically.",
-    "exEs2": "Git no pudo resolver el conflicto automáticamente."
+    "exEs2": "Git no pudo resolver el conflicto automáticamente.",
+    "step": 1
   },
   {
     "en": "to commit changes",
@@ -167,7 +183,8 @@
     "lvl": "A2",
     "tag": "tech",
     "ex2": "I forgot to commit my changes before lunch.",
-    "exEs2": "Me olvidé de hacer commit de mis cambios antes de almorzar."
+    "exEs2": "Me olvidé de hacer commit de mis cambios antes de almorzar.",
+    "step": 1
   },
   {
     "en": "a request",
@@ -177,7 +194,8 @@
     "lvl": "A2",
     "tag": "tech",
     "ex2": "The API rejected the request.",
-    "exEs2": "La API rechazó la solicitud."
+    "exEs2": "La API rechazó la solicitud.",
+    "step": 1
   },
   {
     "en": "a response",
@@ -187,7 +205,8 @@
     "lvl": "A2",
     "tag": "tech",
     "ex2": "The response took ten seconds.",
-    "exEs2": "La respuesta tardó diez segundos."
+    "exEs2": "La respuesta tardó diez segundos.",
+    "step": 1
   },
   {
     "en": "an endpoint",
@@ -197,7 +216,8 @@
     "lvl": "B1",
     "tag": "tech",
     "ex2": "We added a new endpoint for search.",
-    "exEs2": "Agregamos un nuevo endpoint para la búsqueda."
+    "exEs2": "Agregamos un nuevo endpoint para la búsqueda.",
+    "step": 2
   },
   {
     "en": "a payload",
@@ -207,7 +227,8 @@
     "lvl": "B1",
     "tag": "tech",
     "ex2": "The payload was too large.",
-    "exEs2": "El payload era demasiado grande."
+    "exEs2": "El payload era demasiado grande.",
+    "step": 2
   },
   {
     "en": "a header",
@@ -217,7 +238,8 @@
     "lvl": "B1",
     "tag": "tech",
     "ex2": "The server ignored the custom header.",
-    "exEs2": "El servidor ignoró el header personalizado."
+    "exEs2": "El servidor ignoró el header personalizado.",
+    "step": 2
   },
   {
     "en": "a query",
@@ -227,7 +249,8 @@
     "lvl": "A2",
     "tag": "tech",
     "ex2": "I optimized the query and it's much faster now.",
-    "exEs2": "Optimicé la consulta y ahora es mucho más rápida."
+    "exEs2": "Optimicé la consulta y ahora es mucho más rápida.",
+    "step": 1
   },
   {
     "en": "a database",
@@ -237,7 +260,8 @@
     "lvl": "A1",
     "tag": "tech",
     "ex2": "We migrated to a new database last year.",
-    "exEs2": "Migramos a una base de datos nueva el año pasado."
+    "exEs2": "Migramos a una base de datos nueva el año pasado.",
+    "step": 1
   },
   {
     "en": "a table",
@@ -247,7 +271,8 @@
     "lvl": "A1",
     "tag": "tech",
     "ex2": "Drop the table if it exists.",
-    "exEs2": "Borrá la tabla si existe."
+    "exEs2": "Borrá la tabla si existe.",
+    "step": 1
   },
   {
     "en": "a row",
@@ -257,7 +282,8 @@
     "lvl": "A1",
     "tag": "tech",
     "ex2": "Delete the row where the id matches.",
-    "exEs2": "Borrá la fila donde coincida el id."
+    "exEs2": "Borrá la fila donde coincida el id.",
+    "step": 1
   },
   {
     "en": "a column",
@@ -267,7 +293,8 @@
     "lvl": "A1",
     "tag": "tech",
     "ex2": "Rename the column to match the new schema.",
-    "exEs2": "Renombrá la columna para que coincida con el nuevo schema."
+    "exEs2": "Renombrá la columna para que coincida con el nuevo schema.",
+    "step": 1
   },
   {
     "en": "a schema",
@@ -277,7 +304,8 @@
     "lvl": "B1",
     "tag": "tech",
     "ex2": "The schema needs an extra field.",
-    "exEs2": "El schema necesita un campo extra."
+    "exEs2": "El schema necesita un campo extra.",
+    "step": 2
   },
   {
     "en": "a migration",
@@ -287,7 +315,8 @@
     "lvl": "B1",
     "tag": "tech",
     "ex2": "Don't forget to write a rollback for the migration.",
-    "exEs2": "No te olvides de escribir un rollback para la migración."
+    "exEs2": "No te olvides de escribir un rollback para la migración.",
+    "step": 2
   },
   {
     "en": "a seed",
@@ -297,7 +326,8 @@
     "lvl": "B1",
     "tag": "tech",
     "ex2": "The seed script creates ten fake users.",
-    "exEs2": "El script de seed crea diez usuarios falsos."
+    "exEs2": "El script de seed crea diez usuarios falsos.",
+    "step": 3
   },
   {
     "en": "to fetch",
@@ -307,7 +337,8 @@
     "lvl": "A2",
     "tag": "tech",
     "ex2": "We fetch the user's profile on login.",
-    "exEs2": "Traemos el perfil del usuario al iniciar sesión."
+    "exEs2": "Traemos el perfil del usuario al iniciar sesión.",
+    "step": 1
   },
   {
     "en": "to render",
@@ -317,7 +348,8 @@
     "lvl": "B1",
     "tag": "tech",
     "ex2": "The list renders slowly with a lot of items.",
-    "exEs2": "La lista se renderiza lento con muchos elementos."
+    "exEs2": "La lista se renderiza lento con muchos elementos.",
+    "step": 2
   },
   {
     "en": "to parse",
@@ -327,7 +359,8 @@
     "lvl": "B1",
     "tag": "tech",
     "ex2": "We couldn't parse the malformed CSV.",
-    "exEs2": "No pudimos parsear el CSV mal formado."
+    "exEs2": "No pudimos parsear el CSV mal formado.",
+    "step": 2
   },
   {
     "en": "to handle",
@@ -337,7 +370,8 @@
     "lvl": "A2",
     "tag": "tech",
     "ex2": "Handle the case when the list is empty.",
-    "exEs2": "Manejá el caso en que la lista está vacía."
+    "exEs2": "Manejá el caso en que la lista está vacía.",
+    "step": 1
   },
   {
     "en": "to throw an error",
@@ -347,7 +381,8 @@
     "lvl": "B1",
     "tag": "tech",
     "ex2": "The function throws an error if the token is missing.",
-    "exEs2": "La función lanza un error si falta el token."
+    "exEs2": "La función lanza un error si falta el token.",
+    "step": 2
   },
   {
     "en": "to catch an error",
@@ -357,7 +392,8 @@
     "lvl": "B1",
     "tag": "tech",
     "ex2": "We catch every error and send it to Sentry.",
-    "exEs2": "Capturamos cada error y lo mandamos a Sentry."
+    "exEs2": "Capturamos cada error y lo mandamos a Sentry.",
+    "step": 2
   },
   {
     "en": "to log",
@@ -367,7 +403,8 @@
     "lvl": "A2",
     "tag": "tech",
     "ex2": "Log the request duration for debugging.",
-    "exEs2": "Registrá la duración del request para debuguear."
+    "exEs2": "Registrá la duración del request para debuguear.",
+    "step": 1
   },
   {
     "en": "to override",
@@ -377,7 +414,8 @@
     "lvl": "B1",
     "tag": "tech",
     "ex2": "You can override this setting per project.",
-    "exEs2": "Podés sobrescribir esta configuración por proyecto."
+    "exEs2": "Podés sobrescribir esta configuración por proyecto.",
+    "step": 2
   },
   {
     "en": "to overwrite",
@@ -387,7 +425,8 @@
     "lvl": "B1",
     "tag": "tech",
     "ex2": "Be careful, the script overwrites the backup.",
-    "exEs2": "Cuidado, el script sobrescribe el backup."
+    "exEs2": "Cuidado, el script sobrescribe el backup.",
+    "step": 2
   },
   {
     "en": "to refactor",
@@ -397,7 +436,8 @@
     "lvl": "B1",
     "tag": "tech",
     "ex2": "We refactored the whole auth module.",
-    "exEs2": "Refactorizamos todo el módulo de autenticación."
+    "exEs2": "Refactorizamos todo el módulo de autenticación.",
+    "step": 3
   },
   {
     "en": "to nest",
@@ -407,7 +447,8 @@
     "lvl": "B1",
     "tag": "tech",
     "ex2": "Try not to nest more than three components deep.",
-    "exEs2": "Tratá de no anidar más de tres componentes."
+    "exEs2": "Tratá de no anidar más de tres componentes.",
+    "step": 3
   },
   {
     "en": "to loop",
@@ -417,7 +458,8 @@
     "lvl": "A2",
     "tag": "tech",
     "ex2": "We loop over the users to send the email.",
-    "exEs2": "Iteramos sobre los usuarios para mandar el mail."
+    "exEs2": "Iteramos sobre los usuarios para mandar el mail.",
+    "step": 1
   },
   {
     "en": "a loop",
@@ -427,7 +469,8 @@
     "lvl": "A2",
     "tag": "tech",
     "ex2": "There's an infinite loop somewhere in here.",
-    "exEs2": "Hay un loop infinito en algún lado acá."
+    "exEs2": "Hay un loop infinito en algún lado acá.",
+    "step": 1
   },
   {
     "en": "an array",
@@ -437,7 +480,8 @@
     "lvl": "A2",
     "tag": "tech",
     "ex2": "Filter the array before mapping it.",
-    "exEs2": "Filtrá el array antes de mapearlo."
+    "exEs2": "Filtrá el array antes de mapearlo.",
+    "step": 1
   },
   {
     "en": "an object",
@@ -447,7 +491,8 @@
     "lvl": "A2",
     "tag": "tech",
     "ex2": "Spread the object to avoid mutating it.",
-    "exEs2": "Hacé spread del objeto para no mutarlo."
+    "exEs2": "Hacé spread del objeto para no mutarlo.",
+    "step": 1
   },
   {
     "en": "a key",
@@ -457,7 +502,8 @@
     "lvl": "A2",
     "tag": "tech",
     "ex2": "React needs a unique key for each item.",
-    "exEs2": "React necesita una key única para cada elemento."
+    "exEs2": "React necesita una key única para cada elemento.",
+    "step": 1
   },
   {
     "en": "a value",
@@ -467,7 +513,8 @@
     "lvl": "A1",
     "tag": "tech",
     "ex2": "Set a default value for that field.",
-    "exEs2": "Poné un valor por defecto para ese campo."
+    "exEs2": "Poné un valor por defecto para ese campo.",
+    "step": 1
   },
   {
     "en": "a string",
@@ -477,7 +524,8 @@
     "lvl": "A2",
     "tag": "tech",
     "ex2": "Trim the string before comparing it.",
-    "exEs2": "Recortá el string antes de compararlo."
+    "exEs2": "Recortá el string antes de compararlo.",
+    "step": 1
   },
   {
     "en": "a variable",
@@ -487,7 +535,8 @@
     "lvl": "A1",
     "tag": "tech",
     "ex2": "That variable shadows the outer one.",
-    "exEs2": "Esa variable tapa a la de afuera."
+    "exEs2": "Esa variable tapa a la de afuera.",
+    "step": 1
   },
   {
     "en": "a function",
@@ -497,7 +546,8 @@
     "lvl": "A1",
     "tag": "tech",
     "ex2": "Extract that logic into its own function.",
-    "exEs2": "Sacá esa lógica a su propia función."
+    "exEs2": "Sacá esa lógica a su propia función.",
+    "step": 1
   },
   {
     "en": "an argument",
@@ -507,7 +557,8 @@
     "lvl": "A2",
     "tag": "tech",
     "ex2": "The function takes an optional second argument.",
-    "exEs2": "La función acepta un segundo argumento opcional."
+    "exEs2": "La función acepta un segundo argumento opcional.",
+    "step": 1
   },
   {
     "en": "a parameter",
@@ -517,7 +568,8 @@
     "lvl": "A2",
     "tag": "tech",
     "ex2": "Add a parameter to filter by date.",
-    "exEs2": "Agregá un parámetro para filtrar por fecha."
+    "exEs2": "Agregá un parámetro para filtrar por fecha.",
+    "step": 1
   },
   {
     "en": "to return",
@@ -527,7 +579,8 @@
     "lvl": "A2",
     "tag": "tech",
     "ex2": "The function should return early if invalid.",
-    "exEs2": "La función debería retornar temprano si es inválido."
+    "exEs2": "La función debería retornar temprano si es inválido.",
+    "step": 1
   },
   {
     "en": "a statement",
@@ -537,7 +590,8 @@
     "lvl": "B1",
     "tag": "tech",
     "ex2": "Remove that leftover console.log statement.",
-    "exEs2": "Sacá ese console.log que quedó suelto."
+    "exEs2": "Sacá ese console.log que quedó suelto.",
+    "step": 2
   },
   {
     "en": "a scope",
@@ -547,7 +601,8 @@
     "lvl": "B1",
     "tag": "tech",
     "ex2": "Wrap it in a function to create a new scope.",
-    "exEs2": "Envolvelo en una función para crear un scope nuevo."
+    "exEs2": "Envolvelo en una función para crear un scope nuevo.",
+    "step": 2
   },
   {
     "en": "a dependency",
@@ -557,7 +612,8 @@
     "lvl": "B1",
     "tag": "tech",
     "ex2": "That library added a huge dependency.",
-    "exEs2": "Esa librería agregó una dependencia enorme."
+    "exEs2": "Esa librería agregó una dependencia enorme.",
+    "step": 2
   },
   {
     "en": "a package",
@@ -567,7 +623,8 @@
     "lvl": "A2",
     "tag": "tech",
     "ex2": "Update the package to the latest version.",
-    "exEs2": "Actualizá el paquete a la última versión."
+    "exEs2": "Actualizá el paquete a la última versión.",
+    "step": 1
   },
   {
     "en": "a library",
@@ -577,7 +634,8 @@
     "lvl": "A2",
     "tag": "tech",
     "ex2": "We're switching to a lighter library.",
-    "exEs2": "Nos vamos a cambiar a una librería más liviana."
+    "exEs2": "Nos vamos a cambiar a una librería más liviana.",
+    "step": 1
   },
   {
     "en": "a framework",
@@ -587,7 +645,8 @@
     "lvl": "A2",
     "tag": "tech",
     "ex2": "The team is learning a new framework this quarter.",
-    "exEs2": "El equipo está aprendiendo un framework nuevo este trimestre."
+    "exEs2": "El equipo está aprendiendo un framework nuevo este trimestre.",
+    "step": 2
   },
   {
     "en": "deprecated",
@@ -597,7 +656,8 @@
     "lvl": "B1",
     "tag": "tech",
     "ex2": "That API is deprecated since last year.",
-    "exEs2": "Esa API está deprecada desde el año pasado."
+    "exEs2": "Esa API está deprecada desde el año pasado.",
+    "step": 3
   },
   {
     "en": "a build",
@@ -607,7 +667,8 @@
     "lvl": "B1",
     "tag": "tech",
     "ex2": "The build takes almost ten minutes now.",
-    "exEs2": "El build tarda casi diez minutos ahora."
+    "exEs2": "El build tarda casi diez minutos ahora.",
+    "step": 2
   },
   {
     "en": "a pipeline",
@@ -617,7 +678,8 @@
     "lvl": "B1",
     "tag": "tech",
     "ex2": "We added a new step to the pipeline.",
-    "exEs2": "Agregamos un paso nuevo al pipeline."
+    "exEs2": "Agregamos un paso nuevo al pipeline.",
+    "step": 3
   },
   {
     "en": "a test suite",
@@ -627,7 +689,8 @@
     "lvl": "B1",
     "tag": "tech",
     "ex2": "Our test suite takes forever to run.",
-    "exEs2": "Nuestra suite de tests tarda una eternidad en correr."
+    "exEs2": "Nuestra suite de tests tarda una eternidad en correr.",
+    "step": 2
   },
   {
     "en": "to run tests",
@@ -637,7 +700,8 @@
     "lvl": "A2",
     "tag": "tech",
     "ex2": "CI runs tests on every commit.",
-    "exEs2": "El CI corre los tests en cada commit."
+    "exEs2": "El CI corre los tests en cada commit.",
+    "step": 1
   },
   {
     "en": "to pass",
@@ -647,7 +711,8 @@
     "lvl": "A2",
     "tag": "tech",
     "ex2": "The build won't pass until you fix the lint errors.",
-    "exEs2": "El build no va a pasar hasta que arregles los errores de lint."
+    "exEs2": "El build no va a pasar hasta que arregles los errores de lint.",
+    "step": 1
   },
   {
     "en": "to fail",
@@ -657,7 +722,8 @@
     "lvl": "A2",
     "tag": "tech",
     "ex2": "The deploy failed silently.",
-    "exEs2": "El deploy falló en silencio."
+    "exEs2": "El deploy falló en silencio.",
+    "step": 1
   },
   {
     "en": "an edge case",
@@ -667,7 +733,8 @@
     "lvl": "B1",
     "tag": "tech",
     "ex2": "What about the edge case with an empty file?",
-    "exEs2": "¿Qué pasa con el caso límite de un archivo vacío?"
+    "exEs2": "¿Qué pasa con el caso límite de un archivo vacío?",
+    "step": 2
   },
   {
     "en": "a trade-off",
@@ -677,7 +744,8 @@
     "lvl": "B1",
     "tag": "tech",
     "ex2": "There's always a trade-off between readability and performance.",
-    "exEs2": "Siempre hay una relación de compromiso entre legibilidad y rendimiento."
+    "exEs2": "Siempre hay una relación de compromiso entre legibilidad y rendimiento.",
+    "step": 3
   },
   {
     "en": "an overhead",
@@ -687,7 +755,8 @@
     "lvl": "B1",
     "tag": "tech",
     "ex2": "Adding another service adds a lot of overhead.",
-    "exEs2": "Agregar otro servicio suma mucho overhead."
+    "exEs2": "Agregar otro servicio suma mucho overhead.",
+    "step": 3
   },
   {
     "en": "a bottleneck",
@@ -697,7 +766,8 @@
     "lvl": "B1",
     "tag": "tech",
     "ex2": "Network latency is the real bottleneck here.",
-    "exEs2": "La latencia de red es el verdadero cuello de botella acá."
+    "exEs2": "La latencia de red es el verdadero cuello de botella acá.",
+    "step": 3
   },
   {
     "en": "performance",
@@ -707,7 +777,8 @@
     "lvl": "A2",
     "tag": "tech",
     "ex2": "We improved performance by caching the results.",
-    "exEs2": "Mejoramos el rendimiento cacheando los resultados."
+    "exEs2": "Mejoramos el rendimiento cacheando los resultados.",
+    "step": 1
   },
   {
     "en": "a cache",
@@ -717,7 +788,8 @@
     "lvl": "A2",
     "tag": "tech",
     "ex2": "The cache was returning stale data.",
-    "exEs2": "El caché estaba devolviendo datos viejos."
+    "exEs2": "El caché estaba devolviendo datos viejos.",
+    "step": 1
   },
   {
     "en": "a layer",
@@ -727,7 +799,8 @@
     "lvl": "A2",
     "tag": "tech",
     "ex2": "Add a validation layer before saving.",
-    "exEs2": "Agregá una capa de validación antes de guardar."
+    "exEs2": "Agregá una capa de validación antes de guardar.",
+    "step": 1
   },
   {
     "en": "a server",
@@ -737,7 +810,8 @@
     "lvl": "A1",
     "tag": "tech",
     "ex2": "We moved the server to a different region.",
-    "exEs2": "Movimos el servidor a otra región."
+    "exEs2": "Movimos el servidor a otra región.",
+    "step": 1
   },
   {
     "en": "a client",
@@ -747,7 +821,8 @@
     "lvl": "A2",
     "tag": "tech",
     "ex2": "The mobile client hasn't been updated.",
-    "exEs2": "El cliente mobile no fue actualizado."
+    "exEs2": "El cliente mobile no fue actualizado.",
+    "step": 1
   },
   {
     "en": "a load",
@@ -757,7 +832,8 @@
     "lvl": "B1",
     "tag": "tech",
     "ex2": "Traffic doubled and the load is way higher now.",
-    "exEs2": "El tráfico se duplicó y la carga es mucho mayor ahora."
+    "exEs2": "El tráfico se duplicó y la carga es mucho mayor ahora.",
+    "step": 2
   },
   {
     "en": "to scale",
@@ -767,7 +843,8 @@
     "lvl": "B1",
     "tag": "tech",
     "ex2": "We need to scale the database horizontally.",
-    "exEs2": "Necesitamos escalar la base de datos horizontalmente."
+    "exEs2": "Necesitamos escalar la base de datos horizontalmente.",
+    "step": 2
   },
   {
     "en": "a container",
@@ -777,7 +854,8 @@
     "lvl": "B1",
     "tag": "tech",
     "ex2": "Each microservice runs in its own container.",
-    "exEs2": "Cada microservicio corre en su propio contenedor."
+    "exEs2": "Cada microservicio corre en su propio contenedor.",
+    "step": 2
   },
   {
     "en": "an environment",
@@ -787,7 +865,8 @@
     "lvl": "B1",
     "tag": "tech",
     "ex2": "Test it in a local environment first.",
-    "exEs2": "Probalo primero en un entorno local."
+    "exEs2": "Probalo primero en un entorno local.",
+    "step": 2
   },
   {
     "en": "an environment variable",
@@ -797,7 +876,8 @@
     "lvl": "B1",
     "tag": "tech",
     "ex2": "Add the API URL as an environment variable.",
-    "exEs2": "Agregá la URL de la API como variable de entorno."
+    "exEs2": "Agregá la URL de la API como variable de entorno.",
+    "step": 2
   },
   {
     "en": "a default",
@@ -807,7 +887,8 @@
     "lvl": "A2",
     "tag": "tech",
     "ex2": "Change the default timeout to ten seconds.",
-    "exEs2": "Cambiá el timeout por defecto a diez segundos."
+    "exEs2": "Cambiá el timeout por defecto a diez segundos.",
+    "step": 1
   },
   {
     "en": "a setting",
@@ -817,7 +898,8 @@
     "lvl": "A1",
     "tag": "tech",
     "ex2": "There's a setting to disable notifications.",
-    "exEs2": "Hay una configuración para desactivar las notificaciones."
+    "exEs2": "Hay una configuración para desactivar las notificaciones.",
+    "step": 1
   },
   {
     "en": "a flag",
@@ -827,7 +909,8 @@
     "lvl": "B1",
     "tag": "tech",
     "ex2": "Use a feature flag to roll it out slowly.",
-    "exEs2": "Usá un feature flag para lanzarlo de a poco."
+    "exEs2": "Usá un feature flag para lanzarlo de a poco.",
+    "step": 2
   },
   {
     "en": "a shortcut",
@@ -837,7 +920,8 @@
     "lvl": "A2",
     "tag": "tech",
     "ex2": "There's no shortcut for this — you just have to write the tests.",
-    "exEs2": "No hay atajo para esto — hay que escribir los tests nomás."
+    "exEs2": "No hay atajo para esto — hay que escribir los tests nomás.",
+    "step": 1
   },
   {
     "en": "a prompt",
@@ -847,7 +931,8 @@
     "lvl": "B1",
     "tag": "tech",
     "ex2": "The CLI shows a confirmation prompt before deleting.",
-    "exEs2": "La CLI muestra un mensaje de confirmación antes de borrar."
+    "exEs2": "La CLI muestra un mensaje de confirmación antes de borrar.",
+    "step": 2
   },
   {
     "en": "the output",
@@ -857,7 +942,8 @@
     "lvl": "A2",
     "tag": "tech",
     "ex2": "Redirect the output to a file.",
-    "exEs2": "Redirigí la salida a un archivo."
+    "exEs2": "Redirigí la salida a un archivo.",
+    "step": 1
   },
   {
     "en": "the input",
@@ -867,7 +953,8 @@
     "lvl": "A2",
     "tag": "tech",
     "ex2": "Sanitize the input before storing it.",
-    "exEs2": "Sanitizá la entrada antes de guardarla."
+    "exEs2": "Sanitizá la entrada antes de guardarla.",
+    "step": 1
   },
   {
     "en": "a stack trace",
@@ -877,7 +964,8 @@
     "lvl": "B1",
     "tag": "tech",
     "ex2": "The stack trace points to line 42.",
-    "exEs2": "El stack trace apunta a la línea 42."
+    "exEs2": "El stack trace apunta a la línea 42.",
+    "step": 2
   },
   {
     "en": "a warning",
@@ -887,7 +975,8 @@
     "lvl": "A2",
     "tag": "tech",
     "ex2": "The linter throws a warning for unused imports.",
-    "exEs2": "El linter tira un warning por imports sin usar."
+    "exEs2": "El linter tira un warning por imports sin usar.",
+    "step": 1
   },
   {
     "en": "to crash",
@@ -897,7 +986,8 @@
     "lvl": "A2",
     "tag": "tech",
     "ex2": "The app crashed when the list was too long.",
-    "exEs2": "La app se colgó cuando la lista era muy larga."
+    "exEs2": "La app se colgó cuando la lista era muy larga.",
+    "step": 1
   },
   {
     "en": "to freeze",
@@ -907,7 +997,8 @@
     "lvl": "A2",
     "tag": "tech",
     "ex2": "The UI freezes while it loads the file.",
-    "exEs2": "La interfaz se congela mientras carga el archivo."
+    "exEs2": "La interfaz se congela mientras carga el archivo.",
+    "step": 1
   },
   {
     "en": "to hang",
@@ -917,7 +1008,8 @@
     "lvl": "B1",
     "tag": "tech",
     "ex2": "The build hangs on the last step.",
-    "exEs2": "El build se queda colgado en el último paso."
+    "exEs2": "El build se queda colgado en el último paso.",
+    "step": 2
   },
   {
     "en": "to time out",
@@ -927,7 +1019,8 @@
     "lvl": "B1",
     "tag": "tech",
     "ex2": "The connection timed out after thirty seconds.",
-    "exEs2": "La conexión se cortó por tiempo después de treinta segundos."
+    "exEs2": "La conexión se cortó por tiempo después de treinta segundos.",
+    "step": 2
   },
   {
     "en": "to retry",
@@ -937,7 +1030,8 @@
     "lvl": "A2",
     "tag": "tech",
     "ex2": "It retries three times before giving up.",
-    "exEs2": "Reintenta tres veces antes de rendirse."
+    "exEs2": "Reintenta tres veces antes de rendirse.",
+    "step": 1
   },
   {
     "en": "a threshold",
@@ -947,7 +1041,8 @@
     "lvl": "B1",
     "tag": "tech",
     "ex2": "Alert us if errors go above the threshold.",
-    "exEs2": "Avisanos si los errores superan el umbral."
+    "exEs2": "Avisanos si los errores superan el umbral.",
+    "step": 2
   },
   {
     "en": "a wrapper",
@@ -957,7 +1052,8 @@
     "lvl": "B1",
     "tag": "tech",
     "ex2": "I made a small wrapper around the payment API.",
-    "exEs2": "Hice un pequeño wrapper alrededor de la API de pagos."
+    "exEs2": "Hice un pequeño wrapper alrededor de la API de pagos.",
+    "step": 3
   },
   {
     "en": "a boilerplate",
@@ -967,7 +1063,8 @@
     "lvl": "B1",
     "tag": "tech",
     "ex2": "This template cuts down on boilerplate.",
-    "exEs2": "Esta plantilla reduce el código repetitivo."
+    "exEs2": "Esta plantilla reduce el código repetitivo.",
+    "step": 3
   },
   {
     "en": "a snippet",
@@ -977,7 +1074,8 @@
     "lvl": "A2",
     "tag": "tech",
     "ex2": "He shared a useful snippet in Slack.",
-    "exEs2": "Compartió un snippet útil en Slack."
+    "exEs2": "Compartió un snippet útil en Slack.",
+    "step": 1
   },
   {
     "en": "a codebase",
@@ -987,7 +1085,8 @@
     "lvl": "B1",
     "tag": "tech",
     "ex2": "It took a week to get familiar with the codebase.",
-    "exEs2": "Me tomó una semana familiarizarme con el código base."
+    "exEs2": "Me tomó una semana familiarizarme con el código base.",
+    "step": 2
   },
   {
     "en": "legacy code",
@@ -997,7 +1096,8 @@
     "lvl": "B1",
     "tag": "tech",
     "ex2": "Nobody wants to touch that legacy code.",
-    "exEs2": "Nadie quiere tocar ese código legado."
+    "exEs2": "Nadie quiere tocar ese código legado.",
+    "step": 3
   },
   {
     "en": "technical debt",
@@ -1007,7 +1107,8 @@
     "lvl": "B1",
     "tag": "tech",
     "ex2": "We finally paid off some technical debt this sprint.",
-    "exEs2": "Por fin saldamos algo de deuda técnica este sprint."
+    "exEs2": "Por fin saldamos algo de deuda técnica este sprint.",
+    "step": 3
   },
   {
     "en": "a review",
@@ -1017,7 +1118,8 @@
     "lvl": "A2",
     "tag": "tech",
     "ex2": "I left a few comments on the review.",
-    "exEs2": "Dejé algunos comentarios en la revisión."
+    "exEs2": "Dejé algunos comentarios en la revisión.",
+    "step": 1
   },
   {
     "en": "a release",
@@ -1027,7 +1129,8 @@
     "lvl": "A2",
     "tag": "tech",
     "ex2": "This release includes three bug fixes.",
-    "exEs2": "Este release incluye tres correcciones de bugs."
+    "exEs2": "Este release incluye tres correcciones de bugs.",
+    "step": 1
   },
   {
     "en": "a rollout",
@@ -1037,7 +1140,8 @@
     "lvl": "B1",
     "tag": "tech",
     "ex2": "The rollout is limited to 10% of users for now.",
-    "exEs2": "El lanzamiento está limitado al 10% de los usuarios por ahora."
+    "exEs2": "El lanzamiento está limitado al 10% de los usuarios por ahora.",
+    "step": 2
   },
   {
     "en": "a milestone",
@@ -1047,7 +1151,8 @@
     "lvl": "B1",
     "tag": "tech",
     "ex2": "Reaching a thousand users was a big milestone.",
-    "exEs2": "Llegar a mil usuarios fue un hito importante."
+    "exEs2": "Llegar a mil usuarios fue un hito importante.",
+    "step": 2
   },
   {
     "en": "a requirement",
@@ -1057,7 +1162,8 @@
     "lvl": "A2",
     "tag": "tech",
     "ex2": "A verified email is a requirement to log in.",
-    "exEs2": "Un mail verificado es un requisito para iniciar sesión."
+    "exEs2": "Un mail verificado es un requisito para iniciar sesión.",
+    "step": 1
   },
   {
     "en": "a constraint",
@@ -1067,7 +1173,8 @@
     "lvl": "B1",
     "tag": "tech",
     "ex2": "Budget is a bigger constraint than time.",
-    "exEs2": "El presupuesto es una limitación más grande que el tiempo."
+    "exEs2": "El presupuesto es una limitación más grande que el tiempo.",
+    "step": 2
   },
   {
     "en": "a use case",
@@ -1077,7 +1184,8 @@
     "lvl": "B1",
     "tag": "tech",
     "ex2": "Think about the mobile use case too.",
-    "exEs2": "Pensá también en el caso de uso mobile."
+    "exEs2": "Pensá también en el caso de uso mobile.",
+    "step": 2
   },
   {
     "en": "a workflow",
@@ -1087,7 +1195,8 @@
     "lvl": "B1",
     "tag": "tech",
     "ex2": "This tool doesn't fit our workflow.",
-    "exEs2": "Esta herramienta no encaja con nuestro flujo de trabajo."
+    "exEs2": "Esta herramienta no encaja con nuestro flujo de trabajo.",
+    "step": 2
   },
   {
     "en": "a layout",
@@ -1097,7 +1206,8 @@
     "lvl": "A2",
     "tag": "tech",
     "ex2": "The layout breaks on smaller screens.",
-    "exEs2": "El layout se rompe en pantallas más chicas."
+    "exEs2": "El layout se rompe en pantallas más chicas.",
+    "step": 1
   },
   {
     "en": "a wireframe",
@@ -1107,7 +1217,8 @@
     "lvl": "B1",
     "tag": "tech",
     "ex2": "The designer sent over the wireframes.",
-    "exEs2": "El diseñador mandó los wireframes."
+    "exEs2": "El diseñador mandó los wireframes.",
+    "step": 3
   },
   {
     "en": "a toggle",
@@ -1117,7 +1228,8 @@
     "lvl": "B1",
     "tag": "tech",
     "ex2": "Add a toggle to switch between views.",
-    "exEs2": "Agregá un interruptor para cambiar entre vistas."
+    "exEs2": "Agregá un interruptor para cambiar entre vistas.",
+    "step": 2
   },
   {
     "en": "a dropdown",
@@ -1127,7 +1239,8 @@
     "lvl": "A2",
     "tag": "tech",
     "ex2": "The dropdown doesn't close on mobile.",
-    "exEs2": "El desplegable no se cierra en mobile."
+    "exEs2": "El desplegable no se cierra en mobile.",
+    "step": 1
   },
   {
     "en": "a checkbox",
@@ -1137,7 +1250,8 @@
     "lvl": "A2",
     "tag": "tech",
     "ex2": "One checkbox is enough for that setting.",
-    "exEs2": "Un checkbox alcanza para esa configuración."
+    "exEs2": "Un checkbox alcanza para esa configuración.",
+    "step": 1
   },
   {
     "en": "a placeholder",
@@ -1147,7 +1261,8 @@
     "lvl": "B1",
     "tag": "tech",
     "ex2": "The placeholder text is confusing.",
-    "exEs2": "El texto del placeholder confunde."
+    "exEs2": "El texto del placeholder confunde.",
+    "step": 2
   },
   {
     "en": "seamless",
@@ -1157,7 +1272,8 @@
     "lvl": "B1",
     "tag": "tech",
     "ex2": "The migration was completely seamless for users.",
-    "exEs2": "La migración fue totalmente transparente para los usuarios."
+    "exEs2": "La migración fue totalmente transparente para los usuarios.",
+    "step": 3
   },
   {
     "en": "lightweight",
@@ -1167,7 +1283,8 @@
     "lvl": "B1",
     "tag": "tech",
     "ex2": "We chose a lightweight framework for the widget.",
-    "exEs2": "Elegimos un framework liviano para el widget."
+    "exEs2": "Elegimos un framework liviano para el widget.",
+    "step": 3
   },
   {
     "en": "robust",
@@ -1177,7 +1294,8 @@
     "lvl": "B1",
     "tag": "tech",
     "ex2": "We need error handling that's more robust.",
-    "exEs2": "Necesitamos un manejo de errores más robusto."
+    "exEs2": "Necesitamos un manejo de errores más robusto.",
+    "step": 3
   },
   {
     "en": "stale",
@@ -1187,7 +1305,8 @@
     "lvl": "B1",
     "tag": "tech",
     "ex2": "Your local branch is stale, pull the latest changes.",
-    "exEs2": "Tu rama local está desactualizada, traé los últimos cambios."
+    "exEs2": "Tu rama local está desactualizada, traé los últimos cambios.",
+    "step": 3
   },
   {
     "en": "to roll out",
@@ -1197,7 +1316,8 @@
     "lvl": "B1",
     "tag": "tech",
     "ex2": "They're rolling out the new design gradually.",
-    "exEs2": "Están lanzando el diseño nuevo de a poco."
+    "exEs2": "Están lanzando el diseño nuevo de a poco.",
+    "step": 2
   },
   {
     "en": "to spin up",
@@ -1207,7 +1327,8 @@
     "lvl": "B1",
     "tag": "tech",
     "ex2": "Spin up a test database for the demo.",
-    "exEs2": "Levantá una base de datos de prueba para la demo."
+    "exEs2": "Levantá una base de datos de prueba para la demo.",
+    "step": 3
   },
   {
     "en": "to hook up",
@@ -1217,7 +1338,8 @@
     "lvl": "B1",
     "tag": "tech",
     "ex2": "Hook up the frontend to the new endpoint.",
-    "exEs2": "Conectá el frontend al nuevo endpoint."
+    "exEs2": "Conectá el frontend al nuevo endpoint.",
+    "step": 3
   },
   {
     "en": "to break down",
@@ -1227,7 +1349,8 @@
     "lvl": "B1",
     "tag": "tech",
     "ex2": "Break the ticket down into smaller tasks.",
-    "exEs2": "Dividí el ticket en tareas más chicas."
+    "exEs2": "Dividí el ticket en tareas más chicas.",
+    "step": 2
   },
   {
     "en": "to walk through",
@@ -1237,7 +1360,8 @@
     "lvl": "B1",
     "tag": "tech",
     "ex2": "Can you walk me through the deploy process?",
-    "exEs2": "¿Me podés explicar paso a paso el proceso de deploy?"
+    "exEs2": "¿Me podés explicar paso a paso el proceso de deploy?",
+    "step": 3
   },
   {
     "en": "to dive into",
@@ -1247,7 +1371,8 @@
     "lvl": "B1",
     "tag": "tech",
     "ex2": "Let's dive into why the tests are flaky.",
-    "exEs2": "Metámonos de lleno en por qué los tests son inestables."
+    "exEs2": "Metámonos de lleno en por qué los tests son inestables.",
+    "step": 3
   },
   {
     "en": "under the hood",
@@ -1257,7 +1382,8 @@
     "lvl": "B1",
     "tag": "tech",
     "ex2": "It's just a regular array under the hood.",
-    "exEs2": "Por dentro no es más que un array común."
+    "exEs2": "Por dentro no es más que un array común.",
+    "step": 3
   },
   {
     "en": "out of the box",
@@ -1267,7 +1393,8 @@
     "lvl": "B1",
     "tag": "tech",
     "ex2": "Dark mode doesn't work out of the box.",
-    "exEs2": "El modo oscuro no funciona de fábrica."
+    "exEs2": "El modo oscuro no funciona de fábrica.",
+    "step": 3
   },
   {
     "en": "a gotcha",
@@ -1277,6 +1404,7 @@
     "lvl": "B1",
     "tag": "tech",
     "ex2": "Watch out, there's a gotcha with time zones.",
-    "exEs2": "Ojo, hay una trampa con las zonas horarias."
+    "exEs2": "Ojo, hay una trampa con las zonas horarias.",
+    "step": 3
   }
 ]

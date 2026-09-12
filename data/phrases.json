@@ -7,7 +7,8 @@
     "lvl": "A1",
     "tag": "video",
     "ex2": "Let's get started, everyone is here.",
-    "exEs2": "Empecemos, ya están todos."
+    "exEs2": "Empecemos, ya están todos.",
+    "step": 1
   },
   {
     "en": "Before we dive in...",
@@ -17,7 +18,8 @@
     "lvl": "B1",
     "tag": "video",
     "ex2": "Before we dive in, let's recap what we covered last time.",
-    "exEs2": "Antes de meternos de lleno, repasemos lo que vimos la vez pasada."
+    "exEs2": "Antes de meternos de lleno, repasemos lo que vimos la vez pasada.",
+    "step": 3
   },
   {
     "en": "In this video, we're going to...",
@@ -27,7 +29,8 @@
     "lvl": "A2",
     "tag": "video",
     "ex2": "In this video, we're going to deploy the app to production.",
-    "exEs2": "En este video vamos a desplegar la app a producción."
+    "exEs2": "En este video vamos a desplegar la app a producción.",
+    "step": 1
   },
   {
     "en": "Go ahead and...",
@@ -37,7 +40,8 @@
     "lvl": "A2",
     "tag": "video",
     "ex2": "Go ahead and clone the repository.",
-    "exEs2": "Dale, cloná el repositorio."
+    "exEs2": "Dale, cloná el repositorio.",
+    "step": 1
   },
   {
     "en": "As you can see...",
@@ -47,7 +51,8 @@
     "lvl": "A2",
     "tag": "video",
     "ex2": "As you can see, the chart updates in real time.",
-    "exEs2": "Como pueden ver, el gráfico se actualiza en tiempo real."
+    "exEs2": "Como pueden ver, el gráfico se actualiza en tiempo real.",
+    "step": 1
   },
   {
     "en": "That being said...",
@@ -57,7 +62,8 @@
     "lvl": "B1",
     "tag": "video",
     "ex2": "That being said, we still need to write tests.",
-    "exEs2": "Dicho eso, igual necesitamos escribir pruebas."
+    "exEs2": "Dicho eso, igual necesitamos escribir pruebas.",
+    "step": 3
   },
   {
     "en": "Let me show you.",
@@ -67,7 +73,8 @@
     "lvl": "A1",
     "tag": "video",
     "ex2": "Let me show you how the login flow works.",
-    "exEs2": "Déjame mostrarte cómo funciona el flujo de login."
+    "exEs2": "Déjame mostrarte cómo funciona el flujo de login.",
+    "step": 1
   },
   {
     "en": "Bear with me.",
@@ -77,7 +84,8 @@
     "lvl": "B1",
     "tag": "video",
     "ex2": "Bear with me, I'm sharing my screen.",
-    "exEs2": "Tené paciencia, estoy compartiendo mi pantalla."
+    "exEs2": "Tené paciencia, estoy compartiendo mi pantalla.",
+    "step": 3
   },
   {
     "en": "It turns out that...",
@@ -87,7 +95,8 @@
     "lvl": "B1",
     "tag": "video",
     "ex2": "It turns out that the bug was in the frontend.",
-    "exEs2": "Resulta que el error estaba en el frontend."
+    "exEs2": "Resulta que el error estaba en el frontend.",
+    "step": 2
   },
   {
     "en": "Here's the thing.",
@@ -97,7 +106,8 @@
     "lvl": "B1",
     "tag": "video",
     "ex2": "Here's the thing: nobody tested this.",
-    "exEs2": "La cosa es así: nadie probó esto."
+    "exEs2": "La cosa es así: nadie probó esto.",
+    "step": 3
   },
   {
     "en": "Long story short...",
@@ -107,7 +117,8 @@
     "lvl": "B1",
     "tag": "video",
     "ex2": "Long story short, we switched databases.",
-    "exEs2": "Para resumir, cambiamos de base de datos."
+    "exEs2": "Para resumir, cambiamos de base de datos.",
+    "step": 3
   },
   {
     "en": "Keep in mind that...",
@@ -117,7 +128,8 @@
     "lvl": "B1",
     "tag": "video",
     "ex2": "Keep in mind that the demo is tomorrow.",
-    "exEs2": "Tené en cuenta que la demo es mañana."
+    "exEs2": "Tené en cuenta que la demo es mañana.",
+    "step": 2
   },
   {
     "en": "Make sure you...",
@@ -127,7 +139,8 @@
     "lvl": "A2",
     "tag": "video",
     "ex2": "Make sure you back up your data first.",
-    "exEs2": "Asegurate de respaldar tus datos primero."
+    "exEs2": "Asegurate de respaldar tus datos primero.",
+    "step": 1
   },
   {
     "en": "Feel free to...",
@@ -137,7 +150,8 @@
     "lvl": "B1",
     "tag": "video",
     "ex2": "Feel free to ask questions in the comments.",
-    "exEs2": "Sentite libre de preguntar en los comentarios."
+    "exEs2": "Sentite libre de preguntar en los comentarios.",
+    "step": 2
   },
   {
     "en": "We'll cover that later.",
@@ -147,7 +161,8 @@
     "lvl": "A2",
     "tag": "video",
     "ex2": "That's an advanced topic, we'll cover that later.",
-    "exEs2": "Ese es un tema avanzado, vamos a verlo más adelante."
+    "exEs2": "Ese es un tema avanzado, vamos a verlo más adelante.",
+    "step": 1
   },
   {
     "en": "Let's take a look at...",
@@ -157,7 +172,8 @@
     "lvl": "A2",
     "tag": "video",
     "ex2": "Let's take a look at the error message.",
-    "exEs2": "Echemos un vistazo al mensaje de error."
+    "exEs2": "Echemos un vistazo al mensaje de error.",
+    "step": 1
   },
   {
     "en": "Hold on a second.",
@@ -167,7 +183,8 @@
     "lvl": "A1",
     "tag": "video",
     "ex2": "Hold on a second, let me check the logs.",
-    "exEs2": "Esperá un segundo, déjame revisar los logs."
+    "exEs2": "Esperá un segundo, déjame revisar los logs.",
+    "step": 1
   },
   {
     "en": "There you go.",
@@ -177,7 +194,8 @@
     "lvl": "A2",
     "tag": "video",
     "ex2": "Just click submit, and there you go.",
-    "exEs2": "Solo hacé clic en enviar, y listo."
+    "exEs2": "Solo hacé clic en enviar, y listo.",
+    "step": 1
   },
   {
     "en": "That should do it.",
@@ -187,7 +205,8 @@
     "lvl": "B1",
     "tag": "video",
     "ex2": "Clear the cache. That should do it.",
-    "exEs2": "Limpiá la caché. Con eso debería alcanzar."
+    "exEs2": "Limpiá la caché. Con eso debería alcanzar.",
+    "step": 2
   },
   {
     "en": "It doesn't matter.",
@@ -197,7 +216,8 @@
     "lvl": "A1",
     "tag": "video",
     "ex2": "The color doesn't matter, just pick one.",
-    "exEs2": "El color no importa, elegí cualquiera."
+    "exEs2": "El color no importa, elegí cualquiera.",
+    "step": 1
   },
   {
     "en": "It depends on...",
@@ -207,7 +227,8 @@
     "lvl": "A2",
     "tag": "video",
     "ex2": "It depends on how much traffic you expect.",
-    "exEs2": "Depende de cuánto tráfico esperes."
+    "exEs2": "Depende de cuánto tráfico esperes.",
+    "step": 1
   },
   {
     "en": "For the sake of simplicity...",
@@ -217,7 +238,8 @@
     "lvl": "B1",
     "tag": "video",
     "ex2": "For the sake of simplicity, let's use fake data.",
-    "exEs2": "Por simplicidad, usemos datos falsos."
+    "exEs2": "Por simplicidad, usemos datos falsos.",
+    "step": 3
   },
   {
     "en": "Under the hood, it...",
@@ -227,7 +249,8 @@
     "lvl": "B1",
     "tag": "video",
     "ex2": "Under the hood, it makes an HTTP request.",
-    "exEs2": "Por dentro, hace una solicitud HTTP."
+    "exEs2": "Por dentro, hace una solicitud HTTP.",
+    "step": 2
   },
   {
     "en": "Roughly speaking...",
@@ -237,7 +260,8 @@
     "lvl": "B1",
     "tag": "video",
     "ex2": "Roughly speaking, half the users are on mobile.",
-    "exEs2": "A grandes rasgos, la mitad de los usuarios están en el celular."
+    "exEs2": "A grandes rasgos, la mitad de los usuarios están en el celular.",
+    "step": 3
   },
   {
     "en": "You might be wondering...",
@@ -247,7 +271,8 @@
     "lvl": "B1",
     "tag": "video",
     "ex2": "You might be wondering how this handles errors.",
-    "exEs2": "Te podés estar preguntando cómo maneja esto los errores."
+    "exEs2": "Te podés estar preguntando cómo maneja esto los errores.",
+    "step": 2
   },
   {
     "en": "That's pretty much it.",
@@ -257,7 +282,8 @@
     "lvl": "B1",
     "tag": "video",
     "ex2": "Add your API key, and that's pretty much it.",
-    "exEs2": "Agregá tu API key, y eso es prácticamente todo."
+    "exEs2": "Agregá tu API key, y eso es prácticamente todo.",
+    "step": 2
   },
   {
     "en": "Thanks for watching.",
@@ -267,7 +293,8 @@
     "lvl": "A1",
     "tag": "video",
     "ex2": "Thanks for watching, don't forget to subscribe.",
-    "exEs2": "Gracias por mirar, no se olviden de suscribirse."
+    "exEs2": "Gracias por mirar, no se olviden de suscribirse.",
+    "step": 1
   },
   {
     "en": "Could you repeat that, please?",
@@ -277,7 +304,8 @@
     "lvl": "A1",
     "tag": "talk",
     "ex2": "The connection is bad, could you repeat that, please?",
-    "exEs2": "La conexión está mala, ¿podrías repetir eso, por favor?"
+    "exEs2": "La conexión está mala, ¿podrías repetir eso, por favor?",
+    "step": 1
   },
   {
     "en": "I'm not sure I follow.",
@@ -287,7 +315,8 @@
     "lvl": "B1",
     "tag": "talk",
     "ex2": "Wait, I'm not sure I follow the last step.",
-    "exEs2": "Esperá, no te sigo del todo con el último paso."
+    "exEs2": "Esperá, no te sigo del todo con el último paso.",
+    "step": 2
   },
   {
     "en": "Let me rephrase that.",
@@ -297,7 +326,8 @@
     "lvl": "B1",
     "tag": "talk",
     "ex2": "Let me rephrase that in simpler terms.",
-    "exEs2": "Déjame decirlo en términos más simples."
+    "exEs2": "Déjame decirlo en términos más simples.",
+    "step": 2
   },
   {
     "en": "How do you say ... in English?",
@@ -307,7 +337,8 @@
     "lvl": "A1",
     "tag": "talk",
     "ex2": "How do you say 'entrega' in English?",
-    "exEs2": "¿Cómo se dice 'entrega' en inglés?"
+    "exEs2": "¿Cómo se dice 'entrega' en inglés?",
+    "step": 1
   },
   {
     "en": "What does that mean?",
@@ -317,7 +348,8 @@
     "lvl": "A1",
     "tag": "talk",
     "ex2": "What does that mean in this context?",
-    "exEs2": "¿Qué significa eso en este contexto?"
+    "exEs2": "¿Qué significa eso en este contexto?",
+    "step": 1
   },
   {
     "en": "Could you speak more slowly?",
@@ -327,7 +359,8 @@
     "lvl": "A1",
     "tag": "talk",
     "ex2": "I'm still learning, could you speak more slowly?",
-    "exEs2": "Todavía estoy aprendiendo, ¿podrías hablar más despacio?"
+    "exEs2": "Todavía estoy aprendiendo, ¿podrías hablar más despacio?",
+    "step": 1
   },
   {
     "en": "That makes sense.",
@@ -337,7 +370,8 @@
     "lvl": "A2",
     "tag": "talk",
     "ex2": "Oh, that makes sense given the deadline.",
-    "exEs2": "Ah, tiene sentido con el plazo que tenemos."
+    "exEs2": "Ah, tiene sentido con el plazo que tenemos.",
+    "step": 1
   },
   {
     "en": "It doesn't make sense to me.",
@@ -347,7 +381,8 @@
     "lvl": "A2",
     "tag": "talk",
     "ex2": "This diagram doesn't make sense to me.",
-    "exEs2": "Este diagrama no me cierra."
+    "exEs2": "Este diagrama no me cierra.",
+    "step": 1
   },
   {
     "en": "I'd rather ...",
@@ -357,7 +392,8 @@
     "lvl": "B1",
     "tag": "talk",
     "ex2": "I'd rather meet in person.",
-    "exEs2": "Preferiría reunirnos en persona."
+    "exEs2": "Preferiría reunirnos en persona.",
+    "step": 3
   },
   {
     "en": "I'm on it.",
@@ -367,7 +403,8 @@
     "lvl": "B1",
     "tag": "work",
     "ex2": "I'm on it, give me five minutes.",
-    "exEs2": "Ya me pongo con eso, dame cinco minutos."
+    "exEs2": "Ya me pongo con eso, dame cinco minutos.",
+    "step": 2
   },
   {
     "en": "I'll get back to you.",
@@ -377,7 +414,8 @@
     "lvl": "B1",
     "tag": "work",
     "ex2": "I'll get back to you by end of day.",
-    "exEs2": "Te respondo antes de que termine el día."
+    "exEs2": "Te respondo antes de que termine el día.",
+    "step": 2
   },
   {
     "en": "Can you walk me through it?",
@@ -387,7 +425,8 @@
     "lvl": "B1",
     "tag": "work",
     "ex2": "Can you walk me through the setup process?",
-    "exEs2": "¿Me podés explicar el proceso de instalación paso a paso?"
+    "exEs2": "¿Me podés explicar el proceso de instalación paso a paso?",
+    "step": 2
   },
   {
     "en": "Just a heads-up:",
@@ -397,7 +436,8 @@
     "lvl": "B1",
     "tag": "work",
     "ex2": "Just a heads-up: the meeting moved to 3pm.",
-    "exEs2": "Solo para avisarte: la reunión se movió a las 3pm."
+    "exEs2": "Solo para avisarte: la reunión se movió a las 3pm.",
+    "step": 3
   },
   {
     "en": "Let's touch base tomorrow.",
@@ -407,7 +447,8 @@
     "lvl": "B2",
     "tag": "work",
     "ex2": "Let's touch base tomorrow after the demo.",
-    "exEs2": "Hablemos mañana después de la demo."
+    "exEs2": "Hablemos mañana después de la demo.",
+    "step": 3
   },
   {
     "en": "I'm running late.",
@@ -417,7 +458,8 @@
     "lvl": "A2",
     "tag": "work",
     "ex2": "Traffic is bad, I'm running late.",
-    "exEs2": "Hay mucho tráfico, voy con retraso."
+    "exEs2": "Hay mucho tráfico, voy con retraso.",
+    "step": 1
   },
   {
     "en": "It's up to you.",
@@ -427,7 +469,8 @@
     "lvl": "A2",
     "tag": "work",
     "ex2": "We can push today or tomorrow, it's up to you.",
-    "exEs2": "Podemos subirlo hoy o mañana, depende de vos."
+    "exEs2": "Podemos subirlo hoy o mañana, depende de vos.",
+    "step": 1
   },
   {
     "en": "Let me know if you need anything.",
@@ -437,7 +480,8 @@
     "lvl": "A2",
     "tag": "work",
     "ex2": "I'll be online all day, let me know if you need anything.",
-    "exEs2": "Voy a estar conectado todo el día, avisame si necesitás algo."
+    "exEs2": "Voy a estar conectado todo el día, avisame si necesitás algo.",
+    "step": 1
   },
   {
     "en": "I'll take care of it.",
@@ -447,7 +491,8 @@
     "lvl": "A2",
     "tag": "work",
     "ex2": "Leave the migration to me, I'll take care of it.",
-    "exEs2": "Dejame la migración a mí, yo me encargo."
+    "exEs2": "Dejame la migración a mí, yo me encargo.",
+    "step": 1
   },
   {
     "en": "We're on the same page.",
@@ -457,7 +502,8 @@
     "lvl": "B2",
     "tag": "work",
     "ex2": "After the call, we're on the same page now.",
-    "exEs2": "Después de la llamada, ahora estamos en la misma página."
+    "exEs2": "Después de la llamada, ahora estamos en la misma página.",
+    "step": 3
   },
   {
     "en": "Off the top of my head...",
@@ -467,7 +513,8 @@
     "lvl": "B2",
     "tag": "work",
     "ex2": "Off the top of my head, I'd say three days.",
-    "exEs2": "Así de memoria, diría que tres días."
+    "exEs2": "Así de memoria, diría que tres días.",
+    "step": 3
   },
   {
     "en": "Let's park that for now.",
@@ -477,7 +524,8 @@
     "lvl": "B2",
     "tag": "work",
     "ex2": "It's a nice idea, but let's park that for now.",
-    "exEs2": "Es una buena idea, pero dejemos eso para después."
+    "exEs2": "Es una buena idea, pero dejemos eso para después.",
+    "step": 3
   },
   {
     "en": "That's out of scope.",
@@ -487,7 +535,8 @@
     "lvl": "B1",
     "tag": "work",
     "ex2": "Notifications are out of scope for this sprint.",
-    "exEs2": "Las notificaciones quedan fuera del alcance de este sprint."
+    "exEs2": "Las notificaciones quedan fuera del alcance de este sprint.",
+    "step": 3
   },
   {
     "en": "Can you elaborate on that?",
@@ -497,7 +546,8 @@
     "lvl": "B2",
     "tag": "work",
     "ex2": "Can you elaborate on that error you mentioned?",
-    "exEs2": "¿Podés desarrollar sobre ese error que mencionaste?"
+    "exEs2": "¿Podés desarrollar sobre ese error que mencionaste?",
+    "step": 3
   },
   {
     "en": "To be fair, ...",
@@ -507,7 +557,8 @@
     "lvl": "B1",
     "tag": "talk",
     "ex2": "To be fair, the deadline was unrealistic.",
-    "exEs2": "Para ser justos, el plazo era poco realista."
+    "exEs2": "Para ser justos, el plazo era poco realista.",
+    "step": 3
   },
   {
     "en": "I see your point, but...",
@@ -517,7 +568,8 @@
     "lvl": "B1",
     "tag": "talk",
     "ex2": "I see your point, but we don't have time for that.",
-    "exEs2": "Entiendo tu punto, pero no tenemos tiempo para eso."
+    "exEs2": "Entiendo tu punto, pero no tenemos tiempo para eso.",
+    "step": 3
   },
   {
     "en": "That's a good point.",
@@ -527,7 +579,8 @@
     "lvl": "A2",
     "tag": "talk",
     "ex2": "That's a good point, let's add it to the list.",
-    "exEs2": "Buen punto, agreguémoslo a la lista."
+    "exEs2": "Buen punto, agreguémoslo a la lista.",
+    "step": 1
   },
   {
     "en": "Correct me if I'm wrong.",
@@ -537,7 +590,8 @@
     "lvl": "B1",
     "tag": "talk",
     "ex2": "Correct me if I'm wrong, but the meeting is at noon.",
-    "exEs2": "Corregime si me equivoco, pero la reunión es al mediodía."
+    "exEs2": "Corregime si me equivoco, pero la reunión es al mediodía.",
+    "step": 3
   },
   {
     "en": "It's worth a shot.",
@@ -547,7 +601,8 @@
     "lvl": "B2",
     "tag": "talk",
     "ex2": "We might lose data, but it's worth a shot.",
-    "exEs2": "Podríamos perder datos, pero vale la pena probar."
+    "exEs2": "Podríamos perder datos, pero vale la pena probar.",
+    "step": 3
   },
   {
     "en": "It's a matter of time.",
@@ -557,7 +612,8 @@
     "lvl": "B1",
     "tag": "talk",
     "ex2": "The server will crash, it's a matter of time.",
-    "exEs2": "El servidor se va a caer, es cuestión de tiempo."
+    "exEs2": "El servidor se va a caer, es cuestión de tiempo.",
+    "step": 3
   },
   {
     "en": "Sooner or later",
@@ -567,7 +623,8 @@
     "lvl": "B1",
     "tag": "talk",
     "ex2": "Sooner or later the truth comes out.",
-    "exEs2": "Tarde o temprano la verdad sale a la luz."
+    "exEs2": "Tarde o temprano la verdad sale a la luz.",
+    "step": 2
   },
   {
     "en": "On the other hand,",
@@ -577,7 +634,8 @@
     "lvl": "A2",
     "tag": "talk",
     "ex2": "On the other hand, it takes longer to build.",
-    "exEs2": "Por otro lado, lleva más tiempo construirlo."
+    "exEs2": "Por otro lado, lleva más tiempo construirlo.",
+    "step": 1
   },
   {
     "en": "As far as I know,",
@@ -587,7 +645,8 @@
     "lvl": "B1",
     "tag": "talk",
     "ex2": "As far as I know, nobody has fixed it yet.",
-    "exEs2": "Que yo sepa, todavía nadie lo arregló."
+    "exEs2": "Que yo sepa, todavía nadie lo arregló.",
+    "step": 2
   },
   {
     "en": "It's not a big deal.",
@@ -597,7 +656,8 @@
     "lvl": "A2",
     "tag": "talk",
     "ex2": "We can redo it, it's not a big deal.",
-    "exEs2": "Lo podemos rehacer, no es gran cosa."
+    "exEs2": "Lo podemos rehacer, no es gran cosa.",
+    "step": 1
   },
   {
     "en": "Never mind.",
@@ -607,7 +667,8 @@
     "lvl": "A2",
     "tag": "talk",
     "ex2": "Never mind, it was a silly mistake.",
-    "exEs2": "Olvidalo, fue un error tonto."
+    "exEs2": "Olvidalo, fue un error tonto.",
+    "step": 1
   },
   {
     "en": "I'm getting the hang of it.",
@@ -617,7 +678,8 @@
     "lvl": "B2",
     "tag": "talk",
     "ex2": "I'm getting the hang of it after a few tries.",
-    "exEs2": "Le estoy agarrando la mano después de varios intentos."
+    "exEs2": "Le estoy agarrando la mano después de varios intentos.",
+    "step": 3
   },
   {
     "en": "Let's give it a try.",
@@ -627,7 +689,8 @@
     "lvl": "A2",
     "tag": "talk",
     "ex2": "We don't have a better option, let's give it a try.",
-    "exEs2": "No tenemos otra opción mejor, probemos."
+    "exEs2": "No tenemos otra opción mejor, probemos.",
+    "step": 1
   },
   {
     "en": "I'm looking into it.",
@@ -637,7 +700,8 @@
     "lvl": "B1",
     "tag": "work",
     "ex2": "I'm looking into it, might take a while.",
-    "exEs2": "Lo estoy investigando, puede llevar un rato."
+    "exEs2": "Lo estoy investigando, puede llevar un rato.",
+    "step": 2
   },
   {
     "en": "It's up and running.",
@@ -647,7 +711,8 @@
     "lvl": "B1",
     "tag": "work",
     "ex2": "The new feature is up and running.",
-    "exEs2": "La nueva funcionalidad ya está funcionando."
+    "exEs2": "La nueva funcionalidad ya está funcionando.",
+    "step": 2
   },
   {
     "en": "It's down.",
@@ -657,7 +722,8 @@
     "lvl": "A2",
     "tag": "work",
     "ex2": "The database is down.",
-    "exEs2": "La base de datos está caída."
+    "exEs2": "La base de datos está caída.",
+    "step": 1
   },
   {
     "en": "Something went wrong.",
@@ -667,7 +733,8 @@
     "lvl": "A2",
     "tag": "work",
     "ex2": "Something went wrong during the upload.",
-    "exEs2": "Algo salió mal durante la subida."
+    "exEs2": "Algo salió mal durante la subida.",
+    "step": 1
   },
   {
     "en": "It works on my machine.",
@@ -677,7 +744,8 @@
     "lvl": "A2",
     "tag": "work",
     "ex2": "He said it works on my machine, as usual.",
-    "exEs2": "Dijo que en su máquina funciona, como siempre."
+    "exEs2": "Dijo que en su máquina funciona, como siempre.",
+    "step": 2
   },
   {
     "en": "Let's ship it.",
@@ -687,7 +755,8 @@
     "lvl": "B1",
     "tag": "work",
     "ex2": "It's good enough, let's ship it.",
-    "exEs2": "Ya está lo suficientemente bien, lancémoslo."
+    "exEs2": "Ya está lo suficientemente bien, lancémoslo.",
+    "step": 2
   },
   {
     "en": "Good catch!",
@@ -697,7 +766,8 @@
     "lvl": "B1",
     "tag": "work",
     "ex2": "Good catch! That would've broken production.",
-    "exEs2": "¡Bien visto! Eso hubiera roto producción."
+    "exEs2": "¡Bien visto! Eso hubiera roto producción.",
+    "step": 3
   },
   {
     "en": "My bad.",
@@ -707,6 +777,7 @@
     "lvl": "B1",
     "tag": "work",
     "ex2": "My bad, I forgot to save the file.",
-    "exEs2": "Culpa mía, me olvidé de guardar el archivo."
+    "exEs2": "Culpa mía, me olvidé de guardar el archivo.",
+    "step": 3
   }
 ]
