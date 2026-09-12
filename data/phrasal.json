@@ -311,11 +311,11 @@
   },
   {
     "en": "to break down",
-    "es": "descomponerse (auto/máquina)",
+    "es": "descomponerse (auto/máquina); desglosar",
     "ex": "My car broke down on the highway.",
     "exEs": "Se me rompió el auto en la autopista.",
-    "ex2": "The printer broke down again.",
-    "exEs2": "La impresora se rompió de nuevo.",
+    "ex2": "Let's break down the problem into smaller tasks.",
+    "exEs2": "Desglosemos el problema en tareas más chicas.",
     "lvl": "B1",
     "tag": "phrasal"
   },

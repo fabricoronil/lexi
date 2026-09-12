@@ -1070,56 +1070,6 @@
     "exEs2": "Está acostumbrada a hablar en público."
   },
   {
-    "en": "to look forward to",
-    "es": "tener ganas de / esperar con ansias",
-    "ex": "I look forward to the exam.",
-    "exEs": "Espero el examen con ganas.",
-    "lvl": "B1",
-    "tag": "core",
-    "ex2": "We look forward to seeing you soon.",
-    "exEs2": "Tenemos ganas de verte pronto."
-  },
-  {
-    "en": "to end up",
-    "es": "terminar (haciendo algo)",
-    "ex": "I ended up rewriting it.",
-    "exEs": "Terminé reescribiéndolo.",
-    "lvl": "B1",
-    "tag": "core",
-    "ex2": "We ended up watching the whole series in one night.",
-    "exEs2": "Terminamos viendo toda la serie en una noche."
-  },
-  {
-    "en": "to give up",
-    "es": "rendirse",
-    "ex": "Don't give up now.",
-    "exEs": "No te rindas ahora.",
-    "lvl": "A2",
-    "tag": "core",
-    "ex2": "He never gives up, no matter how hard it gets.",
-    "exEs2": "Nunca se rinde, por más difícil que se ponga."
-  },
-  {
-    "en": "to figure out",
-    "es": "descifrar / entender",
-    "ex": "I figured out the problem.",
-    "exEs": "Descifré el problema.",
-    "lvl": "B1",
-    "tag": "core",
-    "ex2": "It took me a while to figure out how the app works.",
-    "exEs2": "Me tomó un rato entender cómo funciona la app."
-  },
-  {
-    "en": "to find out",
-    "es": "averiguar / enterarse",
-    "ex": "I found out yesterday.",
-    "exEs": "Me enteré ayer.",
-    "lvl": "A2",
-    "tag": "core",
-    "ex2": "I found out she was moving to another city.",
-    "exEs2": "Me enteré de que se iba a mudar a otra ciudad."
-  },
-  {
     "en": "to look up",
     "es": "buscar (una palabra)",
     "ex": "Look it up in the docs.",
@@ -1138,26 +1088,6 @@
     "tag": "core",
     "ex2": "Let's grab coffee and catch up.",
     "exEs2": "Tomemos un café y nos ponemos al día."
-  },
-  {
-    "en": "to point out",
-    "es": "señalar",
-    "ex": "He pointed out the error.",
-    "exEs": "Señaló el error.",
-    "lvl": "B1",
-    "tag": "core",
-    "ex2": "My colleague pointed out a flaw in the plan.",
-    "exEs2": "Mi colega señaló una falla en el plan."
-  },
-  {
-    "en": "to carry out",
-    "es": "llevar a cabo",
-    "ex": "We carried out the tests.",
-    "exEs": "Llevamos a cabo las pruebas.",
-    "lvl": "B1",
-    "tag": "core",
-    "ex2": "The company carried out a survey last month.",
-    "exEs2": "La empresa llevó a cabo una encuesta el mes pasado."
   },
   {
     "en": "to take part in",

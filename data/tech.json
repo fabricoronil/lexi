@@ -968,17 +968,6 @@
     "step": 2
   },
   {
-    "en": "a warning",
-    "es": "una advertencia",
-    "ex": "It's just a warning, not an error.",
-    "exEs": "Es solo una advertencia, no un error.",
-    "lvl": "A2",
-    "tag": "tech",
-    "ex2": "The linter throws a warning for unused imports.",
-    "exEs2": "El linter tira un warning por imports sin usar.",
-    "step": 1
-  },
-  {
     "en": "to crash",
     "es": "cerrarse inesperadamente",
     "ex": "The app crashes on startup.",
@@ -1340,17 +1329,6 @@
     "ex2": "Hook up the frontend to the new endpoint.",
     "exEs2": "Conectá el frontend al nuevo endpoint.",
     "step": 3
-  },
-  {
-    "en": "to break down",
-    "es": "desglosar",
-    "ex": "Let's break down the problem.",
-    "exEs": "Desglosemos el problema.",
-    "lvl": "B1",
-    "tag": "tech",
-    "ex2": "Break the ticket down into smaller tasks.",
-    "exEs2": "Dividí el ticket en tareas más chicas.",
-    "step": 2
   },
   {
     "en": "to walk through",
