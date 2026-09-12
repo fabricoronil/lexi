@@ -4,7 +4,7 @@
  * cache-first para el resto.
  */
 
-const VERSION = 'lexi-v24';
+const VERSION = 'lexi-v25';
 const ASSETS = [
   './',
   './index.html',
@@ -21,6 +21,7 @@ const ASSETS = [
   './data/esencial.json',
   './data/core.json',
   './data/tech.json',
+  './data/ia.json',
   './data/phrases.json',
   './data/phrasal.json',
   './data/grammar.json',
