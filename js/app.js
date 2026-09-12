@@ -575,8 +575,6 @@ const HIGHLIGHT_STOPWORDS = new Set([
   'how', 'what', 'which', 'who', 'why', 'when', 'can', 'could', 'would', 'should', 'will',
   'doesnt', 'heres', 'id', 'ill', 'im', 'its', 'lets', 'thats', 'well', 'were',
 ]);
-// Verbos irregulares del propio mazo: el resaltado por raíz no los pesca
-// (become → became no comparten prefijo), así que van directo al ejemplo.
 const HIGHLIGHT_IRREGULAR = { become: 'became', find: 'found', take: 'took', freeze: 'froze', lend: 'lent' };
 
 /**
@@ -2252,6 +2250,25 @@ function renderScopes() {
   const cur = counts.find((x) => x.id === s.settings.newScope) || counts[0];
   $('#scope-note').textContent = `${cur.hint} Te quedan ${cur.left} palabras nuevas sin ver en este escalón.`;
 
+  renderAreaMix();
+}
+
+/**
+ * Cuánto de cada tanda de cards nuevas es de tu área. Subirlo llega antes a
+ * entender los videos, pero el vocabulario general es el que te deja parsear
+ * la oración donde esas palabras aparecen — por eso el default es un tercio
+ * y no la mitad.
+ */
+function renderAreaMix() {
+  const every = decks.areaEvery();
+  $$('#area-mix button').forEach((b) => b.classList.toggle('on', Number(b.dataset.every) === every));
+  const p = decks.pace();
+  const cuantas = decks.areaQuota(p.perDay);
+  $('#area-note').textContent = every >= 5
+    ? `Con ${p.perDay} nuevas por día te tocan ${cuantas} de tech/IA. Tranquilo: primero el vocabulario general.`
+    : every === 3
+      ? `Con ${p.perDay} nuevas por día te tocan ${cuantas} de tech/IA. El equilibrio recomendado.`
+      : `Con ${p.perDay} nuevas por día te tocan ${cuantas} de tech/IA. Llegás antes a los videos, pero con menos base para armar la oración.`;
 }
 
 /**
@@ -2373,6 +2390,14 @@ function wireSync() {
 }
 
 function wireSettings() {
+  $$('#area-mix button').forEach((b) => {
+    b.addEventListener('click', () => {
+      store.setSettings({ areaEvery: Number(b.dataset.every) });
+      sound.playSwitch(true);
+      renderSettings();
+    });
+  });
+
   $$('#scopes button').forEach((b) => {
     b.addEventListener('click', () => {
       store.setSettings({ newScope: b.dataset.scope });

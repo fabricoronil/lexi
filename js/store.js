@@ -26,6 +26,7 @@ const DEFAULTS = {
     minutesPerDay: 15, // presupuesto de tiempo; manda cuando preset === 'tiempo'
     decks: { esencial: true, core: true, tech: true, ia: true, phrases: true, phrasal: true },
     newScope: 'esencial', // qué palabras nuevas entran: esencial | util | todo (ver decks.js)
+    areaEvery: 3, // cada cuántas nuevas entra una de tu área (tech/IA)
     autoSpeak: true,
     reverse: false,
     sound: true,

@@ -183,6 +183,54 @@ function freshOrder(a, b) {
   return (a.tier ?? 3) - (b.tier ?? 3) || freshCost(a) - freshCost(b);
 }
 
+/* ── una de cada tres, de lo tuyo ──
+ * El objetivo no es "saber inglés" en abstracto: es entender videos de
+ * programación y de IA. Si las nuevas salieran sólo por frecuencia del
+ * idioma general, el vocabulario técnico quedaría para dentro de meses —
+ * los términos de dev y de ML no figuran en el top 2000 de nada. Así que
+ * cada tanda reserva un lugar de cada tres para una card de tech o IA del
+ * escalón en el que estés: desde el primer día hay algo de lo tuyo, pero de
+ * a poco y sin que te coma la tanda entera.
+ */
+const AREA_DECKS = new Set(['tech', 'ia']);
+export const AREA_EVERY_DEFAULT = 3; // una card del área cada tantas nuevas
+
+/** Cada cuántas nuevas entra una de tu área. Configurable en Ajustes. */
+export function areaEvery() {
+  const v = store.get().settings.areaEvery;
+  return v >= 2 && v <= 6 ? v : AREA_EVERY_DEFAULT;
+}
+
+/** Cuántas del área entran en una tanda de `limit` cards nuevas. */
+export function areaQuota(limit) {
+  return Math.round(limit / areaEvery());
+}
+
+function pickFresh(fresh, limit) {
+  if (limit <= 0) return [];
+  const area = fresh.filter((c) => AREA_DECKS.has(c.deck));
+  const general = fresh.filter((c) => !AREA_DECKS.has(c.deck));
+
+  // La proporción se calcula sobre la tanda entera y no con un módulo, así se
+  // sostiene con cualquier ritmo: con 12 nuevas por día entran 4 del área, y
+  // con 5 entran 2. Un módulo cada 3 fallaba justo en las tandas chicas,
+  // porque el contador se reinicia todos los días y la tercera nunca llegaba.
+  const quota = Math.min(area.length, areaQuota(limit));
+
+  const out = [];
+  let a = 0;
+  let g = 0;
+  for (let i = 0; i < limit && (a < area.length || g < general.length); i++) {
+    // Repartidas parejo a lo largo de la tanda, no todas juntas al final.
+    const turnoArea = quota > 0
+      && Math.floor(((i + 1) * quota) / limit) > Math.floor((i * quota) / limit);
+    if (turnoArea && a < area.length) out.push(area[a++]);
+    else if (g < general.length) out.push(general[g++]);
+    else if (a < area.length) out.push(area[a++]);
+  }
+  return out;
+}
+
 /**
  * Cola de la sesión: primero lo vencido, después las nuevas del día.
  * Las nuevas se limitan según el nivel de exigencia y según la prioridad
@@ -230,7 +278,7 @@ function computeQueue(now) {
 
   const remainingNew = Math.max(0, s.settings.newPerDay - store.newToday());
   fresh.sort(freshOrder);
-  const picked = fresh.slice(0, remainingNew);
+  const picked = pickFresh(fresh, remainingNew);
   const total = due.length + picked.length;
 
   return { due, fresh: picked, total, midLearning, heldBack, freshLeft: fresh.length };
