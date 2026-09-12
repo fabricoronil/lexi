@@ -2018,6 +2018,195 @@ button.switch.on:active i { transform: translateX(19px) scale(.82); }
 .track-bar i { display: block; height: 6px; border-radius: 3px; transition: width .5s cubic-bezier(.22,.61,.36,1); }
 .track-num { font-size: 11px; color: var(--dim); width: 52px; text-align: right; flex-shrink: 0; }
 
+/* ═══════════════════ tablet ═══════════════════
+ * En el celu la app es una columna y está bien así. En una tablet esa misma
+ * columna deja dos tercios de pantalla vacíos y obliga a scrollear cosas que
+ * entrarían de sobra. Acá el layout se reacomoda en dos columnas y la card de
+ * repaso — que es donde se pasa el tiempo — crece de verdad: letra más
+ * grande, más aire y los cuatro botones de dificultad en una sola fila, sin
+ * tener que bajar la vista en zigzag.
+ *
+ * Nada de esto cambia el HTML: las vistas se reordenan con grid-template-areas
+ * y los contenedores pasan de columna a grilla. El celu no se entera.
+ */
+/* Fuera de tablet los paneles no existen para el layout. */
+.pane { display: contents; }
+
+@media (min-width: 700px) {
+  #app { max-width: 900px; }
+  .view { padding: 0 30px 40px; }
+  .tabbar { max-width: 900px; }
+  .tabbar button span { font-size: 11px; }
+
+  /* ── inicio: el día a la izquierda, los mazos a la derecha ──
+     Las dos columnas son independientes: cada panel apila lo suyo y ninguna
+     fila de una arrastra a la otra. */
+  #view-home {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 340px);
+    column-gap: 34px;
+    align-items: start;
+  }
+  #view-home > .topbar { grid-column: 1 / -1; }
+  .pane { display: flex; flex-direction: column; min-width: 0; }
+  .pane-side .section-label { margin-top: 22px; }
+  #view-home .cta { max-width: 420px; margin-inline: auto; width: 100%; }
+  #view-home .cta-note { text-align: center; }
+  /* El anillo es el objeto principal del inicio: en tablet crece de verdad.
+     El SVG va por viewBox, así que la cuenta del progreso no se toca. */
+  .ring-wrap { width: 248px; height: 248px; margin: 26px auto 10px; }
+  .ring-num { font-size: 54px; }
+  .ring-num small { font-size: 30px; }
+  .ring-label { font-size: 12px; }
+  .deck-top span { font-size: 14px; }
+
+  /* En la lista de palabras, dos columnas piden filas más compactas para que
+     el par inglés/español siga leyéndose como una unidad. */
+  .word-row, .hard-row { min-width: 0; }
+  .word-main { min-width: 0; }
+  .word-en, .word-es { overflow-wrap: anywhere; }
+
+  /* ── repaso: la pantalla donde se pasa el tiempo ──
+     La card crece con el espacio que sobra, pero nunca empuja los botones de
+     dificultad abajo del pliegue: si el contenido no entra, scrollea adentro
+     de la card. Calificar siempre tiene que estar a un toque. */
+  #view-review {
+    max-width: 740px;
+    margin-inline: auto;
+    width: 100%;
+    height: calc(100dvh - var(--tabbar-h) - var(--safe-b));
+    min-height: 0;
+  }
+  /* Si la card llega a scrollear, que se note lo mínimo: la barra gruesa del
+     navegador rompe el borde redondeado y ensucia el único objeto de la
+     pantalla. (Va con `scrollbar-color` y no con `::-webkit-scrollbar`:
+     declarar `scrollbar-width` hace que el motor ignore el pseudo-elemento.) */
+  .card {
+    flex: 1 1 auto;
+    min-height: 240px;
+    overflow-y: auto;
+    scrollbar-width: thin;
+    scrollbar-color: #262d30 transparent;
+  }
+  .card-front { padding: 44px 34px 34px; gap: 22px; }
+  .prompt { font-size: 42px; letter-spacing: -1.8px; }
+  .prompt.long { font-size: 32px; letter-spacing: -1.2px; }
+  .prompt.xlong { font-size: 26px; letter-spacing: -.6px; }
+  .speak { width: 52px; height: 52px; }
+  .speak .ico { width: 22px; height: 22px; }
+  .example { font-size: 17px; }
+  .card-back { padding: 28px 34px; gap: 22px; }
+  .answer { font-size: 26px; }
+  .example-es { font-size: 15px; }
+  .card-hints { padding: 0 34px 24px; }
+  .hint-body { font-size: 15.5px; }
+  /* Los cuatro en una fila: con el pulgar en el borde no hay que leer en
+     zigzag para comparar los intervalos. */
+  .grade-grid { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 11px; }
+  .grade { min-height: 70px; }
+  .answers { padding-bottom: 20px; }
+  .grade b { font-size: 16px; }
+  .hint { font-size: 12.5px; }
+
+  /* ── progreso y ajustes: dos columnas, cada bloque entero ── */
+  #view-stats, #view-settings { columns: 2; column-gap: 32px; }
+  #view-stats > *, #view-settings > * {
+    break-inside: avoid;
+    -webkit-column-break-inside: avoid;
+  }
+  #view-stats > .page-title, #view-settings > .page-title { column-span: all; }
+  /* Un título nunca queda solo al pie de una columna, separado de su panel. */
+  #view-settings > .section-label { break-after: avoid; -webkit-column-break-after: avoid; }
+
+  /* ── listas que entran de a dos ──
+     `hard-list` queda afuera a propósito: vive dentro de Progreso, que ya
+     está a dos columnas, y partirla de nuevo deja las filas ilegibles. */
+  .word-list, .study-nav, .text-list {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 10px;
+  }
+  .deck-list { gap: 10px; }
+
+  /* ── las hojas dejan de subir desde abajo y quedan centradas ──
+     Ya no es una hoja que se desliza: es un diálogo. Sin la manija de
+     arrastre, que ahí no significa nada, y con la barra de scroll discreta. */
+  .sheet-back { align-items: center; padding: 24px; }
+  .sheet {
+    border-radius: 20px;
+    border-bottom: 1px solid var(--line);
+    max-height: 86dvh;
+    padding-bottom: 10px;
+    scrollbar-width: thin;
+    scrollbar-color: #262d30 transparent;
+  }
+  .sheet-grab { display: none; }
+  .sheet-head { padding-top: 18px; }
+
+  /* ── el festejo, a escala ── */
+  .learned-ring { width: 128px; height: 128px; }
+  .learned-title { font-size: 30px; }
+  .learned-word { font-size: 22px; }
+  .learned-sub { max-width: 380px; font-size: 14px; }
+}
+
+/* ── tablet apaisada pero con poco alto ──
+ * Safari en horizontal deja unos 700px útiles, y ahí la card empieza a pelear
+ * con los botones de dificultad. En vez de scrollear el contenido — que
+ * esconde justo el significado — la card se compacta: menos aire, letra un
+ * escalón abajo. Sigue siendo cómoda y entra entera. */
+@media (min-width: 700px) and (max-height: 760px) {
+  .card-front { padding: 30px 34px 26px; gap: 16px; }
+  .prompt { font-size: 36px; }
+  .prompt.long { font-size: 28px; }
+  .prompt.xlong { font-size: 23px; }
+  .speak { width: 44px; height: 44px; }
+  .speak .ico { width: 19px; height: 19px; }
+  .card-back { padding: 22px 34px; gap: 16px; }
+  .answer { font-size: 23px; }
+  .grade { min-height: 62px; }
+  .tags { margin-top: 8px; }
+  .session-bar { padding-top: 18px; }
+}
+
+/* ═══ tablet apaisada: la navegación pasa al costado ═══
+ * Con 1180px de ancho, una barra abajo obliga a bajar el pulgar hasta el
+ * borde inferior y se come alto útil. Un riel a la izquierda queda a mano,
+ * devuelve esa franja a la pantalla y es lo que hace cualquier app de iPad.
+ */
+@media (min-width: 1000px) {
+  :root { --tabbar-h: 0px; --rail-w: 104px; }
+  body { padding-left: var(--rail-w); }
+  #app { max-width: 1000px; padding-bottom: 32px; }
+
+  .tabbar {
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: auto;
+    width: var(--rail-w);
+    max-width: none;
+    margin: 0;
+    grid-template-columns: 1fr;
+    grid-auto-rows: max-content;
+    align-content: center;
+    gap: 10px;
+    border-top: none;
+    border-right: 1px solid var(--line-soft);
+    padding: 0 12px;
+  }
+  .tabbar button { height: 64px; border-radius: 14px; }
+  .tabbar button.active { background: var(--green-bg); }
+  .tabbar button span { font-size: 11px; }
+
+  /* La hoja se centra en el espacio real, sin contar el riel. */
+  .sheet-back, .learned-pop, .streak-pop { left: var(--rail-w); }
+  .streak-pop { left: calc(var(--rail-w) + 50%); }
+
+  #view-review { max-width: 780px; }
+  .view.center { min-height: 100dvh; }
+}
+
 /* ═══════════════════ terminado ═══════════════════ */
 
 /* ── foco visible ──

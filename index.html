@@ -46,6 +46,10 @@
       </button>
     </header>
 
+    <!-- Los dos paneles son `display: contents` en el celu, así que ahí no
+         existen: el orden y el espaciado quedan exactamente como estaban.
+         Recién en tablet se vuelven las dos columnas del layout. -->
+    <div class="pane pane-main">
     <p class="date" id="today-label"></p>
 
     <div class="streak-banner" id="streak-banner">
@@ -86,9 +90,12 @@
       <svg viewBox="0 0 24 24" class="ico"><path d="M5 12h13"/><path d="M12 5l7 7-7 7"/></svg>
     </button>
     <p class="cta-note" id="cta-note"></p>
+    </div>
 
+    <div class="pane pane-side">
     <h2 class="section-label">Mazos</h2>
     <div class="deck-list" id="deck-list"></div>
+    </div>
   </section>
 
   <!-- ══ REPASO ══ -->
