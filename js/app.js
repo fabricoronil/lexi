@@ -1041,6 +1041,7 @@ function renderStats() {
     }
   }
 
+  renderTracks();
   renderHardest();
 
   $('#st-cards-label').textContent = `Las ${c.total} cards`;
@@ -1148,6 +1149,63 @@ function renderWords() {
     }
     list.appendChild(el);
   }
+}
+
+/* ── los dos caminos ──
+ * El objetivo de Lexi es doble: subir de nivel (A1 → A2 → B1) y llegar a
+ * entender los videos de programación y de IA sin subtítulos en español. Las
+ * dos avanzan con las mismas cards, pero avanzan a ritmos distintos, y sin
+ * verlas por separado no hay forma de saber cuál se está quedando atrás.
+ *
+ * El porcentaje es honesto sobre lo que mide: cuánto llevás del vocabulario
+ * de ese nivel *que trae la app*, no un certificado de nivel.
+ */
+function trackRowsHtml(rows, color) {
+  return rows.map(({ id, label, done, total }) => {
+    const pct = total ? Math.round((done / total) * 100) : 0;
+    return `
+      <div class="track-row">
+        <span class="track-label">${escapeHtml(label || id)}</span>
+        <div class="track-bar"><i style="width:${pct}%;background:${color}"></i></div>
+        <span class="track-num mono">${done}/${total}</span>
+      </div>`;
+  }).join('');
+}
+
+function renderTracks() {
+  const levels = decks.levelProgress();
+  const area = decks.areaProgress();
+
+  const sum = (rows) => rows.reduce((a, r) => ({ done: a.done + r.done, total: a.total + r.total }), { done: 0, total: 0 });
+  const lv = sum(levels);
+  const ar = sum(area);
+
+  $('#track-levels').innerHTML = trackRowsHtml(levels, 'var(--blue)');
+  $('#track-area').innerHTML = trackRowsHtml(area, 'var(--red)');
+  $('#track-level-sub').textContent = `${lv.done} de ${lv.total} sabidas`;
+  $('#track-area-sub').textContent = `${ar.done} de ${ar.total} sabidas`;
+
+  renderPace();
+}
+
+/** Cuánto falta a este ritmo — y quién es el cuello de botella. */
+function renderPace() {
+  const p = decks.pace();
+  const note = $('#pace-note');
+  if (!p.scopeLeft) {
+    note.textContent = 'Ya viste todas las palabras nuevas de este escalón. Subí uno en Ajustes para seguir.';
+    return;
+  }
+  if (!p.perDay) {
+    note.textContent = 'Tenés las cards nuevas por día en cero: no va a entrar vocabulario nuevo. Subilo en Ajustes.';
+    return;
+  }
+  const semanas = (d) => (d <= 14 ? `${d} ${d === 1 ? 'día' : 'días'}` : `${Math.round(d / 7)} semanas`);
+  const area = p.areaLeft
+    ? ` Las ${p.areaLeft} de tu área que faltan, a ${p.areaPerDay} por día, en ${semanas(p.daysArea)}.`
+    : '';
+  note.textContent = `A ${p.perDay} cards nuevas por día terminás este escalón en ${semanas(p.daysScope)}.${area}`
+    + ' Si querés llegar antes, subí las cards nuevas por día en Ajustes.';
 }
 
 /**

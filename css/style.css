@@ -1980,3 +1980,39 @@ button.switch.on:active i { transform: translateX(19px) scale(.82); }
 .word-row.as-btn:active { background: var(--surface-2); }
 .word-undo { font-size: 11px; color: var(--dim); font-family: var(--mono); }
 
+/* ── los dos caminos: nivel y área, en Progreso ── */
+.track {
+  margin-top: 14px;
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-radius: 13px;
+  padding: 13px 14px;
+}
+.track-head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 11px;
+}
+.track-name { font-size: 13px; font-weight: 600; color: var(--text-2); letter-spacing: -.2px; }
+.track-sub { font-family: var(--mono); font-size: 11px; color: var(--dim); white-space: nowrap; }
+.track-rows { display: flex; flex-direction: column; gap: 8px; }
+.track-row { display: flex; align-items: center; gap: 10px; }
+.track-label {
+  font-family: var(--mono);
+  font-size: 11.5px;
+  color: var(--muted);
+  width: 74px;
+  flex-shrink: 0;
+}
+.track-bar {
+  flex-grow: 1;
+  height: 6px;
+  background: #191e20;
+  border-radius: 3px;
+  overflow: hidden;
+  min-width: 0;
+}
+.track-bar i { display: block; height: 6px; border-radius: 3px; transition: width .5s cubic-bezier(.22,.61,.36,1); }
+.track-num { font-size: 11px; color: var(--dim); width: 52px; text-align: right; flex-shrink: 0; }

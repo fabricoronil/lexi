@@ -371,6 +371,82 @@ export function deckProgress(deckId) {
   return { started, total: cards.length };
 }
 
+/* ── los dos caminos ──
+ * Lexi tira de dos sogas a la vez: subir de nivel (A1 → A2 → B1) y entender
+ * los videos de tu área. Las dos avanzan con las mismas cards, así que
+ * conviene poder mirarlas por separado y ver cuál se está quedando atrás.
+ * "Sabida" es lo mismo que en el resto de la app: aprendida de verdad (el
+ * intervalo pasó las tres semanas) o marcada como "ya me la sé".
+ */
+
+const LEVELS = ['A1', 'A2', 'B1', 'B2'];
+
+function isSabida(card, s) {
+  const status = cardStatus(card, s);
+  return status === 'learned' || status === 'known';
+}
+
+/** Cuánto llevás del vocabulario de cada nivel CEFR que trae la app. */
+export function levelProgress() {
+  const s = store.get();
+  const out = LEVELS.map((id) => ({ id, done: 0, total: 0 }));
+  const byId = Object.fromEntries(out.map((x) => [x.id, x]));
+  for (const card of activeCards()) {
+    const row = byId[card.lvl];
+    if (!row) continue;
+    row.total += 1;
+    if (isSabida(card, s)) row.done += 1;
+  }
+  return out.filter((x) => x.total);
+}
+
+/** Lo mismo pero para tu área: los mazos tech e IA, por paso. */
+export function areaProgress() {
+  const s = store.get();
+  const out = SCOPES.map((sc) => ({ id: sc.id, label: sc.label, done: 0, total: 0 }));
+  for (const card of activeCards()) {
+    if (!AREA_DECKS.has(card.deck)) continue;
+    const row = out[(card.tier ?? 3) - 1];
+    if (!row) continue;
+    row.total += 1;
+    if (isSabida(card, s)) row.done += 1;
+  }
+  return out.filter((x) => x.total);
+}
+
+/* ── a este ritmo, ¿cuánto falta? ──
+ * El objetivo es entender videos del área lo antes posible, y el cuello de
+ * botella no es el mazo: es cuántas cards nuevas por día aceptás. Sin ver el
+ * número no hay forma de decidir si conviene apretar el acelerador, así que
+ * acá está, en días, para el escalón actual y para el vocabulario del área.
+ */
+export function pace() {
+  const s = store.get();
+  const perDay = Math.max(0, s.settings.newPerDay || 0);
+  const maxTier = scopeTier(s.settings.newScope);
+
+  let areaLeft = 0;
+  let generalLeft = 0;
+  for (const card of studyCards()) {
+    if (s.cards[card.id]) continue;
+    if ((card.tier ?? 3) > maxTier) continue;
+    if (AREA_DECKS.has(card.deck)) areaLeft += 1;
+    else generalLeft += 1;
+  }
+
+  const areaPerDay = perDay ? Math.max(1, areaQuota(perDay)) : 0;
+  const days = (left, rate) => (rate > 0 && left > 0 ? Math.ceil(left / rate) : left > 0 ? Infinity : 0);
+
+  return {
+    perDay,
+    areaPerDay,
+    areaLeft,
+    scopeLeft: areaLeft + generalLeft,
+    daysArea: days(areaLeft, areaPerDay),
+    daysScope: days(areaLeft + generalLeft, perDay),
+  };
+}
+
 /** Cuántas cards nuevas quedan en cada escalón de prioridad, para Ajustes. */
 export function scopeCounts() {
   const s = store.get();
