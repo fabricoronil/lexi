@@ -2017,3 +2017,61 @@ button.switch.on:active i { transform: translateX(19px) scale(.82); }
 }
 .track-bar i { display: block; height: 6px; border-radius: 3px; transition: width .5s cubic-bezier(.22,.61,.36,1); }
 .track-num { font-size: 11px; color: var(--dim); width: 52px; text-align: right; flex-shrink: 0; }
+
+/* ═══════════════════ terminado ═══════════════════ */
+
+/* ── foco visible ──
+ * La app se maneja con teclado en el repaso (espacio revela, 1-4 califican) y
+ * en una tablet con teclado eso es la forma natural de usarla. Sin un anillo
+ * de foco no hay manera de saber dónde estás parado. `:focus-visible` y no
+ * `:focus`: no aparece cuando tocás con el dedo, sólo cuando navegás. */
+:focus-visible {
+  outline: 2px solid var(--green);
+  outline-offset: 3px;
+  border-radius: 8px;
+}
+.grade:focus-visible, .cta:focus-visible, .sheet-btn:focus-visible { outline-offset: 4px; }
+.tabbar button:focus-visible { outline-offset: -3px; }
+
+/* ── puntero fino (trackpad o mouse en la tablet) ──
+ * Con dedo no existe el hover, así que todo el feedback está en `:active`.
+ * Con trackpad sí: un aviso antes del click hace que la interfaz se sienta
+ * viva en vez de muerta hasta que apretás. */
+@media (hover: hover) and (pointer: fine) {
+  .cta:hover { filter: brightness(1.06); }
+  .grade:hover { filter: brightness(1.22); transform: translateY(-1px); }
+  .grade.capped:hover { filter: grayscale(.7); transform: none; }
+  .deck:hover, .word-row.as-btn:hover, .opt.as-btn:hover, .row:hover,
+  .vocab-row.own:hover, .hint-btn:hover {
+    background: var(--surface-2);
+  }
+  .know-btn:hover { color: var(--green); border-color: var(--green-line); }
+  .speak:hover { background: #1d2427; color: var(--text); }
+  .tabbar button:hover { color: var(--text-2); }
+  .tabbar button.active:hover { color: var(--green); }
+}
+
+/* ── el reverso entra por partes ──
+ * Significado primero y ejemplo un instante después: el orden en que se leen.
+ * Un solo gesto orquestado en el momento que importa, en vez de que todo
+ * aparezca de golpe. */
+.card-back.reveal-in .field {
+  animation: reveal-in .32s cubic-bezier(.22,.61,.36,1) backwards;
+}
+.card-back.reveal-in .field:nth-child(2) { animation-delay: .09s; }
+
+/* ── respetar "Reducir movimiento" ──
+ * La app está llena de animación: confeti, chispas, la llama que se pinta,
+ * los pops. Con Reducir movimiento activado en el sistema, todo eso se apaga
+ * y cada animación salta directo a su estado final — que es lo importante:
+ * el festejo tiene que quedar *visible*, no cancelado a mitad de camino. */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: .01ms !important;
+    animation-delay: 0ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: .01ms !important;
+  }
+  .confetti, .learned-sparks { display: none; }
+  .grade:hover { transform: none; }
+}
