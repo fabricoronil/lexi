@@ -483,7 +483,7 @@ button {
   min-height: calc(100dvh - var(--tabbar-h) - var(--safe-b));
 }
 
-.session-bar { display: flex; align-items: center; gap: 14px; padding: 28px 0 0; }
+.session-bar { display: flex; align-items: center; gap: 11px; padding: 28px 0 0; }
 .icon-btn {
   width: 40px; height: 40px;
   display: flex; align-items: center; justify-content: center;
@@ -621,6 +621,23 @@ button {
 .g-good b { color: var(--green); font-weight: 700; } .g-good small { color: #4d8a6a; }
 .g-easy { background: var(--blue-bg); border-color: var(--blue-line); }
 .g-easy b { color: var(--blue); } .g-easy small { color: #55788f; }
+
+/* Tapado por una pista: sigue legible (para que veas qué te perdiste) pero
+   no se puede votar. El candado explica por qué sin tener que leer la nota. */
+.grade.capped {
+  opacity: .32;
+  filter: grayscale(.7);
+  pointer-events: none;
+  position: relative;
+}
+.grade.capped::after {
+  content: '🔒';
+  position: absolute;
+  top: 5px;
+  right: 7px;
+  font-size: 10px;
+  opacity: .75;
+}
 
 @keyframes grade-chosen {
   0% { transform: scale(1); filter: brightness(1); }
@@ -786,6 +803,7 @@ button {
 .split-bar { display: flex; height: 10px; gap: 2px; margin-top: 12px; border-radius: 5px; overflow: hidden; }
 .split-bar span { display: block; transition: width .4s; }
 #sb-learned { background: var(--green); }
+#sb-known { background: #35674c; }
 #sb-learning { background: var(--amber); }
 #sb-unseen { background: #222a2c; }
 
@@ -796,6 +814,7 @@ button {
 button.row:active { opacity: .7; }
 .dot { width: 9px; height: 9px; border-radius: 2px; background: currentColor; }
 .c-dim { color: #222a2c; }
+.c-green-soft { color: #35674c; }
 
 .word-list { display: flex; flex-direction: column; gap: 8px; margin-top: 16px; }
 .word-row {
@@ -844,6 +863,8 @@ button.row:active { opacity: .7; }
 .segmented button.on { background: var(--green); color: var(--green-deep); font-weight: 700; }
 .segmented.seg-4 { grid-template-columns: repeat(4, minmax(0, 1fr)); }
 .segmented.seg-4 button { min-height: 38px; font-size: 12px; padding: 0 2px; }
+.segmented.seg-5 { grid-template-columns: repeat(5, minmax(0, 1fr)); }
+.segmented.seg-5 button { min-height: 38px; font-size: 11px; padding: 0 2px; }
 
 .panel {
   background: var(--surface);
@@ -1754,3 +1775,189 @@ button.switch.on:active i { transform: translateX(19px) scale(.82); }
   border-radius: 999px;
   padding: 2px 8px;
 }
+/* ═══ palabras que ya sabés, pistas y el festejo de "aprendida" ═══ */
+
+/* ── "ya me la sé" ──
+ * Va arriba, en la barra de sesión y no cerca de los botones de calificar:
+ * un toque sin querer ahí no hace nada grave, y además siempre pregunta.
+ */
+.know-btn {
+  margin-left: 0;
+  width: 34px;
+  height: 34px;
+  border-radius: 9px;
+  border: 1px solid var(--line);
+  background: var(--surface);
+  color: var(--dim);
+  flex-shrink: 0;
+}
+.know-btn .ico { width: 17px; height: 17px; }
+.know-btn:active { background: var(--green-bg); border-color: var(--green-line); color: var(--green); }
+
+/* ── pistas ── */
+.hint-btn {
+  align-self: center;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  padding: 8px 14px;
+  border-radius: 999px;
+  border: 1px dashed #2a3134;
+  background: transparent;
+  color: var(--muted);
+  font-size: 12.5px;
+}
+.hint-btn .ico { width: 15px; height: 15px; }
+.hint-btn:active { background: var(--surface-2); color: var(--amber); border-color: #3a2a1a; }
+.hint-btn[hidden] { display: none; }
+.hint-btn.spent { border-style: solid; border-color: var(--amber-line); color: var(--amber); background: var(--amber-bg); }
+
+.card-hints {
+  padding: 0 24px 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.card-hints[hidden] { display: none; }
+.hint-item {
+  background: var(--amber-bg);
+  border: 1px solid var(--amber-line);
+  border-left-width: 3px;
+  border-radius: 10px;
+  padding: 10px 12px;
+  animation: reveal-in .3s cubic-bezier(.22,.61,.36,1);
+}
+.hint-kind {
+  display: block;
+  font-size: 9.5px;
+  letter-spacing: 1.4px;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: #8a7350;
+  margin-bottom: 5px;
+}
+.hint-body { font-size: 14px; line-height: 1.55; color: var(--text-2); }
+.hint-body .skeleton { font-family: var(--mono); letter-spacing: 3px; color: var(--amber); font-weight: 700; }
+.hint-body mark { color: var(--amber); background: transparent; font-weight: 700; }
+.hint-body .blank { color: var(--amber); font-weight: 700; letter-spacing: 1px; }
+
+/* ── hoja de confirmación ── */
+.confirm-sheet .sheet-body { gap: 14px; padding-bottom: 6px; }
+.confirm-sheet h2 { margin: 0; font-size: 18px; letter-spacing: -.3px; }
+.confirm-word {
+  font-size: 21px;
+  font-weight: 700;
+  color: var(--green);
+  margin: 0;
+  letter-spacing: -.5px;
+}
+.confirm-text { margin: 0; font-size: 13px; line-height: 1.55; color: var(--muted); }
+
+/* ── el festejo: verde, grande y en el medio, para que no pase desapercibido ── */
+.learned-pop {
+  position: fixed;
+  inset: 0;
+  z-index: 70;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  padding: 24px;
+  text-align: center;
+  /* Un fondo bien opaco: el festejo tiene que leerse solo, no encima de la
+     card que quedó atrás. El halo verde va por arriba, como resplandor. */
+  background:
+    radial-gradient(circle at 50% 42%, rgba(110,231,160,.20), transparent 58%),
+    rgba(7,15,11,.955);
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity .3s ease;
+}
+/* `pointer-events: auto` no es cosmético: sin esto los toques atraviesan el
+   festejo y calificás a ciegas la card que quedó abajo. */
+.learned-pop.show { opacity: 1; pointer-events: auto; }
+
+.learned-ring { position: relative; width: 104px; height: 104px; }
+.learned-ring-svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+.learned-ring-bg { fill: none; stroke: var(--green-line); stroke-width: 3; }
+.learned-ring-fg {
+  fill: none;
+  stroke: var(--green);
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-dasharray: 201;
+  stroke-dashoffset: 201;
+  filter: drop-shadow(0 0 8px rgba(110,231,160,.6));
+}
+.learned-pop.show .learned-ring-fg { animation: learned-draw .6s cubic-bezier(.22,.61,.36,1) forwards; }
+@keyframes learned-draw { to { stroke-dashoffset: 0; } }
+
+.learned-check {
+  position: absolute;
+  inset: 0;
+  margin: auto;
+  width: 46px;
+  height: 46px;
+  fill: none;
+  stroke: var(--green);
+  stroke-width: 2.4;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-dasharray: 26;
+  stroke-dashoffset: 26;
+  filter: drop-shadow(0 0 10px rgba(110,231,160,.7));
+}
+.learned-pop.show .learned-check {
+  animation: learned-check .42s cubic-bezier(.22,.61,.36,1) .38s forwards;
+}
+@keyframes learned-check { to { stroke-dashoffset: 0; } }
+
+.learned-title, .learned-word, .learned-sub { opacity: 0; transform: translateY(8px); }
+.learned-pop.show .learned-title,
+.learned-pop.show .learned-word,
+.learned-pop.show .learned-sub {
+  animation: learned-text .42s cubic-bezier(.22,.61,.36,1) forwards;
+}
+.learned-pop.show .learned-title { animation-delay: .6s; }
+.learned-pop.show .learned-word { animation-delay: .72s; }
+.learned-pop.show .learned-sub { animation-delay: .84s; }
+@keyframes learned-text { to { opacity: 1; transform: translateY(0); } }
+
+.learned-title {
+  font-size: 25px;
+  font-weight: 700;
+  letter-spacing: -.5px;
+  color: var(--green);
+  text-shadow: 0 0 24px rgba(110,231,160,.35);
+}
+.learned-word { font-size: 19px; font-weight: 700; color: var(--text); letter-spacing: -.4px; }
+.learned-sub { font-size: 13px; color: var(--muted); max-width: 280px; line-height: 1.5; }
+
+/* Chispas verdes que salen desde el centro. */
+.learned-sparks { position: absolute; inset: 0; overflow: hidden; pointer-events: none; }
+.spark {
+  position: absolute;
+  top: 45%;
+  left: 50%;
+  width: 7px;
+  height: 7px;
+  border-radius: 2px;
+  background: var(--green);
+  opacity: 0;
+  animation: spark-out var(--dur, 900ms) cubic-bezier(.22,.61,.36,1) var(--delay, 0ms) forwards;
+}
+@keyframes spark-out {
+  0% { opacity: 0; transform: translate(-50%, -50%) scale(.4); }
+  18% { opacity: 1; }
+  100% { opacity: 0; transform: translate(calc(-50% + var(--dx)), calc(-50% + var(--dy))) scale(.7) rotate(var(--rot, 180deg)); }
+}
+
+/* ── estado "ya la sé" en la lista de palabras ── */
+.word-status.known { color: var(--green); background: var(--green-bg); border-color: var(--green-line); }
+.word-row.as-btn { width: 100%; text-align: left; background: var(--surface); }
+.word-row.as-btn:active { background: var(--surface-2); }
+.word-undo { font-size: 11px; color: var(--dim); font-family: var(--mono); }
+

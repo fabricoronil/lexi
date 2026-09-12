@@ -6,7 +6,7 @@ import * as store from './store.js';
 import * as decks from './decks.js';
 import * as study from './study.js';
 import * as texts from './texts.js';
-import { schedule, previewInterval, formatDelay, AGAIN, HARD, GOOD, EASY } from './srs.js';
+import { schedule, previewInterval, formatDelay, isMature, AGAIN, HARD, GOOD, EASY } from './srs.js';
 import * as sound from './sound.js';
 import * as sync from './sync.js';
 import * as plan from './plan.js';
@@ -36,6 +36,10 @@ let session = null;
 let lastStreakSeen = null;
 let streakPopTimer = null;
 let revealed = false; // si ya se mostró el significado de la card actual
+let hints = []; // pistas disponibles para la card actual
+let hintsShown = 0; // cuántas de esas ya pediste
+let learnedPopTimer = null;
+let streakPendiente = false; // racha salvada justo mientras se festejaba una palabra
 
 /* ═══════════ arranque ═══════════ */
 
@@ -181,7 +185,7 @@ function renderHome() {
 
   $('#n-new').textContent = q.fresh.length;
   $('#n-due').textContent = q.due.length;
-  $('#n-learned').textContent = c.learned;
+  $('#n-learned').textContent = c.sabidas;
 
   const btn = $('#btn-start');
   const note = $('#cta-note');
@@ -394,11 +398,15 @@ function renderCard() {
   }
 
   revealed = false;
+  resetHints();
+  hints = buildHints(card, reverse, ex);
   $('#card-back').hidden = true;
   $('#btn-reveal').hidden = false;
   $('#grade-grid').hidden = true;
   $('#grade-grid').classList.remove('locked');
+  $$('#grade-grid .grade').forEach((b) => b.classList.remove('capped'));
   $('#grade-hint').hidden = true;
+  $('#grade-hint').textContent = 'Elegí según cuánto te costó recordarla';
 
   if (s.settings.autoSpeak) speak(card.en);
 }
@@ -409,9 +417,113 @@ function revealCard() {
   revealed = true;
   $('#card-back').hidden = false;
   $('#btn-reveal').hidden = true;
+  $('#btn-hint').hidden = true;
   $('#grade-grid').hidden = false;
   $('#grade-hint').hidden = false;
+  applyGradeCap();
   bounce($('#card-back'), 'reveal-in');
+}
+
+/* ═══════════ pistas ═══════════
+ * Para cuando la tenés en la punta de la lengua: en vez de rendirte y mirar
+ * la respuesta, pedís un empujón. Van de menos a más — primero más contexto
+ * en inglés (que es como la vas a encontrar de verdad), después el esqueleto
+ * de la palabra. La respuesta entera sigue estando del otro lado del botón.
+ */
+
+/** "darse cuenta" → "d _ _ _ _ _   c _ _ _ _ _" */
+function skeleton(text) {
+  return text.split(/(\s+)/).map((chunk) => {
+    if (/^\s+$/.test(chunk)) return ' &nbsp; ';
+    const letters = [...chunk];
+    return letters.map((ch, i) => (i === 0 || !/[a-záéíóúñü]/i.test(ch) ? ch : '_')).join(' ');
+  }).join('');
+}
+
+/**
+ * Las pistas de la card actual, en orden. `ex` es el ejemplo que ya está a
+ * la vista: la primera pista trae el OTRO, para no repetir lo mismo.
+ */
+function buildHints(card, reverse, shown) {
+  const out = [];
+  const other = shown.en === card.ex ? { en: card.ex2, es: card.exEs2 } : { en: card.ex, es: card.exEs };
+
+  if (reverse) {
+    // Buscás la palabra en inglés: el ejemplo con el hueco es la mejor ayuda.
+    for (const ex of [shown, other]) {
+      if (!ex.en) continue;
+      const masked = maskTerm(ex.en, card.en);
+      if (masked) {
+        out.push({ kind: 'Completá la frase', html: masked });
+        break;
+      }
+    }
+    out.push({ kind: 'Cómo empieza', html: `<span class="skeleton">${skeleton(card.en.replace(/^to\s+/i, ''))}</span>` });
+    return out;
+  }
+
+  // Modo normal: la palabra está a la vista y lo que falta es el significado.
+  if (other.en) {
+    out.push({ kind: 'Otra frase con la misma palabra', html: highlight(other.en, card.en) });
+  }
+  out.push({ kind: 'La traducción, casi', html: `<span class="skeleton">${skeleton(card.es)}</span>` });
+  return out;
+}
+
+/* ── la pista tiene precio ──
+ * Si la sacaste con ayuda, no la sabías: calificarla "Fácil" mentiría y el
+ * SRS te la mandaría a un mes cuando en realidad no te salió sola. Cada
+ * pista baja el techo de lo que podés votar. Podés seguir eligiendo peor
+ * (siempre está "Otra vez"), pero no mejor de lo que de verdad pasó.
+ */
+function maxQuality() {
+  if (!hintsShown) return EASY;
+  return hintsShown === 1 ? GOOD : HARD;
+}
+
+const CAP_NOTE = {
+  [GOOD]: 'Usaste una pista: no te salió sola, así que "Fácil" queda fuera.',
+  [HARD]: 'Con todas las pistas: lo máximo es "Difícil" — la sacaste con ayuda.',
+};
+
+/** Apaga los botones por encima del techo, con el motivo a la vista. */
+function applyGradeCap() {
+  const cap = maxQuality();
+  $$('#grade-grid .grade').forEach((b) => {
+    b.classList.toggle('capped', Number(b.dataset.q) > cap);
+  });
+  $('#grade-hint').textContent = CAP_NOTE[cap] || 'Elegí según cuánto te costó recordarla';
+}
+
+function resetHints() {
+  hints = [];
+  hintsShown = 0;
+  const box = $('#card-hints');
+  box.innerHTML = '';
+  box.hidden = true;
+  const btn = $('#btn-hint');
+  btn.classList.remove('spent');
+  $('#hint-label').textContent = '¿No te sale? Pista';
+  btn.hidden = false;
+}
+
+function showNextHint() {
+  if (!session || revealed || hintsShown >= hints.length) return;
+  const hint = hints[hintsShown];
+  hintsShown += 1;
+
+  const box = $('#card-hints');
+  box.hidden = false;
+  const el = document.createElement('div');
+  el.className = 'hint-item';
+  el.innerHTML = `<span class="hint-kind">${hint.kind}</span><div class="hint-body">${hint.html}</div>`;
+  box.appendChild(el);
+
+  const btn = $('#btn-hint');
+  btn.classList.add('spent');
+  if (hintsShown >= hints.length) btn.hidden = true;
+  else $('#hint-label').textContent = 'Otra pista más';
+  sound.playFlip();
 }
 
 function deckLabel(id) {
@@ -441,16 +553,28 @@ const HIGHLIGHT_IRREGULAR = { become: 'became', find: 'found', take: 'took', fre
  * muestra el ejemplo sin marcar — no es un error, hay mazos donde el
  * ejemplo no repite el término literalmente.
  */
-function highlight(sentence, term) {
-  if (!sentence) return '';
-  const esc = (t) => t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
-  const safe = sentence.replace(/[<>&]/g, (ch) => ({ '<': '&lt;', '>': '&gt;', '&': '&amp;' }[ch]));
+function escapeRe(t) {
+  return t.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
+/** Escapa el HTML de la oración antes de meterle marcas propias. */
+function safeSentence(sentence) {
+  return sentence.replace(/[<>&]/g, (ch) => ({ '<': '&lt;', '>': '&gt;', '&': '&amp;' }[ch]));
+}
+
+/**
+ * Encuentra dónde aparece `term` dentro de la oración y devuelve la regex que
+ * matchea, o null si no aparece. La usan `highlight` (para marcarlo) y
+ * `maskTerm` (para taparlo en las pistas), así las dos coinciden siempre en
+ * qué parte de la oración es "la palabra".
+ */
+function termRegex(safe, term) {
   const clean = term.replace(/^(to|a|an|the)\s+/i, '').replace(/[.!?…]+$/, '').trim();
-  if (!clean) return safe;
+  if (!clean) return null;
 
   try {
-    const exact = new RegExp(esc(clean), 'i');
-    if (exact.test(safe)) return safe.replace(exact, (m) => `<mark>${m}</mark>`);
+    const exact = new RegExp(escapeRe(clean), 'i');
+    if (exact.test(safe)) return exact;
   } catch {
     // regex inválida por algún caracter raro en el término: seguimos con el plan B
   }
@@ -464,16 +588,31 @@ function highlight(sentence, term) {
       for (let cut = 0; cut <= 2 && base.length - cut >= 3; cut++) {
         const stem = base.slice(0, base.length - cut);
         try {
-          const re = new RegExp('\\b' + esc(stem) + '\\w*', 'i');
-          if (re.test(safe)) return safe.replace(re, (m) => `<mark>${m}</mark>`);
+          const re = new RegExp('\\b' + escapeRe(stem) + '\\w*', 'i');
+          if (re.test(safe)) return re;
         } catch {
           // idem
         }
       }
     }
   }
+  return null;
+}
 
-  return safe;
+function highlight(sentence, term) {
+  if (!sentence) return '';
+  const safe = safeSentence(sentence);
+  const re = termRegex(safe, term);
+  return re ? safe.replace(re, (m) => `<mark>${m}</mark>`) : safe;
+}
+
+/** La misma oración pero con la palabra tapada, para pistas del modo inverso. */
+function maskTerm(sentence, term) {
+  if (!sentence) return '';
+  const safe = safeSentence(sentence);
+  const re = termRegex(safe, term);
+  if (!re) return null; // sin match, tapar nada no ayuda: mejor no ofrecer la pista
+  return safe.replace(re, '<span class="blank">_____</span>');
 }
 
 /**
@@ -494,6 +633,7 @@ let grading = false;
 /** Capa cosmética sobre answer(): sonido, XP y el pop del botón elegido. */
 function chooseGrade(quality) {
   if (!session || grading || !revealed) return;
+  if (quality > maxQuality()) return; // tapado por las pistas que pediste
   grading = true;
 
   session.combo = quality === GOOD || quality === EASY ? (session.combo || 0) + 1 : 0;
@@ -525,6 +665,101 @@ function chooseGrade(quality) {
   }, 190);
 }
 
+/* ═══════════ "esta palabra ya me la sé" ═══════════
+ * Siempre pregunta antes de aplicarla: el botón vive arriba, lejos de los
+ * de calificar, pero igual no hay forma de sacarse una palabra de encima
+ * con un toque sin querer.
+ */
+
+function openKnowSheet() {
+  const card = currentCard();
+  if (!card) return;
+  $('#know-word').textContent = card.en;
+  $('#know-sheet').hidden = false;
+  sound.playTap();
+}
+
+function closeKnowSheet() {
+  $('#know-sheet').hidden = true;
+}
+
+function confirmKnown() {
+  const card = currentCard();
+  closeKnowSheet();
+  if (!card || !session) return;
+
+  store.markKnown(card.id);
+
+  // Sale de la cola de esta sesión, no sólo de las próximas.
+  session.queue = session.queue.filter((c) => c.id !== card.id);
+
+  // Y entra la siguiente en su lugar: marcar una como sabida tiene que
+  // adelantarte, no acortarte el día. Como nunca la respondiste, no gastó
+  // cupo de cards nuevas, así que hay lugar para otra.
+  let avanzo = null;
+  if (!store.cardState(card.id).reps) {
+    avanzo = decks.nextFreshCard(session.queue.map((c) => c.id));
+    if (avanzo) session.queue.splice(session.index, 0, avanzo);
+  }
+  if (session.index >= session.queue.length) session.index = 0;
+
+  celebrateLearned(card, {
+    title: '¡Una menos!',
+    sub: avanzo
+      ? `Marcada como sabida. En su lugar entra "${avanzo.en}".`
+      : 'Marcada como sabida: no vuelve a aparecer. La podés devolver al mazo desde Progreso → Palabras.',
+  });
+
+  if (!session.queue.length) return finishSession();
+  renderCard();
+}
+
+/* ═══════════ el festejo de una palabra aprendida ═══════════
+ * Una card se considera aprendida cuando el intervalo pasó las tres semanas
+ * (ver `isMature`). Eso es un logro real y tardaba en notarse: pasaba en
+ * silencio, en medio de la sesión, y el número de "aprendidas" del inicio
+ * subía sin que te enteraras. Ahora se ve.
+ */
+function celebrateLearned(card, { title = '¡Aprendida!', sub = '' } = {}) {
+  const pop = $('#learned-pop');
+  if (!pop) return;
+  $('#learned-title').textContent = title;
+  $('#learned-word').textContent = card.en;
+  $('#learned-sub').textContent = sub || `Ya la tenés: "${card.es}". Vuelve recién en ${formatDelay(store.cardState(card.id).due - Date.now())}.`;
+
+  const sparks = $('#learned-sparks');
+  sparks.innerHTML = '';
+  for (let i = 0; i < 18; i++) {
+    const angle = (Math.PI * 2 * i) / 18 + Math.random() * 0.3;
+    const dist = 110 + Math.random() * 120;
+    const el = document.createElement('i');
+    el.className = 'spark';
+    el.style.setProperty('--dx', Math.cos(angle) * dist + 'px');
+    el.style.setProperty('--dy', Math.sin(angle) * dist + 'px');
+    el.style.setProperty('--dur', 700 + Math.random() * 500 + 'ms');
+    el.style.setProperty('--delay', 380 + Math.random() * 260 + 'ms');
+    el.style.setProperty('--rot', Math.random() * 360 + 'deg');
+    sparks.appendChild(el);
+  }
+
+  pop.classList.remove('show');
+  void pop.offsetWidth; // reinicia las animaciones aunque ya estuviera visible
+  pop.classList.add('show');
+  sound.playPerfect();
+
+  clearTimeout(learnedPopTimer);
+  learnedPopTimer = setTimeout(hideLearnedPop, 2600);
+}
+
+function hideLearnedPop() {
+  clearTimeout(learnedPopTimer);
+  $('#learned-pop').classList.remove('show');
+  if (streakPendiente) {
+    streakPendiente = false;
+    setTimeout(celebrateStreak, 320); // que no se pisen las dos animaciones
+  }
+}
+
 function answer(quality) {
   if (!session) return;
   const card = currentCard();
@@ -533,9 +768,11 @@ function answer(quality) {
   const metBefore = store.goalMet();
   const st = store.cardState(card.id);
   const wasNew = st.reps === 0;
+  const wasLearned = isMature(st);
   const next = schedule(st, quality);
   store.putCard(next);
   if (wasNew) store.recordNewCard();
+  const justLearned = !wasLearned && isMature(next);
 
   session.answered += 1;
   session.queue.splice(session.index, 1);
@@ -554,7 +791,15 @@ function answer(quality) {
   store.setCleared(pending === 0);
   store.recordAnswer();
 
-  if (!metBefore && store.goalMet()) celebrateStreak();
+  // Las dos cosas pueden pasar en la misma respuesta. En vez de que una se
+  // coma a la otra, la racha espera a que termine el festejo de la palabra.
+  const salvasteElDia = !metBefore && store.goalMet();
+  if (justLearned) {
+    celebrateLearned(card);
+    streakPendiente = salvasteElDia;
+  } else if (salvasteElDia) {
+    celebrateStreak();
+  }
 
   if (session.index >= session.queue.length) session.index = 0;
   if (!session.queue.length) return finishSession();
@@ -630,6 +875,19 @@ function wireReview() {
     sound.playTap();
     revealCard();
   });
+  $('#btn-hint').addEventListener('click', showNextHint);
+  $('#btn-know').addEventListener('click', openKnowSheet);
+  $('#btn-know-cancel').addEventListener('click', () => {
+    closeKnowSheet();
+    sound.playTap();
+  });
+  $('#btn-know-confirm').addEventListener('click', confirmKnown);
+  $('#know-sheet').addEventListener('click', (e) => {
+    if (e.target.id === 'know-sheet') closeKnowSheet();
+  });
+  // El festejo tapa la pantalla a propósito (para que no califiques a ciegas);
+  // un toque lo saca antes si no querés esperarlo.
+  $('#learned-pop').addEventListener('click', hideLearnedPop);
   $$('#grade-grid .grade').forEach((b) => {
     b.addEventListener('click', () => chooseGrade(Number(b.dataset.q)));
   });
@@ -640,11 +898,17 @@ function wireReview() {
 
   document.addEventListener('keydown', (e) => {
     if ($('#view-review').hidden) return;
-    if (e.key === ' ' || e.key === 'Enter') {
+    if (!$('#know-sheet').hidden) {
+      if (e.key === 'Escape') closeKnowSheet();
+      return;
+    }
+    if (e.key === 'p' || e.key === 'P') {
+      showNextHint();
+    } else if (e.key === ' ' || e.key === 'Enter') {
       e.preventDefault();
       if (!session) return;
       if (!revealed) revealCard();
-      else chooseGrade(GOOD);
+      else chooseGrade(Math.min(GOOD, maxQuality()));
     } else if (['1', '2', '3', '4'].includes(e.key)) {
       if (revealed) chooseGrade(Number(e.key) - 1);
     } else if (e.key === 'Escape') {
@@ -750,9 +1014,11 @@ function renderStats() {
   $('#st-cards-label').textContent = `Las ${c.total} cards`;
   const pc = (n) => (c.total ? (n / c.total) * 100 : 0);
   $('#sb-learned').style.width = pc(c.learned) + '%';
+  $('#sb-known').style.width = pc(c.known) + '%';
   $('#sb-learning').style.width = pc(c.learning) + '%';
   $('#sb-unseen').style.width = pc(c.unseen) + '%';
   $('#st-learned').textContent = c.learned;
+  $('#st-known').textContent = c.known;
   $('#st-learning').textContent = c.learning;
   $('#st-unseen').textContent = c.unseen;
 
@@ -786,7 +1052,7 @@ function level(n, goal) {
 
 /* ═══════════ vocabulario ═══════════ */
 
-const STATUS_LABEL = { learned: 'Aprendida', learning: 'En progreso', unseen: 'Sin ver' };
+const STATUS_LABEL = { learned: 'Aprendida', learning: 'En progreso', unseen: 'Sin ver', known: 'Ya la sé' };
 
 function wireWords() {
   $$('#view-stats .rows .row').forEach((btn) => {
@@ -821,18 +1087,33 @@ function renderWords() {
   }
 
   for (const { card, st, status } of rows) {
-    const due = st && status !== 'unseen' ? formatDelay(Math.max(0, st.due - Date.now())) : '';
-    const el = document.createElement('div');
-    el.className = 'word-row';
+    const due = st && status !== 'unseen' && status !== 'known'
+      ? formatDelay(Math.max(0, st.due - Date.now()))
+      : '';
+    const known = status === 'known';
+    // Las marcadas como sabidas son las únicas accionables desde acá: tocarlas
+    // las devuelve al mazo, por si te arrepentiste o se te fue el dedo.
+    const el = document.createElement(known ? 'button' : 'div');
+    el.className = 'word-row' + (known ? ' as-btn' : '');
+    if (known) el.type = 'button';
     el.innerHTML = `
       <div class="word-main">
-        <span class="word-en">${card.en}</span>
-        <span class="word-es">${card.es}</span>
+        <span class="word-en">${escapeHtml(card.en)}</span>
+        <span class="word-es">${escapeHtml(card.es)}</span>
       </div>
       <div class="word-meta">
         <span class="word-status ${status}">${STATUS_LABEL[status]}</span>
         ${due ? `<span class="word-due">vuelve en ${due}</span>` : ''}
+        ${known ? '<span class="word-undo">tocá para volver a estudiarla</span>' : ''}
       </div>`;
+    if (known) {
+      el.addEventListener('click', () => {
+        store.unmarkKnown(card.id);
+        sound.playTap();
+        toast(`"${card.en}" vuelve al mazo.`);
+        renderWords();
+      });
+    }
     list.appendChild(el);
   }
 }

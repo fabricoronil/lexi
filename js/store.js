@@ -18,6 +18,7 @@ const DEFAULTS = {
   version: 1,
   updatedAt: 0, // timestamp del último cambio local, para saber qué dispositivo tiene la versión más nueva
   cards: {}, // id -> estado SRS
+  known: {}, // id -> timestamp: las que marcaste "ya me la sé" y no vuelven a aparecer
   settings: {
     preset: 'normal',
     newPerDay: 10,
@@ -52,6 +53,7 @@ let state = null;
  */
 function normalize(s) {
   s.myWords = Array.isArray(s.myWords) ? s.myWords.slice() : [];
+  s.known = s.known && typeof s.known === 'object' ? { ...s.known } : {};
   return s;
 }
 
@@ -336,6 +338,25 @@ export function updateMyWord(id, fields) {
 export function removeMyWord(id) {
   const s = load();
   s.myWords = s.myWords.filter((w) => w.id !== id);
+  save();
+}
+
+/* ── "esta palabra ya me la sé" ──
+ * Marcarla la saca del circuito de estudio para siempre (hasta que la
+ * devuelvas a mano): no entra a la cola, ni al refuerzo, ni a las difíciles.
+ * Vive aparte de `cards` para no ensuciar el historial SRS — si la devolvés,
+ * el progreso que tenía sigue intacto.
+ */
+
+export function markKnown(id) {
+  const s = load();
+  s.known[id] = Date.now();
+  save();
+}
+
+export function unmarkKnown(id) {
+  const s = load();
+  delete s.known[id];
   save();
 }
 

@@ -155,16 +155,16 @@ export function activeCards() {
   return all.filter((c) => decks[c.deck]);
 }
 
+/** Las de los mazos activos que todavía hay que estudiar (sin las que ya sabés). */
+export function studyCards() {
+  const s = store.get();
+  return activeCards().filter((c) => !s.known[c.id]);
+}
+
 export function byId(id) {
   return all.find((c) => c.id === id);
 }
 
-/**
- * Cola de la sesión: primero lo vencido, después las nuevas del día.
- * Las nuevas se limitan según el nivel de exigencia.
- */
-export function buildQueue(now = Date.now()) {
-  const s = store.get();
 /* ── el orden de las nuevas: una rampa, no una pared ──
  * Ordenar por nivel y después por frecuencia daba tres semanas de puro A1 y
  * de golpe una pared de A2. Ahora cada card tiene un costo = su posición en
@@ -183,7 +183,23 @@ function freshOrder(a, b) {
   return (a.tier ?? 3) - (b.tier ?? 3) || freshCost(a) - freshCost(b);
 }
 
-  const pool = activeCards();
+/**
+ * Cola de la sesión: primero lo vencido, después las nuevas del día.
+ * Las nuevas se limitan según el nivel de exigencia.
+ */
+export function buildQueue(now = Date.now()) {
+  const q = computeQueue(now);
+  // Si no queda nada pendiente, el día cuenta para la racha aunque no llegues
+  // a la meta: no tiene sentido exigirte repasos que no existen. Va acá y no
+  // en `computeQueue` porque es un efecto sobre el estado, y hay quien sólo
+  // quiere mirar la cola (ver `nextFreshCard`) sin tocar nada.
+  store.setCleared(q.total === 0 && q.midLearning === 0);
+  return q;
+}
+
+function computeQueue(now) {
+  const s = store.get();
+  const pool = studyCards();
 
   const due = [];
   const fresh = [];
@@ -212,15 +228,12 @@ function freshOrder(a, b) {
   const picked = fresh.slice(0, remainingNew);
   const total = due.length + picked.length;
 
-  // Si no queda nada pendiente, el día cuenta para la racha aunque no llegues
-  // a la meta: no tiene sentido exigirte repasos que no existen.
-  store.setCleared(total === 0 && midLearning === 0);
-
   return { due, fresh: picked, total, midLearning };
 }
 
-/** 'unseen' | 'learning' | 'learned', según el estado SRS guardado (si hay). */
+/** 'unseen' | 'learning' | 'learned' | 'known', según el estado guardado (si hay). */
 export function cardStatus(card, s = store.get()) {
+  if (s.known[card.id]) return 'known';
   const st = s.cards[card.id];
   if (!st) return 'unseen';
   return isMature(st) ? 'learned' : 'learning';
@@ -231,13 +244,17 @@ export function counts() {
   let learned = 0;
   let learning = 0;
   let unseen = 0;
+  let known = 0;
   for (const card of activeCards()) {
     const status = cardStatus(card, s);
-    if (status === 'unseen') unseen += 1;
+    if (status === 'known') known += 1;
+    else if (status === 'unseen') unseen += 1;
     else if (status === 'learned') learned += 1;
     else learning += 1;
   }
-  return { learned, learning, unseen, total: learned + learning + unseen };
+  // Las que marcaste "ya me la sé" cuentan como sabidas: no las vas a repasar,
+  // pero tampoco son deuda pendiente.
+  return { learned, learning, unseen, known, sabidas: learned + known, total: learned + learning + unseen + known };
 }
 
 /** Todas las cards activas con su estado, para listarlas en "Vocabulario". */
@@ -251,13 +268,23 @@ export function wordList() {
 }
 
 /**
+ * La próxima card nueva que tocaría, sin contar las que ya están en la cola
+ * de la sesión. Sirve para reemplazar en el acto a una que marcaste como
+ * "ya me la sé": marcarla no te acorta el día, te adelanta a la siguiente.
+ */
+export function nextFreshCard(excludeIds = []) {
+  const skip = new Set(excludeIds);
+  return computeQueue(Date.now()).fresh.find((c) => !skip.has(c.id)) || null;
+}
+
+/**
  * Cola de refuerzo: para cuando ya no queda nada pendiente por hoy pero
  * el usuario quiere seguir practicando. A propósito no respeta newPerDay
  * ni la meta diaria — es una vuelta extra, sin límite, sobre los mazos
  * activos (ya vistos o no). Se pide de a tandas mezcladas al azar.
  */
 export function buildReinforceQueue(limit = 20) {
-  const pool = activeCards();
+  const pool = studyCards();
   const shuffled = [...pool].sort(() => Math.random() - 0.5);
   return shuffled.slice(0, limit);
 }
@@ -270,7 +297,7 @@ export function buildReinforceQueue(limit = 20) {
 export function hardestCards(limit = 12) {
   const s = store.get();
   const out = [];
-  for (const card of activeCards()) {
+  for (const card of studyCards()) {
     const st = s.cards[card.id];
     if (!st || !struggles(st)) continue;
     out.push({ card, st, score: difficultyScore(st), leech: isLeech(st) });
@@ -287,6 +314,7 @@ export function buildHardQueue(limit = 20) {
 export function deckProgress(deckId) {
   const s = store.get();
   const cards = all.filter((c) => c.deck === deckId);
-  const started = cards.filter((c) => s.cards[c.id]).length;
+  const started = cards.filter((c) => s.cards[c.id] || s.known[c.id]).length;
   return { started, total: cards.length };
 }
+

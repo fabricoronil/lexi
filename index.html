@@ -92,6 +92,9 @@
       <div class="session-progress"><div id="session-fill"></div></div>
       <span class="mono session-count" id="session-count">0/0</span>
       <span class="xp-chip" id="session-xp">+0</span>
+      <button class="icon-btn know-btn" id="btn-know" type="button" aria-label="Ya me sé esta palabra" title="Ya me sé esta palabra">
+        <svg viewBox="0 0 24 24" class="ico"><path d="m2 13 4 4 7-7"/><path d="m11 13 4 4 7-7"/></svg>
+      </button>
     </header>
 
     <div class="tags" id="card-tags"></div>
@@ -107,6 +110,8 @@
         </div>
       </div>
 
+      <div class="card-hints" id="card-hints" hidden></div>
+
       <div class="card-back" id="card-back" hidden>
         <div class="field">
           <div class="field-label">Significado</div>
@@ -120,6 +125,10 @@
     </div>
 
     <div class="answers" id="answers">
+      <button class="hint-btn" id="btn-hint" type="button">
+        <svg viewBox="0 0 24 24" class="ico"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M12 2a7 7 0 0 0-4 12.7V16h8v-1.3A7 7 0 0 0 12 2z"/></svg>
+        <span id="hint-label">¿No te sale? Pista</span>
+      </button>
       <button class="cta reveal-btn" id="btn-reveal" type="button">
         <span>Mostrar significado</span>
         <svg viewBox="0 0 24 24" class="ico"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7-11-7-11-7z"/><circle cx="12" cy="12" r="3"/></svg>
@@ -189,10 +198,11 @@
     <div class="block">
       <h2 class="section-label" id="st-cards-label">Las cards</h2>
       <div class="split-bar">
-        <span id="sb-learned"></span><span id="sb-learning"></span><span id="sb-unseen"></span>
+        <span id="sb-learned"></span><span id="sb-known"></span><span id="sb-learning"></span><span id="sb-unseen"></span>
       </div>
       <div class="rows">
         <button class="row" type="button" data-status="learned"><i class="dot c-green"></i><span>Aprendidas</span><b class="mono" id="st-learned">0</b></button>
+        <button class="row" type="button" data-status="known"><i class="dot c-green-soft"></i><span>Ya las sabías</span><b class="mono" id="st-known">0</b></button>
         <button class="row" type="button" data-status="learning"><i class="dot c-amber"></i><span>En progreso</span><b class="mono" id="st-learning">0</b></button>
         <button class="row" type="button" data-status="unseen"><i class="dot c-dim"></i><span>Sin ver</span><b class="mono" id="st-unseen">0</b></button>
       </div>
@@ -223,11 +233,12 @@
       <h1 class="page-title" style="margin:0">Vocabulario</h1>
     </header>
 
-    <div class="segmented seg-4" id="words-filter">
+    <div class="segmented seg-5" id="words-filter">
       <button data-filter="all" type="button">Todas</button>
       <button data-filter="learned" type="button">Aprendidas</button>
       <button data-filter="learning" type="button">Progreso</button>
       <button data-filter="unseen" type="button">Sin ver</button>
+      <button data-filter="known" type="button">Ya la sé</button>
     </div>
 
     <p class="note" id="words-count"></p>
@@ -634,7 +645,38 @@
     </div>
   </div>
 
+  <!-- ══ HOJA: CONFIRMAR "YA ME LA SÉ" ══ -->
+  <div class="sheet-back" id="know-sheet" hidden>
+    <div class="sheet confirm-sheet" role="dialog" aria-modal="true" aria-labelledby="know-sheet-title">
+      <div class="sheet-grab"></div>
+      <div class="sheet-body">
+        <h2 id="know-sheet-title">¿Ya te sabés esta palabra?</h2>
+        <p class="confirm-word mono" id="know-word">—</p>
+        <p class="confirm-text" id="know-text">No vuelve a aparecer en los repasos y cuenta como sabida. La podés devolver al mazo desde Progreso → Palabras.</p>
+        <div class="sheet-actions">
+          <button class="sheet-btn ghost" id="btn-know-cancel" type="button">Cancelar</button>
+          <button class="sheet-btn" id="btn-know-confirm" type="button">Sí, ya me la sé</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <div class="toast" id="toast" hidden></div>
+
+  <!-- ══ CELEBRACIÓN: PALABRA APRENDIDA ══ -->
+  <div class="learned-pop" id="learned-pop" aria-hidden="true">
+    <div class="learned-ring">
+      <svg viewBox="0 0 72 72" class="learned-ring-svg">
+        <circle cx="36" cy="36" r="32" class="learned-ring-bg"/>
+        <circle cx="36" cy="36" r="32" class="learned-ring-fg"/>
+      </svg>
+      <svg viewBox="0 0 24 24" class="learned-check"><path d="M5 13l4 4L19 7"/></svg>
+    </div>
+    <div class="learned-title" id="learned-title">¡Aprendida!</div>
+    <div class="learned-word mono" id="learned-word">—</div>
+    <div class="learned-sub" id="learned-sub"></div>
+    <div class="learned-sparks" id="learned-sparks"></div>
+  </div>
 
   <div class="streak-pop" id="streak-pop">
     <div class="streak-pop-flame">
