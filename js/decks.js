@@ -21,23 +21,129 @@ function makeId(deckId, en) {
   return deckId + ':' + en.toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '');
 }
 
+/* ── qué tan usada es cada palabra ──
+ * `data/frequency.json` trae las 2000 palabras más frecuentes del idioma en
+ * orden. Cruzando cada card contra esa lista sabemos si lo que te está por
+ * enseñar aparece en cualquier texto o es un término rebuscado que casi no
+ * vas a ver. Eso es lo que decide el orden en que entran las cards nuevas.
+ * Si el archivo no carga, la app sigue andando: sin ranking manda el nivel.
+ */
+const UNRANKED = 5000; // fuera del top 2000: para el orden, como si fuera rarísima
+
+// Palabras que no dicen nada sobre lo difícil que es una card: si mido
+// "to look into" por "to" o "into", me da que es de las más comunes del
+// idioma, cuando lo difícil es justamente el sentido de la expresión.
+const RANK_STOPWORDS = new Set([
+  'a', 'an', 'the', 'to', 'of', 'in', 'on', 'at', 'for', 'and', 'or', 'but',
+  'is', 'be', 'am', 'are', 'was', 'were', 'it', 'this', 'that', 'you', 'your',
+  'we', 'i', 'my', 'me', 'not', 'with', 'as', 'do', 'so', 'up', 'out', 'off',
+]);
+
+let freq = null; // Map: palabra -> posición en el ranking (1 = la más usada)
+
+async function loadFrequency() {
+  try {
+    const res = await fetch('data/frequency.json');
+    if (!res.ok) return null;
+    const data = await res.json();
+    const map = new Map();
+    (data.words || []).forEach((w, i) => {
+      const k = String(w.w || '').toLowerCase();
+      if (k && !map.has(k)) map.set(k, i + 1);
+    });
+    return map;
+  } catch {
+    return null; // sin conexión y sin cache: seguimos sin ranking
+  }
+}
+
+/** Posición de una palabra suelta, probando las terminaciones más comunes. */
+function wordRank(w) {
+  if (!freq) return null;
+  const tries = [w, w.replace(/s$/, ''), w.replace(/es$/, ''), w.replace(/ing$/, ''),
+    w.replace(/ing$/, 'e'), w.replace(/ed$/, ''), w.replace(/ied$/, 'y')];
+  for (const t of tries) {
+    const r = freq.get(t);
+    if (r) return r;
+  }
+  return null;
+}
+
+/**
+ * Qué tan usada es una card. Para una expresión de varias palabras vale la
+ * parte MENOS común: "to look into" es tan difícil como la idea que arma,
+ * no como la palabra "to".
+ */
+function cardRank(en) {
+  if (!freq) return UNRANKED;
+  const words = en.toLowerCase().match(/[a-z']+/g) || [];
+  const content = words.filter((w) => w.length > 1 && !RANK_STOPWORDS.has(w));
+  const use = content.length ? content : words;
+  if (!use.length) return UNRANKED;
+  let worst = 0;
+  for (const w of use) worst = Math.max(worst, wordRank(w) || UNRANKED);
+  return worst;
+}
+
 export async function loadDecks() {
   if (all.length) return all;
-  const results = await Promise.all(
-    DECKS.map(async (deck) => {
-      const res = await fetch(deck.file);
-      if (!res.ok) throw new Error(`No pude cargar ${deck.file} (${res.status})`);
-      const rows = await res.json();
-      return rows.map((row, i) => ({
-        ...row,
-        deck: deck.id,
-        color: deck.color,
-        id: makeId(deck.id, row.en) || `${deck.id}:${i}`,
-      }));
-    })
-  );
+  const [results, freqMap] = await Promise.all([
+    Promise.all(
+      DECKS.map(async (deck) => {
+        const res = await fetch(deck.file);
+        if (!res.ok) throw new Error(`No pude cargar ${deck.file} (${res.status})`);
+        const rows = await res.json();
+        return rows.map((row, i) => ({
+          ...row,
+          deck: deck.id,
+          color: deck.color,
+          id: makeId(deck.id, row.en) || `${deck.id}:${i}`,
+        }));
+      })
+    ),
+    loadFrequency(),
+  ]);
+  freq = freqMap;
   all = results.flat();
+  for (const card of all) {
+    card.rank = cardRank(card.en);
+    card.tier = cardTier(card);
+  }
   return all;
+}
+
+/* ── prioridad: qué se aprende ahora y qué puede esperar ──
+ * Tres escalones, de lo que rinde más a lo que rinde menos si recién
+ * arrancás. No esconde nada: sólo decide el orden en que las cards nuevas
+ * entran al mazo, para que las primeras horas se te vayan en palabras que
+ * vas a escuchar en cualquier video y no en términos rebuscados.
+ */
+export const SCOPES = [
+  { id: 'esencial', tier: 1, label: 'Base', hint: 'Lo que aparece en cualquier frase, más el vocabulario técnico de todos los días (a bug, a function, a server).' },
+  { id: 'util', tier: 2, label: 'Intermedio', hint: 'Suma lo de uso diario menos común y lo técnico de videos y docs (to deploy, an endpoint, inference).' },
+  { id: 'todo', tier: 3, label: 'Completo', hint: 'También lo idiomático y los términos más rebuscados (under the hood, stale, gradient descent).' },
+];
+
+export function scopeTier(id) {
+  const s = SCOPES.find((x) => x.id === id);
+  return s ? s.tier : 3;
+}
+
+/**
+ * 1 = base · 2 = intermedio · 3 = puede esperar.
+ *
+ * Para el vocabulario técnico y las frases de video, el ranking de frecuencia
+ * del idioma general no sirve: `to debug` y `stale` están los dos fuera del
+ * top 2000, pero uno lo escuchás en cada video y el otro casi nunca. Por eso
+ * esos mazos traen un `step` puesto a mano, y cuando está, manda.
+ */
+export function cardTier(card) {
+  if (card.step) return Math.min(3, Math.max(1, card.step));
+  const rank = card.rank ?? UNRANKED;
+  if (card.lvl === 'A1') return 1;
+  if (card.lvl === 'A2') return rank <= 1500 ? 1 : 2;
+  if (card.lvl === 'B1') return rank <= 1000 ? 2 : 3;
+  return 3;
 }
 
 export function allCards() {
@@ -59,6 +165,24 @@ export function byId(id) {
  */
 export function buildQueue(now = Date.now()) {
   const s = store.get();
+/* ── el orden de las nuevas: una rampa, no una pared ──
+ * Ordenar por nivel y después por frecuencia daba tres semanas de puro A1 y
+ * de golpe una pared de A2. Ahora cada card tiene un costo = su posición en
+ * el ranking de frecuencia + un peso por nivel. Así A1 domina el arranque
+ * pero A2 aparece desde el principio y toma fuerza sola: una palabra A2 que
+ * se usa todo el tiempo entra antes que una A1 que casi no aparece, que es
+ * lo que de verdad conviene aprender primero.
+ */
+const LVL_WEIGHT = { A1: 0, A2: 250, B1: 600, B2: 1000 };
+
+function freshCost(card) {
+  return (card.rank ?? UNRANKED) + (LVL_WEIGHT[card.lvl] ?? 1200);
+}
+
+function freshOrder(a, b) {
+  return (a.tier ?? 3) - (b.tier ?? 3) || freshCost(a) - freshCost(b);
+}
+
   const pool = activeCards();
 
   const due = [];
@@ -84,9 +208,7 @@ export function buildQueue(now = Date.now()) {
   due.sort((a, b) => s.cards[a.id].due - s.cards[b.id].due);
 
   const remainingNew = Math.max(0, s.settings.newPerDay - store.newToday());
-  // Las nuevas salen mezcladas pero de menor a mayor nivel.
-  const order = { A1: 0, A2: 1, B1: 2, B2: 3 };
-  fresh.sort((a, b) => (order[a.lvl] ?? 9) - (order[b.lvl] ?? 9));
+  fresh.sort(freshOrder);
   const picked = fresh.slice(0, remainingNew);
   const total = due.length + picked.length;
 
