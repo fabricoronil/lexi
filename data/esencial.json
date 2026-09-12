@@ -1,0 +1,1422 @@
+[
+  {
+    "en": "to tell",
+    "es": "contar / decirle a alguien",
+    "ex": "Tell me the truth.",
+    "exEs": "Decime la verdad.",
+    "lvl": "A1",
+    "tag": "esencial",
+    "ex2": "He told us a funny story.",
+    "exEs2": "Nos contó una historia graciosa."
+  },
+  {
+    "en": "to leave",
+    "es": "irse / dejar",
+    "ex": "I leave the house at eight.",
+    "exEs": "Salgo de casa a las ocho.",
+    "lvl": "A2",
+    "tag": "esencial",
+    "ex2": "Don't leave your bag there.",
+    "exEs2": "No dejes tu bolso ahí."
+  },
+  {
+    "en": "to put",
+    "es": "poner",
+    "ex": "Put it on the table.",
+    "exEs": "Ponelo en la mesa.",
+    "lvl": "A1",
+    "tag": "esencial",
+    "ex2": "Where did you put the keys?",
+    "exEs2": "¿Dónde pusiste las llaves?"
+  },
+  {
+    "en": "to let",
+    "es": "dejar (permitir)",
+    "ex": "Let me help you.",
+    "exEs": "Dejame ayudarte.",
+    "lvl": "A2",
+    "tag": "esencial",
+    "ex2": "My parents let me stay up late.",
+    "exEs2": "Mis viejos me dejan quedarme despierto."
+  },
+  {
+    "en": "to understand",
+    "es": "entender",
+    "ex": "I don't understand this word.",
+    "exEs": "No entiendo esta palabra.",
+    "lvl": "A1",
+    "tag": "esencial",
+    "ex2": "Now I understand why.",
+    "exEs2": "Ahora entiendo por qué."
+  },
+  {
+    "en": "to pay",
+    "es": "pagar",
+    "ex": "I'll pay with my card.",
+    "exEs": "Voy a pagar con tarjeta.",
+    "lvl": "A1",
+    "tag": "esencial",
+    "ex2": "Who paid for dinner?",
+    "exEs2": "¿Quién pagó la cena?"
+  },
+  {
+    "en": "to sell",
+    "es": "vender",
+    "ex": "They sell coffee here.",
+    "exEs": "Acá venden café.",
+    "lvl": "A2",
+    "tag": "esencial",
+    "ex2": "He sold his car last month.",
+    "exEs2": "Vendió el auto el mes pasado."
+  },
+  {
+    "en": "to send",
+    "es": "enviar / mandar",
+    "ex": "Send me the file.",
+    "exEs": "Mandame el archivo.",
+    "lvl": "A1",
+    "tag": "esencial",
+    "ex2": "I sent the email yesterday.",
+    "exEs2": "Mandé el mail ayer."
+  },
+  {
+    "en": "to meet",
+    "es": "conocer / encontrarse con",
+    "ex": "Nice to meet you.",
+    "exEs": "Un gusto conocerte.",
+    "lvl": "A1",
+    "tag": "esencial",
+    "ex2": "Let's meet at the station.",
+    "exEs2": "Encontrémonos en la estación."
+  },
+  {
+    "en": "to move",
+    "es": "mover / mudarse",
+    "ex": "Don't move.",
+    "exEs": "No te muevas.",
+    "lvl": "A2",
+    "tag": "esencial",
+    "ex2": "We moved to a new apartment.",
+    "exEs2": "Nos mudamos a un departamento nuevo."
+  },
+  {
+    "en": "to turn",
+    "es": "girar / doblar",
+    "ex": "Turn left at the corner.",
+    "exEs": "Doblá a la izquierda en la esquina.",
+    "lvl": "A2",
+    "tag": "esencial",
+    "ex2": "She turned around and smiled.",
+    "exEs2": "Se dio vuelta y sonrió."
+  },
+  {
+    "en": "to decide",
+    "es": "decidir",
+    "ex": "I can't decide.",
+    "exEs": "No me puedo decidir.",
+    "lvl": "A2",
+    "tag": "esencial",
+    "ex2": "We decided to stay home.",
+    "exEs2": "Decidimos quedarnos en casa."
+  },
+  {
+    "en": "to lose",
+    "es": "perder",
+    "ex": "Don't lose the ticket.",
+    "exEs": "No pierdas el pasaje.",
+    "lvl": "A1",
+    "tag": "esencial",
+    "ex2": "I lost my phone.",
+    "exEs2": "Perdí el celular."
+  },
+  {
+    "en": "to bring",
+    "es": "traer",
+    "ex": "Bring your laptop.",
+    "exEs": "Traé tu notebook.",
+    "lvl": "A2",
+    "tag": "esencial",
+    "ex2": "She brought us coffee.",
+    "exEs2": "Nos trajo café."
+  },
+  {
+    "en": "to show",
+    "es": "mostrar",
+    "ex": "Show me how it works.",
+    "exEs": "Mostrame cómo funciona.",
+    "lvl": "A1",
+    "tag": "esencial",
+    "ex2": "He showed me the photos.",
+    "exEs2": "Me mostró las fotos."
+  },
+  {
+    "en": "to believe",
+    "es": "creer",
+    "ex": "I believe you.",
+    "exEs": "Te creo.",
+    "lvl": "A2",
+    "tag": "esencial",
+    "ex2": "She didn't believe the story.",
+    "exEs2": "No creyó la historia."
+  },
+  {
+    "en": "to hope",
+    "es": "esperar (desear)",
+    "ex": "I hope you're doing well.",
+    "exEs": "Espero que estés bien.",
+    "lvl": "A2",
+    "tag": "esencial",
+    "ex2": "We hope to see you soon.",
+    "exEs2": "Esperamos verte pronto."
+  },
+  {
+    "en": "to seem",
+    "es": "parecer",
+    "ex": "It seems easy.",
+    "exEs": "Parece fácil.",
+    "lvl": "A2",
+    "tag": "esencial",
+    "ex2": "He seems tired today.",
+    "exEs2": "Parece cansado hoy."
+  },
+  {
+    "en": "to answer",
+    "es": "contestar",
+    "ex": "Answer the question.",
+    "exEs": "Contestá la pregunta.",
+    "lvl": "A1",
+    "tag": "esencial",
+    "ex2": "Nobody answered the phone.",
+    "exEs2": "Nadie contestó el teléfono."
+  },
+  {
+    "en": "to drive",
+    "es": "manejar",
+    "ex": "She drives to work.",
+    "exEs": "Maneja hasta el trabajo.",
+    "lvl": "A1",
+    "tag": "esencial",
+    "ex2": "I don't know how to drive.",
+    "exEs2": "No sé manejar."
+  },
+  {
+    "en": "to wear",
+    "es": "usar (ropa)",
+    "ex": "He wears glasses.",
+    "exEs": "Usa anteojos.",
+    "lvl": "A2",
+    "tag": "esencial",
+    "ex2": "I'm wearing a blue shirt.",
+    "exEs2": "Tengo puesta una camisa azul."
+  },
+  {
+    "en": "to sit",
+    "es": "sentarse",
+    "ex": "Sit here, please.",
+    "exEs": "Sentate acá, por favor.",
+    "lvl": "A1",
+    "tag": "esencial",
+    "ex2": "We sat by the window.",
+    "exEs2": "Nos sentamos al lado de la ventana."
+  },
+  {
+    "en": "to carry",
+    "es": "llevar (cargar)",
+    "ex": "Can you carry this bag?",
+    "exEs": "¿Podés llevar este bolso?",
+    "lvl": "A2",
+    "tag": "esencial",
+    "ex2": "She carries her laptop everywhere.",
+    "exEs2": "Lleva la notebook a todos lados."
+  },
+  {
+    "en": "to add",
+    "es": "agregar",
+    "ex": "Add some salt.",
+    "exEs": "Agregá un poco de sal.",
+    "lvl": "A2",
+    "tag": "esencial",
+    "ex2": "I added your name to the list.",
+    "exEs2": "Agregué tu nombre a la lista."
+  },
+  {
+    "en": "to check",
+    "es": "revisar / chequear",
+    "ex": "Check your email.",
+    "exEs": "Revisá tu mail.",
+    "lvl": "A2",
+    "tag": "esencial",
+    "ex2": "I checked the price twice.",
+    "exEs2": "Chequeé el precio dos veces."
+  },
+  {
+    "en": "to follow",
+    "es": "seguir",
+    "ex": "Follow me.",
+    "exEs": "Seguime.",
+    "lvl": "A2",
+    "tag": "esencial",
+    "ex2": "She followed the instructions.",
+    "exEs2": "Siguió las instrucciones."
+  },
+  {
+    "en": "to continue",
+    "es": "seguir / continuar",
+    "ex": "Let's continue tomorrow.",
+    "exEs": "Sigamos mañana.",
+    "lvl": "A2",
+    "tag": "esencial",
+    "ex2": "The rain continued all night.",
+    "exEs2": "La lluvia siguió toda la noche."
+  },
+  {
+    "en": "to create",
+    "es": "crear",
+    "ex": "I created an account.",
+    "exEs": "Creé una cuenta.",
+    "lvl": "A2",
+    "tag": "esencial",
+    "ex2": "They create content every week.",
+    "exEs2": "Crean contenido todas las semanas."
+  },
+  {
+    "en": "to grow",
+    "es": "crecer",
+    "ex": "Kids grow fast.",
+    "exEs": "Los chicos crecen rápido.",
+    "lvl": "A2",
+    "tag": "esencial",
+    "ex2": "The team grew a lot this year.",
+    "exEs2": "El equipo creció mucho este año."
+  },
+  {
+    "en": "to teach",
+    "es": "enseñar",
+    "ex": "She teaches English.",
+    "exEs": "Enseña inglés.",
+    "lvl": "A2",
+    "tag": "esencial",
+    "ex2": "He taught me how to cook.",
+    "exEs2": "Me enseñó a cocinar."
+  },
+  {
+    "en": "to hate",
+    "es": "odiar",
+    "ex": "I hate waiting.",
+    "exEs": "Odio esperar.",
+    "lvl": "A2",
+    "tag": "esencial",
+    "ex2": "She hates the cold.",
+    "exEs2": "Odia el frío."
+  },
+  {
+    "en": "a place",
+    "es": "lugar",
+    "ex": "This is a nice place.",
+    "exEs": "Este es un lindo lugar.",
+    "lvl": "A1",
+    "tag": "esencial",
+    "ex2": "I know a good place to eat.",
+    "exEs2": "Conozco un buen lugar para comer."
+  },
+  {
+    "en": "a job",
+    "es": "empleo / puesto",
+    "ex": "He found a new job.",
+    "exEs": "Consiguió un trabajo nuevo.",
+    "lvl": "A1",
+    "tag": "esencial",
+    "ex2": "It's a hard job.",
+    "exEs2": "Es un trabajo difícil."
+  },
+  {
+    "en": "a word",
+    "es": "palabra",
+    "ex": "I don't know this word.",
+    "exEs": "No conozco esta palabra.",
+    "lvl": "A1",
+    "tag": "esencial",
+    "ex2": "In other words, it's cheaper.",
+    "exEs2": "En otras palabras, es más barato."
+  },
+  {
+    "en": "a problem",
+    "es": "problema",
+    "ex": "We have a problem.",
+    "exEs": "Tenemos un problema.",
+    "lvl": "A1",
+    "tag": "esencial",
+    "ex2": "No problem.",
+    "exEs2": "No hay drama."
+  },
+  {
+    "en": "a story",
+    "es": "historia / cuento",
+    "ex": "Tell me the whole story.",
+    "exEs": "Contame toda la historia.",
+    "lvl": "A1",
+    "tag": "esencial",
+    "ex2": "It's a long story.",
+    "exEs2": "Es una historia larga."
+  },
+  {
+    "en": "a part",
+    "es": "parte",
+    "ex": "This is the best part.",
+    "exEs": "Esta es la mejor parte.",
+    "lvl": "A2",
+    "tag": "esencial",
+    "ex2": "I only read the first part.",
+    "exEs2": "Leí sólo la primera parte."
+  },
+  {
+    "en": "a group",
+    "es": "grupo",
+    "ex": "We work in small groups.",
+    "exEs": "Trabajamos en grupos chicos.",
+    "lvl": "A2",
+    "tag": "esencial",
+    "ex2": "Join the group.",
+    "exEs2": "Sumate al grupo."
+  },
+  {
+    "en": "a team",
+    "es": "equipo",
+    "ex": "She joined our team.",
+    "exEs": "Se sumó a nuestro equipo.",
+    "lvl": "A2",
+    "tag": "esencial",
+    "ex2": "The whole team helped.",
+    "exEs2": "Todo el equipo ayudó."
+  },
+  {
+    "en": "a price",
+    "es": "precio",
+    "ex": "The price is too high.",
+    "exEs": "El precio es muy alto.",
+    "lvl": "A2",
+    "tag": "esencial",
+    "ex2": "Prices went up again.",
+    "exEs2": "Los precios subieron otra vez."
+  },
+  {
+    "en": "important",
+    "es": "importante",
+    "ex": "This is really important.",
+    "exEs": "Esto es muy importante.",
+    "lvl": "A1",
+    "tag": "esencial",
+    "ex2": "It's an important meeting.",
+    "exEs2": "Es una reunión importante."
+  },
+  {
+    "en": "different",
+    "es": "distinto",
+    "ex": "It's a different story now.",
+    "exEs": "Ahora es otra historia.",
+    "lvl": "A2",
+    "tag": "esencial",
+    "ex2": "We have different opinions.",
+    "exEs2": "Tenemos opiniones distintas."
+  },
+  {
+    "en": "the same",
+    "es": "el mismo / igual",
+    "ex": "We have the same phone.",
+    "exEs": "Tenemos el mismo celular.",
+    "lvl": "A1",
+    "tag": "esencial",
+    "ex2": "It's the same as before.",
+    "exEs2": "Es igual que antes."
+  },
+  {
+    "en": "right",
+    "es": "correcto / justo",
+    "ex": "You're right.",
+    "exEs": "Tenés razón.",
+    "lvl": "A1",
+    "tag": "esencial",
+    "ex2": "That's the right answer.",
+    "exEs2": "Esa es la respuesta correcta."
+  },
+  {
+    "en": "wrong",
+    "es": "equivocado / mal",
+    "ex": "Something is wrong.",
+    "exEs": "Algo está mal.",
+    "lvl": "A1",
+    "tag": "esencial",
+    "ex2": "I took the wrong bus.",
+    "exEs2": "Me tomé el colectivo equivocado."
+  },
+  {
+    "en": "true",
+    "es": "cierto / verdadero",
+    "ex": "That's not true.",
+    "exEs": "Eso no es cierto.",
+    "lvl": "A1",
+    "tag": "esencial",
+    "ex2": "Is it true?",
+    "exEs2": "¿Es cierto?"
+  },
+  {
+    "en": "ready",
+    "es": "listo",
+    "ex": "I'm ready.",
+    "exEs": "Estoy listo.",
+    "lvl": "A1",
+    "tag": "esencial",
+    "ex2": "Dinner is ready.",
+    "exEs2": "La cena está lista."
+  },
+  {
+    "en": "busy",
+    "es": "ocupado",
+    "ex": "I'm busy right now.",
+    "exEs": "Estoy ocupado ahora.",
+    "lvl": "A1",
+    "tag": "esencial",
+    "ex2": "She had a busy week.",
+    "exEs2": "Tuvo una semana movida."
+  },
+  {
+    "en": "tired",
+    "es": "cansado",
+    "ex": "I'm really tired today.",
+    "exEs": "Hoy estoy muy cansado.",
+    "lvl": "A1",
+    "tag": "esencial",
+    "ex2": "You look tired.",
+    "exEs2": "Parecés cansado."
+  },
+  {
+    "en": "sure",
+    "es": "seguro",
+    "ex": "Are you sure?",
+    "exEs": "¿Estás seguro?",
+    "lvl": "A1",
+    "tag": "esencial",
+    "ex2": "I'm not sure about that.",
+    "exEs2": "No estoy seguro de eso."
+  },
+  {
+    "en": "free",
+    "es": "libre / gratis",
+    "ex": "The app is free.",
+    "exEs": "La app es gratis.",
+    "lvl": "A1",
+    "tag": "esencial",
+    "ex2": "Are you free tomorrow?",
+    "exEs2": "¿Estás libre mañana?"
+  },
+  {
+    "en": "own",
+    "es": "propio",
+    "ex": "I have my own room.",
+    "exEs": "Tengo mi propia habitación.",
+    "lvl": "A2",
+    "tag": "esencial",
+    "ex2": "She started her own business.",
+    "exEs2": "Arrancó su propio negocio."
+  },
+  {
+    "en": "late",
+    "es": "tarde",
+    "ex": "I'm running late.",
+    "exEs": "Voy tarde.",
+    "lvl": "A1",
+    "tag": "esencial",
+    "ex2": "He always arrives late.",
+    "exEs2": "Siempre llega tarde."
+  },
+  {
+    "en": "early",
+    "es": "temprano",
+    "ex": "I wake up early.",
+    "exEs": "Me despierto temprano.",
+    "lvl": "A1",
+    "tag": "esencial",
+    "ex2": "We got there early.",
+    "exEs2": "Llegamos temprano."
+  },
+  {
+    "en": "cheap",
+    "es": "barato",
+    "ex": "It was pretty cheap.",
+    "exEs": "Salió bastante barato.",
+    "lvl": "A1",
+    "tag": "esencial",
+    "ex2": "I found a cheap ticket.",
+    "exEs2": "Encontré un pasaje barato."
+  },
+  {
+    "en": "expensive",
+    "es": "caro",
+    "ex": "This place is expensive.",
+    "exEs": "Este lugar es caro.",
+    "lvl": "A1",
+    "tag": "esencial",
+    "ex2": "It's too expensive for me.",
+    "exEs2": "Es muy caro para mí."
+  },
+  {
+    "en": "clean",
+    "es": "limpio",
+    "ex": "The kitchen is clean.",
+    "exEs": "La cocina está limpia.",
+    "lvl": "A1",
+    "tag": "esencial",
+    "ex2": "Keep it clean.",
+    "exEs2": "Mantenelo limpio."
+  },
+  {
+    "en": "full",
+    "es": "lleno",
+    "ex": "The bus is full.",
+    "exEs": "El colectivo está lleno.",
+    "lvl": "A1",
+    "tag": "esencial",
+    "ex2": "I'm full, thanks.",
+    "exEs2": "Estoy lleno, gracias."
+  },
+  {
+    "en": "strong",
+    "es": "fuerte",
+    "ex": "He's very strong.",
+    "exEs": "Es muy fuerte.",
+    "lvl": "A2",
+    "tag": "esencial",
+    "ex2": "It's a strong password.",
+    "exEs2": "Es una contraseña fuerte."
+  },
+  {
+    "en": "safe",
+    "es": "seguro (sin riesgo)",
+    "ex": "It's a safe neighborhood.",
+    "exEs": "Es un barrio seguro.",
+    "lvl": "A2",
+    "tag": "esencial",
+    "ex2": "Keep your money safe.",
+    "exEs2": "Guardá tu plata en un lugar seguro."
+  },
+  {
+    "en": "possible",
+    "es": "posible",
+    "ex": "Is that possible?",
+    "exEs": "¿Eso es posible?",
+    "lvl": "A2",
+    "tag": "esencial",
+    "ex2": "Come as soon as possible.",
+    "exEs2": "Vení lo antes posible."
+  },
+  {
+    "en": "usually",
+    "es": "normalmente",
+    "ex": "I usually walk to work.",
+    "exEs": "Normalmente camino al trabajo.",
+    "lvl": "A1",
+    "tag": "esencial",
+    "ex2": "We usually eat at eight.",
+    "exEs2": "Normalmente comemos a las ocho."
+  },
+  {
+    "en": "often",
+    "es": "seguido / a menudo",
+    "ex": "We often meet on Fridays.",
+    "exEs": "Nos juntamos seguido los viernes.",
+    "lvl": "A2",
+    "tag": "esencial",
+    "ex2": "How often do you study?",
+    "exEs2": "¿Cada cuánto estudiás?"
+  },
+  {
+    "en": "than",
+    "es": "que (en comparaciones)",
+    "ex": "This one is better than that one.",
+    "exEs": "Este es mejor que aquel.",
+    "lvl": "A1",
+    "tag": "esencial",
+    "ex2": "She's taller than me.",
+    "exEs2": "Es más alta que yo."
+  },
+  {
+    "en": "then",
+    "es": "entonces / después",
+    "ex": "Then we went home.",
+    "exEs": "Después nos fuimos a casa.",
+    "lvl": "A1",
+    "tag": "esencial",
+    "ex2": "If it rains, then we stay.",
+    "exEs2": "Si llueve, entonces nos quedamos."
+  },
+  {
+    "en": "while",
+    "es": "mientras",
+    "ex": "I listen to music while I work.",
+    "exEs": "Escucho música mientras trabajo.",
+    "lvl": "A2",
+    "tag": "esencial",
+    "ex2": "She called while you were out.",
+    "exEs2": "Llamó mientras no estabas."
+  },
+  {
+    "en": "between",
+    "es": "entre",
+    "ex": "It's between the bank and the shop.",
+    "exEs": "Está entre el banco y el negocio.",
+    "lvl": "A2",
+    "tag": "esencial",
+    "ex2": "Choose between these two.",
+    "exEs2": "Elegí entre estos dos."
+  },
+  {
+    "en": "another",
+    "es": "otro",
+    "ex": "Give me another one.",
+    "exEs": "Dame otro.",
+    "lvl": "A1",
+    "tag": "esencial",
+    "ex2": "Let's try another way.",
+    "exEs2": "Probemos de otra forma."
+  },
+  {
+    "en": "both",
+    "es": "los dos / ambos",
+    "ex": "Both options work.",
+    "exEs": "Las dos opciones sirven.",
+    "lvl": "A2",
+    "tag": "esencial",
+    "ex2": "We both liked it.",
+    "exEs2": "A los dos nos gustó."
+  },
+  {
+    "en": "each",
+    "es": "cada",
+    "ex": "Each student has a book.",
+    "exEs": "Cada estudiante tiene un libro.",
+    "lvl": "A2",
+    "tag": "esencial",
+    "ex2": "They cost five each.",
+    "exEs2": "Salen cinco cada uno."
+  },
+  {
+    "en": "most",
+    "es": "la mayoría",
+    "ex": "Most people agree.",
+    "exEs": "La mayoría está de acuerdo.",
+    "lvl": "A2",
+    "tag": "esencial",
+    "ex2": "I spent most of the day there.",
+    "exEs2": "Pasé la mayor parte del día ahí."
+  },
+  {
+    "en": "anywhere",
+    "es": "en ningún lado / en cualquier lado",
+    "ex": "I can't find it anywhere.",
+    "exEs": "No lo encuentro en ningún lado.",
+    "lvl": "A2",
+    "tag": "esencial",
+    "ex2": "We can meet anywhere.",
+    "exEs2": "Nos podemos encontrar en cualquier lado."
+  },
+  {
+    "en": "without",
+    "es": "sin",
+    "ex": "I can't work without coffee.",
+    "exEs": "No puedo trabajar sin café.",
+    "lvl": "A2",
+    "tag": "esencial",
+    "ex2": "She left without saying goodbye.",
+    "exEs2": "Se fue sin saludar."
+  },
+  {
+    "en": "during",
+    "es": "durante",
+    "ex": "I sleep during the day.",
+    "exEs": "Duermo durante el día.",
+    "lvl": "A2",
+    "tag": "esencial",
+    "ex2": "It happened during the meeting.",
+    "exEs2": "Pasó durante la reunión."
+  },
+  {
+    "en": "to hold",
+    "es": "sostener / agarrar",
+    "ex": "Hold this for a second.",
+    "exEs": "Sostené esto un segundo.",
+    "lvl": "A2",
+    "tag": "esencial",
+    "ex2": "She held the door open.",
+    "exEs2": "Mantuvo la puerta abierta."
+  },
+  {
+    "en": "to break",
+    "es": "romper",
+    "ex": "Don't break it.",
+    "exEs": "No lo rompas.",
+    "lvl": "A2",
+    "tag": "esencial",
+    "ex2": "The screen broke when it fell.",
+    "exEs2": "La pantalla se rompió cuando se cayó."
+  },
+  {
+    "en": "to catch",
+    "es": "agarrar / alcanzar",
+    "ex": "Catch the ball.",
+    "exEs": "Agarrá la pelota.",
+    "lvl": "A2",
+    "tag": "esencial",
+    "ex2": "I need to catch the bus.",
+    "exEs2": "Tengo que alcanzar el colectivo."
+  },
+  {
+    "en": "to throw",
+    "es": "tirar",
+    "ex": "Don't throw it on the floor.",
+    "exEs": "No lo tires al piso.",
+    "lvl": "A2",
+    "tag": "esencial",
+    "ex2": "He threw the paper away.",
+    "exEs2": "Tiró el papel."
+  },
+  {
+    "en": "to cut",
+    "es": "cortar",
+    "ex": "Cut it in two parts.",
+    "exEs": "Cortalo en dos partes.",
+    "lvl": "A2",
+    "tag": "esencial",
+    "ex2": "I cut my finger.",
+    "exEs2": "Me corté el dedo."
+  },
+  {
+    "en": "to fill",
+    "es": "llenar",
+    "ex": "Fill the bottle, please.",
+    "exEs": "Llená la botella, por favor.",
+    "lvl": "A2",
+    "tag": "esencial",
+    "ex2": "She filled the form online.",
+    "exEs2": "Llenó el formulario por internet."
+  },
+  {
+    "en": "to push",
+    "es": "empujar",
+    "ex": "Push the door.",
+    "exEs": "Empujá la puerta.",
+    "lvl": "A2",
+    "tag": "esencial",
+    "ex2": "Don't push me.",
+    "exEs2": "No me empujes."
+  },
+  {
+    "en": "to pull",
+    "es": "tirar (de algo)",
+    "ex": "Pull the handle.",
+    "exEs": "Tirá de la manija.",
+    "lvl": "A2",
+    "tag": "esencial",
+    "ex2": "He pulled the chair back.",
+    "exEs2": "Corrió la silla para atrás."
+  },
+  {
+    "en": "to share",
+    "es": "compartir",
+    "ex": "Can you share the file?",
+    "exEs": "¿Podés compartir el archivo?",
+    "lvl": "A2",
+    "tag": "esencial",
+    "ex2": "We shared a taxi.",
+    "exEs2": "Compartimos un taxi."
+  },
+  {
+    "en": "to join",
+    "es": "sumarse / unirse",
+    "ex": "Join us tonight.",
+    "exEs": "Sumate esta noche.",
+    "lvl": "A2",
+    "tag": "esencial",
+    "ex2": "She joined the team last month.",
+    "exEs2": "Se sumó al equipo el mes pasado."
+  },
+  {
+    "en": "to accept",
+    "es": "aceptar",
+    "ex": "They accepted the offer.",
+    "exEs": "Aceptaron la oferta.",
+    "lvl": "A2",
+    "tag": "esencial",
+    "ex2": "She didn't accept the money.",
+    "exEs2": "No aceptó la plata."
+  },
+  {
+    "en": "to offer",
+    "es": "ofrecer",
+    "ex": "They offered me a job.",
+    "exEs": "Me ofrecieron un trabajo.",
+    "lvl": "A2",
+    "tag": "esencial",
+    "ex2": "He offered to help.",
+    "exEs2": "Se ofreció a ayudar."
+  },
+  {
+    "en": "to order",
+    "es": "pedir (encargar)",
+    "ex": "Let's order a pizza.",
+    "exEs": "Pidamos una pizza.",
+    "lvl": "A2",
+    "tag": "esencial",
+    "ex2": "I ordered it online.",
+    "exEs2": "Lo pedí por internet."
+  },
+  {
+    "en": "to prepare",
+    "es": "preparar",
+    "ex": "I need to prepare dinner.",
+    "exEs": "Tengo que preparar la cena.",
+    "lvl": "A2",
+    "tag": "esencial",
+    "ex2": "We prepared everything the night before.",
+    "exEs2": "Preparamos todo la noche anterior."
+  },
+  {
+    "en": "to receive",
+    "es": "recibir",
+    "ex": "I received your message.",
+    "exEs": "Recibí tu mensaje.",
+    "lvl": "A2",
+    "tag": "esencial",
+    "ex2": "She receives a lot of emails.",
+    "exEs2": "Recibe muchos mails."
+  },
+  {
+    "en": "to reply",
+    "es": "responder",
+    "ex": "Reply when you can.",
+    "exEs": "Respondé cuando puedas.",
+    "lvl": "A2",
+    "tag": "esencial",
+    "ex2": "Nobody replied to my message.",
+    "exEs2": "Nadie respondió mi mensaje."
+  },
+  {
+    "en": "to stay",
+    "es": "quedarse",
+    "ex": "Stay here.",
+    "exEs": "Quedate acá.",
+    "lvl": "A2",
+    "tag": "esencial",
+    "ex2": "We stayed at a cheap hotel.",
+    "exEs2": "Nos quedamos en un hotel barato."
+  },
+  {
+    "en": "to visit",
+    "es": "visitar",
+    "ex": "I visit my parents on Sundays.",
+    "exEs": "Visito a mis viejos los domingos.",
+    "lvl": "A2",
+    "tag": "esencial",
+    "ex2": "She visited us last year.",
+    "exEs2": "Nos visitó el año pasado."
+  },
+  {
+    "en": "to worry",
+    "es": "preocuparse",
+    "ex": "Don't worry about it.",
+    "exEs": "No te preocupes por eso.",
+    "lvl": "A2",
+    "tag": "esencial",
+    "ex2": "She worries too much.",
+    "exEs2": "Se preocupa demasiado."
+  },
+  {
+    "en": "to matter",
+    "es": "importar",
+    "ex": "It doesn't matter.",
+    "exEs": "No importa.",
+    "lvl": "B1",
+    "tag": "esencial",
+    "ex2": "What matters is that you tried.",
+    "exEs2": "Lo que importa es que lo intentaste."
+  },
+  {
+    "en": "to owe",
+    "es": "deber (plata)",
+    "ex": "I owe you ten bucks.",
+    "exEs": "Te debo diez mangos.",
+    "lvl": "B1",
+    "tag": "esencial",
+    "ex2": "How much do I owe you?",
+    "exEs2": "¿Cuánto te debo?"
+  },
+  {
+    "en": "to fit",
+    "es": "entrar / quedar bien",
+    "ex": "This shirt doesn't fit me.",
+    "exEs": "Esta camisa no me entra.",
+    "lvl": "B1",
+    "tag": "esencial",
+    "ex2": "It fits perfectly.",
+    "exEs2": "Queda perfecto."
+  },
+  {
+    "en": "to hide",
+    "es": "esconder / esconderse",
+    "ex": "He hid the keys.",
+    "exEs": "Escondió las llaves.",
+    "lvl": "A2",
+    "tag": "esencial",
+    "ex2": "She's hiding something.",
+    "exEs2": "Está escondiendo algo."
+  },
+  {
+    "en": "to trust",
+    "es": "confiar",
+    "ex": "I trust you.",
+    "exEs": "Confío en vos.",
+    "lvl": "B1",
+    "tag": "esencial",
+    "ex2": "Don't trust that page.",
+    "exEs2": "No confíes en esa página."
+  },
+  {
+    "en": "to waste",
+    "es": "desperdiciar / perder",
+    "ex": "Don't waste your time.",
+    "exEs": "No pierdas el tiempo.",
+    "lvl": "B1",
+    "tag": "esencial",
+    "ex2": "We wasted a lot of money.",
+    "exEs2": "Desperdiciamos mucha plata."
+  },
+  {
+    "en": "to protect",
+    "es": "proteger",
+    "ex": "A case protects your phone.",
+    "exEs": "Una funda protege el celular.",
+    "lvl": "A2",
+    "tag": "esencial",
+    "ex2": "They protect the data.",
+    "exEs2": "Protegen los datos."
+  },
+  {
+    "en": "to support",
+    "es": "apoyar / bancar",
+    "ex": "My family supports me.",
+    "exEs": "Mi familia me banca.",
+    "lvl": "A2",
+    "tag": "esencial",
+    "ex2": "We support that idea.",
+    "exEs2": "Apoyamos esa idea."
+  },
+  {
+    "en": "to belong",
+    "es": "pertenecer",
+    "ex": "This doesn't belong here.",
+    "exEs": "Esto no va acá.",
+    "lvl": "B1",
+    "tag": "esencial",
+    "ex2": "The book belongs to her.",
+    "exEs2": "El libro es de ella."
+  },
+  {
+    "en": "a chance",
+    "es": "oportunidad / chance",
+    "ex": "Give me another chance.",
+    "exEs": "Dame otra oportunidad.",
+    "lvl": "A2",
+    "tag": "esencial",
+    "ex2": "There's a chance it rains.",
+    "exEs2": "Hay chances de que llueva."
+  },
+  {
+    "en": "a point",
+    "es": "punto / sentido",
+    "ex": "That's a good point.",
+    "exEs": "Ese es un buen punto.",
+    "lvl": "A2",
+    "tag": "esencial",
+    "ex2": "What's the point of this?",
+    "exEs2": "¿Qué sentido tiene esto?"
+  },
+  {
+    "en": "a fact",
+    "es": "hecho / dato",
+    "ex": "That's a known fact.",
+    "exEs": "Eso es un hecho conocido.",
+    "lvl": "A2",
+    "tag": "esencial",
+    "ex2": "Check the facts first.",
+    "exEs2": "Chequeá los datos primero."
+  },
+  {
+    "en": "a case",
+    "es": "caso",
+    "ex": "In that case, call me.",
+    "exEs": "En ese caso, llamame.",
+    "lvl": "A2",
+    "tag": "esencial",
+    "ex2": "It's a special case.",
+    "exEs2": "Es un caso especial."
+  },
+  {
+    "en": "a rule",
+    "es": "regla",
+    "ex": "That's the rule here.",
+    "exEs": "Esa es la regla acá.",
+    "lvl": "A2",
+    "tag": "esencial",
+    "ex2": "She broke the rules.",
+    "exEs2": "Rompió las reglas."
+  },
+  {
+    "en": "a piece",
+    "es": "pedazo",
+    "ex": "Give me a piece of bread.",
+    "exEs": "Dame un pedazo de pan.",
+    "lvl": "A2",
+    "tag": "esencial",
+    "ex2": "It broke into pieces.",
+    "exEs2": "Se rompió en pedazos."
+  },
+  {
+    "en": "a list",
+    "es": "lista",
+    "ex": "Add it to the list.",
+    "exEs": "Agregalo a la lista.",
+    "lvl": "A2",
+    "tag": "esencial",
+    "ex2": "I made a list of things to buy.",
+    "exEs2": "Hice una lista de cosas para comprar."
+  },
+  {
+    "en": "a size",
+    "es": "tamaño / talle",
+    "ex": "What size do you wear?",
+    "exEs": "¿Qué talle usás?",
+    "lvl": "A2",
+    "tag": "esencial",
+    "ex2": "The size is wrong.",
+    "exEs2": "El tamaño está mal."
+  },
+  {
+    "en": "a sound",
+    "es": "sonido / ruido",
+    "ex": "I heard a strange sound.",
+    "exEs": "Escuché un ruido raro.",
+    "lvl": "A2",
+    "tag": "esencial",
+    "ex2": "Turn the sound down.",
+    "exEs2": "Bajá el sonido."
+  },
+  {
+    "en": "a tip",
+    "es": "consejo / propina",
+    "ex": "That's a useful tip.",
+    "exEs": "Ese es un consejo útil.",
+    "lvl": "A2",
+    "tag": "esencial",
+    "ex2": "We left a tip.",
+    "exEs2": "Dejamos propina."
+  },
+  {
+    "en": "quiet",
+    "es": "callado / silencioso",
+    "ex": "The street is quiet at night.",
+    "exEs": "La calle es silenciosa de noche.",
+    "lvl": "A2",
+    "tag": "esencial",
+    "ex2": "Be quiet, please.",
+    "exEs2": "Quedate callado, por favor."
+  },
+  {
+    "en": "loud",
+    "es": "fuerte (de sonido)",
+    "ex": "The music is too loud.",
+    "exEs": "La música está muy fuerte.",
+    "lvl": "A2",
+    "tag": "esencial",
+    "ex2": "He has a loud voice.",
+    "exEs2": "Tiene una voz fuerte."
+  },
+  {
+    "en": "dark",
+    "es": "oscuro",
+    "ex": "It's getting dark.",
+    "exEs": "Se está poniendo oscuro.",
+    "lvl": "A2",
+    "tag": "esencial",
+    "ex2": "She has dark hair.",
+    "exEs2": "Tiene el pelo oscuro."
+  },
+  {
+    "en": "bright",
+    "es": "brillante / luminoso",
+    "ex": "The room is bright.",
+    "exEs": "La habitación es luminosa.",
+    "lvl": "A2",
+    "tag": "esencial",
+    "ex2": "That's a bright idea.",
+    "exEs2": "Esa es una idea brillante."
+  },
+  {
+    "en": "heavy",
+    "es": "pesado",
+    "ex": "This bag is heavy.",
+    "exEs": "Este bolso es pesado.",
+    "lvl": "A2",
+    "tag": "esencial",
+    "ex2": "It was a heavy rain.",
+    "exEs2": "Fue una lluvia fuerte."
+  },
+  {
+    "en": "light",
+    "es": "liviano / ligero",
+    "ex": "The laptop is light.",
+    "exEs": "La notebook es liviana.",
+    "lvl": "A2",
+    "tag": "esencial",
+    "ex2": "I had a light lunch.",
+    "exEs2": "Almorcé liviano."
+  },
+  {
+    "en": "deep",
+    "es": "profundo",
+    "ex": "The water is deep here.",
+    "exEs": "El agua es profunda acá.",
+    "lvl": "A2",
+    "tag": "esencial",
+    "ex2": "Take a deep breath.",
+    "exEs2": "Respirá hondo."
+  },
+  {
+    "en": "dry",
+    "es": "seco",
+    "ex": "The towel is dry.",
+    "exEs": "La toalla está seca.",
+    "lvl": "A2",
+    "tag": "esencial",
+    "ex2": "It's a dry summer.",
+    "exEs2": "Es un verano seco."
+  },
+  {
+    "en": "wet",
+    "es": "mojado",
+    "ex": "My shoes are wet.",
+    "exEs": "Tengo los zapatos mojados.",
+    "lvl": "A2",
+    "tag": "esencial",
+    "ex2": "Careful, the floor is wet.",
+    "exEs2": "Cuidado, el piso está mojado."
+  },
+  {
+    "en": "empty",
+    "es": "vacío",
+    "ex": "The bottle is empty.",
+    "exEs": "La botella está vacía.",
+    "lvl": "A2",
+    "tag": "esencial",
+    "ex2": "The street was empty.",
+    "exEs2": "La calle estaba vacía."
+  },
+  {
+    "en": "dirty",
+    "es": "sucio",
+    "ex": "My hands are dirty.",
+    "exEs": "Tengo las manos sucias.",
+    "lvl": "A2",
+    "tag": "esencial",
+    "ex2": "Don't leave dirty plates.",
+    "exEs2": "No dejes platos sucios."
+  },
+  {
+    "en": "strange",
+    "es": "raro / extraño",
+    "ex": "That's strange.",
+    "exEs": "Eso es raro.",
+    "lvl": "A2",
+    "tag": "esencial",
+    "ex2": "I heard a strange noise.",
+    "exEs2": "Escuché un ruido raro."
+  },
+  {
+    "en": "common",
+    "es": "común / frecuente",
+    "ex": "It's a common mistake.",
+    "exEs": "Es un error común.",
+    "lvl": "A2",
+    "tag": "esencial",
+    "ex2": "That name is very common here.",
+    "exEs2": "Ese nombre es muy común acá."
+  },
+  {
+    "en": "similar",
+    "es": "parecido",
+    "ex": "They look similar.",
+    "exEs": "Se parecen.",
+    "lvl": "A2",
+    "tag": "esencial",
+    "ex2": "It's similar to the other one.",
+    "exEs2": "Es parecido al otro."
+  },
+  {
+    "en": "kind",
+    "es": "amable",
+    "ex": "She was very kind to me.",
+    "exEs": "Fue muy amable conmigo.",
+    "lvl": "A2",
+    "tag": "esencial",
+    "ex2": "That's kind of you.",
+    "exEs2": "Qué amable de tu parte."
+  },
+  {
+    "en": "smart",
+    "es": "inteligente / vivo",
+    "ex": "He's a smart guy.",
+    "exEs": "Es un tipo inteligente.",
+    "lvl": "A2",
+    "tag": "esencial",
+    "ex2": "That was a smart move.",
+    "exEs2": "Esa fue una jugada inteligente."
+  },
+  {
+    "en": "lazy",
+    "es": "vago",
+    "ex": "I feel lazy today.",
+    "exEs": "Hoy estoy con fiaca.",
+    "lvl": "A2",
+    "tag": "esencial",
+    "ex2": "Don't be lazy.",
+    "exEs2": "No seas vago."
+  },
+  {
+    "en": "honest",
+    "es": "honesto / sincero",
+    "ex": "To be honest, I don't like it.",
+    "exEs": "Para ser sincero, no me gusta.",
+    "lvl": "B1",
+    "tag": "esencial",
+    "ex2": "She's an honest person.",
+    "exEs2": "Es una persona honesta."
+  },
+  {
+    "en": "though",
+    "es": "aunque / igual",
+    "ex": "It's expensive, though.",
+    "exEs": "Igual, es caro.",
+    "lvl": "B1",
+    "tag": "esencial",
+    "ex2": "I like it, though it's long.",
+    "exEs2": "Me gusta, aunque es largo."
+  },
+  {
+    "en": "unless",
+    "es": "a menos que",
+    "ex": "We'll go unless it rains.",
+    "exEs": "Vamos a menos que llueva.",
+    "lvl": "B1",
+    "tag": "esencial",
+    "ex2": "Don't call unless it's urgent.",
+    "exEs2": "No llames a menos que sea urgente."
+  },
+  {
+    "en": "otherwise",
+    "es": "si no / de lo contrario",
+    "ex": "Leave now, otherwise you'll be late.",
+    "exEs": "Salí ahora, si no vas a llegar tarde.",
+    "lvl": "B1",
+    "tag": "esencial",
+    "ex2": "Save it, otherwise you lose it.",
+    "exEs2": "Guardalo, si no lo perdés."
+  },
+  {
+    "en": "either",
+    "es": "cualquiera de los dos / tampoco",
+    "ex": "Either option works.",
+    "exEs": "Cualquiera de las dos opciones sirve.",
+    "lvl": "B1",
+    "tag": "esencial",
+    "ex2": "I don't like it either.",
+    "exEs2": "A mí tampoco me gusta."
+  },
+  {
+    "en": "especially",
+    "es": "sobre todo / especialmente",
+    "ex": "I like fruit, especially apples.",
+    "exEs": "Me gusta la fruta, sobre todo las manzanas.",
+    "lvl": "A2",
+    "tag": "esencial",
+    "ex2": "It's cold, especially at night.",
+    "exEs2": "Hace frío, especialmente de noche."
+  },
+  {
+    "en": "probably",
+    "es": "probablemente / seguro que",
+    "ex": "He's probably at home.",
+    "exEs": "Seguro que está en casa.",
+    "lvl": "A2",
+    "tag": "esencial",
+    "ex2": "It'll probably rain.",
+    "exEs2": "Probablemente llueva."
+  },
+  {
+    "en": "perhaps",
+    "es": "quizás",
+    "ex": "Perhaps she forgot.",
+    "exEs": "Quizás se olvidó.",
+    "lvl": "B1",
+    "tag": "esencial",
+    "ex2": "Perhaps we can try later.",
+    "exEs2": "Quizás podamos probar más tarde."
+  },
+  {
+    "en": "mostly",
+    "es": "en general / mayormente",
+    "ex": "I mostly watch videos in English.",
+    "exEs": "En general miro videos en inglés.",
+    "lvl": "B1",
+    "tag": "esencial",
+    "ex2": "The class is mostly beginners.",
+    "exEs2": "La clase es mayormente de principiantes."
+  },
+  {
+    "en": "meanwhile",
+    "es": "mientras tanto",
+    "ex": "Meanwhile, I'll make coffee.",
+    "exEs": "Mientras tanto, hago café.",
+    "lvl": "B1",
+    "tag": "esencial",
+    "ex2": "Meanwhile, nothing changed.",
+    "exEs2": "Mientras tanto, no cambió nada."
+  },
+  {
+    "en": "somehow",
+    "es": "de alguna manera",
+    "ex": "Somehow it worked.",
+    "exEs": "De alguna manera funcionó.",
+    "lvl": "B1",
+    "tag": "esencial",
+    "ex2": "We'll fix it somehow.",
+    "exEs2": "Lo vamos a arreglar de alguna forma."
+  },
+  {
+    "en": "instead",
+    "es": "en vez de eso",
+    "ex": "I stayed home instead.",
+    "exEs": "Me quedé en casa en vez de eso.",
+    "lvl": "A2",
+    "tag": "esencial",
+    "ex2": "Let's walk instead.",
+    "exEs2": "Mejor caminemos."
+  },
+  {
+    "en": "enough time",
+    "es": "suficiente tiempo",
+    "ex": "We don't have enough time.",
+    "exEs": "No tenemos suficiente tiempo.",
+    "lvl": "A2",
+    "tag": "esencial",
+    "ex2": "Is that enough time for you?",
+    "exEs2": "¿Te alcanza ese tiempo?"
+  }
+]
