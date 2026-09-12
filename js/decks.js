@@ -185,7 +185,9 @@ function freshOrder(a, b) {
 
 /**
  * Cola de la sesión: primero lo vencido, después las nuevas del día.
- * Las nuevas se limitan según el nivel de exigencia.
+ * Las nuevas se limitan según el nivel de exigencia y según la prioridad
+ * elegida en Ajustes — lo que queda afuera por prioridad no desaparece,
+ * espera su turno (`heldBack`).
  */
 export function buildQueue(now = Date.now()) {
   const q = computeQueue(now);
@@ -200,9 +202,11 @@ export function buildQueue(now = Date.now()) {
 function computeQueue(now) {
   const s = store.get();
   const pool = studyCards();
+  const maxTier = scopeTier(s.settings.newScope);
 
   const due = [];
   const fresh = [];
+  let heldBack = 0; // nuevas que existen pero todavía no toca aprender
   let midLearning = 0; // a medio aprender y todavía fuera de la ventana
 
   // Ventana de adelanto: una card en aprendizaje que vuelve en menos de 20 min
@@ -212,7 +216,8 @@ function computeQueue(now) {
   for (const card of pool) {
     const st = s.cards[card.id];
     if (!st) {
-      fresh.push(card);
+      if ((card.tier ?? 3) <= maxTier) fresh.push(card);
+      else heldBack += 1;
     } else if (isDue(st, now) || (st.state === 'learning' && st.due - now <= AHEAD)) {
       due.push(card);
     } else if (st.state === 'learning') {
@@ -228,7 +233,7 @@ function computeQueue(now) {
   const picked = fresh.slice(0, remainingNew);
   const total = due.length + picked.length;
 
-  return { due, fresh: picked, total, midLearning };
+  return { due, fresh: picked, total, midLearning, heldBack, freshLeft: fresh.length };
 }
 
 /** 'unseen' | 'learning' | 'learned' | 'known', según el estado guardado (si hay). */
@@ -318,3 +323,16 @@ export function deckProgress(deckId) {
   return { started, total: cards.length };
 }
 
+/** Cuántas cards nuevas quedan en cada escalón de prioridad, para Ajustes. */
+export function scopeCounts() {
+  const s = store.get();
+  const left = { 1: 0, 2: 0, 3: 0 };
+  for (const card of studyCards()) {
+    if (s.cards[card.id]) continue;
+    left[card.tier ?? 3] += 1;
+  }
+  return SCOPES.map((sc) => ({
+    ...sc,
+    left: SCOPES.filter((x) => x.tier <= sc.tier).reduce((a, x) => a + left[x.tier], 0),
+  }));
+}

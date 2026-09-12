@@ -137,6 +137,15 @@ function wireNav() {
     if ($('#btn-more').dataset.mode === 'reinforce') startReinforce();
     else startSession(true);
   });
+  $('#btn-scope-up').addEventListener('click', () => {
+    const next = $('#scope-banner').dataset.next;
+    if (!next) return;
+    store.setSettings({ newScope: next });
+    sound.playLearned(true);
+    const label = decks.SCOPES.find((x) => x.id === next)?.label || next;
+    toast(`Listo: ahora también entran las palabras de "${label}".`);
+    renderHome();
+  });
   $('#btn-start').addEventListener('click', () => {
     sound.playTap();
     if ($('#btn-start').dataset.mode === 'reinforce') startReinforce();
@@ -187,6 +196,8 @@ function renderHome() {
   $('#n-due').textContent = q.due.length;
   $('#n-learned').textContent = c.sabidas;
 
+  renderScopeBanner(q);
+
   const btn = $('#btn-start');
   const note = $('#cta-note');
   if (q.total > 0) {
@@ -231,6 +242,29 @@ function renderHome() {
       </div>`;
     list.appendChild(el);
   }
+}
+
+/**
+ * Cuando te quedaste sin palabras nuevas del escalón elegido pero todavía
+ * hay guardadas para más adelante, te lo dice y te deja subir de un toque.
+ * Es el "poco a poco": el salto lo das vos cuando terminaste lo anterior,
+ * no la app metiéndote términos rebuscados de sorpresa.
+ */
+function renderScopeBanner(q) {
+  const el = $('#scope-banner');
+  const scope = store.get().settings.newScope;
+  const cur = decks.SCOPES.find((x) => x.id === scope);
+  const nextScope = decks.SCOPES.find((x) => x.tier === (cur ? cur.tier + 1 : 99));
+
+  if (q.freshLeft > 0 || !q.heldBack || !nextScope) {
+    el.hidden = true;
+    return;
+  }
+  el.hidden = false;
+  $('#scope-banner-title').textContent = `Terminaste las palabras de "${cur.label}"`;
+  $('#scope-banner-sub').textContent = `Quedan ${q.heldBack} nuevas guardadas para más adelante. ${nextScope.hint}`;
+  $('#btn-scope-up').textContent = `Pasar a ${nextScope.label}`;
+  el.dataset.next = nextScope.id;
 }
 
 /** El estado del día, bien a la vista: completado, en riesgo, o todavía sin arrancar. */
@@ -2169,6 +2203,8 @@ function renderSettings() {
   renderMinutes();
   renderGoalRec();
 
+  renderScopes();
+
   $('#t-sound').classList.toggle('on', s.settings.sound);
   $('#t-speak').classList.toggle('on', s.settings.autoSpeak);
   $('#t-reverse').classList.toggle('on', s.settings.reverse);
@@ -2196,6 +2232,26 @@ function renderSettings() {
 
   renderSyncStatus();
   $('#version-label').textContent = `Versión ${APP_VERSION}`;
+}
+
+/**
+ * Qué palabras nuevas entran. No apaga mazos ni esconde nada: decide en qué
+ * orden se aprende, para que las primeras semanas se te vayan en lo que de
+ * verdad vas a escuchar y no en términos que casi no aparecen.
+ */
+function renderScopes() {
+  const s = store.get();
+  const counts = decks.scopeCounts();
+  // Las etiquetas salen de SCOPES y no del HTML, así no se desfasan al
+  // renombrar un escalón.
+  $$('#scopes button').forEach((b) => {
+    const sc = counts.find((x) => x.id === b.dataset.scope);
+    if (sc) b.textContent = sc.label;
+    b.classList.toggle('on', b.dataset.scope === s.settings.newScope);
+  });
+  const cur = counts.find((x) => x.id === s.settings.newScope) || counts[0];
+  $('#scope-note').textContent = `${cur.hint} Te quedan ${cur.left} palabras nuevas sin ver en este escalón.`;
+
 }
 
 /**
@@ -2317,6 +2373,14 @@ function wireSync() {
 }
 
 function wireSettings() {
+  $$('#scopes button').forEach((b) => {
+    b.addEventListener('click', () => {
+      store.setSettings({ newScope: b.dataset.scope });
+      sound.playSwitch(true);
+      renderSettings();
+    });
+  });
+
   $$('#presets button').forEach((b) => {
     b.addEventListener('click', () => {
       const p = store.PRESETS[b.dataset.preset];

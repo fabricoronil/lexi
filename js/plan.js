@@ -39,10 +39,13 @@ export function projectDailyLoad(newPerDay = store.get().settings.newPerDay, now
   const queue = [];
   let unseen = 0;
 
-  for (const card of decks.activeCards()) {
+  // Sólo cuenta lo que de verdad puede entrar a la cola: sin las que marcaste
+  // como sabidas y sin las que el escalón de prioridad guarda para después.
+  const maxTier = decks.scopeTier(s.settings.newScope);
+  for (const card of decks.studyCards()) {
     const st = s.cards[card.id];
     if (!st) {
-      unseen += 1;
+      if ((card.tier ?? 3) <= maxTier) unseen += 1;
       continue;
     }
     const day = Math.max(0, Math.round((st.due - now) / DAY));

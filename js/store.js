@@ -25,6 +25,7 @@ const DEFAULTS = {
     dailyGoal: 30,
     minutesPerDay: 15, // presupuesto de tiempo; manda cuando preset === 'tiempo'
     decks: { esencial: true, core: true, tech: true, ia: true, phrases: true, phrasal: true },
+    newScope: 'esencial', // qué palabras nuevas entran: esencial | util | todo (ver decks.js)
     autoSpeak: true,
     reverse: false,
     sound: true,

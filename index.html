@@ -73,6 +73,14 @@
       <div class="stat"><b class="c-green" id="n-learned">0</b><span>aprendidas</span></div>
     </div>
 
+    <div class="scope-banner" id="scope-banner" hidden>
+      <div class="scope-banner-text">
+        <b id="scope-banner-title">Terminaste las palabras esenciales</b>
+        <small id="scope-banner-sub"></small>
+      </div>
+      <button class="sheet-btn small" id="btn-scope-up" type="button">Subir escalón</button>
+    </div>
+
     <button class="cta" id="btn-start" type="button">
       <span id="cta-label">Empezar repaso</span>
       <svg viewBox="0 0 24 24" class="ico"><path d="M5 12h13"/><path d="M12 5l7 7-7 7"/></svg>
@@ -287,6 +295,14 @@
       <p class="rec-why" id="rec-why"></p>
     </div>
     <p class="note" id="goal-note"></p>
+
+    <h2 class="section-label">Qué palabras nuevas te toma</h2>
+    <div class="segmented" id="scopes">
+      <button data-scope="esencial" type="button">Base</button>
+      <button data-scope="util" type="button">Intermedio</button>
+      <button data-scope="todo" type="button">Completo</button>
+    </div>
+    <p class="note" id="scope-note"></p>
 
     <h2 class="section-label">Mazos activos</h2>
     <div class="panel" id="deck-toggles"></div>
