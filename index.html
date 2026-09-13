@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="theme-color" content="#0b0d0e">
+<meta name="theme-color" content="#000000">
 <meta name="description" content="Lexi — vocabulario de inglés con repetición espaciada, enfocado en el área tech.">
 <title>Lexi — vocabulario de inglés</title>
 <link rel="manifest" href="manifest.webmanifest">
@@ -14,7 +14,10 @@
 <meta name="apple-mobile-web-app-title" content="Lexi">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;700&family=Space+Grotesk:wght@400;500;600;700&display=swap">
+<!-- En iPhone y iPad gana SF Pro, que ya está en el sistema y nunca se
+     descarga. Estas dos son el respaldo para Linux, Android y Windows:
+     Inter cubre la interfaz y Source Serif 4 hace de New York. -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600;8..60,700&display=swap">
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -22,24 +25,28 @@
 <svg width="0" height="0" style="position:absolute" aria-hidden="true">
   <defs>
     <linearGradient id="flameGrad" x1="0" y1="1" x2="0" y2="0">
-      <stop offset="0%" stop-color="#ff5f3a"/>
-      <stop offset="55%" stop-color="#ff9a3d"/>
-      <stop offset="100%" stop-color="#ffd166"/>
+      <stop offset="0%" stop-color="#FF6B35"/>
+      <stop offset="55%" stop-color="#FF9F0A"/>
+      <stop offset="100%" stop-color="#FFD60A"/>
     </linearGradient>
   </defs>
 </svg>
 
 <div id="boot" class="boot">
-  <div class="boot-logo">lexi<span>_</span></div>
+  <div class="boot-logo">lexi<span>.</span></div>
   <div class="boot-msg" id="boot-msg">cargando mazos…</div>
 </div>
+
+<!-- La barra que aparece cuando el título grande de la vista se va de
+     pantalla: sabés dónde estás sin gastar altura mientras estás arriba. -->
+<div class="navbar" id="navbar" hidden><span class="navbar-title" id="navbar-title"></span></div>
 
 <main id="app" hidden>
 
   <!-- ══ INICIO ══ -->
   <section class="view" id="view-home">
     <header class="topbar">
-      <div class="logo">lexi<span>_</span></div>
+      <div class="logo">lexi<span>.</span></div>
       <button class="streak-chip" id="streak-chip" type="button" aria-label="Ver progreso">
         <svg viewBox="0 0 24 24" class="ico"><path d="M12 3c.5 3 2 4 3.5 5.5A7 7 0 1 1 5 13c0-2 1-3.5 2.5-5 .5 1.5 1.5 2 2.5 2 0-3 1-5.5 2-7z"/></svg>
         <span id="streak-count">0</span>
@@ -53,28 +60,37 @@
     <p class="date" id="today-label"></p>
 
     <div class="streak-banner" id="streak-banner">
-      <span class="streak-banner-ico" id="streak-banner-ico">🔥</span>
+      <span class="streak-banner-ico" id="streak-banner-ico"></span>
       <div class="streak-banner-text">
         <b id="streak-banner-title">No dejes que la racha muera</b>
         <small id="streak-banner-sub"></small>
       </div>
     </div>
 
+    <!-- Dos anillos: el de afuera son los repasos contra la meta del día, el
+         de adentro las palabras nuevas que entraron. Son las dos cosas que
+         hace una sesión y avanzan a ritmos distintos. -->
     <div class="ring-wrap">
-      <svg class="ring" viewBox="0 0 208 208" aria-hidden="true">
-        <circle cx="104" cy="104" r="90" class="ring-bg"/>
-        <circle cx="104" cy="104" r="90" class="ring-fg" id="ring-fg"/>
+      <svg class="ring" viewBox="0 0 224 224" aria-hidden="true">
+        <circle cx="112" cy="112" r="92" class="ring-track-outer" stroke-width="15"/>
+        <circle cx="112" cy="112" r="70" class="ring-track-inner" stroke-width="15"/>
+        <circle cx="112" cy="112" r="92" class="ring-fg ring-outer" id="ring-fg" stroke-width="15"/>
+        <circle cx="112" cy="112" r="70" class="ring-fg ring-inner" id="ring-fg-new" stroke-width="15"/>
       </svg>
       <div class="ring-center">
         <div class="ring-num"><span id="done-today">0</span><small>/<span id="goal-today">30</span></small></div>
-        <div class="ring-label">cards de hoy</div>
+        <div class="ring-label">repasos de hoy</div>
       </div>
+    </div>
+    <div class="ring-legend">
+      <span><i class="k-goal"></i>meta del día</span>
+      <span><i class="k-new"></i><span id="ring-new-label">0 palabras nuevas</span></span>
     </div>
 
     <div class="stat-row">
-      <div class="stat"><b class="c-blue" id="n-new">0</b><span>nuevas</span></div>
+      <div class="stat"><b id="n-new">0</b><span>nuevas</span></div>
       <div class="stat"><b class="c-amber" id="n-due">0</b><span>repasos</span></div>
-      <div class="stat"><b class="c-green" id="n-learned">0</b><span>aprendidas</span></div>
+      <div class="stat"><b class="c-blue" id="n-learned">0</b><span>aprendidas</span></div>
     </div>
 
     <div class="scope-banner" id="scope-banner" hidden>
@@ -105,7 +121,7 @@
         <svg viewBox="0 0 24 24" class="ico"><path d="M6 6l12 12"/><path d="M18 6L6 18"/></svg>
       </button>
       <div class="session-progress"><div id="session-fill"></div></div>
-      <span class="mono session-count" id="session-count">0/0</span>
+      <span class="session-count" id="session-count">0/0</span>
       <span class="xp-chip" id="session-xp">+0</span>
       <button class="icon-btn know-btn" id="btn-know" type="button" aria-label="Ya me sé esta palabra" title="Ya me sé esta palabra">
         <svg viewBox="0 0 24 24" class="ico"><path d="m2 13 4 4 7-7"/><path d="m11 13 4 4 7-7"/></svg>
@@ -114,32 +130,75 @@
 
     <div class="tags" id="card-tags"></div>
 
-    <div class="card" id="card">
-      <div class="card-front">
-        <div class="prompt" id="card-prompt">—</div>
-        <button class="speak" id="btn-speak" type="button" aria-label="Escuchar pronunciación">
-          <svg viewBox="0 0 24 24" class="ico"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="M16 9a4 4 0 0 1 0 6"/><path d="M19 6a8 8 0 0 1 0 12"/></svg>
-        </button>
-        <div class="field front-example">
-          <div class="example mono" id="card-example"></div>
+    <!-- La card es un objeto con dos caras y gira de verdad. En el dorso la
+         palabra sigue arriba en chico: girarla no puede costarte el contexto
+         de qué estabas respondiendo. -->
+    <div class="card-stage">
+      <div class="card" id="card">
+        <div class="card-face card-front">
+          <div class="prompt serif" id="card-prompt">—</div>
+          <button class="speak" id="btn-speak" type="button" aria-label="Escuchar pronunciación">
+            <svg viewBox="0 0 24 24" class="ico"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="M16 9a4 4 0 0 1 0 6"/><path d="M19 6a8 8 0 0 1 0 12"/></svg>
+          </button>
+          <div class="front-example">
+            <div class="example" id="card-example"></div>
+          </div>
+          <div class="card-hints" id="card-hints" hidden></div>
         </div>
-      </div>
 
-      <div class="card-hints" id="card-hints" hidden></div>
-
-      <div class="card-back" id="card-back" hidden>
-        <div class="field">
-          <div class="field-label">Significado</div>
-          <div class="answer" id="card-answer"></div>
-        </div>
-        <div class="field">
-          <div class="field-label">Ejemplo</div>
-          <div class="example-es" id="card-example-es"></div>
+        <div class="card-face card-back" id="card-back">
+          <div class="back-head">
+            <div class="back-word" id="card-back-word"></div>
+            <div class="example back-example" id="card-back-example"></div>
+          </div>
+          <div class="field">
+            <div class="field-label">Significado</div>
+            <div class="answer" id="card-answer"></div>
+          </div>
+          <div class="field">
+            <div class="field-label">Ejemplo</div>
+            <div class="example-es" id="card-example-es"></div>
+          </div>
+          <!-- Las pistas que pediste siguen a la vista del otro lado: si las
+               usaste para llegar acá, tenés que poder releerlas. -->
+          <div class="card-hints back-hints" id="card-hints-back" hidden></div>
         </div>
       </div>
     </div>
 
     <div class="answers" id="answers">
+      <!-- ── práctica activa ──
+           Antes de ver la respuesta, producirla: escribirla, elegirla entre
+           otras parecidas, o sacarla de oído. Cuál de los tres aparece lo
+           decide `quiz.js` según qué tan sabida está la palabra. -->
+      <div class="quiz" id="quiz" hidden>
+        <div class="quiz-listen" id="quiz-listen" hidden>
+          <button class="listen-btn" id="btn-listen" type="button" aria-label="Escuchar de nuevo">
+            <svg viewBox="0 0 24 24" class="ico"><path d="M11 5 6 9H3v6h3l5 4z"/><path d="M16 9a4 4 0 0 1 0 6"/><path d="M19 6a8 8 0 0 1 0 12"/></svg>
+          </button>
+          <p class="listen-hint">Escuchá y escribí lo que dice</p>
+        </div>
+
+        <form class="quiz-form" id="quiz-form" hidden>
+          <div class="quiz-input-row">
+            <input class="quiz-input" id="quiz-input" type="text" autocomplete="off"
+                   autocapitalize="none" autocorrect="off" spellcheck="false"
+                   enterkeyhint="done" placeholder="Escribí la respuesta">
+            <button class="quiz-send" id="btn-quiz-send" type="submit" aria-label="Comprobar">
+              <svg viewBox="0 0 24 24" class="ico"><path d="M5 12h13"/><path d="m12 5 7 7-7 7"/></svg>
+            </button>
+          </div>
+          <button class="quiz-skip" id="btn-quiz-skip" type="button">No me la acuerdo</button>
+        </form>
+
+        <div class="quiz-choices" id="quiz-choices" hidden></div>
+
+        <div class="quiz-verdict" id="quiz-verdict" hidden>
+          <span class="v-ico"><svg viewBox="0 0 24 24" class="ico"><path d="M5 13l4 4L19 7"/></svg></span>
+          <div class="v-body"><b id="verdict-title"></b><small id="verdict-note"></small></div>
+        </div>
+      </div>
+
       <button class="hint-btn" id="btn-hint" type="button">
         <svg viewBox="0 0 24 24" class="ico"><path d="M9 18h6"/><path d="M10 22h4"/><path d="M12 2a7 7 0 0 0-4 12.7V16h8v-1.3A7 7 0 0 0 12 2z"/></svg>
         <span id="hint-label">¿No te sale? Pista</span>
@@ -167,9 +226,16 @@
     <p class="done-sub" id="done-sub"></p>
     <div class="done-stats">
       <div class="stat"><b id="done-count">0</b><span>respondidas</span></div>
-      <div class="stat"><b class="c-green" id="done-xp">0</b><span>xp</span></div>
+      <div class="stat"><b class="c-blue" id="done-xp">0</b><span>xp</span></div>
       <div class="stat"><b class="c-amber" id="done-streak">0</b><span>de racha</span></div>
     </div>
+    <!-- Las que se te escaparon: la lista que conviene mirar dos minutos
+         antes de cerrar la app. -->
+    <div class="done-misses" id="done-misses" hidden>
+      <h3 id="done-misses-title">Se te escaparon</h3>
+      <div class="done-miss-list" id="done-miss-list"></div>
+    </div>
+
     <button class="cta ghost" id="btn-more" type="button">Seguir repasando</button>
     <button class="link-btn" id="btn-home" type="button">Volver al inicio</button>
     <div class="confetti" id="confetti"></div>
@@ -185,14 +251,14 @@
           <svg viewBox="0 0 24 24" class="ico"><path d="M12 3c.5 3 2 4 3.5 5.5A7 7 0 1 1 5 13c0-2 1-3.5 2.5-5 .5 1.5 1.5 2 2.5 2 0-3 1-5.5 2-7z"/></svg>
           Racha actual
         </div>
-        <div class="big mono" id="st-streak">0 <small>días</small></div>
+        <div class="big" id="st-streak">0 <small>días</small></div>
       </div>
       <div class="streak-card">
         <div class="mini-label">
           <svg viewBox="0 0 24 24" class="ico"><path d="M8 21h8"/><path d="M12 17v4"/><path d="M6 4h12v5a6 6 0 0 1-12 0z"/><path d="M18 5h3v2a3 3 0 0 1-3 3"/><path d="M6 5H3v2a3 3 0 0 0 3 3"/></svg>
           Récord
         </div>
-        <div class="big mono" id="st-best">0 <small>días</small></div>
+        <div class="big" id="st-best">0 <small>días</small></div>
       </div>
     </div>
     <p class="rescue-note" id="st-rescue" hidden></p>
@@ -200,7 +266,7 @@
     <div class="block">
       <div class="block-head">
         <h2 class="section-label">Últimas 18 semanas</h2>
-        <span class="mono muted" id="st-total">0 repasos</span>
+        <span class="muted num" id="st-total">0 repasos</span>
       </div>
       <div class="heatmap" id="heatmap"></div>
       <div class="legend">
@@ -216,10 +282,10 @@
         <span id="sb-learned"></span><span id="sb-known"></span><span id="sb-learning"></span><span id="sb-unseen"></span>
       </div>
       <div class="rows">
-        <button class="row" type="button" data-status="learned"><i class="dot c-green"></i><span>Aprendidas</span><b class="mono" id="st-learned">0</b></button>
-        <button class="row" type="button" data-status="known"><i class="dot c-green-soft"></i><span>Ya las sabías</span><b class="mono" id="st-known">0</b></button>
-        <button class="row" type="button" data-status="learning"><i class="dot c-amber"></i><span>En progreso</span><b class="mono" id="st-learning">0</b></button>
-        <button class="row" type="button" data-status="unseen"><i class="dot c-dim"></i><span>Sin ver</span><b class="mono" id="st-unseen">0</b></button>
+        <button class="row" type="button" data-status="learned"><i class="dot c-accent"></i><span>Aprendidas</span><b class="num" id="st-learned">0</b></button>
+        <button class="row" type="button" data-status="known"><i class="dot c-green-soft"></i><span>Ya las sabías</span><b class="num" id="st-known">0</b></button>
+        <button class="row" type="button" data-status="learning"><i class="dot c-amber"></i><span>En progreso</span><b class="num" id="st-learning">0</b></button>
+        <button class="row" type="button" data-status="unseen"><i class="dot c-dim"></i><span>Sin ver</span><b class="num" id="st-unseen">0</b></button>
       </div>
     </div>
 
@@ -246,7 +312,7 @@
     <div class="block">
       <div class="block-head">
         <h2 class="section-label">Las que más te cuestan</h2>
-        <span class="mono muted" id="hard-count"></span>
+        <span class="muted num" id="hard-count"></span>
       </div>
       <p class="note" id="hard-note"></p>
       <div class="hard-list" id="hard-list"></div>
@@ -288,7 +354,7 @@
     <h2 class="section-label">Tiempo por día</h2>
     <div class="panel">
       <label class="slider-row">
-        <span class="slider-head">Minutos que le querés meter <b class="mono" id="v-minutes">15</b></span>
+        <span class="slider-head">Minutos que le querés meter <b class="num" id="v-minutes">15</b></span>
         <input type="range" id="s-minutes" min="5" max="45" step="5">
       </label>
     </div>
@@ -303,11 +369,11 @@
 
     <div class="panel">
       <label class="slider-row">
-        <span class="slider-head">Cards nuevas por día <b class="mono" id="v-new">10</b></span>
+        <span class="slider-head">Cards nuevas por día <b class="num" id="v-new">10</b></span>
         <input type="range" id="s-new" min="0" max="40" step="1">
       </label>
       <label class="slider-row">
-        <span class="slider-head">Meta diaria de repasos <b class="mono" id="v-goal">30</b></span>
+        <span class="slider-head">Meta diaria de repasos <b class="num" id="v-goal">30</b></span>
         <input type="range" id="s-goal" min="5" max="150" step="5">
       </label>
     </div>
@@ -315,7 +381,7 @@
       <div class="rec-main">
         <div class="rec-text">
           <span class="rec-label">Meta recomendada</span>
-          <b class="mono rec-value" id="rec-value">30</b>
+          <b class="rec-value" id="rec-value">30</b>
         </div>
         <button class="sheet-btn small" id="btn-use-rec" type="button">Usar</button>
       </div>
@@ -341,6 +407,25 @@
 
     <h2 class="section-label">Mazos activos</h2>
     <div class="panel" id="deck-toggles"></div>
+
+    <h2 class="section-label">Cómo practicás</h2>
+    <p class="note">Los cuatro botones y los intervalos no cambian: esto decide sólo si antes de darlos tenés que producir la respuesta.</p>
+    <div class="segmented" id="practice-mode">
+      <button data-practice="off" type="button">Clásico</button>
+      <button data-practice="smart" type="button">Mixto</button>
+      <button data-practice="always" type="button">Exigente</button>
+    </div>
+    <p class="note" id="practice-note"></p>
+
+    <div class="panel">
+      <div class="opt">
+        <div class="opt-text">
+          <span>Dictado</span>
+          <small>Algunas palabras llegan sólo de oído, sin verlas escritas</small>
+        </div>
+        <button class="switch" id="t-listen" type="button" role="switch"><i></i></button>
+      </div>
+    </div>
 
     <h2 class="section-label">Repaso</h2>
     <div class="panel">
@@ -420,7 +505,7 @@
 
     <div class="study-nav">
       <button class="study-card" id="btn-go-vocab" type="button">
-        <span class="study-card-ico">📚</span>
+        <span class="study-card-ico"><svg viewBox="0 0 24 24" class="ico"><path d="M12 6.6C10.4 5.2 8.4 4.6 5 4.6a1 1 0 0 0-1 1v11.6a1 1 0 0 0 1 1c3.4 0 5.4.6 7 2 1.6-1.4 3.6-2 7-2a1 1 0 0 0 1-1V5.6a1 1 0 0 0-1-1c-3.4 0-5.4.6-7 2z"/><path d="M12 6.6v14"/></svg></span>
         <div class="study-card-text">
           <span>Vocabulario</span>
           <small id="study-vocab-sub">Las tuyas, las de cada nivel y las más frecuentes</small>
@@ -428,7 +513,7 @@
         <svg viewBox="0 0 24 24" class="ico chev"><path d="m9 6 6 6-6 6"/></svg>
       </button>
       <button class="study-card" id="btn-go-grammar" type="button">
-        <span class="study-card-ico">📘</span>
+        <span class="study-card-ico"><svg viewBox="0 0 24 24" class="ico"><path d="M4 19.5V5.6A1.6 1.6 0 0 1 5.6 4H19a1 1 0 0 1 1 1v13.4"/><path d="M6.2 16h13.3a.5.5 0 0 1 .5.5V19a1 1 0 0 1-1 1H6.2A2.2 2.2 0 0 1 4 17.8 2.2 2.2 0 0 1 6.2 16z"/><path d="M9 8h6"/></svg></span>
         <div class="study-card-text">
           <span>Gramática</span>
           <small id="study-grammar-sub">El camino de A1 a B2</small>
@@ -436,7 +521,7 @@
         <svg viewBox="0 0 24 24" class="ico chev"><path d="m9 6 6 6-6 6"/></svg>
       </button>
       <button class="study-card" id="btn-go-texts" type="button">
-        <span class="study-card-ico">📰</span>
+        <span class="study-card-ico"><svg viewBox="0 0 24 24" class="ico"><rect x="3.5" y="5" width="17" height="14" rx="2"/><path d="M7 9h6"/><path d="M7 12.5h10"/><path d="M7 16h10"/></svg></span>
         <div class="study-card-text">
           <span>Textos</span>
           <small id="study-texts-sub">Reading estilo examen, por nivel</small>
@@ -487,31 +572,31 @@
     </button>
 
     <div class="topic-block" id="topic-rule-block">
-      <h2 class="section-label">📋 Regla</h2>
+      <h2 class="section-label"><svg viewBox="0 0 24 24" class="ico"><rect x="4" y="3.5" width="16" height="17" rx="2"/><path d="M8 8.5h8"/><path d="M8 12h8"/><path d="M8 15.5h5"/></svg> Regla</h2>
       <div class="topic-rule" id="topic-rule"></div>
       <div class="topic-tip" id="topic-tip-block" hidden>
-        <span class="tip-ico">💡</span>
+        <span class="tip-ico"><svg viewBox="0 0 24 24" class="ico"><path d="M9.5 18h5"/><path d="M10.3 21h3.4"/><path d="M12 3a6.5 6.5 0 0 0-3.7 11.8V16h7.4v-1.2A6.5 6.5 0 0 0 12 3z"/></svg></span>
         <p id="topic-tip"></p>
       </div>
     </div>
 
     <div class="topic-block" id="topic-sections-block" hidden>
-      <h2 class="section-label">📖 Cómo funciona</h2>
+      <h2 class="section-label"><svg viewBox="0 0 24 24" class="ico"><path d="M4 7h10"/><path d="M4 12h16"/><path d="M4 17h7"/><circle cx="17.5" cy="7" r="2.2"/><circle cx="14.5" cy="17" r="2.2"/></svg> Cómo funciona</h2>
       <div class="topic-sections" id="topic-sections"></div>
     </div>
 
     <div class="topic-block" id="topic-examples-block">
-      <h2 class="section-label">🔤 Ejemplos</h2>
+      <h2 class="section-label"><svg viewBox="0 0 24 24" class="ico"><path d="M3 17 6.5 7l3.5 10"/><path d="M4.2 13.6h4.6"/><path d="M13.5 7v10h3.2a2.6 2.6 0 0 0 0-5.2H13.5"/><path d="M16.7 11.8a2.4 2.4 0 0 0 0-4.8H13.5"/></svg> Ejemplos</h2>
       <div class="topic-examples" id="topic-examples"></div>
     </div>
 
     <div class="topic-block" id="topic-mistakes-block">
-      <h2 class="section-label">❌ Errores típicos</h2>
+      <h2 class="section-label"><svg viewBox="0 0 24 24" class="ico"><circle cx="12" cy="12" r="8.5"/><path d="m9.2 9.2 5.6 5.6"/><path d="m14.8 9.2-5.6 5.6"/></svg> Errores típicos</h2>
       <div class="topic-mistakes" id="topic-mistakes"></div>
     </div>
 
     <div class="topic-block" id="topic-exercises-block">
-      <h2 class="section-label">🏋️ Practicá</h2>
+      <h2 class="section-label"><svg viewBox="0 0 24 24" class="ico"><path d="M3 10v4"/><path d="M21 10v4"/><path d="M6.5 7.5v9"/><path d="M17.5 7.5v9"/><path d="M6.5 12h11"/></svg> Practicá</h2>
       <div class="topic-exercises" id="topic-exercises"></div>
       <p class="practice-summary" id="topic-exercise-summary" hidden></p>
     </div>
@@ -555,7 +640,7 @@
     <div class="reading-passage" id="text-body"></div>
 
     <div class="topic-block">
-      <h2 class="section-label">❓ Comprensión de lectura</h2>
+      <h2 class="section-label"><svg viewBox="0 0 24 24" class="ico"><circle cx="12" cy="12" r="8.5"/><path d="M9.6 9.4a2.5 2.5 0 0 1 4.9.6c0 1.7-2.5 2.1-2.5 3.6"/><path d="M12 16.6h.01"/></svg> Comprensión de lectura</h2>
       <div class="topic-exercises" id="text-questions"></div>
       <p class="practice-summary" id="text-summary" hidden></p>
     </div>
@@ -589,7 +674,7 @@
 
     <div class="study-nav">
       <button class="study-card" id="btn-go-my-vocab" type="button">
-        <span class="study-card-ico">✍️</span>
+        <span class="study-card-ico"><svg viewBox="0 0 24 24" class="ico"><path d="M16.4 4.6a2 2 0 0 1 2.8 0l.2.2a2 2 0 0 1 0 2.8L9 18l-4.5 1.5L6 15z"/><path d="M14.5 6.5 17.5 9.5"/></svg></span>
         <div class="study-card-text">
           <span>Mi vocabulario</span>
           <small id="hub-my-vocab-sub">Las palabras que fuiste anotando</small>
@@ -631,15 +716,15 @@
   <!-- ══ NAV ══ -->
   <nav class="tabbar" id="tabbar">
     <button data-view="home" type="button" class="active">
-      <svg viewBox="0 0 24 24" class="ico"><path d="M4 10.5 12 4l8 6.5V20a1 1 0 0 1-1 1h-4v-6H9v6H5a1 1 0 0 1-1-1z"/></svg>
+      <svg viewBox="0 0 24 24" class="ico"><path d="M3.5 10.6 12 3.8l8.5 6.8V19a1.8 1.8 0 0 1-1.8 1.8H5.3A1.8 1.8 0 0 1 3.5 19z"/><path d="M9.4 20.8v-6.2h5.2v6.2"/></svg>
       <span>Inicio</span>
     </button>
     <button data-view="study" type="button">
-      <svg viewBox="0 0 24 24" class="ico"><path d="M4 5.5A2.5 2.5 0 0 1 6.5 3H20v15H6.5A2.5 2.5 0 0 0 4 20.5z"/><path d="M4 5.5v15"/><path d="M20 18H6.5A2.5 2.5 0 0 0 4 20.5"/></svg>
+      <svg viewBox="0 0 24 24" class="ico"><path d="M12 6.6C10.4 5.2 8.4 4.6 5 4.6a1 1 0 0 0-1 1v11.6a1 1 0 0 0 1 1c3.4 0 5.4.6 7 2 1.6-1.4 3.6-2 7-2a1 1 0 0 0 1-1V5.6a1 1 0 0 0-1-1c-3.4 0-5.4.6-7 2z"/><path d="M12 6.6v14"/></svg>
       <span>Estudio</span>
     </button>
     <button data-view="stats" type="button">
-      <svg viewBox="0 0 24 24" class="ico"><path d="M4 20V10"/><path d="M10 20V4"/><path d="M16 20v-7"/><path d="M22 20H2"/></svg>
+      <svg viewBox="0 0 24 24" class="ico"><path d="M4.5 20V13"/><path d="M9.5 20V7"/><path d="M14.5 20v-5"/><path d="M19.5 20V4"/></svg>
       <span>Progreso</span>
     </button>
     <button data-view="settings" type="button">
@@ -702,7 +787,7 @@
       <div class="sheet-grab"></div>
       <div class="sheet-body">
         <h2 id="know-sheet-title">¿Ya te sabés esta palabra?</h2>
-        <p class="confirm-word mono" id="know-word">—</p>
+        <p class="confirm-word" id="know-word">—</p>
         <p class="confirm-text" id="know-text">No vuelve a aparecer en los repasos y cuenta como sabida. La podés devolver al mazo desde Progreso → Palabras.</p>
         <div class="sheet-actions">
           <button class="sheet-btn ghost" id="btn-know-cancel" type="button">Cancelar</button>
@@ -724,7 +809,7 @@
       <svg viewBox="0 0 24 24" class="learned-check"><path d="M5 13l4 4L19 7"/></svg>
     </div>
     <div class="learned-title" id="learned-title">¡Aprendida!</div>
-    <div class="learned-word mono" id="learned-word">—</div>
+    <div class="learned-word" id="learned-word">—</div>
     <div class="learned-sub" id="learned-sub"></div>
     <div class="learned-sparks" id="learned-sparks"></div>
   </div>

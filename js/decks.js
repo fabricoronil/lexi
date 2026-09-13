@@ -6,12 +6,12 @@ import * as store from './store.js';
 import { isDue, isMature, difficultyScore, struggles, isLeech } from './srs.js';
 
 export const DECKS = [
-  { id: 'esencial', file: 'data/esencial.json', label: 'esencial', hint: 'las que más se usan', color: '#f5d76e' },
-  { id: 'core', file: 'data/core.json', label: 'core', hint: 'conectores y verbos A2–B1', color: '#7ab8f5' },
-  { id: 'tech', file: 'data/tech.json', label: 'tech', hint: 'dev, videos, docs', color: '#6ee7a0' },
-  { id: 'ia', file: 'data/ia.json', label: 'IA', hint: 'machine learning, modelos, LLMs', color: '#f38ba8' },
-  { id: 'phrases', file: 'data/phrases.json', label: 'frases', hint: 'videos y reuniones', color: '#f5a742' },
-  { id: 'phrasal', file: 'data/phrasal.json', label: 'phrasal verbs', hint: 'get up, give up, look for…', color: '#cba6f7' },
+  { id: 'esencial', file: 'data/esencial.json', label: 'esencial', hint: 'las que más se usan', color: '#FFD60A' },
+  { id: 'core', file: 'data/core.json', label: 'core', hint: 'conectores y verbos A2–B1', color: '#0A84FF' },
+  { id: 'tech', file: 'data/tech.json', label: 'tech', hint: 'dev, videos, docs', color: '#30D158' },
+  { id: 'ia', file: 'data/ia.json', label: 'IA', hint: 'machine learning, modelos, LLMs', color: '#FF375F' },
+  { id: 'phrases', file: 'data/phrases.json', label: 'frases', hint: 'videos y reuniones', color: '#FF9F0A' },
+  { id: 'phrasal', file: 'data/phrasal.json', label: 'phrasal verbs', hint: 'get up, give up, look for…', color: '#BF5AF2' },
 ];
 
 let all = [];
