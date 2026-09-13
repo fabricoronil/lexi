@@ -30,6 +30,11 @@ const DEFAULTS = {
     autoSpeak: true,
     reverse: false,
     sound: true,
+    // Clásico por defecto: el flujo de Anki de siempre — ves la palabra, la
+    // pensás, la mostrás y te calificás con los cuatro botones. Los modos de
+    // práctica activa son opcionales y se prenden en Ajustes (ver quiz.js).
+    practice: 'off',
+    listen: true, // dictado en las palabras que ya sabés hace rato
   },
   streak: {
     current: 0,
