@@ -10,6 +10,7 @@ import { schedule, previewInterval, formatDelay, isMature, AGAIN, HARD, GOOD, EA
 import * as sound from './sound.js';
 import * as sync from './sync.js';
 import * as plan from './plan.js';
+import * as quiz from './quiz.js';
 
 const $ = (sel) => document.querySelector(sel);
 const $$ = (sel) => Array.from(document.querySelectorAll(sel));
@@ -38,6 +39,9 @@ let streakPopTimer = null;
 let revealed = false; // si ya se mostró el significado de la card actual
 let hints = []; // pistas disponibles para la card actual
 let hintsShown = 0; // cuántas de esas ya pediste
+let quizMode = quiz.MODES.REVEAL; // qué ejercicio le tocó a la card actual
+let quizCap = null; // techo de calificación que dejó el ejercicio (null = sin ejercicio)
+let quizDone = false; // ya contestaste el ejercicio de esta card
 let learnedPopTimer = null;
 let streakPendiente = false; // racha salvada justo mientras se festejaba una palabra
 
@@ -88,12 +92,91 @@ async function boot() {
 
 /* ═══════════ navegación ═══════════ */
 
+/* ── cómo se siente moverse por la app ──
+ * Entrar a una subvista (tocar un mazo, un tema, una palabra) empuja desde
+ * la derecha; volver la devuelve por donde vino. Cambiar de pestaña no es
+ * ni una cosa ni la otra: es saltar de lado, y ahí alcanza con que el
+ * contenido aparezca. La dirección se deduce de la profundidad.
+ */
+const DEPTH = {
+  home: 0, study: 0, stats: 0, settings: 0,
+  review: 1, done: 1,
+  words: 1, vocab: 1, grammar: 1, texts: 1,
+  'vocab-list': 2, 'my-vocab': 2, 'grammar-level': 2, 'texts-level': 2,
+  'grammar-topic': 3, 'texts-reader': 3,
+};
+
+const TITLES = {
+  home: 'Lexi', study: 'Estudio', stats: 'Progreso', settings: 'Ajustes',
+};
+
+let currentView = 'home';
+
+/* Si una transición se cuelga una vez, no se vuelve a intentar en toda la
+ * sesión: mejor navegar sin animación que esperar 700 ms cada vez. */
+let transicionesRotas = false;
+
+function limpiarNav() {
+  delete document.documentElement.dataset.nav;
+}
+
+function puedeAnimarVistas() {
+  return !transicionesRotas
+    && typeof document.startViewTransition === 'function'
+    && !matchMedia('(prefers-reduced-motion: reduce)').matches;
+}
+
 function show(view) {
+  const from = DEPTH[currentView] ?? 0;
+  const to = DEPTH[view] ?? 0;
+  const dir = to > from ? 'push' : to < from ? 'pop' : null;
+  currentView = view;
+
+  const paint = () => swapView(view);
+
+  // Sin View Transitions (Firefox, Safari viejo) la app sigue andando
+  // exactamente igual: se pierde el deslizamiento, no la navegación.
+  if (dir && puedeAnimarVistas()) {
+    document.documentElement.dataset.nav = dir;
+    const t = document.startViewTransition(paint);
+
+    // Red de seguridad. La transición monta una captura de la pantalla por
+    // encima de todo y la saca cuando termina; si por lo que sea no termina,
+    // esa captura queda congelada tapando la app y no hay forma de seguir.
+    // Pasa de verdad en algunos motores, así que a los 700 ms la salteamos
+    // — el DOM ya cambió dentro de `paint`, sólo se pierde el deslizamiento.
+    const rescate = setTimeout(() => {
+      transicionesRotas = true;
+      t.skipTransition();
+      limpiarNav();
+    }, 700);
+    // `ready` rechaza cuando la transición se saltea, y sin capturarlo el
+    // navegador lo reporta como error no manejado. Es el camino esperado acá.
+    t.ready.catch(() => {});
+    t.finished
+      .catch(() => {})
+      .finally(() => { clearTimeout(rescate); limpiarNav(); });
+  } else {
+    paint();
+    if (!dir) {
+      const el = $('#view-' + view);
+      if (el) bounce(el, 'fade-in');
+    }
+  }
+}
+
+function swapView(view) {
   for (const v of VIEWS) {
     const el = $('#view-' + v);
     if (el) el.hidden = v !== view;
   }
   $('#tabbar').hidden = view === 'review';
+  // La barra de título flotante no tiene sentido en el repaso ni en el
+  // final: son pantallas de una sola cosa y sin scroll que seguir.
+  $('#navbar').hidden = view === 'review' || view === 'done';
+  $('#navbar-title').textContent = TITLES[view] || '';
+  $('#navbar').classList.remove('solid');
+
   const activeTab = SUBVIEW_TAB[view] || view;
   $$('#tabbar button').forEach((b) => b.classList.toggle('active', b.dataset.view === activeTab));
   window.scrollTo(0, 0);
@@ -127,9 +210,52 @@ function wireGlobalTapSound() {
   });
 }
 
+/* ── el título que aparece al scrollear ──
+ * Mientras estás arriba de todo, el título grande de la vista ya dice dónde
+ * estás y una barra encima sería ruido. Cuando ese título se va de pantalla,
+ * el mismo texto reaparece en chico sobre material translúcido. Lo mismo
+ * hace la barra de una subvista: se pega arriba y recién ahí toma fondo.
+ */
+function wireScrollChrome() {
+  const navbar = $('#navbar');
+  let ticking = false;
+
+  const update = () => {
+    ticking = false;
+    const y = window.scrollY;
+
+    // El título grande de la vista visible, si tiene uno en el flujo.
+    const title = $$('.view:not([hidden]) > .page-title')[0];
+    if (title && !navbar.hidden) {
+      const irsePor = title.offsetTop + title.offsetHeight - 8;
+      navbar.classList.toggle('solid', y > irsePor);
+    } else if (!navbar.hidden) {
+      navbar.classList.toggle('solid', y > 24);
+    }
+
+    // Las barras de subvista toman fondo apenas dejan de estar en su sitio.
+    for (const bar of $$('.view:not([hidden]) .session-bar')) {
+      bar.classList.toggle('stuck', y > 4);
+    }
+  };
+
+  addEventListener('scroll', () => {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(update);
+  }, { passive: true });
+  update();
+}
+
 function wireNav() {
   wireGlobalTapSound();
-  $$('#tabbar button').forEach((b) => b.addEventListener('click', () => show(b.dataset.view)));
+  wireScrollChrome();
+  $$('#tabbar button').forEach((b) => b.addEventListener('click', () => {
+    // El ícono da un salto corto: la respuesta al toque, no un adorno.
+    $$('#tabbar button').forEach((x) => x.classList.remove('just-picked'));
+    if (b.dataset.view !== currentView) bounce(b, 'just-picked');
+    show(b.dataset.view);
+  }));
   $('#streak-chip').addEventListener('click', () => show('stats'));
   $('#btn-home').addEventListener('click', () => show('home'));
   $('#btn-more').addEventListener('click', () => {
@@ -159,6 +285,34 @@ function wireNav() {
 
 /* ═══════════ inicio ═══════════ */
 
+/* Las circunferencias de los dos anillos (2πr con r = 92 y 70), que es lo
+ * que hay que recorrer con stroke-dashoffset para llenarlos. */
+const RING_OUTER = 578.05;
+const RING_INNER = 439.82;
+
+/**
+ * Lleva un número hasta su valor contándolo, en vez de que aparezca. Sirve
+ * para el anillo del día: la cifra sube mientras el arco se dibuja, y las
+ * dos cosas terminan juntas.
+ */
+function countUp(el, to, dur = 520) {
+  if (!el) return;
+  const from = Number(el.textContent) || 0;
+  if (from === to || matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    el.textContent = to;
+    return;
+  }
+  const t0 = performance.now();
+  const step = (now) => {
+    const k = Math.min(1, (now - t0) / dur);
+    // La misma curva que dibuja el arco, para que vayan al mismo ritmo.
+    const eased = 1 - Math.pow(1 - k, 3);
+    el.textContent = Math.round(from + (to - from) * eased);
+    if (k < 1) requestAnimationFrame(step);
+  };
+  requestAnimationFrame(step);
+}
+
 function renderHome() {
   const s = store.get();
   const q = decks.buildQueue();
@@ -186,11 +340,24 @@ function renderHome() {
 
   renderStreakBanner(st, met, goal, done);
 
-  $('#done-today').textContent = Math.min(done, goal);
+  // ── los dos anillos ──
+  // El de afuera son los repasos contra la meta; el de adentro, las palabras
+  // nuevas del día contra el ritmo elegido. Avanzan a velocidades distintas
+  // y verlos juntos dice de un vistazo si hoy sólo repasaste o si además
+  // aprendiste algo nuevo.
+  countUp($('#done-today'), Math.min(done, goal));
   $('#goal-today').textContent = goal;
   const pct = met ? 1 : goal ? Math.min(1, done / goal) : 0;
-  $('#ring-fg').style.strokeDashoffset = String(565.5 * (1 - pct));
+  $('#ring-fg').style.strokeDashoffset = String(RING_OUTER * (1 - pct));
   $('#ring-fg').classList.toggle('full', pct >= 1);
+
+  const nuevasHoy = store.newToday();
+  const cupo = Math.max(1, s.settings.newPerDay || 1);
+  const pctNew = Math.min(1, nuevasHoy / cupo);
+  $('#ring-fg-new').style.strokeDashoffset = String(RING_INNER * (1 - pctNew));
+  $('#ring-new-label').textContent = nuevasHoy === 1
+    ? '1 palabra nueva'
+    : `${nuevasHoy} palabras nuevas`;
 
   $('#n-new').textContent = q.fresh.length;
   $('#n-due').textContent = q.due.length;
@@ -268,6 +435,17 @@ function renderScopeBanner(q) {
 }
 
 /** El estado del día, bien a la vista: completado, en riesgo, o todavía sin arrancar. */
+/* Los mismos trazos que el resto de la app, en vez de emoji: un emoji se
+ * dibuja distinto en cada sistema y en Linux sin fuente de color es una caja
+ * vacía. */
+const BANNER_ICON = {
+  flame: '<svg viewBox="0 0 24 24" class="ico"><path d="M12 3c.5 3 2 4 3.5 5.5A7 7 0 1 1 5 13c0-2 1-3.5 2.5-5 .5 1.5 1.5 2 2.5 2 0-3 1-5.5 2-7z"/></svg>',
+  check: '<svg viewBox="0 0 24 24" class="ico"><circle cx="12" cy="12" r="9"/><path d="m8.5 12.2 2.4 2.4 4.6-5"/></svg>',
+  clock: '<svg viewBox="0 0 24 24" class="ico"><circle cx="12" cy="12" r="9"/><path d="M12 7v5.2l3.2 2"/></svg>',
+  alert: '<svg viewBox="0 0 24 24" class="ico"><path d="M12 4.5 2.8 20h18.4z"/><path d="M12 10v4.2"/><path d="M12 17.3h.01"/></svg>',
+  trophy: '<svg viewBox="0 0 24 24" class="ico"><path d="M8 21h8"/><path d="M12 17v4"/><path d="M6 4h12v5a6 6 0 0 1-12 0z"/><path d="M18 5h3v2a3 3 0 0 1-3 3"/><path d="M6 5H3v2a3 3 0 0 0 3 3"/></svg>',
+};
+
 function renderStreakBanner(st, met, goal, done) {
   const el = $('#streak-banner');
   const ico = $('#streak-banner-ico');
@@ -279,17 +457,17 @@ function renderStreakBanner(st, met, goal, done) {
 
   if (met && st.rescuedToday) {
     el.className = 'streak-banner done';
-    ico.textContent = '💪';
+    ico.innerHTML = BANNER_ICON.trophy;
     title.textContent = '¡Racha recuperada!';
     sub.textContent = `Pagaste la meta ×${st.multiplier} y la salvaste: seguís con ${streak} ${day(streak)}. Volvé mañana antes de medianoche.`;
   } else if (met) {
     el.className = 'streak-banner done';
-    ico.textContent = '✅';
+    ico.innerHTML = BANNER_ICON.check;
     title.textContent = '¡Racha de hoy completada!';
     sub.textContent = `Racha de ${streak} ${day(streak)}. Volvé mañana antes de medianoche.`;
   } else if (st.mode === 'rescue') {
     el.className = 'streak-banner rescue' + (st.lastChance ? ' last' : '');
-    ico.textContent = st.lastChance ? '🆘' : '⏳';
+    ico.innerHTML = st.lastChance ? BANNER_ICON.alert : BANNER_ICON.clock;
     title.textContent = st.lastChance
       ? 'Última chance para recuperar la racha'
       : 'Podés recuperar la racha';
@@ -298,12 +476,12 @@ function renderStreakBanner(st, met, goal, done) {
       : `Te salteaste un día. Hacé ${goal} respuestas hoy (el doble) y no perdés tu racha de ${streak} ${day(streak)}. Te faltan ${falta}.`;
   } else if (streak > 0) {
     el.className = 'streak-banner warn';
-    ico.textContent = '🔥';
+    ico.innerHTML = BANNER_ICON.flame;
     title.textContent = 'No dejes que la racha muera';
     sub.textContent = `Te faltan ${falta} respuestas para salvar tu racha de ${streak} ${day(streak)}.`;
   } else {
     el.className = 'streak-banner start';
-    ico.textContent = '🔥';
+    ico.innerHTML = BANNER_ICON.flame;
     title.textContent = 'Arrancá tu racha hoy';
     sub.textContent = done > 0
       ? `Te faltan ${falta} respuestas para empezarla.`
@@ -328,7 +506,7 @@ function startSession(extra) {
     return;
   }
 
-  session = { queue, index: 0, answered: 0, xp: 0, combo: 0, reinforce: false };
+  session = { queue, index: 0, answered: 0, xp: 0, combo: 0, reinforce: false, missed: new Map() };
   $('#session-xp').textContent = '+0';
   show('review');
   renderCard();
@@ -345,7 +523,7 @@ function startReinforce() {
     show('home');
     return;
   }
-  session = { queue, index: 0, answered: 0, xp: 0, combo: 0, reinforce: true };
+  session = { queue, index: 0, answered: 0, xp: 0, combo: 0, reinforce: true, missed: new Map() };
   $('#session-xp').textContent = '+0';
   show('review');
   renderCard();
@@ -410,14 +588,20 @@ function renderCard() {
 
   $('#card-answer').textContent = back;
   $('#card-example-es').textContent = ex.es || '';
+  // En el dorso la palabra sigue arriba: girar la card no puede costarte
+  // el contexto de qué era lo que estabas respondiendo.
+  $('#card-back-word').textContent = front;
+  // Y la oración en inglés con la palabra marcada: es el contexto con el que
+  // se decide si te la sabías o no, así que tiene que estar al calificar.
+  $('#card-back-example').innerHTML = reverse ? '' : highlight(ex.en, card.en);
 
   const seen = st.reps === 0 ? 'nueva' : `vista ${st.reps} ${st.reps === 1 ? 'vez' : 'veces'}`;
-  const reinforceTag = session.reinforce ? '<span class="tag refuerzo">refuerzo</span>' : '';
-  $('#card-tags').innerHTML = `
-    ${reinforceTag}
-    <span class="tag accent">${deckLabel(card.deck)}</span>
-    <span class="tag">${card.lvl}</span>
-    <span class="tag">${seen}</span>`;
+  const parts = [];
+  if (session.reinforce) parts.push('<span class="tag refuerzo">refuerzo</span>');
+  parts.push(`<span class="tag accent">${deckLabel(card.deck)}</span>`);
+  parts.push(`<span class="tag">${card.lvl}</span>`);
+  parts.push(`<span class="tag">${seen}</span>`);
+  $('#card-tags').innerHTML = parts.join('<span class="sep">·</span>');
 
   // El total incluye lo que ya se contestó más lo que queda en cola: si una
   // card "vuelve" (otra vez / aprendizaje) el total crece con ella, así el
@@ -434,7 +618,7 @@ function renderCard() {
   revealed = false;
   resetHints();
   hints = buildHints(card, reverse, ex);
-  $('#card-back').hidden = true;
+  $('#card').classList.remove('flipped');
   $('#btn-reveal').hidden = false;
   $('#grade-grid').hidden = true;
   $('#grade-grid').classList.remove('locked');
@@ -442,20 +626,174 @@ function renderCard() {
   $('#grade-hint').hidden = true;
   $('#grade-hint').textContent = 'Elegí según cuánto te costó recordarla';
 
-  if (s.settings.autoSpeak) speak(card.en);
+  setupQuiz(card, st, reverse);
+
+  // En dictado la palabra arranca tapada: escucharla es el ejercicio, y
+  // verla escrita lo resolvería solo.
+  if (quizMode === quiz.MODES.LISTEN) speak(card.en);
+  else if (s.settings.autoSpeak) speak(card.en);
 }
 
-/** Muestra el significado de la card actual y habilita votar. */
+/* ═══════════ práctica activa ═══════════
+ * Antes de ver la respuesta, producirla. El modo lo elige `quiz.js` según
+ * qué tan sabida está la palabra; acá sólo se monta lo que corresponda y se
+ * traduce el resultado en un techo de calificación, igual que hacen las
+ * pistas: si no te salió, "Bien" le mentiría al SRS.
+ */
+
+function hideQuiz() {
+  $('#quiz').hidden = true;
+  $('#quiz-form').hidden = true;
+  $('#quiz-choices').hidden = true;
+  $('#quiz-listen').hidden = true;
+  $('#quiz-verdict').hidden = true;
+  $('#quiz-choices').innerHTML = '';
+  $('#quiz-input').value = '';
+  $('#btn-listen').classList.remove('playing');
+}
+
+/** Deja la card lista con el ejercicio que le toca — o con ninguno. */
+function setupQuiz(card, st, reverse) {
+  hideQuiz();
+  quizCap = null;
+  quizDone = false;
+
+  const s = store.get();
+  quizMode = quiz.pickMode(st, {
+    practice: s.settings.practice,
+    listen: s.settings.listen,
+    canListen: 'speechSynthesis' in window,
+  });
+
+  if (quizMode === quiz.MODES.REVEAL) return;
+
+  $('#quiz').hidden = false;
+  // El ejercicio ocupa el lugar del botón de revelar: el camino corto
+  // sigue existiendo, pero por abajo (ver "No me la acuerdo").
+  $('#btn-reveal').hidden = true;
+
+  if (quizMode === quiz.MODES.CHOICE) {
+    const opts = quiz.buildChoices(card, decks.studyCards(), reverse);
+    $('#quiz-choices').hidden = false;
+    $('#quiz-choices').innerHTML = opts.map((o, i) => `
+      <button class="quiz-choice" type="button" data-right="${o.right}">
+        <span class="key">${i + 1}</span><span>${escapeHtml(o.text)}</span>
+      </button>`).join('');
+    $$('#quiz-choices .quiz-choice').forEach((b) => {
+      b.addEventListener('click', () => answerChoice(b));
+    });
+    return;
+  }
+
+  // Escribir y dictado comparten el campo de texto; cambia qué se pide y en
+  // qué idioma se contesta.
+  const enEspanol = !reverse && quizMode !== quiz.MODES.LISTEN;
+  const input = $('#quiz-input');
+  $('#quiz-form').hidden = false;
+  input.classList.toggle('as-sans', enEspanol);
+  input.placeholder = quizMode === quiz.MODES.LISTEN
+    ? 'Escribí lo que escuchaste'
+    : enEspanol ? 'Escribí qué significa' : 'Escribí la palabra en inglés';
+  input.lang = enEspanol ? 'es' : 'en';
+
+  if (quizMode === quiz.MODES.LISTEN) {
+    $('#quiz-listen').hidden = false;
+    // La palabra tapada: el ejercicio es reconocerla de oído.
+    $('#card-prompt').textContent = '· · ·';
+    $('#card-prompt').className = 'prompt serif listening';
+    $('#card-example').innerHTML = '';
+  }
+
+  // El foco automático sólo con teclado físico: en el celular abriría el
+  // teclado en pantalla y taparía la card que hay que leer.
+  if (matchMedia('(hover: hover) and (pointer: fine)').matches) {
+    // `preventScroll` porque enfocar arrastraría la vista hasta el campo y
+    // dejaría la palabra fuera de pantalla, que es lo que hay que leer.
+    setTimeout(() => input.focus({ preventScroll: true }), 120);
+  }
+}
+
+/** Lo que respondió el ejercicio: fija el techo y da vuelta la card. */
+function settleQuiz(verdict, note) {
+  quizDone = true;
+  quizCap = quiz.capForVerdict(verdict);
+
+  const box = $('#quiz-verdict');
+  box.className = 'quiz-verdict ' + verdict;
+  box.hidden = false;
+  $('#verdict-title').textContent =
+    verdict === 'ok' ? 'Correcto' : verdict === 'close' ? 'Casi' : 'Era otra';
+  $('#verdict-note').innerHTML = note;
+
+  if (verdict === 'ok') sound.playCorrect();
+  else if (verdict === 'close') sound.playHard();
+  else sound.playWrong();
+
+  $('#quiz-form').hidden = true;
+  $('#btn-hint').hidden = true;
+  revealCard();
+}
+
+function answerWrite() {
+  if (!session || quizDone) return;
+  const card = currentCard();
+  if (!card) return;
+  const typed = $('#quiz-input').value.trim();
+  if (!typed) return;
+
+  const reverse = store.get().settings.reverse;
+  // En dictado siempre se escribe la palabra en inglés, la haya pedido en
+  // el idioma que la haya pedido la card.
+  const expected = quizMode === quiz.MODES.LISTEN ? card.en : (reverse ? card.en : card.es);
+  const r = quiz.check(typed, expected);
+
+  const era = `<span class="was">${escapeHtml(expected)}</span>`;
+  const note = r.verdict === 'ok'
+    ? era
+    : r.verdict === 'close'
+      ? `Escribiste <span class="typed">${r.typedHtml || escapeHtml(typed)}</span> — era ${era}`
+      : `Escribiste <span class="typed">${escapeHtml(typed)}</span> — era ${era}`;
+  settleQuiz(r.verdict, note);
+}
+
+function answerChoice(btn) {
+  if (!session || quizDone) return;
+  const card = currentCard();
+  if (!card) return;
+  const right = btn.dataset.right === 'true';
+
+  $$('#quiz-choices .quiz-choice').forEach((b) => {
+    b.disabled = true;
+    if (b.dataset.right === 'true') b.classList.add('right');
+  });
+  if (!right) btn.classList.add('wrong');
+
+  const reverse = store.get().settings.reverse;
+  const expected = reverse ? card.en : card.es;
+  settleQuiz(right ? 'ok' : 'no', `<span class="was">${escapeHtml(expected)}</span>`);
+}
+
+/** "No me la acuerdo": cuenta como fallada, que es lo que pasó. */
+function skipQuiz() {
+  if (!session || quizDone) return;
+  const card = currentCard();
+  if (!card) return;
+  const reverse = store.get().settings.reverse;
+  const expected = quizMode === quiz.MODES.LISTEN ? card.en : (reverse ? card.en : card.es);
+  settleQuiz('no', `Era <span class="was">${escapeHtml(expected)}</span>`);
+}
+
+/** Da vuelta la card y habilita calificar. */
 function revealCard() {
   if (!session || revealed) return;
   revealed = true;
-  $('#card-back').hidden = false;
+  $('#card').classList.add('flipped');
   $('#btn-reveal').hidden = true;
   $('#btn-hint').hidden = true;
   $('#grade-grid').hidden = false;
   $('#grade-hint').hidden = false;
   applyGradeCap();
-  bounce($('#card-back'), 'reveal-in');
+  sound.playFlip();
 }
 
 /* ═══════════ pistas ═══════════
@@ -511,13 +849,19 @@ function buildHints(card, reverse, shown) {
  * (siempre está "Otra vez"), pero no mejor de lo que de verdad pasó.
  */
 function maxQuality() {
-  if (!hintsShown) return EASY;
-  return hintsShown === 1 ? GOOD : HARD;
+  const porPistas = !hintsShown ? EASY : hintsShown === 1 ? GOOD : HARD;
+  // Las dos fuentes de techo se acumulan y manda la más baja: pedir una
+  // pista y además errar el ejercicio no puede terminar en "Bien".
+  return quizCap === null ? porPistas : Math.min(porPistas, quizCap);
 }
 
-const CAP_NOTE = {
+const HINT_NOTE = {
   [GOOD]: 'Usaste una pista: no te salió sola, así que "Fácil" queda fuera.',
   [HARD]: 'Con todas las pistas: lo máximo es "Difícil" — la sacaste con ayuda.',
+};
+const QUIZ_NOTE = {
+  [GOOD]: 'Le erraste por poco: lo máximo es "Bien".',
+  [AGAIN]: 'No te salió, así que va de vuelta a la cola.',
 };
 
 /** Apaga los botones por encima del techo, con el motivo a la vista. */
@@ -526,15 +870,20 @@ function applyGradeCap() {
   $$('#grade-grid .grade').forEach((b) => {
     b.classList.toggle('capped', Number(b.dataset.q) > cap);
   });
-  $('#grade-hint').textContent = CAP_NOTE[cap] || 'Elegí según cuánto te costó recordarla';
+  // El motivo tiene que ser el del techo que manda, no el de cualquiera.
+  const porPistas = !hintsShown ? EASY : hintsShown === 1 ? GOOD : HARD;
+  const note = (quizCap !== null && quizCap <= porPistas ? QUIZ_NOTE[quizCap] : HINT_NOTE[porPistas])
+    || 'Elegí según cuánto te costó recordarla';
+  $('#grade-hint').textContent = note;
 }
 
 function resetHints() {
   hints = [];
   hintsShown = 0;
-  const box = $('#card-hints');
-  box.innerHTML = '';
-  box.hidden = true;
+  for (const box of [$('#card-hints'), $('#card-hints-back')]) {
+    box.innerHTML = '';
+    box.hidden = true;
+  }
   const btn = $('#btn-hint');
   btn.classList.remove('spent');
   $('#hint-label').textContent = '¿No te sale? Pista';
@@ -546,12 +895,15 @@ function showNextHint() {
   const hint = hints[hintsShown];
   hintsShown += 1;
 
-  const box = $('#card-hints');
-  box.hidden = false;
-  const el = document.createElement('div');
-  el.className = 'hint-item';
-  el.innerHTML = `<span class="hint-kind">${hint.kind}</span><div class="hint-body">${hint.html}</div>`;
-  box.appendChild(el);
+  // La misma pista de los dos lados de la card: la pedís en el frente y la
+  // volvés a tener a la vista cuando estás por calificar.
+  for (const box of [$('#card-hints'), $('#card-hints-back')]) {
+    box.hidden = false;
+    const el = document.createElement('div');
+    el.className = 'hint-item';
+    el.innerHTML = `<span class="hint-kind">${hint.kind}</span><div class="hint-body">${hint.html}</div>`;
+    box.appendChild(el);
+  }
 
   const btn = $('#btn-hint');
   btn.classList.add('spent');
@@ -834,6 +1186,12 @@ function answer(quality) {
   const justLearned = !wasLearned && isMature(next);
 
   session.answered += 1;
+  // Lo que se te escapó hoy, para poder mirarlo junto al final. Un Map por
+  // id: si la card vuelve dentro de la misma sesión no se cuenta dos veces.
+  // Y no se borra al acertarla después: toda card fallada vuelve en la misma
+  // sesión, así que borrarla al segundo intento dejaría la lista siempre
+  // vacía — justo las que costaron son las que hay que poder repasar.
+  if (quality === AGAIN) session.missed.set(card.id, card);
   session.queue.splice(session.index, 1);
 
   // Si hay que volver a verla dentro de la sesión, la reinsertamos más adelante.
@@ -891,6 +1249,8 @@ function finishSession() {
         ? `Te faltan ${falta} respuestas para recuperar la racha (hoy la meta va ×${st.multiplier}).`
         : `Te faltan ${falta} respuestas para que cuente el día.`;
 
+  renderMisses(session ? [...session.missed.values()] : []);
+
   const noMorePending = decks.buildQueue().total === 0;
   const more = $('#btn-more');
   more.textContent = noMorePending ? 'Reforzar más' : 'Seguir repasando';
@@ -903,6 +1263,29 @@ function finishSession() {
   bounce($('#done-mark'), 'enter');
   spawnConfetti(met && !wasReinforce);
   sound.playComplete();
+}
+
+/**
+ * Las que fallaste en esta sesión. Es la lista que conviene mirar dos
+ * minutos antes de cerrar la app: ya volvieron a la cola, pero verlas
+ * juntas con el significado al lado es media vuelta más de repaso gratis.
+ */
+function renderMisses(cards) {
+  const box = $('#done-misses');
+  if (!cards.length) {
+    box.hidden = true;
+    return;
+  }
+  const top = cards.slice(0, 5);
+  $('#done-misses-title').textContent = cards.length === 1
+    ? 'Se te escapó una'
+    : `Se te escaparon ${cards.length}`;
+  $('#done-miss-list').innerHTML = top.map((c) => `
+    <div class="done-miss">
+      <span class="en">${escapeHtml(c.en)}</span>
+      <span class="es">${escapeHtml(c.es)}</span>
+    </div>`).join('');
+  box.hidden = false;
 }
 
 function spawnConfetti(big) {
@@ -927,6 +1310,15 @@ function spawnConfetti(big) {
 function wireReview() {
   $('#btn-speak').addEventListener('click', (e) => {
     e.stopPropagation();
+    const card = currentCard();
+    if (card) speak(card.en);
+  });
+  $('#quiz-form').addEventListener('submit', (e) => {
+    e.preventDefault();
+    answerWrite();
+  });
+  $('#btn-quiz-skip').addEventListener('click', skipQuiz);
+  $('#btn-listen').addEventListener('click', () => {
     const card = currentCard();
     if (card) speak(card.en);
   });
@@ -961,6 +1353,21 @@ function wireReview() {
       if (e.key === 'Escape') closeKnowSheet();
       return;
     }
+    // Mientras el ejercicio está sin contestar, el teclado es suyo: los
+    // números eligen opción y Enter manda lo escrito. Los atajos de
+    // calificar recién valen cuando la card ya está dada vuelta.
+    const enEjercicio = !$('#quiz').hidden && !quizDone;
+    if (enEjercicio && document.activeElement === $('#quiz-input')) {
+      if (e.key === 'Escape') $('#quiz-input').blur();
+      return; // el resto lo maneja el formulario
+    }
+    if (enEjercicio && !$('#quiz-choices').hidden && ['1', '2', '3', '4'].includes(e.key)) {
+      e.preventDefault();
+      const btn = $$('#quiz-choices .quiz-choice')[Number(e.key) - 1];
+      if (btn) answerChoice(btn);
+      return;
+    }
+
     if (e.key === 'p' || e.key === 'P') {
       showNextHint();
     } else if (e.key === ' ' || e.key === 'Enter') {
@@ -1004,6 +1411,15 @@ function speak(text) {
     if (voice) u.voice = voice;
     u.lang = voice ? voice.lang : 'en-US';
     u.rate = 0.92;
+    // Que se vea que está sonando: con el celular en silencio, las ondas
+    // del botón son la única señal de que el dictado se reprodujo.
+    const marcar = (on) => {
+      $('#btn-listen')?.classList.toggle('playing', on);
+      $('#btn-speak')?.classList.toggle('speaking', on);
+    };
+    u.onstart = () => marcar(true);
+    u.onend = () => marcar(false);
+    u.onerror = () => marcar(false);
     speechSynthesis.speak(u);
   } catch (e) {
     console.warn('Sin voz disponible:', e);
@@ -1290,7 +1706,7 @@ function startHardDrill() {
     toast('Todavía no hay palabras difíciles para atacar.');
     return;
   }
-  session = { queue, index: 0, answered: 0, xp: 0, combo: 0, reinforce: true };
+  session = { queue, index: 0, answered: 0, xp: 0, combo: 0, reinforce: true, missed: new Map() };
   $('#session-xp').textContent = '+0';
   show('review');
   renderCard();
@@ -1464,7 +1880,7 @@ const SECTION_RENDERERS = {
   </div>`,
 
   /** Aviso destacado (ámbar) para las trampas que no entran en "errores típicos". */
-  warn: (s) => `<div class="sec-warn"><span class="warn-ico">⚠️</span><div>${toArray(s.body).map((p) => `<p>${richText(p)}</p>`).join('')}</div></div>`,
+  warn: (s) => `<div class="sec-warn"><span class="warn-ico"><svg viewBox="0 0 24 24" class="ico"><path d="M12 4.5 2.8 20h18.4z"/><path d="M12 10v4.2"/><path d="M12 17.3h.01"/></svg></span><div>${toArray(s.body).map((p) => `<p>${richText(p)}</p>`).join('')}</div></div>`,
 };
 
 function toArray(v) {
@@ -1697,7 +2113,7 @@ function renderGrammarLevel() {
   if (!lvl) return;
   $('#grammar-level-title').textContent = lvl.label;
   $('#grammar-level-goal').textContent = lvl.goal;
-  $('#grammar-level-book').textContent = `📖 ${lvl.book}`;
+  $('#grammar-level-book').textContent = lvl.book;
 
   const body = $('#grammar-level-body');
   body.innerHTML = '';
@@ -1748,6 +2164,9 @@ function openTopic(id) {
   show('grammar-topic');
 }
 
+const X_MARK = '<svg viewBox="0 0 24 24" class="ico"><path d="m6 6 12 12"/><path d="M18 6 6 18"/></svg>';
+const CHECK_MARK = '<svg viewBox="0 0 24 24" class="ico"><path d="M5 13l4 4L19 7"/></svg>';
+
 function renderTopic() {
   const found = study.topicById(currentTopicId);
   if (!found) return;
@@ -1796,8 +2215,8 @@ function renderTopic() {
     mistakesBlock.hidden = false;
     $('#topic-mistakes').innerHTML = topic.mistakes.map((m) => `
       <div class="topic-mistake">
-        <div class="wrong"><span class="ico">❌</span><span class="txt">${escapeHtml(m.wrong)}</span></div>
-        <div class="right"><span class="ico">✅</span><span class="txt">${escapeHtml(m.right)}</span></div>
+        <div class="wrong"><span class="mark">${X_MARK}</span><span class="txt">${escapeHtml(m.wrong)}</span></div>
+        <div class="right"><span class="mark">${CHECK_MARK}</span><span class="txt">${escapeHtml(m.right)}</span></div>
         ${m.note ? `<div class="mistake-note">${escapeHtml(m.note)}</div>` : ''}
       </div>`).join('');
   } else {
@@ -2008,8 +2427,8 @@ function wireWordSheet() {
 /* ═══════════ vocabulario: hub y listas ═══════════ */
 
 const FREQ_SECTIONS = [
-  { id: 'freq1000', size: 1000, ico: '🥇', label: 'Las 1000 palabras más importantes', hint: 'El núcleo del idioma: con esto seguís una conversación normal' },
-  { id: 'freq2000', size: 2000, ico: '🥈', label: 'Las 2000 palabras más importantes', hint: 'Las mil de arriba más el segundo millar, para leer y ver cosas sin subtítulos' },
+  { id: 'freq1000', size: 1000, ico: `<svg viewBox="0 0 24 24" class="ico"><circle cx="12" cy="14.5" r="5.5"/><path d="M8.5 9.3 6.5 3.5h11l-2 5.8"/><path d="M12 12.2v4.6"/></svg>`, label: 'Las 1000 palabras más importantes', hint: 'El núcleo del idioma: con esto seguís una conversación normal' },
+  { id: 'freq2000', size: 2000, ico: `<svg viewBox="0 0 24 24" class="ico"><circle cx="12" cy="14.5" r="5.5"/><path d="M8.5 9.3 6.5 3.5h11l-2 5.8"/><path d="M12 12.2v4.6"/></svg>`, label: 'Las 2000 palabras más importantes', hint: 'Las mil de arriba más el segundo millar, para leer y ver cosas sin subtítulos' },
 ];
 
 /*
@@ -2288,9 +2707,12 @@ function renderSettings() {
 
   renderScopes();
 
+  renderPracticeMode();
+
   $('#t-sound').classList.toggle('on', s.settings.sound);
   $('#t-speak').classList.toggle('on', s.settings.autoSpeak);
   $('#t-reverse').classList.toggle('on', s.settings.reverse);
+  $('#t-listen').classList.toggle('on', s.settings.listen);
 
   const box = $('#deck-toggles');
   box.innerHTML = '';
@@ -2322,6 +2744,28 @@ function renderSettings() {
  * orden se aprende, para que las primeras semanas se te vayan en lo que de
  * verdad vas a escuchar y no en términos que casi no aparecen.
  */
+
+/* ── cuánta práctica activa ──
+ * Es el ajuste que más cambia cómo se siente una sesión, así que dice en
+ * castellano qué va a pasar en vez de dejarlo en tres etiquetas sueltas.
+ */
+function renderPracticeMode() {
+  const s = store.get();
+  const cur = s.settings.practice || 'off';
+  $$('#practice-mode button').forEach((b) => b.classList.toggle('on', b.dataset.practice === cur));
+  $('#practice-note').textContent = quiz.PRACTICE.find((x) => x.id === cur)?.hint || '';
+
+  // El dictado sólo tiene sentido dentro del modo mixto: en clásico no hay
+  // ejercicio y en exigente siempre se escribe.
+  const fila = $('#t-listen').closest('.opt');
+  const aplica = cur === 'smart';
+  fila.style.opacity = aplica ? '' : '.45';
+  $('#t-listen').disabled = !aplica;
+  fila.querySelector('small').textContent = aplica
+    ? 'Algunas palabras llegan sólo de oído, sin verlas escritas'
+    : 'Disponible en el modo Mixto';
+}
+
 function renderScopes() {
   const s = store.get();
   const counts = decks.scopeCounts();
@@ -2553,6 +2997,20 @@ function wireSettings() {
     store.setSettings({ reverse: on });
     sound.playSwitch(on);
     renderSettings();
+  });
+  $('#t-listen').addEventListener('click', () => {
+    if ($('#t-listen').disabled) return;
+    const on = !store.get().settings.listen;
+    store.setSettings({ listen: on });
+    sound.playSwitch(on);
+    renderSettings();
+  });
+  $$('#practice-mode button').forEach((b) => {
+    b.addEventListener('click', () => {
+      store.setSettings({ practice: b.dataset.practice });
+      sound.playTap();
+      renderSettings();
+    });
   });
 
   $('#btn-export').addEventListener('click', () => {
