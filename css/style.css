@@ -52,17 +52,16 @@
   --label-4: rgba(235, 235, 245, .20);   /* deshabilitado */
 
   /* ── acento ──
-   * El verde del logo (la barra del cursor en `assets/icon.svg`). Un solo
-   * tono alcanza para todo: 13.6:1 como texto sobre el fondo, 11.0:1 sobre
-   * un panel, 11.8:1 como relleno con `--on-accent` encima. Ojo con eso
-   * último: el texto sobre el relleno va oscuro, porque blanco sobre este
-   * verde da 1.5:1 y no se lee.
+   * Verde menta. Un solo tono alcanza para todo: 12.5:1 como texto sobre el
+   * fondo, 10.1:1 sobre un panel y 11.0:1 como relleno con `--on-accent`
+   * encima. Ojo con eso último: el texto sobre el relleno va oscuro, porque
+   * blanco sobre este menta da 1.6:1 y no se lee.
    */
-  --accent: #6EE7A0;
-  --accent-text: #6EE7A0;
-  --accent-soft: rgba(110, 231, 160, .16);
-  --accent-line: rgba(110, 231, 160, .32);
-  --on-accent: #06190E;
+  --accent: #66DDAA;
+  --accent-text: #66DDAA;
+  --accent-soft: rgba(102, 221, 170, .16);
+  --accent-line: rgba(102, 221, 170, .32);
+  --on-accent: #05170F;
 
   /* ── las cuatro señales del SRS ──
    * systemColors en su variante oscura. Viven como punto de color y como
@@ -70,11 +69,11 @@
    */
   --again: #FF453A;
   --hard: #FF9F0A;
-  --good: #6EE7A0;   /* el verde del logo: acertar y la marca son lo mismo */
+  --good: #66DDAA;   /* el mismo menta: acertar y la marca son lo mismo */
   --easy: #64D2FF;
   --again-soft: rgba(255, 69, 58, .16);
   --hard-soft: rgba(255, 159, 10, .16);
-  --good-soft: rgba(110, 231, 160, .16);
+  --good-soft: rgba(102, 221, 170, .16);
   --easy-soft: rgba(100, 210, 255, .16);
 
   /* ── la llama de la racha ── */
@@ -751,9 +750,9 @@ html[data-nav="pop"]::view-transition-new(root) {
   transition: stroke-dashoffset var(--d-slow) var(--ease-out);
 }
 .ring-outer { stroke: var(--accent); stroke-dasharray: 578.05; stroke-dashoffset: 578.05; }
-.ring-inner { stroke: #B6F5D2; stroke-dasharray: 439.82; stroke-dashoffset: 439.82; }
+.ring-inner { stroke: #ADEFD6; stroke-dasharray: 439.82; stroke-dashoffset: 439.82; }
 /* Meta cumplida: el anillo se enciende en vez de simplemente llenarse. */
-.ring-outer.full { filter: drop-shadow(0 0 10px rgba(110, 231, 160, .65)); }
+.ring-outer.full { filter: drop-shadow(0 0 10px rgba(102, 221, 170, .65)); }
 
 .ring-center {
   position: absolute;
@@ -806,7 +805,7 @@ html[data-nav="pop"]::view-transition-new(root) {
   flex-shrink: 0;
 }
 .ring-legend .k-goal { background: var(--accent); }
-.ring-legend .k-new { background: #B6F5D2; }
+.ring-legend .k-new { background: #ADEFD6; }
 
 /* ── tres números, sin cajas ──
  * Las cajas separadas competían con el anillo. Acá los números se apoyan en
@@ -1308,7 +1307,7 @@ html[data-nav="pop"]::view-transition-new(root) {
   color: var(--on-accent);
 }
 .g-good small { color: rgba(255, 255, 255, .7); }
-.g-good:active { background: #52C784; }
+.g-good:active { background: #4CC494; }
 
 /* Tapado por una pista o por el ejercicio: sigue legible, para que veas qué
  * te perdiste. Y si el tapado es el primario, pierde el relleno: un botón
@@ -1810,8 +1809,8 @@ html[data-nav="pop"]::view-transition-new(root) {
   display: block;
 }
 .lv0 { background: var(--fill-4); }
-.lv1 { background: rgba(110, 231, 160, .30); }
-.lv2 { background: rgba(110, 231, 160, .58); }
+.lv1 { background: rgba(102, 221, 170, .30); }
+.lv2 { background: rgba(102, 221, 170, .58); }
 .lv3 { background: var(--accent); }
 .lv4 { background: var(--accent-text); }
 
@@ -3234,7 +3233,7 @@ input[type=range]::-moz-range-thumb {
   padding: 28px;
   text-align: center;
   background:
-    radial-gradient(circle at 50% 42%, rgba(110, 231, 160, .20), transparent 60%),
+    radial-gradient(circle at 50% 42%, rgba(102, 221, 170, .20), transparent 60%),
     rgba(0, 0, 0, .92);
   -webkit-backdrop-filter: blur(6px);
   backdrop-filter: blur(6px);
@@ -3256,7 +3255,7 @@ input[type=range]::-moz-range-thumb {
   stroke-linecap: round;
   stroke-dasharray: 201;
   stroke-dashoffset: 201;
-  filter: drop-shadow(0 0 10px rgba(110, 231, 160, .55));
+  filter: drop-shadow(0 0 10px rgba(102, 221, 170, .55));
 }
 .learned-pop.show .learned-ring-fg { animation: ring-draw 700ms var(--ease-out) forwards; }
 @keyframes ring-draw { to { stroke-dashoffset: 0; } }
@@ -3274,7 +3273,7 @@ input[type=range]::-moz-range-thumb {
   stroke-linejoin: round;
   stroke-dasharray: 26;
   stroke-dashoffset: 26;
-  filter: drop-shadow(0 0 12px rgba(110, 231, 160, .65));
+  filter: drop-shadow(0 0 12px rgba(102, 221, 170, .65));
 }
 .learned-pop.show .learned-check { animation: ring-draw 420ms var(--ease-out) 420ms forwards; }
 
@@ -3549,7 +3548,7 @@ input[type=range]::-moz-range-thumb {
 @media (hover: hover) and (pointer: fine) {
   .cta:hover { filter: brightness(1.1); }
   .grade:hover { background: var(--fill-3); }
-  .g-good:hover { background: #85EFB1; }
+  .g-good:hover { background: #7CE6BC; }
   .grade.capped:hover { background: var(--fill-4); }
   .quiz-choice:hover:not(:disabled) { background: var(--surface-2); }
   .deck:hover, .row:hover, .word-row.as-btn:hover, button.opt:hover,
@@ -3601,9 +3600,9 @@ input[type=range]::-moz-range-thumb {
     --separator: rgba(120, 120, 128, .9);
     --fill-4: rgba(120, 120, 128, .34);
     --surface: #222225;
-    --accent-text: #93F0BC;
+    --accent-text: #8FEBCB;
   }
-  .example mark { box-shadow: inset 0 -.42em 0 rgba(110, 231, 160, .45); }
+  .example mark { box-shadow: inset 0 -.42em 0 rgba(102, 221, 170, .45); }
 }
 
 /* ── reducir movimiento ──
