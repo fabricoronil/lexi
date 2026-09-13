@@ -1,0 +1,12 @@
+{
+  "name": "lexi",
+  "version": "28.0.0",
+  "private": true,
+  "description": "Vocabulario y frases en inglés con repetición espaciada.",
+  "license": "MIT",
+  "type": "module",
+  "scripts": {
+    "test": "test/sintaxis.sh && node --test test/*.test.mjs",
+    "serve": "python3 -m http.server 8000"
+  }
+}
