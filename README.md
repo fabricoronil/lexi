@@ -44,6 +44,9 @@ un estilo que dé ganas de abrirlo.
 - **563 cards** repartidas en seis mazos.
 - **Pronunciación** con la voz del sistema, en inglés.
 - **Modo inverso** (español → inglés) para producción, no sólo reconocimiento.
+- **Práctica activa opcional**: escribir la respuesta, elegirla entre otras
+  parecidas o sacarla de oído, antes de ver el significado. Viene apagada.
+- **Lo que se te escapó**, al terminar la sesión: las que fallaste, juntas.
 - **Heatmap** de actividad y estadísticas de cuántas cards tenés aprendidas.
 - **Instalable** en el celular o la tablet (PWA) y funciona sin conexión.
 - **Copia de seguridad** en `.json` para pasar el progreso entre dispositivos.
@@ -180,6 +183,48 @@ es un logro real y antes pasaba en silencio, en medio de la sesión: el número
 de "aprendidas" del inicio subía sin que te enteraras. Ahora la pantalla se
 pone verde, el círculo se dibuja y te dice cuál fue y cuándo vuelve.
 
+## Producir la respuesta, no sólo reconocerla
+
+Los cuatro botones y los intervalos son los de siempre: esto no los toca.
+Lo que decide es si, **antes** de mostrarte el significado, la respuesta
+tiene que salir de vos. Uno cree que se acuerda de una palabra hasta que
+tiene que escribirla.
+
+En **Ajustes → Cómo practicás** hay tres niveles:
+
+| | Qué pasa en la sesión |
+| --- | --- |
+| **Clásico** | El flujo de Anki de siempre: ves la palabra, la pensás, mostrás el significado y te calificás. **Es el que viene puesto.** |
+| **Mixto** | El ejercicio sigue a la madurez de la palabra (ver abajo) |
+| **Exigente** | Escribís siempre, salvo la primera vez que ves una palabra |
+
+En **Mixto** la exigencia sube con la palabra, no de golpe:
+
+| Estado de la card | Qué te pide |
+| --- | --- |
+| Nunca la viste | Elegirla entre cuatro del mismo mazo y nivel |
+| En los pasos de aprendizaje | Nada: la mirás entera, como siempre |
+| Ya graduada | Escribir el significado |
+| Intervalo de tres semanas o más | Escribirla **de oído**, sin verla |
+
+Pedirle a alguien que escriba una palabra que ve por primera vez no es
+exigencia, es una pared: no hay nada que recuperar todavía. Y seguir
+mostrándole cuatro opciones a una palabra que hace un mes que sabe no le
+enseña nada. El dictado aparece último porque entender un video es
+justamente reconocer la palabra sin leerla, que es el objetivo de la app.
+
+Al comparar lo que escribiste no se es quisquilloso: no importan los
+acentos, las mayúsculas, la puntuación, el `to` del infinitivo ni los
+artículos, y una respuesta separada por `/` acepta cualquiera de sus partes
+(`darse cuenta / resolver`). Un error de tipeo en una palabra larga cuenta
+como **Casi** y te marca la letra; en una de cuatro letras no, porque ahí
+cambiar una letra cambia la palabra.
+
+Y el resultado **tiene precio**, igual que las pistas: si la escribiste bien
+podés votar lo que quieras; si le erraste por una letra el techo es "Bien";
+y si no te salió, sólo queda "Otra vez". Calificar "Fácil" algo que no supiste
+le mentiría al SRS y te mandaría la palabra a un mes.
+
 ## Anotar palabras al vuelo
 
 En **Estudio → Mi vocabulario** hay un botón **Anotar**: escribís la palabra y ya
@@ -281,6 +326,7 @@ JavaScript con módulos ES, sin dependencias ni build. Las piezas principales:
 - `js/srs.js` — el planificador SM-2, aislado y sin efectos secundarios
 - `js/store.js` — persistencia en `localStorage`, racha, historial y palabras propias
 - `js/decks.js` — carga de mazos, ranking por frecuencia y armado de la cola del día
+- `js/quiz.js` — los modos de práctica activa y la comparación de respuestas
 - `js/plan.js` — proyección de carga diaria, para recomendar la meta
 - `js/app.js` — vistas y eventos
 
@@ -288,8 +334,22 @@ Para correrlo local hace falta un servidor (los módulos y `fetch` no andan con
 `file://`):
 
 ```bash
-python3 -m http.server 8000
+npm run serve   # o: python3 -m http.server 8000
 ```
+
+### Las pruebas
+
+El planificador es lo que no se puede romper: si programa mal, las palabras
+vuelven cuando ya te las olvidaste, y eso no se nota hasta semanas después.
+`test/` fija su comportamiento — los pasos de aprendizaje, los topes del ease,
+el reaprendizaje, el fuzz — y también la comparación de respuestas escritas,
+que es el otro lugar donde un cambio chico hace daño silencioso.
+
+```bash
+npm test
+```
+
+No hay dependencias: usa el runner que trae Node.
 
 ## Licencia
 
