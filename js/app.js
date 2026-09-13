@@ -506,7 +506,7 @@ function startSession(extra) {
     return;
   }
 
-  session = { queue, index: 0, answered: 0, xp: 0, combo: 0, reinforce: false, missed: new Map() };
+  session = newSession(queue);
   $('#session-xp').textContent = '+0';
   show('review');
   renderCard();
@@ -523,10 +523,44 @@ function startReinforce() {
     show('home');
     return;
   }
-  session = { queue, index: 0, answered: 0, xp: 0, combo: 0, reinforce: true, missed: new Map() };
+  session = newSession(queue, { reinforce: true });
   $('#session-xp').textContent = '+0';
   show('review');
   renderCard();
+}
+
+/* ── la sesión y su contador honesto ──
+ * El contador de arriba mostraba `respuestas dadas / respuestas totales`, y
+ * ese segundo número no se puede saber al arrancar: toda card nueva vuelve
+ * una o dos veces más dentro de la sesión (los pasos de aprendizaje), y cada
+ * "Otra vez" la trae de nuevo. Por eso empezabas con 40 y el total crecía
+ * mientras respondías: el objetivo se corría solo.
+ *
+ * Ahora el denominador son las CARDS de la sesión — eso sí queda fijo desde
+ * el arranque y es exactamente lo que anuncia la pantalla de inicio — y el
+ * numerador, las que ya quedaron listas: una card cuenta recién cuando sale
+ * del bucle de aprendizaje y no vuelve más hoy. El total sólo se mueve si vos
+ * cambiás la sesión (marcar "ya me la sé" saca una y mete su reemplazo).
+ *
+ *   plan    · ids de las cards de esta sesión (el denominador)
+ *   done    · las que ya no vuelven hoy (el numerador)
+ *   touched · respondidas al menos una vez pero todavía en el bucle; valen
+ *             medio punto en la barra, para que avance en cada respuesta y
+ *             no parezca trabada mientras peleás con una palabra.
+ */
+function newSession(queue, { reinforce = false } = {}) {
+  return {
+    queue,
+    index: 0,
+    answered: 0,
+    xp: 0,
+    combo: 0,
+    reinforce,
+    missed: new Map(),
+    plan: new Set(queue.map((c) => c.id)),
+    done: new Set(),
+    touched: new Set(),
+  };
 }
 
 function currentCard() {
@@ -603,13 +637,21 @@ function renderCard() {
   parts.push(`<span class="tag">${seen}</span>`);
   $('#card-tags').innerHTML = parts.join('<span class="sep">·</span>');
 
-  // El total incluye lo que ya se contestó más lo que queda en cola: si una
-  // card "vuelve" (otra vez / aprendizaje) el total crece con ella, así el
-  // contador nunca muestra más respuestas que el total (ej. "8/7").
-  const total = session.answered + session.queue.length;
-  $('#session-count').textContent = `${session.answered}/${total}`;
-  const pct = total ? (session.answered / total) * 100 : 0;
+  // Cards de la sesión, no respuestas: que una palabra vuelva dos veces
+  // porque la estás aprendiendo no es trabajo nuevo, y el número de arriba
+  // tiene que ser el mismo que te prometió la pantalla de inicio (ver
+  // `newSession`). La barra sí suma el avance parcial de las que están a
+  // medio camino, para que se mueva con cada respuesta.
+  const total = session.plan.size;
+  const listas = session.done.size;
+  $('#session-count').textContent = `${listas}/${total}`;
+  let enCurso = 0;
+  for (const id of session.touched) if (!session.done.has(id)) enCurso += 1;
+  const pct = total ? Math.min(100, ((listas + enCurso * 0.5) / total) * 100) : 0;
   $('#session-fill').style.width = pct + '%';
+  $('#session-count').title = enCurso
+    ? `${listas} de ${total} cards listas · ${enCurso} a medio aprender, vuelven en esta sesión`
+    : `${listas} de ${total} cards listas`;
 
   for (let q = 0; q <= 3; q++) {
     $('#iv-' + q).textContent = previewInterval(st, q);
@@ -1101,8 +1143,12 @@ function confirmKnown() {
 
   store.markKnown(card.id);
 
-  // Sale de la cola de esta sesión, no sólo de las próximas.
+  // Sale de la cola de esta sesión, no sólo de las próximas. Y sale también
+  // del total: no la vas a responder, así que contarla sería inflar el número.
   session.queue = session.queue.filter((c) => c.id !== card.id);
+  session.plan.delete(card.id);
+  session.done.delete(card.id);
+  session.touched.delete(card.id);
 
   // Y entra la siguiente en su lugar: marcar una como sabida tiene que
   // adelantarte, no acortarte el día. Como nunca la respondiste, no gastó
@@ -1110,7 +1156,10 @@ function confirmKnown() {
   let avanzo = null;
   if (!store.cardState(card.id).reps) {
     avanzo = decks.nextFreshCard(session.queue.map((c) => c.id));
-    if (avanzo) session.queue.splice(session.index, 0, avanzo);
+    if (avanzo) {
+      session.queue.splice(session.index, 0, avanzo);
+      session.plan.add(avanzo.id); // una por otra: el total queda igual
+    }
   }
   if (session.index >= session.queue.length) session.index = 0;
 
@@ -1201,6 +1250,13 @@ function answer(quality) {
     const at = Math.min(session.queue.length, session.index + gap);
     session.queue.splice(at, 0, card);
   }
+
+  // Para el contador: la card cuenta como hecha recién cuando deja de volver.
+  // Mientras siga en el bucle de aprendizaje suma medio punto en la barra,
+  // pero no se descuenta del total (ver `newSession`).
+  session.touched.add(card.id);
+  if (soon) session.done.delete(card.id);
+  else session.done.add(card.id);
 
   // "No queda nada pendiente" incluye lo que todavía está dando vueltas en
   // esta sesión, no sólo lo que vence más adelante.
@@ -1706,7 +1762,7 @@ function startHardDrill() {
     toast('Todavía no hay palabras difíciles para atacar.');
     return;
   }
-  session = { queue, index: 0, answered: 0, xp: 0, combo: 0, reinforce: true, missed: new Map() };
+  session = newSession(queue, { reinforce: true });
   $('#session-xp').textContent = '+0';
   show('review');
   renderCard();
