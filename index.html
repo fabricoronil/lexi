@@ -528,7 +528,81 @@
         </div>
         <svg viewBox="0 0 24 24" class="ico chev"><path d="m9 6 6 6-6 6"/></svg>
       </button>
+      <button class="study-card" id="btn-go-games" type="button">
+        <span class="study-card-ico"><svg viewBox="0 0 24 24" class="ico"><path d="M8 9V5.5A2.5 2.5 0 0 1 10.5 3h3A2.5 2.5 0 0 1 16 5.5V9"/><rect x="3.5" y="9" width="17" height="12" rx="3"/><path d="M8 13v4"/><path d="M6 15h4"/><circle cx="16" cy="14.5" r="1"/><circle cx="18" cy="17" r="1"/></svg></span>
+        <div class="study-card-text">
+          <span>Juegos</span>
+          <small id="study-games-sub">Practicá jugando, sin que afecte tu repaso</small>
+        </div>
+        <svg viewBox="0 0 24 24" class="ico chev"><path d="m9 6 6 6-6 6"/></svg>
+      </button>
     </div>
+  </section>
+
+  <!-- ══ JUEGOS — lista ══ -->
+  <section class="view" id="view-games" hidden>
+    <header class="session-bar">
+      <button class="icon-btn" id="btn-games-back" type="button" aria-label="Volver a Estudio">
+        <svg viewBox="0 0 24 24" class="ico"><path d="M15 18l-6-6 6-6"/></svg>
+      </button>
+      <h1 class="page-title" style="margin:0">Juegos</h1>
+    </header>
+    <p class="note" style="margin-top:6px">No tocan el SRS ni la racha: son para practicar rápido lo que ya viste, jugando.</p>
+    <div class="study-nav">
+      <button class="study-card" id="btn-play-speed" type="button">
+        <span class="study-card-ico"><svg viewBox="0 0 24 24" class="ico"><circle cx="12" cy="12" r="8.5"/><path d="M12 7.5V12l3 2"/></svg></span>
+        <div class="study-card-text">
+          <span>Contrarreloj</span>
+          <small id="game-speed-sub">Elegí la traducción antes de que se acabe el minuto</small>
+        </div>
+        <svg viewBox="0 0 24 24" class="ico chev"><path d="m9 6 6 6-6 6"/></svg>
+      </button>
+    </div>
+  </section>
+
+  <!-- ══ JUEGOS — Contrarreloj ══ -->
+  <section class="view" id="view-game-speed" hidden>
+    <header class="session-bar">
+      <button class="icon-btn" id="btn-game-quit" type="button" aria-label="Salir del juego">
+        <svg viewBox="0 0 24 24" class="ico"><path d="M6 6l12 12"/><path d="M18 6L6 18"/></svg>
+      </button>
+      <div class="session-progress"><div id="game-timer-fill"></div></div>
+      <span class="session-count" id="game-time">60</span>
+      <span class="xp-chip" id="game-score">0</span>
+    </header>
+
+    <div class="card-stage" style="min-height:220px">
+      <div class="card" id="game-card">
+        <div class="card-face card-front">
+          <div class="prompt serif" id="game-prompt">—</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="quiz-choices" id="game-choices"></div>
+  </section>
+
+  <!-- ══ JUEGOS — resultado ══ -->
+  <section class="view center" id="view-game-done" hidden>
+    <div class="done-mark" id="game-done-mark">
+      <svg viewBox="0 0 24 24" class="ico"><path d="M4 12.5 9.5 18 20 7"/></svg>
+    </div>
+    <h2 id="game-done-title">Tiempo</h2>
+    <p class="done-sub" id="game-done-sub"></p>
+    <div class="done-stats game-stats">
+      <div class="stat"><b id="game-done-score">0</b><span>puntos</span></div>
+      <div class="stat"><b id="game-done-best">0</b><span>mejor</span></div>
+      <div class="stat"><b id="game-done-correct">0/0</b><span>bien</span></div>
+      <div class="stat"><b id="game-done-combo">0</b><span>combo</span></div>
+    </div>
+    <div class="done-misses" id="game-done-misses" hidden>
+      <h3 id="game-done-misses-title">Se te escaparon</h3>
+      <div class="done-miss-list" id="game-done-miss-list"></div>
+    </div>
+
+    <button class="cta" id="btn-game-again" type="button">Jugar de nuevo</button>
+    <button class="link-btn" id="btn-game-back" type="button">Volver a Juegos</button>
+    <div class="confetti" id="game-confetti"></div>
   </section>
 
   <!-- ══ GRAMÁTICA — niveles ══ -->

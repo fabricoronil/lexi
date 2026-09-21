@@ -11,15 +11,17 @@ import * as sound from './sound.js';
 import * as sync from './sync.js';
 import * as plan from './plan.js';
 import * as quiz from './quiz.js';
+import * as games from './games.js';
 
 const $ = (sel) => document.querySelector(sel);
 const $$ = (sel) => Array.from(document.querySelectorAll(sel));
 
-const VIEWS = ['home', 'review', 'done', 'stats', 'words', 'settings', 'study', 'grammar', 'grammar-level', 'grammar-topic', 'vocab', 'vocab-list', 'my-vocab', 'texts', 'texts-level', 'texts-reader'];
+const VIEWS = ['home', 'review', 'done', 'stats', 'words', 'settings', 'study', 'grammar', 'grammar-level', 'grammar-topic', 'vocab', 'vocab-list', 'my-vocab', 'texts', 'texts-level', 'texts-reader', 'games', 'game-speed', 'game-done'];
 const SUBVIEW_TAB = {
   words: 'stats', grammar: 'study', 'grammar-level': 'study', 'grammar-topic': 'study',
   vocab: 'study', 'vocab-list': 'study', 'my-vocab': 'study',
   texts: 'study', 'texts-level': 'study', 'texts-reader': 'study',
+  games: 'study', 'game-speed': 'study', 'game-done': 'study',
 };
 let wordsFilter = 'all';
 let currentGrammarLevelId = null;
@@ -32,8 +34,9 @@ const openVocabBlocks = new Set(); // grupos desplegados, por sección
 const XP_BY_QUALITY = [2, 5, 10, 15]; // otra vez, difícil, bien, fácil — solo cosmético, no toca el SRS
 // Mismo número que VERSION en sw.js — subir los dos juntos en cada deploy, así "Versión" en Ajustes
 // sirve para confirmar a simple vista si el dispositivo ya tiene los cambios nuevos.
-const APP_VERSION = 'v29';
+const APP_VERSION = 'v30';
 let session = null;
+let game = null; // sesión del Contrarreloj en curso (ver "═══ juegos ═══" más abajo)
 let lastStreakSeen = null;
 let streakPopTimer = null;
 let revealed = false; // si ya se mostró el significado de la card actual
@@ -82,6 +85,7 @@ async function boot() {
   wireSync();
   wireVersionCheck();
   wireStudy();
+  wireGames();
   wireMyVocab();
   wireVocabList();
   wireWordSheet();
@@ -101,8 +105,8 @@ async function boot() {
 const DEPTH = {
   home: 0, study: 0, stats: 0, settings: 0,
   review: 1, done: 1,
-  words: 1, vocab: 1, grammar: 1, texts: 1,
-  'vocab-list': 2, 'my-vocab': 2, 'grammar-level': 2, 'texts-level': 2,
+  words: 1, vocab: 1, grammar: 1, texts: 1, games: 1,
+  'vocab-list': 2, 'my-vocab': 2, 'grammar-level': 2, 'texts-level': 2, 'game-speed': 2, 'game-done': 2,
   'grammar-topic': 3, 'texts-reader': 3,
 };
 
@@ -170,10 +174,13 @@ function swapView(view) {
     const el = $('#view-' + v);
     if (el) el.hidden = v !== view;
   }
-  $('#tabbar').hidden = view === 'review';
+  // Igual que en el repaso: mientras el reloj corre, no hay forma de irse
+  // por la tabbar sin pasar por "salir" — así nunca queda un timer corriendo
+  // de fondo sobre una pantalla que ya no se ve.
+  $('#tabbar').hidden = view === 'review' || view === 'game-speed';
   // La barra de título flotante no tiene sentido en el repaso ni en el
   // final: son pantallas de una sola cosa y sin scroll que seguir.
-  $('#navbar').hidden = view === 'review' || view === 'done';
+  $('#navbar').hidden = view === 'review' || view === 'done' || view === 'game-speed' || view === 'game-done';
   $('#navbar-title').textContent = TITLES[view] || '';
   $('#navbar').classList.remove('solid');
 
@@ -195,6 +202,7 @@ function swapView(view) {
   if (view === 'texts') renderTextLevels();
   if (view === 'texts-level') renderTextsLevel();
   if (view === 'texts-reader') renderTextReader();
+  if (view === 'games') renderGamesList();
 }
 
 // Botones que ya disparan su propio sonido — el tap genérico se salta estos
@@ -1344,8 +1352,8 @@ function renderMisses(cards) {
   box.hidden = false;
 }
 
-function spawnConfetti(big) {
-  const host = $('#confetti');
+function spawnConfetti(big, hostSel = '#confetti') {
+  const host = $(hostSel);
   if (!host) return;
   host.innerHTML = '';
   const colors = ['#6ee7a0', '#f5a742', '#7ab8f5', '#f57a7a'];
@@ -1361,6 +1369,189 @@ function spawnConfetti(big) {
     host.appendChild(p);
   }
   setTimeout(() => { host.innerHTML = ''; }, 2200);
+}
+
+/* ═══════════ juegos ═══════════
+ * Aparte del repaso: no llaman a `store.putCard` ni a `store.recordAnswer`,
+ * así que nada de lo que pasa acá agenda una card ni toca la racha. El único
+ * rastro que dejan es su propio mejor puntaje (`store.recordGameRun`).
+ */
+
+function renderGamesList() {
+  const best = store.gameBest('speed');
+  $('#game-speed-sub').textContent = best
+    ? `Mejor puntaje: ${best}`
+    : 'Elegí la traducción antes de que se acabe el minuto';
+}
+
+function gamePool() {
+  const cards = decks.activeCards();
+  const seen = cards.filter((c) => decks.cardStatus(c) !== 'unseen');
+  return games.pickPool(cards, seen);
+}
+
+function startSpeedGame() {
+  const pool = gamePool();
+  if (pool.length < games.MIN_POOL) {
+    toast('Activá algún mazo en Ajustes para poder jugar.');
+    return;
+  }
+  game = {
+    pool,
+    score: 0,
+    combo: 0,
+    bestCombo: 0,
+    correct: 0,
+    total: 0,
+    missed: new Map(),
+    current: null,
+    locked: false,
+    endsAt: Date.now() + games.SPEED_SECONDS * 1000,
+    timer: null,
+  };
+  show('game-speed');
+  renderGameScore();
+  nextGameRound();
+  game.timer = setInterval(tickGame, 200);
+  tickGame();
+}
+
+function nextGameRound() {
+  if (!game) return;
+  const reverse = store.get().settings.reverse;
+  const { card, choices } = games.nextRound(game.pool, reverse, game.current?.id);
+  game.current = card;
+  game.locked = false;
+
+  $('#game-prompt').textContent = reverse ? card.es : card.en;
+
+  $('#game-choices').innerHTML = choices.map((c, i) => `
+    <button class="quiz-choice" type="button" data-right="${c.right}">
+      <span class="key">${i + 1}</span><span>${escapeHtml(c.text)}</span>
+    </button>`).join('');
+  $$('#game-choices .quiz-choice').forEach((b) => b.addEventListener('click', () => answerGame(b)));
+}
+
+function answerGame(btn) {
+  if (!game || game.locked || !btn) return;
+  game.locked = true;
+  game.total += 1;
+  const right = btn.dataset.right === 'true';
+  $$('#game-choices .quiz-choice').forEach((b) => { b.disabled = true; });
+
+  if (right) {
+    game.correct += 1;
+    game.score += games.scoreForHit(game.combo);
+    game.combo += 1;
+    game.bestCombo = Math.max(game.bestCombo, game.combo);
+    btn.classList.add('right');
+    sound.playCorrect();
+  } else {
+    game.missed.set(game.current.id, game.current);
+    game.combo = 0;
+    btn.classList.add('wrong');
+    const rightBtn = $$('#game-choices .quiz-choice').find((b) => b.dataset.right === 'true');
+    if (rightBtn) rightBtn.classList.add('right');
+    sound.playWrong();
+  }
+  renderGameScore();
+  const delay = right ? 260 : 700;
+  setTimeout(() => nextGameRound(), delay);
+}
+
+function renderGameScore() {
+  if (!game) return;
+  const chip = $('#game-score');
+  chip.textContent = game.score;
+  chip.classList.toggle('combo', game.combo >= 3);
+  bounce(chip, 'pop');
+}
+
+function tickGame() {
+  if (!game) return;
+  const remaining = Math.max(0, game.endsAt - Date.now());
+  const pct = remaining / (games.SPEED_SECONDS * 1000);
+  const fill = $('#game-timer-fill');
+  fill.style.width = (pct * 100) + '%';
+  fill.classList.toggle('low', remaining <= 10000);
+  $('#game-time').textContent = Math.ceil(remaining / 1000);
+  if (remaining <= 0) endSpeedGame();
+}
+
+function quitGame() {
+  if (game) clearInterval(game.timer);
+  game = null;
+  show('games');
+}
+
+function endSpeedGame() {
+  if (!game) return;
+  clearInterval(game.timer);
+  const prevBest = store.gameBest('speed');
+  const best = store.recordGameRun('speed', game.score);
+  const isRecord = game.score > 0 && game.score > prevBest;
+  const g = game;
+  game = null;
+
+  $('#game-done-score').textContent = g.score;
+  $('#game-done-best').textContent = best;
+  $('#game-done-correct').textContent = `${g.correct}/${g.total}`;
+  $('#game-done-combo').textContent = g.bestCombo;
+  $('#game-done-title').textContent = isRecord ? '¡Nuevo récord!' : 'Se acabó el tiempo';
+  $('#game-done-sub').textContent = g.total === 0
+    ? 'No llegaste a contestar ninguna — probá de nuevo.'
+    : isRecord
+      ? 'Superaste tu mejor puntaje.'
+      : `Tu mejor puntaje sigue siendo ${best}.`;
+
+  renderGameMisses([...g.missed.values()]);
+
+  show('game-done');
+  bounce($('#game-done-mark'), 'enter');
+  if (isRecord) spawnConfetti(true, '#game-confetti');
+  sound.playComplete();
+}
+
+/** Las que fallaste en la ronda: igual que "se te escaparon" del repaso. */
+function renderGameMisses(cards) {
+  const box = $('#game-done-misses');
+  if (!cards.length) {
+    box.hidden = true;
+    return;
+  }
+  const top = cards.slice(0, 5);
+  $('#game-done-misses-title').textContent = cards.length === 1
+    ? 'Se te escapó una'
+    : `Se te escaparon ${cards.length}`;
+  $('#game-done-miss-list').innerHTML = top.map((c) => `
+    <div class="done-miss">
+      <span class="en">${escapeHtml(c.en)}</span>
+      <span class="es">${escapeHtml(c.es)}</span>
+    </div>`).join('');
+  box.hidden = false;
+}
+
+function wireGames() {
+  $('#btn-play-speed').addEventListener('click', () => {
+    sound.playTap();
+    startSpeedGame();
+  });
+  $('#btn-game-quit').addEventListener('click', quitGame);
+  $('#btn-game-again').addEventListener('click', () => {
+    sound.playTap();
+    startSpeedGame();
+  });
+  $('#btn-game-back').addEventListener('click', () => show('games'));
+
+  document.addEventListener('keydown', (e) => {
+    if ($('#view-game-speed').hidden) return;
+    if (e.key === 'Escape') { quitGame(); return; }
+    if (['1', '2', '3', '4'].includes(e.key)) {
+      e.preventDefault();
+      const btn = $$('#game-choices .quiz-choice')[Number(e.key) - 1];
+      if (btn) answerGame(btn);
+    }
+  });
 }
 
 function wireReview() {
@@ -2099,6 +2290,8 @@ function wireStudy() {
   $('#btn-vocab-list-back').addEventListener('click', () => show('vocab'));
   $('#btn-go-grammar').addEventListener('click', () => show('grammar'));
   $('#btn-go-texts').addEventListener('click', () => show('texts'));
+  $('#btn-go-games').addEventListener('click', () => show('games'));
+  $('#btn-games-back').addEventListener('click', () => show('study'));
   $('#btn-grammar-back').addEventListener('click', () => show('study'));
   $('#btn-grammar-level-back').addEventListener('click', () => show('grammar'));
   $('#btn-grammar-topic-back').addEventListener('click', () => show(currentGrammarLevelId ? 'grammar-level' : 'grammar'));

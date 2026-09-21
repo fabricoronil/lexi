@@ -966,6 +966,9 @@ html[data-nav="pop"]::view-transition-new(root) {
   background: var(--accent-text);
   transition: width var(--d-base) var(--ease-out);
 }
+/* Últimos diez segundos del Contrarreloj: la barra pasa a rojo, mismo aviso
+ * que "Otra vez" en el repaso. */
+.session-progress div.low { background: var(--again); }
 .session-count {
   font-size: var(--t-footnote);
   color: var(--label-2);
@@ -1659,6 +1662,9 @@ html[data-nav="pop"]::view-transition-new(root) {
 }
 .done-stats .stat b { font-size: var(--t-title-1); letter-spacing: -1px; }
 #view-done .cta { max-width: 320px; }
+/* El resultado del Contrarreloj agrega una cuarta columna (combo). */
+.game-stats { grid-template-columns: repeat(4, minmax(0, 1fr)); }
+#view-game-done .cta { max-width: 320px; }
 
 /* ── lo que fallaste hoy ──
  * Termina la sesión diciendo exactamente cuáles se te escaparon. Es la

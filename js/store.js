@@ -49,6 +49,7 @@ const DEFAULTS = {
   exerciseResults: {}, // id de tema -> { correct, total, bestPct, at }
   textResults: {}, // id de texto de lectura -> { correct, total, bestPct, attempts, at }
   myWords: [], // palabras anotadas a mano desde el celu (ver más abajo)
+  games: {}, // id de juego -> { best, plays, at } — puntaje propio, aparte del SRS (ver js/games.js)
 };
 
 let state = null;
@@ -405,6 +406,25 @@ export function recordTextRun(textId, correct, total) {
 
 export function textResult(textId) {
   return load().textResults[textId] || null;
+}
+
+/* ── juegos ──
+ * Puntaje propio de cada juego, guardado aparte de `cards`: jugar al
+ * Contrarreloj no agenda ni califica nada, así que no tiene sentido que
+ * viva junto al progreso del SRS. Mismo patrón que `exerciseResults`.
+ */
+
+export function gameBest(id) {
+  return load().games[id]?.best || 0;
+}
+
+export function recordGameRun(id, score) {
+  const s = load();
+  const prev = s.games[id];
+  const best = prev ? Math.max(prev.best, score) : score;
+  s.games[id] = { best, plays: (prev?.plays || 0) + 1, at: todayKey() };
+  save();
+  return best;
 }
 
 export function resetAll() {
