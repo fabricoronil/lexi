@@ -971,8 +971,17 @@ html[data-nav="pop"]::view-transition-new(root) {
 .session-progress div.low { background: var(--again); }
 .session-count {
   font-size: var(--t-footnote);
+  line-height: 1.2;
+  text-align: right;
   color: var(--label-2);
   font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+.session-count small {
+  display: block;
+  font-size: var(--t-caption);
+  line-height: 1.2;
+  color: var(--label-3);
 }
 
 .xp-chip {

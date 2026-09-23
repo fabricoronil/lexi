@@ -571,6 +571,19 @@ function newSession(queue, { reinforce = false } = {}) {
   };
 }
 
+/**
+ * En qué tanda de la sesión estás. Las tandas son del tamaño de la meta
+ * diaria (mínimo 10) y la última se lleva el resto: 100 cards con meta 40
+ * son 40 + 40 + 20. `hechas` son las cards listas dentro de la tanda actual.
+ */
+function tandaActual(total, listas, goal) {
+  const max = Math.max(10, goal || 0);
+  const count = Math.max(1, Math.ceil(total / max));
+  const i = Math.min(count - 1, Math.floor(listas / max));
+  const size = Math.min(max, total - i * max);
+  return { n: i + 1, count, max, size, hechas: listas - i * max };
+}
+
 function currentCard() {
   return session ? session.queue[session.index] : null;
 }
@@ -650,16 +663,25 @@ function renderCard() {
   // tiene que ser el mismo que te prometió la pantalla de inicio (ver
   // `newSession`). La barra sí suma el avance parcial de las que están a
   // medio camino, para que se mueva con cada respuesta.
+  //
+  // Y se muestra como cuenta regresiva, en tandas del tamaño de la meta
+  // diaria: después de unos días sin entrar se juntan cien repasos, y un
+  // `0/100` no te dice cuánto falta para nada alcanzable. La sesión sigue
+  // teniendo todas las cards; sólo cambia cómo se cuentan.
   const total = session.plan.size;
   const listas = session.done.size;
-  $('#session-count').textContent = `${listas}/${total}`;
   let enCurso = 0;
   for (const id of session.touched) if (!session.done.has(id)) enCurso += 1;
-  const pct = total ? Math.min(100, ((listas + enCurso * 0.5) / total) * 100) : 0;
+  const t = tandaActual(total, listas, s.settings.dailyGoal);
+  const faltan = t.size - t.hechas;
+  $('#session-count').innerHTML = t.count > 1
+    ? `faltan ${faltan}<small>tanda ${t.n} de ${t.count}</small>`
+    : `faltan ${faltan}`;
+  const pct = t.size ? Math.min(100, ((t.hechas + enCurso * 0.5) / t.size) * 100) : 0;
   $('#session-fill').style.width = pct + '%';
-  $('#session-count').title = enCurso
+  $('#session-count').title = (enCurso
     ? `${listas} de ${total} cards listas · ${enCurso} a medio aprender, vuelven en esta sesión`
-    : `${listas} de ${total} cards listas`;
+    : `${listas} de ${total} cards listas`) + (t.count > 1 ? ` · tandas de ${t.max}` : '');
 
   for (let q = 0; q <= 3; q++) {
     $('#iv-' + q).textContent = previewInterval(st, q);
